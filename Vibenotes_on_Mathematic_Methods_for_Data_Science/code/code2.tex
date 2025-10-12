@@ -1,0 +1,33 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{k}{def}\PY{+w}{ }\PY{n+nf}{gauss\PYZus{}seidel\PYZus{}solve}\PY{p}{(}\PY{n}{A}\PY{p}{,} \PY{n}{b}\PY{p}{,} \PY{n}{x0}\PY{p}{,} \PY{n}{max\PYZus{}iter}\PY{p}{,} \PY{n}{tol}\PY{o}{=}\PY{l+m+mf}{1e\PYZhy{}6}\PY{p}{)}\PY{p}{:}
+\PY{+w}{    }\PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{}}
+\PY{l+s+sd}{    Solves Ax = b using the Gauss\PYZhy{}Seidel method. M = D \PYZhy{} L, N = U.}
+\PY{l+s+sd}{    Requires an explicit sequential loop (forward substitution).}
+\PY{l+s+sd}{    \PYZdq{}\PYZdq{}\PYZdq{}}
+    \PY{n}{n} \PY{o}{=} \PY{n}{A}\PY{o}{.}\PY{n}{shape}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}
+    \PY{n}{x\PYZus{}old} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{n}{x0}\PY{p}{,} \PY{n}{dtype}\PY{o}{=}\PY{n}{A}\PY{o}{.}\PY{n}{dtype}\PY{p}{)}
+    
+    \PY{k}{for} \PY{n}{k} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{n}{max\PYZus{}iter} \PY{o}{+} \PY{l+m+mi}{1}\PY{p}{)}\PY{p}{:}
+        \PY{n}{x\PYZus{}new} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{copy}\PY{p}{(}\PY{n}{x\PYZus{}old}\PY{p}{)}
+        
+        \PY{c+c1}{\PYZsh{} Sequential update: The causal heart of the method}
+        \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{n}\PY{p}{)}\PY{p}{:}
+            \PY{c+c1}{\PYZsh{} 1. Calculate sum for j \PYZlt{} i (L*x\PYZus{}new: using updated values)}
+            \PY{n}{sum\PYZus{}L} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{dot}\PY{p}{(}\PY{n}{A}\PY{p}{[}\PY{n}{i}\PY{p}{,} \PY{p}{:}\PY{n}{i}\PY{p}{]}\PY{p}{,} \PY{n}{x\PYZus{}new}\PY{p}{[}\PY{p}{:}\PY{n}{i}\PY{p}{]}\PY{p}{)}
+            \PY{c+c1}{\PYZsh{} 2. Calculate sum for j \PYZgt{} i (U*x\PYZus{}old: using old values)}
+            \PY{n}{sum\PYZus{}U} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{dot}\PY{p}{(}\PY{n}{A}\PY{p}{[}\PY{n}{i}\PY{p}{,} \PY{n}{i}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{:}\PY{p}{]}\PY{p}{,} \PY{n}{x\PYZus{}old}\PY{p}{[}\PY{n}{i}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{:}\PY{p}{]}\PY{p}{)}
+            
+            \PY{c+c1}{\PYZsh{} Update: x\PYZus{}i\PYZca{}(k+1) = (b\PYZus{}i \PYZhy{} sum\PYZus{}L \PYZhy{} sum\PYZus{}U) / A\PYZus{}ii}
+            \PY{n}{x\PYZus{}new}\PY{p}{[}\PY{n}{i}\PY{p}{]} \PY{o}{=} \PY{p}{(}\PY{n}{b}\PY{p}{[}\PY{n}{i}\PY{p}{]} \PY{o}{\PYZhy{}} \PY{n}{sum\PYZus{}L} \PY{o}{\PYZhy{}} \PY{n}{sum\PYZus{}U}\PY{p}{)} \PY{o}{/} \PY{n}{A}\PY{p}{[}\PY{n}{i}\PY{p}{,} \PY{n}{i}\PY{p}{]}
+        
+        \PY{c+c1}{\PYZsh{} Relative Error Criterion (L\PYZus{}inf norm)}
+        \PY{n}{error\PYZus{}norm} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{linalg}\PY{o}{.}\PY{n}{norm}\PY{p}{(}\PY{n}{x\PYZus{}new} \PY{o}{\PYZhy{}} \PY{n}{x\PYZus{}old}\PY{p}{,} \PY{n}{np}\PY{o}{.}\PY{n}{inf}\PY{p}{)}
+        \PY{k}{if} \PY{n}{error\PYZus{}norm} \PY{o}{\PYZlt{}} \PY{n}{tol} \PY{o}{*} \PY{n}{np}\PY{o}{.}\PY{n}{linalg}\PY{o}{.}\PY{n}{norm}\PY{p}{(}\PY{n}{x\PYZus{}new}\PY{p}{,} \PY{n}{np}\PY{o}{.}\PY{n}{inf}\PY{p}{)}\PY{p}{:}
+            \PY{c+c1}{\PYZsh{} print(f\PYZdq{}Gauss\PYZhy{}Seidel converged in \PYZob{}k\PYZcb{} iterations.\PYZdq{})}
+            \PY{k}{return} \PY{n}{x\PYZus{}new}\PY{p}{,} \PY{n}{k}
+            
+        \PY{n}{x\PYZus{}old} \PY{o}{=} \PY{n}{x\PYZus{}new}
+        
+    \PY{c+c1}{\PYZsh{} print(f\PYZdq{}Gauss\PYZhy{}Seidel failed to converge in \PYZob{}max\PYZus{}iter\PYZcb{} iterations.\PYZdq{})}
+    \PY{k}{return} \PY{n}{x\PYZus{}old}\PY{p}{,} \PY{n}{max\PYZus{}iter}
+\end{Verbatim}

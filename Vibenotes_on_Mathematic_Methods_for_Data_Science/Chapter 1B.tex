@@ -1,0 +1,476 @@
+\newpage
+\section{Direct Methods: LU Factorization}
+
+While Iterative Methods leverage sparsity for efficiency in large-scale systems, they rely on favorable spectral properties (i.e., $\rho(\mathbf{T}) < 1$). For dense, small-to-moderately sized systems, or when the matrix $\mathbf{A}$ is ill-conditioned (and thus, $\rho(\mathbf{T}) \approx 1$), direct methods are computationally stable and preferred. These methods terminate in a finite number of operations, primarily relying on the Gaussian Elimination process, which is fundamentally an implicit matrix factorization.
+
+\begin{definition}[LU Factorization]
+Let $\mathbf{A} \in \R^{n \times n}$ be a square matrix. An $\mathbf{LU}$ factorization of $\mathbf{A}$ is a decomposition $\mathbf{A} = \mathbf{L}\mathbf{U}$, where:
+\begin{enumerate}
+    \item $\mathbf{L} \in \R^{n \times n}$ is a Unit Lower-Triangular Matrix: $L_{ij} = 0$ for $i < j$ and $L_{ii} = 1$ $\forall i$.
+    \item $\mathbf{U} \in \R^{n \times n}$ is an Upper-Triangular Matrix: $U_{ij} = 0$ for $i > j$.
+\end{enumerate}
+If a standard LU decomposition exists, the solution to $\mathbf{A}\mathbf{x} = \mathbf{b}$ is reduced to two simpler triangular solves:
+\begin{enumerate}
+    \item Forward Substitution: Solve $\mathbf{L}\mathbf{y} = \mathbf{b}$ for the intermediate vector $\mathbf{y}$.
+    \item Backward Substitution: Solve $\mathbf{U}\mathbf{x} = \mathbf{y}$ for the solution vector $\mathbf{x}$.
+\end{enumerate}
+\end{definition}
+
+\begin{theorem}[Existence and Uniqueness of Standard LU Factorization]
+An $n \times n$ matrix $\mathbf{A}$ admits an $\mathbf{LU}$ factorization (with $\mathbf{L}$ unit lower-triangular) if and only if all of its leading principal minors are non-zero. That is,
+\[ \det(\mathbf{A}_k) \ne 0 \quad \text{for all } k = 1, \dots, n-1 \]
+where $\mathbf{A}_k$ is the $k \times k$ submatrix in the upper-left corner of $\mathbf{A}$.
+If such a factorization exists, it is unique.
+\end{theorem}
+
+\begin{proof}[Proof Sketch (Constructive)]
+The proof is constructive and relies on the Gaussian elimination process without row interchanges. In the $k$-th step of elimination, we form the matrix $\mathbf{M}_k = \mathbf{I} - \mathbf{m}_k \mathbf{e}_k^T$, where $\mathbf{m}_k = [0, \dots, 0, m_{k+1, k}, \dots, m_{n, k}]^T$ are the multipliers that zero out entries below the pivot $A_{k, k}^{(k-1)}$. This step requires the pivot to be non-zero, $A_{k, k}^{(k-1)} \ne 0$. The resulting upper-triangular matrix is $\mathbf{U} = \mathbf{M}_{n-1} \cdots \mathbf{M}_1 \mathbf{A}$. Since each $\mathbf{M}_k$ is unit lower-triangular, their product $\mathbf{M} = \mathbf{M}_{n-1} \cdots \mathbf{M}_1$ is also unit lower-triangular. Thus, $\mathbf{A} = \mathbf{M}^{-1}\mathbf{U}$. The matrix $\mathbf{L} = \mathbf{M}^{-1}$ is easily computed as $\mathbf{L} = \mathbf{I} + \mathbf{m}_1 \mathbf{e}_1^T + \cdots + \mathbf{m}_{n-1} \mathbf{e}_{n-1}^T$, where the entries below the diagonal are simply the multipliers used during elimination.
+
+The condition $\det(\mathbf{A}_k) \ne 0$ ensures that all necessary pivots are non-zero, guaranteeing the process can continue up to $n-1$. The determinant of $\mathbf{A}_k$ is equal to the product of the first $k$ pivots: $\det(\mathbf{A}_k) = A_{1, 1}^{(0)} A_{2, 2}^{(1)} \cdots A_{k, k}^{(k-1)}$. Thus, non-zero principal minors are equivalent to the existence of non-zero pivots.
+\end{proof}
+
+\subsubsection{Computational Complexity of LU Decomposition}
+
+The LU decomposition is a process of $\mathcal{O}(n^3)$ complexity.
+
+\begin{proposition}[Computational Cost of LU]
+The total number of floating-point operations (FLOPs) required to compute the $\mathbf{L}$ and $\mathbf{U}$ factors for a dense $n \times n$ matrix is asymptotically:
+\[ \text{FLOPs}(\mathbf{LU}) \sim \frac{2}{3} n^3 \]
+The subsequent forward and backward substitutions required to solve $\mathbf{A}\mathbf{x}=\mathbf{b}$ have a cost of $2n^2$ FLOPs.
+\end{proposition}
+\begin{remark}
+In data science, the high $\mathcal{O}(n^3)$ cost of the decomposition means that for a single system solve, the overhead dominates. However, if the same matrix $\mathbf{A}$ must be inverted or if multiple systems with the same $\mathbf{A}$ but different right-hand sides $\mathbf{b}$ must be solved, the $\mathcal{O}(n^2)$ cost of the triangular solves makes the $\mathbf{LU}$ factorization highly efficient. This re-use of the factorisation is a common pattern in iterative refinement, preconditioners, and time-stepping numerical methods.
+\end{remark}
+
+\subsection{Canonical Factorization Variants: Doolittle, Crout, and Cholesky}
+
+The standard LU factorization is not unique unless a constraint is imposed on the diagonal elements of $\mathbf{L}$ or $\mathbf{U}$. The three canonical forms impose different normalization constraints, which alter the computational structure and memory access patterns of the resulting algorithms.
+
+\subsubsection{Doolittle Factorization (Unit Lower)}
+The Doolittle factorization is the standard form derived directly from Gaussian Elimination, where the lower-triangular factor $\mathbf{L}$ is constrained to be Unit Lower-Triangular ($L_{ii} = 1$).
+
+\[ \mathbf{A} = \mathbf{L}\mathbf{U} \quad \text{with } L_{ii} = 1 \]
+
+The entries are calculated recursively from the matrix equation $\mathbf{A}_{ij} = \sum_{k=1}^{\min(i, j)} L_{ik} U_{kj}$. The system of equations is:
+\begin{align} U_{ij} &= A_{ij} - \sum_{k=1}^{i-1} L_{ik} U_{kj} \quad (\text{For } i \le j \text{ - Row } i \text{ of } \mathbf{U}) \\ L_{ij} &= \frac{1}{U_{jj}} \left( A_{ij} - \sum_{k=1}^{j-1} L_{ik} U_{kj} \right) \quad (\text{For } i > j \text{ - Column } j \text{ of } \mathbf{L}) \end{align}
+
+The Doolittle algorithm, in its most common form, is a \textbf{right-looking factorization}. At each step $k$, it computes the $k$-th row of $\mathbf{U}$ and the $k$-th column of $\mathbf{L}$. It then immediately uses these to perform a rank-1 update on the remaining submatrix. This structure mirrors the standard Gaussian elimination process.
+
+\subsubsection{Crout Factorization (Unit Upper)}
+The Crout factorization imposes the constraint that the upper-triangular factor $\mathbf{U}$ is Unit Upper-Triangular ($U_{ii} = 1$).
+
+\[ \mathbf{A} = \mathbf{L}\mathbf{U} \quad \text{with } U_{ii} = 1 \]
+
+The resulting system of equations is:
+\begin{align} L_{ij} &= A_{ij} - \sum_{k=1}^{j-1} L_{ik} U_{kj} \quad (\text{For } i \ge j \text{ - Column } j \text{ of } \mathbf{L}) \\ U_{ij} &= \frac{1}{L_{ii}} \left( A_{ij} - \sum_{k=1}^{i-1} L_{ik} U_{kj} \right) \quad (\text{For } i < j \text{ - Row } i \text{ of } \mathbf{U}) \end{align}
+
+The Crout Algorithm is a classic \textbf{left-looking factorization}. To compute the $j$-th column of $\mathbf{L}$ and the $j$-th row of $\mathbf{U}$, it accesses all previously computed columns from $1$ to $j-1$ ("looking left"). The calculation is based on dot products with these finalized columns. This method is often preferred in high-performance computing due to its excellent memory access patterns, which utilize cache and vectorization more effectively.
+
+\begin{remark}[Algorithmic Difference]
+The difference between Crout and Doolittle is simply an algebraic re-organization of the same $\mathcal{O}(n^3)$ calculation. Doolittle computes the multipliers $L_{ij}$ and then uses them to find the entries of $\mathbf{U}$, matching the structure of classical Gaussian elimination. Crout flips the order, computing the full column of $\mathbf{L}$ first.
+\end{remark}
+
+\subsubsection{Cholesky Factorization: The Symmetric Case}
+
+The most important and stable variant for many data science and optimisation problems is the Cholesky Factorization, which applies to Symmetric Positive Definite (SPD) matrices. The symmetry constraint allows for a significantly more efficient and stable factorization.
+
+\begin{definition}[Cholesky Factorization]
+Let $\mathbf{A} \in \R^{n \times n}$ be an $\mathbf{SPD}$ matrix. The Cholesky factorization of $\mathbf{A}$ is a decomposition
+\[ \mathbf{A} = \mathbf{L}\mathbf{L}^T \]
+where $\mathbf{L}$ is a Lower-Triangular Matrix with strictly positive diagonal entries ($L_{ii} > 0$).
+\end{definition}
+
+\begin{theorem}[Existence and Uniqueness of Cholesky Factorization]
+A square matrix $\mathbf{A} \in \R^{n \times n}$ has a unique Cholesky factorization $\mathbf{A} = \mathbf{L}\mathbf{L}^T$ if and only if $\mathbf{A}$ is Symmetric Positive Definite (SPD).
+\end{theorem}
+
+\begin{proof}[Proof of Existence ($\mathbf{SPD} \implies$ Cholesky)]
+The proof is an inductive construction (similar to the LU proof). The base case $n=1$ is trivial: $A_{11} = L_{11}^2$, so $L_{11} = \sqrt{A_{11}}$, which is real and positive since $\mathbf{A}$ is SPD ($A_{11} > 0$).
+
+For the inductive step, assume that every $k \times k$ principal submatrix of $\mathbf{A}$ is SPD and has a Cholesky factorization. We partition $\mathbf{A}$ as:
+\[ \mathbf{A} = \begin{pmatrix} \mathbf{A}_{n-1} & \mathbf{v} \\ \mathbf{v}^T & a_{nn} \end{pmatrix} \]
+where $\mathbf{A}_{n-1}$ is the $(n-1) \times (n-1)$ leading principal submatrix, $\mathbf{v} \in \R^{n-1}$, and $a_{nn} \in \R$. By the inductive hypothesis, $\mathbf{A}_{n-1}$ has a unique Cholesky factorization $\mathbf{A}_{n-1} = \mathbf{L}_{n-1} \mathbf{L}_{n-1}^T$.
+We seek a factor $\mathbf{L}$ of the form:
+\[ \mathbf{L} = \begin{pmatrix} \mathbf{L}_{n-1} & \mathbf{0} \\ \mathbf{u}^T & l_{nn} \end{pmatrix} \]
+where $\mathbf{u} \in \R^{n-1}$ and $l_{nn} > 0$. The factorization $\mathbf{A} = \mathbf{L}\mathbf{L}^T$ yields:
+\[ \begin{pmatrix} \mathbf{A}_{n-1} & \mathbf{v} \\ \mathbf{v}^T & a_{nn} \end{pmatrix} = \begin{pmatrix} \mathbf{L}_{n-1} & \mathbf{0} \\ \mathbf{u}^T & l_{nn} \end{pmatrix} \begin{pmatrix} \mathbf{L}_{n-1}^T & \mathbf{u} \\ \mathbf{0}^T & l_{nn} \end{pmatrix} = \begin{pmatrix} \mathbf{L}_{n-1} \mathbf{L}_{n-1}^T & \mathbf{L}_{n-1} \mathbf{u} \\ \mathbf{u}^T \mathbf{L}_{n-1}^T & \mathbf{u}^T \mathbf{u} + l_{nn}^2 \end{pmatrix} \]
+Equating the blocks:
+\begin{enumerate}
+    \item $\mathbf{A}_{n-1} = \mathbf{L}_{n-1} \mathbf{L}_{n-1}^T$ (Inductive hypothesis holds).
+    \item $\mathbf{v} = \mathbf{L}_{n-1} \mathbf{u}$. Since $\mathbf{L}_{n-1}$ is non-singular (it has a full rank, positive-diagonal triangular matrix), $\mathbf{u}$ is uniquely determined by the forward solve: $\mathbf{u} = \mathbf{L}_{n-1}^{-1} \mathbf{v}$.
+    \item $a_{nn} = \mathbf{u}^T \mathbf{u} + l_{nn}^2$. Thus, $l_{nn}^2 = a_{nn} - \mathbf{u}^T \mathbf{u}$.
+\end{enumerate}
+For $l_{nn}$ to be real and positive, we require $l_{nn}^2 = a_{nn} - \mathbf{u}^T \mathbf{u} > 0$.
+The quantity $\sigma = a_{nn} - \mathbf{u}^T \mathbf{u}$ is precisely the Schur complement of $\mathbf{A}$ with respect to $\mathbf{A}_{n-1}$. Since $\mathbf{A}$ is SPD, its Schur complement must also be positive, guaranteeing $l_{nn} = \sqrt{\sigma}$ is real and positive. Uniqueness follows from the fact that at each step, $\mathbf{u}$ and $l_{nn}$ are uniquely defined.
+\end{proof}
+
+\paragraph{Cholesky Algorithm (Dot Product/Row-Oriented)}
+The Cholesky algorithm simplifies the LU equations significantly. We only need to compute the entries of $\mathbf{L}$. The equations derived from $\mathbf{A}_{ij} = \sum_{k=1}^{j} L_{ik} L_{jk}$ (since $L_{ik} L_{jk} = L_{ik} (L^T)_{kj}$) are:
+\begin{itemize}
+    \item Diagonal Elements ($i=j$):
+    \[ A_{ii} = \sum_{k=1}^{i-1} L_{ik}^2 + L_{ii}^2 \implies L_{ii} = \sqrt{A_{ii} - \sum_{k=1}^{i-1} L_{ik}^2} \]
+    \item Off-Diagonal Elements ($i>j$):
+    \[ A_{ij} = \sum_{k=1}^{j-1} L_{ik} L_{jk} + L_{ij} L_{jj} \implies L_{ij} = \frac{1}{L_{jj}} \left( A_{ij} - \sum_{k=1}^{j-1} L_{ik} L_{jk} \right) \]
+\end{itemize}
+
+\begin{proposition}[Computational Cost of Cholesky]
+Due to the symmetry and the fact that only $\mathbf{L}$ needs to be stored and computed, the Cholesky factorization is twice as fast as the general LU factorization. The total number of FLOPs is asymptotically:
+\[ \text{FLOPs}(\mathbf{L}\mathbf{L}^T) \sim \frac{1}{3} n^3 \]
+This $\mathcal{O}(n^3/3)$ complexity makes it the method of choice for any SPD system.
+\end{proposition}
+
+\subsection{Implementation and Numerical Stability: Pivoting and Condition Number}
+
+\subsubsection{The Necessity of Pivoting: Factorization Failure}
+
+The fundamental flaw in a non-pivoted LU factorization is the potential for division by zero if a pivot $U_{kk}$ (which is $\det(\mathbf{A}_k) / \det(\mathbf{A}_{k-1})$) is zero.
+
+\begin{definition}[Pivoting]
+\textbf{Pivoting} is the strategic interchange of rows (and/or columns) of the matrix $\mathbf{A}$ to ensure that the factorization proceeds without breakdown and to enhance numerical stability.
+\begin{itemize}
+    \item Partial Pivoting (Row Pivoting): At step $k$, the pivot row is swapped with a row $i \ge k$ such that $|A_{ik}|$ is maximized. This results in the $\mathbf{LUP}$ factorization (sometimes called \textbf{PLU}, personally I don't like this name due to the order implications, we do firts \textbf{PA} and after that, we look for the \textbf{LU} decomposition).
+    \item Complete Pivoting (Row and Column Pivoting): At step $k$, the pivot is chosen from the entire un-eliminated submatrix to maximize $|A_{ij}|$, requiring both row and column swaps. This results in a $\mathbf{P}\mathbf{A}\mathbf{Q} = \mathbf{L}\mathbf{U}$ , which is called \textbf{LUPQ} decomposition (MATLAB names it LUCP).
+\end{itemize}
+\end{definition}
+
+\begin{proposition}[Stability of LU]
+The standard, non-pivoted LU factorization is unstable in finite-precision arithmetic. The growth factor, $\rho = \max_{i,j,k} |A_{ij}^{(k)}| / \max_{i,j} |A_{ij}^{(0)}|$, can grow exponentially with $n$.
+Partial pivoting ensures that the multipliers in $\mathbf{L}$ are bounded by unity, $|L_{ij}| \le 1$. Although $\rho$ can still grow polynomially, $\rho \le 2^{n-1}$, this bound is rarely reached in practice. For all practical purposes, Partial Pivoting is essential for robust LU-based solves in general-purpose computing.
+\end{proposition}
+
+\begin{remark}[Cholesky and Stability]
+The Cholesky factorization \textbf{does not require pivoting}. The fact that $\mathbf{A}$ is SPD inherently guarantees numerical stability. All entries of $\mathbf{L}$ are bounded, and no growth factor analysis is needed. This is a significant advantage of the Cholesky method.
+\end{remark}
+
+\subsubsection{The Role of Condition Number in Numerical Accuracy}
+
+In numerical analysis, a small residual $\|\mathbf{b} - \mathbf{A}\mathbf{x}_{comp}\|$ does not guarantee an accurate solution $\mathbf{x}_{comp}$. The error is magnified by the matrix's condition number.
+
+\begin{definition}[Condition Number]
+For a non-singular matrix $\mathbf{A}$, the condition number with respect to a matrix norm $\|\cdot\|$ is defined as:
+\[ \kappa(\mathbf{A}) = \|\mathbf{A}\| \cdot \|\mathbf{A}^{-1}\| \]
+If $\kappa(\mathbf{A})$ is large, the matrix is considered ill-conditioned.
+\end{definition}
+
+\begin{theorem}[Bound on Relative Error]
+Let $\mathbf{x}$ be the true solution to $\mathbf{A}\mathbf{x} = \mathbf{b}$, and $\mathbf{x}_{comp}$ be the computed solution. The relative error in the solution is bounded by the condition number multiplied by the relative residual:
+\[ \frac{\|\mathbf{x} - \mathbf{x}_{comp}\|}{\|\mathbf{x}\|} \le \kappa(\mathbf{A}) \frac{\|\mathbf{b} - \mathbf{A}\mathbf{x}_{comp}\|}{\|\mathbf{b}\|} \]
+This theorem is central to understanding the limits of all direct methods: a large condition number implies that the relative accuracy of the solution degrades linearly with the condition number, regardless of how small the residual is.
+\end{theorem}
+
+\subsection{Application in Data Science: Inversion, Least Squares, and Statistics}
+
+LU factorizations are the foundational workhorse for a wide array of data science and statistical computing tasks.
+
+\subsubsection{Matrix Inversion}
+While inverting a matrix $\mathbf{A}$ explicitly ($\mathbf{A}^{-1}$) is generally avoided due to stability and computational cost (requiring $\mathcal{O}(n^3)$ FLOPs), the $\mathbf{LU}$ factorization is the numerical mechanism by which inversion is achieved.
+\[ \mathbf{A}^{-1} = (\mathbf{L}\mathbf{U})^{-1} = \mathbf{U}^{-1} \mathbf{L}^{-1} \]
+The columns of $\mathbf{A}^{-1}$, denoted $\mathbf{z}_j$, are found by solving $n$ systems $\mathbf{A}\mathbf{z}_j = \mathbf{e}_j$ (where $\mathbf{e}_j$ is the $j$-th standard basis vector), each requiring one forward and one backward solve ($\mathcal{O}(n^2)$ FLOPs). Total cost is $\mathcal{O}(n^3)$.
+
+\subsubsection{Solving the Normal Equations for Least Squares}
+
+The canonical linear regression problem in data science seeks to find the vector $\mathbf{x}$ that minimizes the $\ell_2$-norm of the residual:
+\[ \min_{\mathbf{x}} \|\mathbf{y} - \mathbf{X}\mathbf{x}\|_2 \]
+where $\mathbf{X} \in \R^{m \times n}$ is the design matrix ($m \ge n$), and $\mathbf{y} \in \R^m$. The solution $\mathbf{x}$ satisfies the Normal Equations:
+\[ (\mathbf{X}^T \mathbf{X}) \mathbf{x} = \mathbf{X}^T \mathbf{y} \]
+If $\mathbf{X}$ is full-rank, the matrix $\mathbf{A} = \mathbf{X}^T \mathbf{X} \in \R^{n \times n}$ is guaranteed to be Symmetric Positive Definite (SPD).
+\begin{enumerate}
+    \item Factorization: Compute the Cholesky factorization $\mathbf{A} = \mathbf{L}\mathbf{L}^T$. ($\mathcal{O}(n^3/3)$)
+    \item Solve: Solve $\mathbf{L}\mathbf{y} = \mathbf{X}^T \mathbf{y}$ (Forward) and $\mathbf{L}^T \mathbf{x} = \mathbf{y}$ (Backward). ($\mathcal{O}(n^2)$)
+\end{enumerate}
+The use of Cholesky factorization is the default robust method for solving the normal equations in statistical software. However, it is important to note that the condition number of $\mathbf{X}^T \mathbf{X}$ is $\kappa(\mathbf{X}^T \mathbf{X}) = \kappa(\mathbf{X})^2$, meaning this approach is highly sensitive to ill-conditioning in the design matrix $\mathbf{X}$. Alternative methods, such as the QR factorization (to be covered in the next section), are generally preferred for ill-conditioned problems.
+
+\subsubsection{Determinant Calculation}
+
+The family of LU factorizations provides the most numerically efficient means to calculate the determinant of a matrix $\mathbf{A}$. The method leverages two key properties: the determinant of a product of matrices is the product of their determinants, and the determinant of a triangular matrix is the product of its diagonal entries.
+
+\[ \det(\mathbf{A}) = \det(\mathbf{L}\mathbf{U}) = \det(\mathbf{L})\det(\mathbf{U}) \]
+
+The final calculation depends on the specific constraints of the factorization used:
+
+\begin{itemize}
+    \item \textbf{Doolittle Form ($L_{ii} = 1$):} Since $\mathbf{L}$ is a unit lower-triangular matrix, its determinant is trivially $\det(\mathbf{L}) = \prod_{i=1}^n L_{ii} = 1$. The calculation thus simplifies to the product of the diagonal entries of $\mathbf{U}$ (the pivots):
+    \[ \det(\mathbf{A}) = \det(\mathbf{U}) = \prod_{i=1}^n U_{ii} \]
+
+    \item \textbf{Crout Form ($U_{ii} = 1$):} Conversely, in the Crout form, $\mathbf{U}$ is unit upper-triangular, making its determinant $\det(\mathbf{U}) = \prod_{i=1}^n U_{ii} = 1$. The determinant of $\mathbf{A}$ is therefore the product of the diagonal entries of $\mathbf{L}$:
+    \[ \det(\mathbf{A}) = \det(\mathbf{L}) = \prod_{i=1}^n L_{ii} \]
+
+    \item \textbf{Cholesky Form ($\mathbf{A} = \mathbf{L}\mathbf{L}^T$):} For Symmetric Positive Definite matrices, we use the property that $\det(\mathbf{M}^T) = \det(\mathbf{M})$. The calculation becomes:
+    \[ \det(\mathbf{A}) = \det(\mathbf{L}\mathbf{L}^T) = \det(\mathbf{L})\det(\mathbf{L}^T) = (\det(\mathbf{L}))^2 \]
+    Since $\mathbf{L}$ is lower-triangular with positive diagonal entries, the determinant is the square of the product of its diagonal elements:
+    \[ \det(\mathbf{A}) = \left(\prod_{i=1}^n L_{ii}\right)^2 \]
+    This elegantly confirms that the determinant of an SPD matrix is always positive.
+\end{itemize}
+
+If pivoting is used ($\mathbf{P}\mathbf{A} = \mathbf{L}\mathbf{U}$), we must account for the determinant of the permutation matrix $\mathbf{P}$. Since $\det(\mathbf{P}) = (-1)^s = (-1)^{-s} \quad \forall s \in \mathbb{N}$, where $s$ is the number of row interchanges, the formula becomes:
+\[ \det(\mathbf{P})\det(\mathbf{A}) = \det(\mathbf{L})\det(\mathbf{U}) \implies \det(\mathbf{A}) = (-1)^s \det(\mathbf{L})\det(\mathbf{U}) \]
+For the standard pivoted LU factorization (Doolittle form), this is $\det(\mathbf{A}) = (-1)^s \prod_{i=1}^n U_{ii}$. The overall calculation remains dominated by the $\mathcal{O}(n^3)$ cost of the initial factorization and is the standard numerical method for computing determinants.
+
+\subsection{Numerical Implementation in Python}
+
+To solidify the theoretical foundations, we present pedagogical implementations of the Doolittle, Crout, and Cholesky factorizations. These functions are written "from scratch" using the \texttt{numpy} library to directly mirror the underlying mathematical formulas. We also include the requisite forward and backward substitution solvers that utilize these factorizations to solve linear systems.
+
+\subsubsection*{Core Solver: Substitution Algorithms}
+The efficiency of the LU factorization paradigm hinges on the speed of solving the resulting triangular systems. The following functions implement forward substitution for lower-triangular systems ($\mathbf{L}\mathbf{y} = \mathbf{b}$) and backward substitution for upper-triangular systems ($\mathbf{U}\mathbf{x} = \mathbf{y}$).
+
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{k+kn}{import}\PY{+w}{ }\PY{n+nn}{numpy}\PY{+w}{ }\PY{k}{as}\PY{+w}{ }\PY{n+nn}{np}
+
+\PY{k}{def}\PY{+w}{ }\PY{n+nf}{forward\PYZus{}substitution}\PY{p}{(}\PY{n}{L}\PY{p}{,} \PY{n}{b}\PY{p}{)}\PY{p}{:}
+\PY{+w}{    }\PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{}}
+\PY{l+s+sd}{    Solves the system Ly = b for y, where L is a lower\PYZhy{}triangular matrix.}
+\PY{l+s+sd}{    Assumes L\PYZus{}ii is not zero. For Doolittle, L\PYZus{}ii = 1.}
+\PY{l+s+sd}{    \PYZdq{}\PYZdq{}\PYZdq{}}
+    \PY{n}{n} \PY{o}{=} \PY{n}{L}\PY{o}{.}\PY{n}{shape}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}
+    \PY{n}{y} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{zeros}\PY{p}{(}\PY{n}{n}\PY{p}{,} \PY{n}{dtype}\PY{o}{=}\PY{n}{L}\PY{o}{.}\PY{n}{dtype}\PY{p}{)}
+    \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{n}\PY{p}{)}\PY{p}{:}
+        \PY{c+c1}{\PYZsh{} The @ operator is dot product for 1D arrays}
+        \PY{n}{y}\PY{p}{[}\PY{n}{i}\PY{p}{]} \PY{o}{=} \PY{p}{(}\PY{n}{b}\PY{p}{[}\PY{n}{i}\PY{p}{]} \PY{o}{\PYZhy{}} \PY{n}{L}\PY{p}{[}\PY{n}{i}\PY{p}{,} \PY{p}{:}\PY{n}{i}\PY{p}{]} \PY{o}{@} \PY{n}{y}\PY{p}{[}\PY{p}{:}\PY{n}{i}\PY{p}{]}\PY{p}{)} \PY{o}{/} \PY{n}{L}\PY{p}{[}\PY{n}{i}\PY{p}{,} \PY{n}{i}\PY{p}{]}
+    \PY{k}{return} \PY{n}{y}
+
+\PY{k}{def}\PY{+w}{ }\PY{n+nf}{backward\PYZus{}substitution}\PY{p}{(}\PY{n}{U}\PY{p}{,} \PY{n}{y}\PY{p}{)}\PY{p}{:}
+\PY{+w}{    }\PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{}}
+\PY{l+s+sd}{    Solves the system Ux = y for x, where U is an upper\PYZhy{}triangular matrix.}
+\PY{l+s+sd}{    Assumes U\PYZus{}ii is not zero.}
+\PY{l+s+sd}{    \PYZdq{}\PYZdq{}\PYZdq{}}
+    \PY{n}{n} \PY{o}{=} \PY{n}{U}\PY{o}{.}\PY{n}{shape}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}
+    \PY{n}{x} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{zeros}\PY{p}{(}\PY{n}{n}\PY{p}{,} \PY{n}{dtype}\PY{o}{=}\PY{n}{U}\PY{o}{.}\PY{n}{dtype}\PY{p}{)}
+    \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{n} \PY{o}{\PYZhy{}} \PY{l+m+mi}{1}\PY{p}{,} \PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{,} \PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{:}
+        \PY{n}{x}\PY{p}{[}\PY{n}{i}\PY{p}{]} \PY{o}{=} \PY{p}{(}\PY{n}{y}\PY{p}{[}\PY{n}{i}\PY{p}{]} \PY{o}{\PYZhy{}} \PY{n}{U}\PY{p}{[}\PY{n}{i}\PY{p}{,} \PY{n}{i}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{:}\PY{p}{]} \PY{o}{@} \PY{n}{x}\PY{p}{[}\PY{n}{i}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{:}\PY{p}{]}\PY{p}{)} \PY{o}{/} \PY{n}{U}\PY{p}{[}\PY{n}{i}\PY{p}{,} \PY{n}{i}\PY{p}{]}
+    \PY{k}{return} \PY{n}{x}
+\end{Verbatim}
+
+\subsubsection*{Factorization Algorithms}
+The following functions implement the three canonical factorization variants discussed. Note that these are non-pivoted implementations and will fail if a zero pivot is encountered (for LU/Crout) or if the matrix is not SPD (for Cholesky).
+
+\paragraph{Doolittle Factorization ($L_{ii} = 1$)}
+This implementation follows the right-looking (Gaussian elimination) structure.
+
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{k}{def}\PY{+w}{ }\PY{n+nf}{doolittle\PYZus{}lu}\PY{p}{(}\PY{n}{A}\PY{p}{)}\PY{p}{:}
+\PY{+w}{    }\PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{}}
+\PY{l+s+sd}{    Performs LU factorization of A using Doolittle\PYZsq{}s method (L\PYZus{}ii = 1).}
+\PY{l+s+sd}{    Returns L, U. This is a non\PYZhy{}pivoted implementation.}
+\PY{l+s+sd}{    \PYZdq{}\PYZdq{}\PYZdq{}}
+    \PY{n}{n} \PY{o}{=} \PY{n}{A}\PY{o}{.}\PY{n}{shape}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}
+    \PY{n}{L} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{eye}\PY{p}{(}\PY{n}{n}\PY{p}{,} \PY{n}{dtype}\PY{o}{=}\PY{n}{A}\PY{o}{.}\PY{n}{dtype}\PY{p}{)}
+    \PY{n}{U} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{zeros}\PY{p}{(}\PY{p}{(}\PY{n}{n}\PY{p}{,} \PY{n}{n}\PY{p}{)}\PY{p}{,} \PY{n}{dtype}\PY{o}{=}\PY{n}{A}\PY{o}{.}\PY{n}{dtype}\PY{p}{)}
+
+    \PY{k}{for} \PY{n}{k} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{n}\PY{p}{)}\PY{p}{:}
+        \PY{c+c1}{\PYZsh{} Calculate k\PYZhy{}th row of U}
+        \PY{c+c1}{\PYZsh{} U[k, k:] = A[k, k:] \PYZhy{} sum(L[k, p]*U[p, k:]) for p=0..k\PYZhy{}1}
+        \PY{c+c1}{\PYZsh{} This is a dot product of the k\PYZhy{}th row of L with columns of U}
+        \PY{n}{U}\PY{p}{[}\PY{n}{k}\PY{p}{,} \PY{n}{k}\PY{p}{:}\PY{p}{]} \PY{o}{=} \PY{n}{A}\PY{p}{[}\PY{n}{k}\PY{p}{,} \PY{n}{k}\PY{p}{:}\PY{p}{]} \PY{o}{\PYZhy{}} \PY{n}{L}\PY{p}{[}\PY{n}{k}\PY{p}{,} \PY{p}{:}\PY{n}{k}\PY{p}{]} \PY{o}{@} \PY{n}{U}\PY{p}{[}\PY{p}{:}\PY{n}{k}\PY{p}{,} \PY{n}{k}\PY{p}{:}\PY{p}{]}
+
+        \PY{c+c1}{\PYZsh{} Calculate k\PYZhy{}th column of L}
+        \PY{k}{if} \PY{n}{np}\PY{o}{.}\PY{n}{abs}\PY{p}{(}\PY{n}{U}\PY{p}{[}\PY{n}{k}\PY{p}{,} \PY{n}{k}\PY{p}{]}\PY{p}{)} \PY{o}{\PYZlt{}} \PY{l+m+mf}{1e\PYZhy{}12}\PY{p}{:}
+            \PY{k}{raise} \PY{n}{np}\PY{o}{.}\PY{n}{linalg}\PY{o}{.}\PY{n}{LinAlgError}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Zero pivot encountered.}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+
+        \PY{c+c1}{\PYZsh{} L[k+1:, k] = (A[k+1:, k] \PYZhy{} sum(L[k+1:, p]*U[p, k])) / U[k, k]}
+        \PY{c+c1}{\PYZsh{} This is a dot product of submatrix of L with k\PYZhy{}th column of U}
+        \PY{n}{L}\PY{p}{[}\PY{n}{k}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{:}\PY{p}{,} \PY{n}{k}\PY{p}{]} \PY{o}{=} \PY{p}{(}\PY{n}{A}\PY{p}{[}\PY{n}{k}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{:}\PY{p}{,} \PY{n}{k}\PY{p}{]} \PY{o}{\PYZhy{}} \PY{n}{L}\PY{p}{[}\PY{n}{k}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{:}\PY{p}{,} \PY{p}{:}\PY{n}{k}\PY{p}{]} \PY{o}{@} \PY{n}{U}\PY{p}{[}\PY{p}{:}\PY{n}{k}\PY{p}{,} \PY{n}{k}\PY{p}{]}\PY{p}{)} \PY{o}{/} \PY{n}{U}\PY{p}{[}\PY{n}{k}\PY{p}{,} \PY{n}{k}\PY{p}{]}
+
+    \PY{k}{return} \PY{n}{L}\PY{p}{,} \PY{n}{U}
+\end{Verbatim}
+
+\paragraph{Crout Factorization ($U_{ii} = 1$)}
+This implementation follows the left-looking (dot-product) structure.
+
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{k}{def}\PY{+w}{ }\PY{n+nf}{crout\PYZus{}lu}\PY{p}{(}\PY{n}{A}\PY{p}{)}\PY{p}{:}
+\PY{+w}{    }\PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{}}
+\PY{l+s+sd}{    Performs LU factorization of A using Crout\PYZsq{}s method (U\PYZus{}ii = 1).}
+\PY{l+s+sd}{    Returns L, U. This is a non\PYZhy{}pivoted implementation.}
+\PY{l+s+sd}{    \PYZdq{}\PYZdq{}\PYZdq{}}
+    \PY{n}{n} \PY{o}{=} \PY{n}{A}\PY{o}{.}\PY{n}{shape}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}
+    \PY{n}{L} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{zeros}\PY{p}{(}\PY{p}{(}\PY{n}{n}\PY{p}{,} \PY{n}{n}\PY{p}{)}\PY{p}{,} \PY{n}{dtype}\PY{o}{=}\PY{n}{A}\PY{o}{.}\PY{n}{dtype}\PY{p}{)}
+    \PY{n}{U} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{eye}\PY{p}{(}\PY{n}{n}\PY{p}{,} \PY{n}{dtype}\PY{o}{=}\PY{n}{A}\PY{o}{.}\PY{n}{dtype}\PY{p}{)}
+
+    \PY{k}{for} \PY{n}{j} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{n}\PY{p}{)}\PY{p}{:}
+        \PY{c+c1}{\PYZsh{} Calculate j\PYZhy{}th column of L}
+        \PY{c+c1}{\PYZsh{} L[j:, j] = A[j:, j] \PYZhy{} sum(L[j:, k]*U[k, j]) for k=0..j\PYZhy{}1}
+        \PY{n}{L}\PY{p}{[}\PY{n}{j}\PY{p}{:}\PY{p}{,} \PY{n}{j}\PY{p}{]} \PY{o}{=} \PY{n}{A}\PY{p}{[}\PY{n}{j}\PY{p}{:}\PY{p}{,} \PY{n}{j}\PY{p}{]} \PY{o}{\PYZhy{}} \PY{n}{L}\PY{p}{[}\PY{n}{j}\PY{p}{:}\PY{p}{,} \PY{p}{:}\PY{n}{j}\PY{p}{]} \PY{o}{@} \PY{n}{U}\PY{p}{[}\PY{p}{:}\PY{n}{j}\PY{p}{,} \PY{n}{j}\PY{p}{]}
+
+        \PY{c+c1}{\PYZsh{} Calculate j\PYZhy{}th row of U}
+        \PY{k}{if} \PY{n}{np}\PY{o}{.}\PY{n}{abs}\PY{p}{(}\PY{n}{L}\PY{p}{[}\PY{n}{j}\PY{p}{,} \PY{n}{j}\PY{p}{]}\PY{p}{)} \PY{o}{\PYZlt{}} \PY{l+m+mf}{1e\PYZhy{}12}\PY{p}{:}
+            \PY{k}{raise} \PY{n}{np}\PY{o}{.}\PY{n}{linalg}\PY{o}{.}\PY{n}{LinAlgError}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Zero pivot encountered.}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+
+        \PY{c+c1}{\PYZsh{} U[j, j+1:] = (A[j, j+1:] \PYZhy{} sum(L[j, k]*U[k, j+1:])) / L[j, j]}
+        \PY{n}{U}\PY{p}{[}\PY{n}{j}\PY{p}{,} \PY{n}{j}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{:}\PY{p}{]} \PY{o}{=} \PY{p}{(}\PY{n}{A}\PY{p}{[}\PY{n}{j}\PY{p}{,} \PY{n}{j}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{:}\PY{p}{]} \PY{o}{\PYZhy{}} \PY{n}{L}\PY{p}{[}\PY{n}{j}\PY{p}{,} \PY{p}{:}\PY{n}{j}\PY{p}{]} \PY{o}{@} \PY{n}{U}\PY{p}{[}\PY{p}{:}\PY{n}{j}\PY{p}{,} \PY{n}{j}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{:}\PY{p}{]}\PY{p}{)} \PY{o}{/} \PY{n}{L}\PY{p}{[}\PY{n}{j}\PY{p}{,} \PY{n}{j}\PY{p}{]}
+
+    \PY{k}{return} \PY{n}{L}\PY{p}{,} \PY{n}{U}
+\end{Verbatim}
+
+\paragraph{Cholesky Factorization ($\mathbf{A} = \mathbf{L}\mathbf{L}^T$)}
+This algorithm computes the lower-triangular factor $\mathbf{L}$ for an SPD matrix. It includes a check for positive definiteness by ensuring the arguments to the square root are positive.
+
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{k}{def}\PY{+w}{ }\PY{n+nf}{cholesky}\PY{p}{(}\PY{n}{A}\PY{p}{)}\PY{p}{:}
+\PY{+w}{    }\PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{}}
+\PY{l+s+sd}{    Performs Cholesky factorization of A (A = LL\PYZca{}T).}
+\PY{l+s+sd}{    Returns the lower\PYZhy{}triangular matrix L.}
+\PY{l+s+sd}{    A must be a symmetric positive\PYZhy{}definite matrix.}
+\PY{l+s+sd}{    \PYZdq{}\PYZdq{}\PYZdq{}}
+    \PY{n}{n} \PY{o}{=} \PY{n}{A}\PY{o}{.}\PY{n}{shape}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}
+    \PY{n}{L} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{zeros}\PY{p}{(}\PY{p}{(}\PY{n}{n}\PY{p}{,} \PY{n}{n}\PY{p}{)}\PY{p}{,} \PY{n}{dtype}\PY{o}{=}\PY{n}{A}\PY{o}{.}\PY{n}{dtype}\PY{p}{)}
+
+    \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{n}\PY{p}{)}\PY{p}{:}
+        \PY{k}{for} \PY{n}{j} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{i} \PY{o}{+} \PY{l+m+mi}{1}\PY{p}{)}\PY{p}{:}
+            \PY{c+c1}{\PYZsh{} Sum of squares of elements in the same row}
+            \PY{n}{s} \PY{o}{=} \PY{n}{L}\PY{p}{[}\PY{n}{i}\PY{p}{,} \PY{p}{:}\PY{n}{j}\PY{p}{]} \PY{o}{@} \PY{n}{L}\PY{p}{[}\PY{n}{j}\PY{p}{,} \PY{p}{:}\PY{n}{j}\PY{p}{]}
+
+            \PY{k}{if} \PY{n}{i} \PY{o}{==} \PY{n}{j}\PY{p}{:} \PY{c+c1}{\PYZsh{} Diagonal elements}
+                \PY{n}{diag\PYZus{}val} \PY{o}{=} \PY{n}{A}\PY{p}{[}\PY{n}{i}\PY{p}{,} \PY{n}{i}\PY{p}{]} \PY{o}{\PYZhy{}} \PY{n}{s}
+                \PY{k}{if} \PY{n}{diag\PYZus{}val} \PY{o}{\PYZlt{}} \PY{l+m+mi}{0}\PY{p}{:}
+                    \PY{k}{raise} \PY{n}{np}\PY{o}{.}\PY{n}{linalg}\PY{o}{.}\PY{n}{LinAlgError}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Matrix is not positive definite.}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+                \PY{n}{L}\PY{p}{[}\PY{n}{i}\PY{p}{,} \PY{n}{j}\PY{p}{]} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{sqrt}\PY{p}{(}\PY{n}{diag\PYZus{}val}\PY{p}{)}
+            \PY{k}{else}\PY{p}{:} \PY{c+c1}{\PYZsh{} Off\PYZhy{}diagonal elements}
+                \PY{k}{if} \PY{n}{L}\PY{p}{[}\PY{n}{j}\PY{p}{,} \PY{n}{j}\PY{p}{]} \PY{o}{==} \PY{l+m+mi}{0}\PY{p}{:}
+                    \PY{k}{raise} \PY{n}{np}\PY{o}{.}\PY{n}{linalg}\PY{o}{.}\PY{n}{LinAlgError}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Matrix is not positive definite.}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+                \PY{n}{L}\PY{p}{[}\PY{n}{i}\PY{p}{,} \PY{n}{j}\PY{p}{]} \PY{o}{=} \PY{p}{(}\PY{n}{A}\PY{p}{[}\PY{n}{i}\PY{p}{,} \PY{n}{j}\PY{p}{]} \PY{o}{\PYZhy{}} \PY{n}{s}\PY{p}{)} \PY{o}{/} \PY{n}{L}\PY{p}{[}\PY{n}{j}\PY{p}{,} \PY{n}{j}\PY{p}{]}
+
+    \PY{k}{return} \PY{n}{L}
+\end{Verbatim}
+
+\subsubsection*{Example Usage: Solving a System}
+Finally, we demonstrate how to combine these functions to solve a linear system $\mathbf{A}\mathbf{x} = \mathbf{b}$.
+
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{k}{def}\PY{+w}{ }\PY{n+nf}{solve\PYZus{}with\PYZus{}lu}\PY{p}{(}\PY{n}{factorization\PYZus{}func}\PY{p}{,} \PY{n}{A}\PY{p}{,} \PY{n}{b}\PY{p}{)}\PY{p}{:}
+\PY{+w}{    }\PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{}}
+\PY{l+s+sd}{    Solves Ax = b using a specified LU factorization function.}
+\PY{l+s+sd}{    \PYZdq{}\PYZdq{}\PYZdq{}}
+    \PY{n+nb}{print}\PY{p}{(}\PY{l+s+sa}{f}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{\PYZhy{}\PYZhy{}\PYZhy{} Solving with }\PY{l+s+si}{\PYZob{}}\PY{n}{factorization\PYZus{}func}\PY{o}{.}\PY{n+nv+vm}{\PYZus{}\PYZus{}name\PYZus{}\PYZus{}}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s2}{ \PYZhy{}\PYZhy{}\PYZhy{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+    \PY{k}{try}\PY{p}{:}
+        \PY{n}{L}\PY{p}{,} \PY{n}{U} \PY{o}{=} \PY{n}{factorization\PYZus{}func}\PY{p}{(}\PY{n}{A}\PY{p}{)}
+        \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{L:}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{np}\PY{o}{.}\PY{n}{round}\PY{p}{(}\PY{n}{L}\PY{p}{,} \PY{l+m+mi}{4}\PY{p}{)}\PY{p}{)}
+        \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{U:}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{np}\PY{o}{.}\PY{n}{round}\PY{p}{(}\PY{n}{U}\PY{p}{,} \PY{l+m+mi}{4}\PY{p}{)}\PY{p}{)}
+
+        \PY{c+c1}{\PYZsh{} Step 1: Solve Ly = b}
+        \PY{n}{y} \PY{o}{=} \PY{n}{forward\PYZus{}substitution}\PY{p}{(}\PY{n}{L}\PY{p}{,} \PY{n}{b}\PY{p}{)}
+
+        \PY{c+c1}{\PYZsh{} Step 2: Solve Ux = y}
+        \PY{n}{x} \PY{o}{=} \PY{n}{backward\PYZus{}substitution}\PY{p}{(}\PY{n}{U}\PY{p}{,} \PY{n}{y}\PY{p}{)}
+        \PY{k}{return} \PY{n}{x}
+    \PY{k}{except} \PY{n}{np}\PY{o}{.}\PY{n}{linalg}\PY{o}{.}\PY{n}{LinAlgError} \PY{k}{as} \PY{n}{e}\PY{p}{:}
+        \PY{n+nb}{print}\PY{p}{(}\PY{n}{e}\PY{p}{)}
+        \PY{k}{return} \PY{k+kc}{None}
+
+\PY{c+c1}{\PYZsh{} Example Matrix (Doolittle and Crout)}
+\PY{n}{A} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{p}{[}\PY{p}{[}\PY{l+m+mf}{2.}\PY{p}{,} \PY{l+m+mf}{1.}\PY{p}{,} \PY{l+m+mf}{1.}\PY{p}{]}\PY{p}{,} \PY{p}{[}\PY{l+m+mf}{4.}\PY{p}{,} \PY{l+m+mf}{3.}\PY{p}{,} \PY{l+m+mf}{3.}\PY{p}{]}\PY{p}{,} \PY{p}{[}\PY{l+m+mf}{8.}\PY{p}{,} \PY{l+m+mf}{7.}\PY{p}{,} \PY{l+m+mf}{9.}\PY{p}{]}\PY{p}{]}\PY{p}{)}
+\PY{n}{b} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{p}{[}\PY{l+m+mf}{6.}\PY{p}{,} \PY{l+m+mf}{14.}\PY{p}{,} \PY{l+m+mf}{36.}\PY{p}{]}\PY{p}{)}
+
+\PY{n}{x\PYZus{}doolittle} \PY{o}{=} \PY{n}{solve\PYZus{}with\PYZus{}lu}\PY{p}{(}\PY{n}{doolittle\PYZus{}lu}\PY{p}{,} \PY{n}{A}\PY{p}{,} \PY{n}{b}\PY{p}{)}
+\PY{n}{x\PYZus{}crout} \PY{o}{=} \PY{n}{solve\PYZus{}with\PYZus{}lu}\PY{p}{(}\PY{n}{crout\PYZus{}lu}\PY{p}{,} \PY{n}{A}\PY{p}{,} \PY{n}{b}\PY{p}{)}
+
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s2}{Solution (Doolittle):}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{np}\PY{o}{.}\PY{n}{round}\PY{p}{(}\PY{n}{x\PYZus{}doolittle}\PY{p}{,} \PY{l+m+mi}{4}\PY{p}{)}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Solution (Crout):}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{np}\PY{o}{.}\PY{n}{round}\PY{p}{(}\PY{n}{x\PYZus{}crout}\PY{p}{,} \PY{l+m+mi}{4}\PY{p}{)}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Verification (numpy.linalg.solve):}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{np}\PY{o}{.}\PY{n}{round}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{linalg}\PY{o}{.}\PY{n}{solve}\PY{p}{(}\PY{n}{A}\PY{p}{,} \PY{n}{b}\PY{p}{)}\PY{p}{,} \PY{l+m+mi}{4}\PY{p}{)}\PY{p}{)}
+
+
+\PY{c+c1}{\PYZsh{} Example SPD Matrix (Cholesky)}
+\PY{n}{A\PYZus{}spd} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{p}{[}\PY{p}{[}\PY{l+m+mf}{4.}\PY{p}{,} \PY{l+m+mf}{2.}\PY{p}{,} \PY{o}{\PYZhy{}}\PY{l+m+mf}{2.}\PY{p}{]}\PY{p}{,} \PY{p}{[}\PY{l+m+mf}{2.}\PY{p}{,} \PY{l+m+mf}{5.}\PY{p}{,} \PY{l+m+mf}{5.}\PY{p}{]}\PY{p}{,} \PY{p}{[}\PY{o}{\PYZhy{}}\PY{l+m+mf}{2.}\PY{p}{,} \PY{l+m+mf}{5.}\PY{p}{,} \PY{l+m+mf}{14.}\PY{p}{]}\PY{p}{]}\PY{p}{)}
+\PY{n}{b\PYZus{}spd} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{p}{[}\PY{l+m+mf}{6.}\PY{p}{,} \PY{l+m+mf}{27.}\PY{p}{,} \PY{l+m+mf}{45.}\PY{p}{]}\PY{p}{)}
+
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s2}{\PYZhy{}\PYZhy{}\PYZhy{} Solving with Cholesky \PYZhy{}\PYZhy{}\PYZhy{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\PY{k}{try}\PY{p}{:}
+    \PY{n}{L\PYZus{}cholesky} \PY{o}{=} \PY{n}{cholesky}\PY{p}{(}\PY{n}{A\PYZus{}spd}\PY{p}{)}
+    \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{L (Cholesky):}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{np}\PY{o}{.}\PY{n}{round}\PY{p}{(}\PY{n}{L\PYZus{}cholesky}\PY{p}{,} \PY{l+m+mi}{4}\PY{p}{)}\PY{p}{)}
+
+    \PY{c+c1}{\PYZsh{} For A=LL\PYZca{}T, we solve Ly=b and then L\PYZca{}T x = y}
+    \PY{n}{y} \PY{o}{=} \PY{n}{forward\PYZus{}substitution}\PY{p}{(}\PY{n}{L\PYZus{}cholesky}\PY{p}{,} \PY{n}{b\PYZus{}spd}\PY{p}{)}
+    \PY{n}{x\PYZus{}cholesky} \PY{o}{=} \PY{n}{backward\PYZus{}substitution}\PY{p}{(}\PY{n}{L\PYZus{}cholesky}\PY{o}{.}\PY{n}{T}\PY{p}{,} \PY{n}{y}\PY{p}{)} \PY{c+c1}{\PYZsh{} Note the transpose!}
+
+    \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s2}{Solution (Cholesky):}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{np}\PY{o}{.}\PY{n}{round}\PY{p}{(}\PY{n}{x\PYZus{}cholesky}\PY{p}{,} \PY{l+m+mi}{4}\PY{p}{)}\PY{p}{)}
+    \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Verification (numpy.linalg.solve):}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{np}\PY{o}{.}\PY{n}{round}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{linalg}\PY{o}{.}\PY{n}{solve}\PY{p}{(}\PY{n}{A\PYZus{}spd}\PY{p}{,} \PY{n}{b\PYZus{}spd}\PY{p}{)}\PY{p}{,} \PY{l+m+mi}{4}\PY{p}{)}\PY{p}{)}
+\PY{k}{except} \PY{n}{np}\PY{o}{.}\PY{n}{linalg}\PY{o}{.}\PY{n}{LinAlgError} \PY{k}{as} \PY{n}{e}\PY{p}{:}
+    \PY{n+nb}{print}\PY{p}{(}\PY{n}{e}\PY{p}{)}
+\end{Verbatim}
+
+\subsection{\texorpdfstring{$\smallstar$}{*} Further Variants and Generalizations of LU Factorization}
+
+Beyond the canonical Doolittle, Crout, and Cholesky forms, several other factorizations generalize or adapt the core LU concept. These variants are crucial in both theoretical and applied contexts, from ensuring universal applicability to optimizing for specific matrix structures. We state their foundational theorems without proof, highlighting the mathematical principles upon which they are built.
+
+\subsubsection{LDU Factorization: The Symmetric Form}
+This variant explicitly isolates the pivots (the diagonal of $\mathbf{U}$) into a separate diagonal matrix $\mathbf{D}$, leaving two unit triangular factors.
+
+\begin{itemize}
+    \item \textbf{Constraint:} Both $\mathbf{L}$ and a new upper-triangular matrix $\mathbf{U}'$ are unit triangular, and $\mathbf{D}$ is a diagonal matrix.
+    \[ \mathbf{A} = \mathbf{L}\mathbf{D}\mathbf{U}' \]
+\end{itemize}
+
+\begin{theorem}[Existence and Uniqueness of LDU Factorization]
+If a square matrix $\mathbf{A}$ admits an LU factorization and is non-singular, then it has a unique factorization $\mathbf{A} = \mathbf{L}\mathbf{D}\mathbf{U}'$, where $\mathbf{L}$ and $\mathbf{U}'$ are unit triangular and $\mathbf{D}$ is diagonal.
+\end{theorem}
+
+\begin{remark}[Theoretical Insight]
+This factorization is a simple algebraic rearrangement of the standard LU form ($\mathbf{U} = \mathbf{D}\mathbf{U}'$). Its primary theoretical importance is revealing the symmetric structure when $\mathbf{A}$ itself is symmetric. If $\mathbf{A} = \mathbf{A}^T$, then by the uniqueness of the LDU factorization, we must have $\mathbf{U}' = \mathbf{L}^T$, leading directly to the $\mathbf{L}\mathbf{D}\mathbf{L}^T$ form.
+\end{remark}
+
+\subsubsection{LDL\textsuperscript{T} Factorization: The Square-Root-Free Cholesky}
+This is a direct and computationally significant consequence of the LDU factorization for symmetric matrices. It retains the efficiency of Cholesky but avoids computing square roots.
+
+\begin{itemize}
+    \item \textbf{Constraint:} The matrix $\mathbf{A}$ must be symmetric, $\mathbf{L}$ is unit lower-triangular, and $\mathbf{D}$ is diagonal (but not necessarily with positive entries).
+    \[ \mathbf{A} = \mathbf{L}\mathbf{D}\mathbf{L}^T \]
+\end{itemize}
+
+\begin{theorem}[Existence of LDL\textsuperscript{T} Factorization]
+A non-singular symmetric matrix $\mathbf{A}$ has a unique $\mathbf{L}\mathbf{D}\mathbf{L}^T$ factorization if and only if all its leading principal minors are non-zero.
+\end{theorem}
+
+\begin{remark}[Theoretical Insight]
+This factorization is more general than the standard Cholesky form. Since $\mathbf{D}$ is not required to be positive, the $\mathbf{L}\mathbf{D}\mathbf{L}^T$ decomposition exists for a broader class of matrices, including symmetric \textbf{indefinite} matrices. This is critically important in optimization algorithms (like Newton's method), where the Hessian matrix is symmetric but may not be positive definite. The proof is inherited directly from the LDU case. The signs of the diagonal entries in $\mathbf{D}$ (the pivots) constitute the \textbf{inertia} of the matrix, a concept from spectral theory.
+\end{remark}
+
+\subsubsection{Block LU Factorization}
+This generalization applies the factorization idea to matrices partitioned into sub-matrices or "blocks".
+
+\begin{itemize}
+    \item \textbf{Constraint:} The matrix $\mathbf{A}$ is partitioned as $\mathbf{A} = \begin{pmatrix} \mathbf{A}_{11} & \mathbf{A}_{12} \\ \mathbf{A}_{21} & \mathbf{A}_{22} \end{pmatrix}$, where the leading principal block $\mathbf{A}_{11}$ is square and non-singular.
+\end{itemize}
+
+\begin{theorem}[Existence of Block LU Factorization]
+If $\mathbf{A}_{11}$ is non-singular, then $\mathbf{A}$ can be factored as:
+\[ \mathbf{A} = 
+\begin{pmatrix} \mathbf{I} & \mathbf{0} \\ \mathbf{A}_{21}\mathbf{A}_{11}^{-1} & \mathbf{I} \end{pmatrix}
+\begin{pmatrix} \mathbf{A}_{11} & \mathbf{A}_{12} \\ \mathbf{0} & \mathbf{A}_{22} - \mathbf{A}_{21}\mathbf{A}_{11}^{-1}\mathbf{A}_{12} \end{pmatrix}
+\]
+This is a block LU decomposition where the lower-right entry of the upper-triangular block is the \textbf{Schur Complement} of $\mathbf{A}_{11}$ in $\mathbf{A}$.
+\end{theorem}
+
+\begin{remark}[Theoretical Insight]
+This factorization is fundamental to many advanced numerical algorithms, including domain decomposition methods for solving PDEs and matrix inversion formulas. The proof is a direct algebraic verification via block matrix multiplication. The properties of the \textbf{Schur complement}, $S = \mathbf{A}_{22} - \mathbf{A}_{21}\mathbf{A}_{11}^{-1}\mathbf{A}_{12}$, are a deep field of study. For example, if $\mathbf{A}$ is Symmetric Positive Definite, then so is its Schur complement $S$. This property allows for recursive proofs and algorithms based on partitioning, such as those used in computational statistics for analyzing conditional probability distributions of multivariate Gaussian variables.
+\end{remark}
+
+\subsubsection{Factorization of Band Matrices}
+This is a curious and practically paramount specialization. Instead of a new form, it postulates that the \textit{structure} of $\mathbf{A}$ is inherited by its factors $\mathbf{L}$ and $\mathbf{U}$.
+
+\begin{itemize}
+    \item \textbf{Constraint:} The matrix $\mathbf{A}$ is a \textbf{band matrix}, meaning $A_{ij} = 0$ if $|i-j| > w$ for some bandwidth $w$.
+\end{itemize}
+
+\begin{theorem}[Band Structure Preservation]
+If a band matrix $\mathbf{A}$ with lower bandwidth $w_L$ and upper bandwidth $w_U$ admits an LU factorization (without pivoting), then the factor $\mathbf{L}$ has lower bandwidth $w_L$ and the factor $\mathbf{U}$ has upper bandwidth $w_U$.
+\end{theorem}
+
+\begin{remark}[Theoretical Insight]
+This theorem is profound because it states that the factorization process introduces no new non-zero entries outside the original band (a property known as zero "fill-in" outside the band). This preservation of sparsity reduces the computational cost dramatically from $\mathcal{O}(n^3)$ to $\mathcal{O}(n \cdot w_L \cdot w_U)$. The most celebrated case is for tridiagonal matrices ($w_L=w_U=1$), where the cost becomes linear, $\mathcal{O}(n)$. The resulting algorithm is known as the \textbf{Thomas Algorithm} or TDMA (Tridiagonal Matrix Algorithm), and it is the cornerstone for solving linear systems that arise from finite difference discretizations of Partial Differential Equations, such as the heat equation.
+\end{remark}
+
+\subsubsection{Rank-Revealing LU Factorization}
+This variant is a more ambitious postulation. Its objective is not just numerical stability, but to obtain structural information about the matrix, specifically its \textbf{numerical rank}.
+
+\begin{itemize}
+    \item \textbf{Constraint:} Complete pivoting (both rows and columns) is used to maximize the magnitude of the pivot at each step of the process. The resulting form is $\mathbf{P}\mathbf{A}\mathbf{Q} = \mathbf{L}\mathbf{U}$.
+\end{itemize}
+
+\begin{theorem}[Rank-Revealing LU Structure]
+For any matrix $\mathbf{A} \in \R^{m \times n}$ of rank $r$, there exist permutation matrices $\mathbf{P}$ and $\mathbf{Q}$ such that in the factorization $\mathbf{P}\mathbf{A}\mathbf{Q} = \mathbf{L}\mathbf{U}$, the matrix $\mathbf{U}$ has a structure that reveals the rank:
+\[ \mathbf{U} = \begin{pmatrix} \mathbf{U}_{11} & \mathbf{U}_{12} \\ \mathbf{0} & \mathbf{U}_{22} \end{pmatrix} \]
+where $\mathbf{U}_{11}$ is an $r \times r$ non-singular upper-triangular matrix, and the entries of $\mathbf{U}_{22}$ are numerically zero (or of very small magnitude).
+\end{theorem}
+
+\begin{remark}[Theoretical Insight]
+The complete pivoting strategy acts as a greedy algorithm that attempts to concentrate the "energy" or the linearly independent information of the matrix into the upper-left block $\mathbf{U}_{11}$. The pivots (the diagonal of $\mathbf{U}$) tend to appear in decreasing order of magnitude, and an abrupt drop indicates the numerical rank $r$. While theoretically powerful, this factorization is computationally more expensive than partial pivoting. It is an important tool for diagnosing collinearity in statistical models and serves as a conceptual precursor to the Singular Value Decomposition (SVD), which is the most robust numerical method for determining rank. Its theoretical analysis relies on perturbation theory and the properties of element growth under Gaussian elimination with complete pivoting.
+\end{remark}

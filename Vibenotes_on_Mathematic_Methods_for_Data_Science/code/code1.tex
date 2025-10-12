@@ -1,0 +1,31 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{k+kn}{import}\PY{+w}{ }\PY{n+nn}{numpy}\PY{+w}{ }\PY{k}{as}\PY{+w}{ }\PY{n+nn}{np}
+
+\PY{k}{def}\PY{+w}{ }\PY{n+nf}{jacobi\PYZus{}solve}\PY{p}{(}\PY{n}{A}\PY{p}{,} \PY{n}{b}\PY{p}{,} \PY{n}{x0}\PY{p}{,} \PY{n}{max\PYZus{}iter}\PY{p}{,} \PY{n}{tol}\PY{o}{=}\PY{l+m+mf}{1e\PYZhy{}6}\PY{p}{)}\PY{p}{:}
+\PY{+w}{    }\PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{}}
+\PY{l+s+sd}{    Solves Ax = b using the Jacobi method. M = D, N = L + U.}
+\PY{l+s+sd}{    Implementation is highly vectorized (O(n\PYZca{}2) or O(n) for sparse A).}
+\PY{l+s+sd}{    \PYZdq{}\PYZdq{}\PYZdq{}}
+    \PY{n}{n} \PY{o}{=} \PY{n}{A}\PY{o}{.}\PY{n}{shape}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}
+    \PY{n}{x\PYZus{}old} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{n}{x0}\PY{p}{,} \PY{n}{dtype}\PY{o}{=}\PY{n}{A}\PY{o}{.}\PY{n}{dtype}\PY{p}{)} \PY{c+c1}{\PYZsh{} Initialize iterate}
+    
+    \PY{c+c1}{\PYZsh{} Extract D and R = L + U (R is off\PYZhy{}diagonal)}
+    \PY{n}{D} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{diag}\PY{p}{(}\PY{n}{A}\PY{p}{)}
+    \PY{n}{R} \PY{o}{=} \PY{n}{A} \PY{o}{\PYZhy{}} \PY{n}{np}\PY{o}{.}\PY{n}{diag}\PY{p}{(}\PY{n}{D}\PY{p}{)}
+    
+    \PY{k}{for} \PY{n}{k} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{n}{max\PYZus{}iter} \PY{o}{+} \PY{l+m+mi}{1}\PY{p}{)}\PY{p}{:}
+        \PY{c+c1}{\PYZsh{} x\PYZus{}new = D\PYZca{}\PYZob{}\PYZhy{}1\PYZcb{} * (b \PYZhy{} R * x\PYZus{}old)}
+        \PY{c+c1}{\PYZsh{} @ is matrix multiplication; / D is component\PYZhy{}wise division (D\PYZca{}\PYZob{}\PYZhy{}1\PYZcb{} operation)}
+        \PY{n}{x\PYZus{}new} \PY{o}{=} \PY{p}{(}\PY{n}{b} \PY{o}{\PYZhy{}} \PY{n}{R} \PY{o}{@} \PY{n}{x\PYZus{}old}\PY{p}{)} \PY{o}{/} \PY{n}{D} 
+        
+        \PY{c+c1}{\PYZsh{} Relative Error Criterion (L\PYZus{}inf norm)}
+        \PY{n}{error\PYZus{}norm} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{linalg}\PY{o}{.}\PY{n}{norm}\PY{p}{(}\PY{n}{x\PYZus{}new} \PY{o}{\PYZhy{}} \PY{n}{x\PYZus{}old}\PY{p}{,} \PY{n}{np}\PY{o}{.}\PY{n}{inf}\PY{p}{)}
+        \PY{k}{if} \PY{n}{error\PYZus{}norm} \PY{o}{\PYZlt{}} \PY{n}{tol} \PY{o}{*} \PY{n}{np}\PY{o}{.}\PY{n}{linalg}\PY{o}{.}\PY{n}{norm}\PY{p}{(}\PY{n}{x\PYZus{}new}\PY{p}{,} \PY{n}{np}\PY{o}{.}\PY{n}{inf}\PY{p}{)}\PY{p}{:}
+            \PY{c+c1}{\PYZsh{} print(f\PYZdq{}Jacobi converged in \PYZob{}k\PYZcb{} iterations.\PYZdq{})}
+            \PY{k}{return} \PY{n}{x\PYZus{}new}\PY{p}{,} \PY{n}{k}
+            
+        \PY{n}{x\PYZus{}old} \PY{o}{=} \PY{n}{x\PYZus{}new}
+        
+    \PY{c+c1}{\PYZsh{} print(f\PYZdq{}Jacobi failed to converge in \PYZob{}max\PYZus{}iter\PYZcb{} iterations.\PYZdq{})}
+    \PY{k}{return} \PY{n}{x\PYZus{}old}\PY{p}{,} \PY{n}{max\PYZus{}iter}
+\end{Verbatim}

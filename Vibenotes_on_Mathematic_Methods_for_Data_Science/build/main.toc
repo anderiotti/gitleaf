@@ -1,0 +1,53 @@
+\babel@toc {english}{}\relax 
+\contentsline {chapter}{\numberline {1}Linear Algebra and Algorithms}{4}{chapter.1}%
+\contentsline {section}{\numberline {1.1}Numerical Solution of Linear Systems of Equations}{4}{section.1.1}%
+\contentsline {subsection}{\numberline {1.1.1}Iterative Methods: Jacobi and Gauss-Seidel}{4}{subsection.1.1.1}%
+\contentsline {subsubsection}{The Jacobi Iteration}{4}{section*.2}%
+\contentsline {subsubsection}{The Gauss-Seidel Iteration}{5}{section*.3}%
+\contentsline {subsubsection}{The Rigor of Convergence: The Spectral Radius Criterion}{5}{section*.4}%
+\contentsline {subsection}{\numberline {1.1.2}Architectural Analysis: Computational Cost and Parallelism}{5}{subsection.1.1.2}%
+\contentsline {subsubsection}{Computational Complexity (Cost per Iteration)}{6}{section*.5}%
+\contentsline {subsubsection}{Data Dependency and Parallelization}{6}{section*.6}%
+\contentsline {subsection}{\numberline {1.1.3}Heuristics and Advanced Intuition}{6}{subsection.1.1.3}%
+\contentsline {subsubsection}{The Causal Advantage of Gauss-Seidel}{6}{section*.7}%
+\contentsline {subsubsection}{Symmetric Positive Definite Matrices}{7}{section*.8}%
+\contentsline {subsubsection}{The Role of Ordering and Scaling}{7}{section*.9}%
+\contentsline {subsection}{\numberline {1.1.4}Numerical Diagnosis: Implementation and Error Analysis}{7}{subsection.1.1.4}%
+\contentsline {subsubsection}{Numerical Implementation in Python}{7}{section*.10}%
+\contentsline {paragraph}{Jacobi Iteration: Vectorized (Trivially Parallel)}{8}{section*.11}%
+\contentsline {paragraph}{Gauss-Seidel Iteration: Explicit Sequential Loop (Causality)}{8}{section*.12}%
+\contentsline {subsubsection}{Stopping Criteria and Error Norms}{9}{section*.13}%
+\contentsline {section}{\numberline {1.2}Direct Methods: LU Factorization}{10}{section.1.2}%
+\contentsline {subsubsection}{Computational Complexity of LU Decomposition}{10}{section*.14}%
+\contentsline {subsection}{\numberline {1.2.1}Canonical Factorization Variants: Doolittle, Crout, and Cholesky}{11}{subsection.1.2.1}%
+\contentsline {subsubsection}{Doolittle Factorization (Unit Lower)}{11}{section*.15}%
+\contentsline {subsubsection}{Crout Factorization (Unit Upper)}{11}{section*.16}%
+\contentsline {subsubsection}{Cholesky Factorization: The Symmetric Case}{12}{section*.17}%
+\contentsline {paragraph}{Cholesky Algorithm (Dot Product/Row-Oriented)}{13}{section*.18}%
+\contentsline {subsection}{\numberline {1.2.2}Implementation and Numerical Stability: Pivoting and Condition Number}{13}{subsection.1.2.2}%
+\contentsline {subsubsection}{The Necessity of Pivoting: Factorization Failure}{13}{section*.19}%
+\contentsline {subsubsection}{The Role of Condition Number in Numerical Accuracy}{14}{section*.20}%
+\contentsline {subsection}{\numberline {1.2.3}Application in Data Science: Inversion, Least Squares, and Statistics}{14}{subsection.1.2.3}%
+\contentsline {subsubsection}{Matrix Inversion}{14}{section*.21}%
+\contentsline {subsubsection}{Solving the Normal Equations for Least Squares}{15}{section*.22}%
+\contentsline {subsubsection}{Determinant Calculation}{15}{section*.23}%
+\contentsline {subsection}{\numberline {1.2.4}Numerical Implementation in Python}{16}{subsection.1.2.4}%
+\contentsline {paragraph}{Doolittle Factorization ($L_{ii} = 1$)}{17}{section*.26}%
+\contentsline {paragraph}{Crout Factorization ($U_{ii} = 1$)}{17}{section*.27}%
+\contentsline {paragraph}{Cholesky Factorization ($\mathbf {A} = \mathbf {L}\mathbf {L}^T$)}{18}{section*.28}%
+\contentsline {subsection}{\numberline {1.2.5}$\smallstar $ Further Variants and Generalizations of LU Factorization}{20}{subsection.1.2.5}%
+\contentsline {subsubsection}{LDU Factorization: The Symmetric Form}{20}{section*.30}%
+\contentsline {subsubsection}{LDL\textsuperscript {T} Factorization: The Square-Root-Free Cholesky}{20}{section*.31}%
+\contentsline {subsubsection}{Block LU Factorization}{21}{section*.32}%
+\contentsline {subsubsection}{Factorization of Band Matrices}{21}{section*.33}%
+\contentsline {subsubsection}{Rank-Revealing LU Factorization}{22}{section*.34}%
+\contentsline {section}{\numberline {1.3}The QR Factorization: The Stable Path to Least Squares}{23}{section.1.3}%
+\contentsline {subsection}{\numberline {1.3.1}Solving Least Squares with Reduced QR}{23}{subsection.1.3.1}%
+\contentsline {subsection}{\numberline {1.3.2}Methods of Construction}{24}{subsection.1.3.2}%
+\contentsline {subsubsection}{The Gram-Schmidt Process: A Geometric Construction}{24}{section*.35}%
+\contentsline {paragraph}{Classical Gram-Schmidt (CGS)}{24}{section*.36}%
+\contentsline {paragraph}{Modified Gram-Schmidt (MGS)}{24}{section*.37}%
+\contentsline {subsubsection}{Orthogonal Transformations: Householder and Givens}{24}{section*.38}%
+\contentsline {paragraph}{Householder Reflectors}{25}{section*.39}%
+\contentsline {paragraph}{Givens Rotations}{25}{section*.40}%
+\contentsline {subsection}{\numberline {1.3.3}Numerical Implementation in Python}{25}{subsection.1.3.3}%

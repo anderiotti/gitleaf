@@ -1,0 +1,331 @@
+
+\section{The QR Factorization}
+
+While the Cholesky factorization of the normal equations, $\mathbf{A}^T\mathbf{A}\mathbf{x} = \mathbf{A}^T\mathbf{b}$, provides an elegant and efficient direct method for solving full-rank least-squares problems, it harbors a significant numerical pathology. The very formation of $\mathbf{A}^T\mathbf{A}$ can dramatically worsen the conditioning of the problem.
+
+\begin{theorem}[Conditioning of Normal Equations]
+Let $\mathbf{A} \in \R^{m \times n}$ with $m \ge n$ be a full-rank matrix. The condition number of the Gram matrix $\mathbf{A}^T\mathbf{A}$ is the square of the condition number of $\mathbf{A}$ itself:
+\[ \kappa_2(\mathbf{A}^T\mathbf{A}) = (\kappa_2(\mathbf{A}))^2 \]
+\end{theorem}
+\begin{remark}
+This squaring of the condition number can be numerically catastrophic. If $\kappa_2(\mathbf{A}) = 10^4$ (a moderately ill-conditioned matrix), then $\kappa_2(\mathbf{A}^T\mathbf{A}) = 10^8$. This inflation can transform a solvable problem into one where floating-point arithmetic yields a solution with no correct digits. This motivates the search for a method that avoids the formation of $\mathbf{A}^T\mathbf{A}$ entirely. The QR factorization is the definitive answer.
+\end{remark}
+
+The core idea is to factor $\mathbf{A}$ into a product of a matrix with orthonormal columns and an upper-triangular matrix. Such a decomposition leverages the supreme numerical stability of orthogonal matrices.
+
+\begin{definition}[Orthogonal Matrix]
+A square matrix $\mathbf{Q} \in \R^{n \times n}$ is \textbf{orthogonal} if its columns form an orthonormal basis. This is equivalent to the condition:
+\[ \mathbf{Q}^T\mathbf{Q} = \mathbf{Q}\mathbf{Q}^T = \mathbf{I} \quad \implies \quad \mathbf{Q}^{-1} = \mathbf{Q}^T \]
+\end{definition}
+
+\begin{proposition}[Properties of Orthogonal Transformations]
+Multiplication by an orthogonal matrix $\mathbf{Q}$ is an isometry in Euclidean space. It preserves the $\ell_2$-norm, the inner product, and the Frobenius norm. Crucially for numerical analysis:
+\begin{proposition}[Properties of Orthogonal Transformations]
+Multiplication by an orthogonal matrix $\mathbf{Q}$ is an isometry in Euclidean space. It preserves the $\ell_2$-norm, the inner product, and the Frobenius norm.\footnote{The \textbf{Frobenius norm} is the Euclidean norm of the matrix treated as a vector: $\|\mathbf{A}\|_F = \sqrt{\sum_{i,j} |a_{ij}|^2} = \sqrt{\text{tr}(\mathbf{A}^T\mathbf{A})}$. The induced \textbf{$\ell_2$-norm} (or spectral norm) is defined via the supremum: $\|\mathbf{A}\|_2 = \sup_{\|\mathbf{x}\|_2=1} \|\mathbf{A}\mathbf{x}\|_2 = \sqrt{\lambda_{\max}(\mathbf{A}^T\mathbf{A})} = \sigma_{\max}(\mathbf{A})$, where $\lambda_{\max}$ is the largest eigenvalue and $\sigma_{\max}$ is the largest singular value of $\mathbf{A}$.} Crucially for numerical analysis:
+\begin{enumerate}
+    \item \textbf{Norm Preservation:} $\|\mathbf{Q}\mathbf{x}\|_2 = \|\mathbf{x}\|_2$ for any vector $\mathbf{x}$.
+    \item \textbf{Perfect Conditioning:} The $\ell_2$-condition number is optimal: $\kappa_2(\mathbf{Q}) = 1$.
+\end{enumerate}
+This implies that orthogonal transformations do not amplify errors and are the most stable operations in numerical linear algebra.
+\end{proposition}
+
+\begin{definition}[Full QR Factorization]
+Let $\mathbf{A} \in \R^{m \times n}$ with $m \ge n$. A \textbf{full QR factorization} of $\mathbf{A}$ is a decomposition
+\[ \mathbf{A} = \mathbf{Q}\mathbf{R} \]
+where $\mathbf{Q} \in \R^{m \times m}$ is an orthogonal matrix and $\mathbf{R} \in \R^{m \times n}$ is an upper-triangular matrix (more accurately, upper-trapezoidal).
+\[ \mathbf{A} = \begin{pmatrix} \mathbf{q}_1 & \cdots & \mathbf{q}_m \end{pmatrix} 
+   \begin{pmatrix} R_{11} & \cdots & R_{1n} \\ & \ddots & \vdots \\ & & R_{nn} \\ \hline & \mathbf{0} & \end{pmatrix}
+   = \mathbf{Q}_1 \mathbf{R}_1
+\]
+The factorization is often partitioned into its "thin" or "reduced" form, where $\mathbf{Q}_1 \in \R^{m \times n}$ contains the first $n$ columns of $\mathbf{Q}$ and $\mathbf{R}_1 \in \R^{n \times n}$ is the top square part of $\mathbf{R}$.
+\end{definition}
+
+\subsubsection{Full vs. Reduced QR Factorization}
+The QR factorization comes in two primary forms, whose utility depends on the application.
+
+\begin{itemize}
+    \item \textbf{Full QR:} This is the form described above where $\mathbf{A} \in \R^{m \times n}$, $\mathbf{Q} \in \R^{m \times m}$, and $\mathbf{R} \in \R^{m \times n}$. The columns of $\mathbf{Q}$ form a complete orthonormal basis for the entire space $\R^m$. The first $n$ columns, $\{\mathbf{q}_1, \dots, \mathbf{q}_n\}$, form a basis for the column space of $\mathbf{A}$ ($\text{Col}(\mathbf{A})$), while the remaining $m-n$ columns, $\{\mathbf{q}_{n+1}, \dots, \mathbf{q}_m\}$, form a basis for its orthogonal complement, the left null space ($\text{Null}(\mathbf{A}^T)$).
+
+    \item \textbf{Reduced (or Thin) QR:} This is the more popular and computationally practical form. For a tall matrix $\mathbf{A}$ ($m \ge n$), the last $m-n$ columns of $\mathbf{Q}$ are multiplied by a block of zeros in $\mathbf{R}$, contributing nothing to the product $\mathbf{A}$. The reduced factorization discards these components.
+\end{itemize}
+
+\begin{definition}[Reduced QR Factorization]
+Let $\mathbf{A} \in \R^{m \times n}$ with $m \ge n$ and full column rank. The \textbf{reduced QR factorization} is
+\[ \mathbf{A} = \mathbf{Q}_1\mathbf{R}_1 \]
+where $\mathbf{Q}_1 \in \R^{m \times n}$ is a matrix with orthonormal columns (i.e., $\mathbf{Q}_1^T\mathbf{Q}_1 = \mathbf{I}_n$) and $\mathbf{R}_1 \in \R^{n \times n}$ is a non-singular upper-triangular matrix.
+\end{definition}
+
+\begin{remark}[Practical Importance]
+The reduced form is sufficient for solving the least-squares problem, as the solution $\mathbf{x}$ depends only on $\mathbf{Q}_1$ and $\mathbf{R}_1$. Furthermore, it offers significant savings in both storage and computation. For a large matrix, e.g., $m=10^6, n=100$, the full $\mathbf{Q}$ would be an intractable $10^6 \times 10^6$ matrix, while the reduced $\mathbf{Q}_1$ is a manageable $10^6 \times 100$ matrix. Algorithms like Gram-Schmidt naturally produce the reduced form.
+\end{remark}
+
+\subsection{Solving Least Squares with QR}
+The QR factorization elegantly transforms the least-squares problem $\min_{\mathbf{x}} \|\mathbf{A}\mathbf{x} - \mathbf{b}\|_2$ into a trivial one.
+\begin{align*}
+    \|\mathbf{A}\mathbf{x} - \mathbf{b}\|_2^2 &= \|\mathbf{Q}\mathbf{R}\mathbf{x} - \mathbf{b}\|_2^2 \\
+    &= \|\mathbf{Q}^T(\mathbf{Q}\mathbf{R}\mathbf{x} - \mathbf{b})\|_2^2 && (\text{since } \mathbf{Q}^T \text{ is orthogonal}) \\
+    &= \|\mathbf{R}\mathbf{x} - \mathbf{Q}^T\mathbf{b}\|_2^2
+\end{align*}
+Let's partition $\mathbf{R}$ and the transformed vector $\mathbf{Q}^T\mathbf{b}$:
+\[ \mathbf{R} = \begin{pmatrix} \mathbf{R}_1 \\ \mathbf{0} \end{pmatrix}, \quad \mathbf{Q}^T\mathbf{b} = \begin{pmatrix} \mathbf{c}_1 \\ \mathbf{c}_2 \end{pmatrix} \]
+where $\mathbf{R}_1$ is an $n \times n$ upper-triangular matrix and $\mathbf{c}_1 \in \R^n$. The squared norm becomes:
+\[ \|\begin{pmatrix} \mathbf{R}_1 \\ \mathbf{0} \end{pmatrix} \mathbf{x} - \begin{pmatrix} \mathbf{c}_1 \\ \mathbf{c}_2 \end{pmatrix}\|_2^2 = \|\mathbf{R}_1\mathbf{x} - \mathbf{c}_1\|_2^2 + \|\mathbf{c}_2\|_2^2 \]
+To minimize this expression, we have no control over the second term, $\|\mathbf{c}_2\|_2^2$, which is the norm of the final residual. The first term can be driven to zero by choosing $\mathbf{x}$ to solve the upper-triangular system:
+\[ \mathbf{R}_1\mathbf{x} = \mathbf{c}_1 \]
+This can be solved efficiently and stably using backward substitution. This procedure completely circumvents the formation of $\mathbf{A}^T\mathbf{A}$.
+
+\subsection{Methods of Construction}
+There are two main philosophies for constructing the QR factorization:
+\begin{enumerate}
+    \item \textbf{Gram-Schmidt Orthogonalization:} Constructs the columns of $\mathbf{Q}$ sequentially by explicitly orthogonalizing the columns of $\mathbf{A}$. This is geometrically intuitive but numerically problematic.
+    \item \textbf{Orthogonal Transformations:} Applies a sequence of simple orthogonal matrices (reflectors or rotators) to $\mathbf{A}$ to gradually transform it into an upper-triangular matrix $\mathbf{R}$. This is the foundation of modern, stable algorithms.
+\end{enumerate}
+
+\paragraph{1.2.1.1 The Gram-Schmidt Process: A Geometric Construction}
+The Gram-Schmidt process is the classical method for converting a set of linearly independent vectors into an orthonormal set.
+
+\paragraph{Classical Gram-Schmidt (CGS)}
+The algorithm proceeds by taking each vector $\mathbf{a}_k$ from $\mathbf{A}$ and making it orthogonal to all previously computed orthonormal vectors $\mathbf{q}_1, \dots, \mathbf{q}_{k-1}$.
+\begin{enumerate}
+    \item Project $\mathbf{a}_k$ onto the subspace spanned by $\{\mathbf{q}_1, \dots, \mathbf{q}_{k-1}\}$.
+    \item Subtract this projection from $\mathbf{a}_k$ to get an orthogonal vector $\mathbf{v}_k$.
+    \item Normalize $\mathbf{v}_k$ to get the next orthonormal vector $\mathbf{q}_k$.
+\end{enumerate}
+The corresponding entries of $\mathbf{R}$ are the projection coefficients: $R_{ik} = \mathbf{q}_i^T \mathbf{a}_k$.
+
+\begin{remark}[Numerical Instability of CGS]
+In finite-precision arithmetic, CGS is notoriously unstable. When the columns of $\mathbf{A}$ are close to being linearly dependent, the subtraction step $\mathbf{v}_k = \mathbf{a}_k - \sum (\mathbf{q}_i^T\mathbf{a}_k)\mathbf{q}_i$ suffers from catastrophic cancellation. This results in computed vectors $\{\mathbf{q}_k\}$ that rapidly lose their mutual orthogonality. The final $\mathbf{Q}$ matrix can be far from orthogonal, rendering the solution useless.
+\end{remark}
+
+\paragraph{Modified Gram-Schmidt (MGS)}
+MGS is an algebraic rearrangement of CGS that is numerically far more stable. Instead of orthogonalizing each $\mathbf{a}_k$ against the original basis vectors, MGS modifies the remaining vectors in $\mathbf{A}$ at each step.
+In step $k$:
+\begin{enumerate}
+    \item Normalize the current first vector to get $\mathbf{q}_k$.
+    \item Explicitly subtract the component parallel to $\mathbf{q}_k$ from all subsequent vectors.
+\end{enumerate}
+This is equivalent to performing Gaussian elimination on the rows of $\mathbf{A}^T$. While algebraically identical to CGS, its numerical properties are superior because the loss of orthogonality is much slower. However, it is still not as stable as methods based on Householder or Givens transformations.
+
+\paragraph{1.2.1.2 Orthogonal Transformations: Householder and Givens}
+The modern approach to QR factorization is to apply a sequence of orthogonal transformations that introduce zeros below the diagonal of $\mathbf{A}$. Let this sequence be $\mathbf{Q}_k, \dots, \mathbf{Q}_1$.
+\[ \mathbf{Q}_k \cdots \mathbf{Q}_2 \mathbf{Q}_1 \mathbf{A} = \mathbf{R} \]
+Then $\mathbf{A} = (\mathbf{Q}_1^T \mathbf{Q}_2^T \cdots \mathbf{Q}_k^T) \mathbf{R}$, and the full orthogonal matrix is $\mathbf{Q} = \mathbf{Q}_1^T \cdots \mathbf{Q}_k^T$.
+
+\paragraph{Householder Reflectors}
+A Householder transformation is an orthogonal matrix that reflects a vector across a hyperplane. ��
+
+
+\begin{definition}[Householder Reflector]
+A Householder reflector is a matrix of the form
+\[ \mathbf{P} = \mathbf{I} - 2 \frac{\mathbf{v}\mathbf{v}^T}{\|\mathbf{v}\|_2^2} \]
+for some non-zero vector $\mathbf{v} \in \R^m$. $\mathbf{P}$ is symmetric and orthogonal ($\mathbf{P} = \mathbf{P}^T = \mathbf{P}^{-1}$).
+\end{definition}
+
+The goal is to choose $\mathbf{v}$ such that for a given vector $\mathbf{x}$, its reflection $\mathbf{P}\mathbf{x}$ lies along the first standard basis vector $\mathbf{e}_1$. That is, $\mathbf{P}\mathbf{x} = \alpha \mathbf{e}_1$. The correct choice of $\mathbf{v}$ is:
+\[ \mathbf{v} = \mathbf{x} + \text{sgn}(x_1) \|\mathbf{x}\|_2 \mathbf{e}_1 \]
+The sign function is chosen to avoid subtracting nearly equal numbers when computing $\mathbf{v}$, which is a crucial detail for numerical stability.
+
+\textbf{The Householder QR Algorithm:} The algorithm proceeds column by column.
+\begin{enumerate}
+    \item \textbf{Step 1:} Consider the first column $\mathbf{a}_1$ of $\mathbf{A}$. Construct a Householder reflector $\mathbf{P}_1$ that maps $\mathbf{a}_1$ to a multiple of $\mathbf{e}_1$. Apply this transformation to the entire matrix: $\mathbf{A}^{(1)} = \mathbf{P}_1 \mathbf{A}$. The first column of $\mathbf{A}^{(1)}$ is now zero below the diagonal.
+    \item \textbf{Step 2:} Consider the second column of $\mathbf{A}^{(1)}$, but only the sub-vector from the second entry downwards. Construct a smaller reflector $\hat{\mathbf{P}}_2$ for this sub-vector. Embed this into an $m \times m$ matrix $\mathbf{P}_2 = \text{diag}(\mathbf{I}_1, \hat{\mathbf{P}}_2)$. Apply it: $\mathbf{A}^{(2)} = \mathbf{P}_2 \mathbf{A}^{(1)}$.
+    \item Repeat this process $n$ times. The result is $\mathbf{A}^{(n)} = \mathbf{P}_n \cdots \mathbf{P}_1 \mathbf{A} = \mathbf{R}$.
+\end{enumerate}
+\begin{remark}[Implicit Q]
+In practice, the full $m \times m$ matrix $\mathbf{Q}$ is rarely formed explicitly. To solve the least-squares problem, we need to compute $\mathbf{Q}^T\mathbf{b}$. This is done by applying the reflectors sequentially: $\mathbf{Q}^T\mathbf{b} = \mathbf{P}_n \cdots \mathbf{P}_1 \mathbf{b}$. This is an $\mathcal{O}(mn)$ process, far cheaper than forming $\mathbf{Q}$ explicitly and multiplying. The Householder vectors $\mathbf{v}_k$ can be stored efficiently in the lower triangle of $\mathbf{A}$.
+\end{remark}
+
+\paragraph{Givens Rotations}
+A Givens rotation is an orthogonal matrix that performs a plane rotation. It is a more "surgical" tool than a Householder reflector, as it can be used to zero out a single specific element of a matrix.
+
+
+\begin{definition}[Givens Rotation]
+A Givens rotation matrix $\mathbf{G}(i, k, \theta)$ is an identity matrix except for a $2 \times 2$ block affecting rows $i$ and $k$:
+\[ G_{ii} = G_{kk} = c = \cos(\theta), \quad G_{ik} = s = \sin(\theta), \quad G_{ki} = -s = -\sin(\theta) \]
+\end{definition}
+
+Given a vector $\mathbf{x}$, we can choose $c$ and $s$ such that multiplying by $\mathbf{G}$ zeroes out the $k$-th element, using the value from the $i$-th element.
+\[ \begin{pmatrix} c & s \\ -s & c \end{pmatrix} \begin{pmatrix} x_i \\ x_k \end{pmatrix} = \begin{pmatrix} r \\ 0 \end{pmatrix} \]
+
+\textbf{The Givens QR Algorithm:} The algorithm proceeds by applying a sequence of Givens rotations to zero out every element below the diagonal, one at a time. A common strategy is to eliminate elements column by column from the bottom up.
+
+\begin{remark}[Givens vs. Householder]
+For dense matrices, Householder QR is generally more efficient as each reflector introduces an entire column of zeros. The total flop count for Householder is $\sim 2mn^2 - \frac{2}{3}n^3$, whereas for Givens it is $\sim 3mn^2 - n^3$. However, Givens rotations are indispensable when:
+\begin{itemize}
+    \item \textbf{The matrix is sparse:} A Givens rotation only affects two rows, thus preserving much of the sparsity. A Householder reflector is dense and destroys sparsity.
+    \item \textbf{Parallel Computation:} The process of zeroing out elements with Givens rotations can be structured to allow for massive parallelization, as rotations acting on disjoint sets of rows can be applied simultaneously.
+\end{itemize}
+Therefore, Householder is the workhorse for dense linear algebra, while Givens is the specialist for sparse and parallel environments.
+\end{remark}
+
+\newpage
+\subsection{Numerical Implementation in Python}
+
+We now provide pedagogical Python implementations of the QR factorization algorithms. The Gram-Schmidt methods are presented to illustrate the theory, followed by the numerically robust Householder QR, which reflects the standard approach used in high-performance libraries.
+
+\subsubsection*{Gram-Schmidt Algorithms}
+These algorithms construct the factors $\mathbf{Q}_1$ and $\mathbf{R}_1$ of the reduced QR factorization.
+
+\begin{minted}[
+    frame=lines,
+    framesep=2mm,
+    linenos,
+    numbersep=5pt,
+    fontfamily=tt,
+    fontsize=\small,
+    breaklines
+]{python}
+import numpy as np
+
+def classical_gram_schmidt(A):
+    """
+    Computes the reduced QR factorization of A using Classical Gram-Schmidt.
+    WARNING: This algorithm is numerically unstable.
+    """
+    m, n = A.shape
+    Q = np.zeros((m, n), dtype=A.dtype)
+    R = np.zeros((n, n), dtype=A.dtype)
+    
+    for j in range(n):
+        v = A[:, j]
+        for i in range(j):
+            R[i, j] = Q[:, i].T @ A[:, j] # R_ij = q_i^T a_j
+            v = v - R[i, j] * Q[:, i]   # v = v - proj(v)
+            
+        R[j, j] = np.linalg.norm(v)
+        if R[j, j] < 1e-12:
+            raise np.linalg.LinAlgError("Matrix is rank-deficient.")
+        Q[:, j] = v / R[j, j]
+        
+    return Q, R
+
+def modified_gram_schmidt(A):
+    """
+    Computes the reduced QR factorization of A using Modified Gram-Schmidt.
+    This version is more numerically stable than the classical version.
+    """
+    m, n = A.shape
+    Q = np.zeros((m, n), dtype=A.dtype)
+    R = np.zeros((n, n), dtype=A.dtype)
+    V = A.copy() # Use a copy to orthogonalize in place
+    
+    for j in range(n):
+        R[j, j] = np.linalg.norm(V[:, j])
+        if R[j, j] < 1e-12:
+            raise np.linalg.LinAlgError("Matrix is rank-deficient.")
+        Q[:, j] = V[:, j] / R[j, j]
+        
+        # Orthogonalize remaining vectors against the new q_j
+        for k in range(j + 1, n):
+            R[j, k] = Q[:, j].T @ V[:, k]
+            V[:, k] = V[:, k] - R[j, k] * Q[:, j]
+            
+    return Q, R
+\end{minted}
+
+\subsubsection*{Householder QR Algorithm}
+The standard library approach does not form $\mathbf{Q}$ explicitly. Instead, it computes $\mathbf{R}$ and stores the Householder vectors in the lower part of the matrix $\mathbf{A}$. The matrix $\mathbf{Q}$ is then applied implicitly when needed.
+
+\begin{minted}[
+    frame=lines,
+    framesep=2mm,
+    linenos,
+    numbersep=5pt,
+    fontfamily=tt,
+    fontsize=\small,
+    breaklines
+]{python}
+def householder_qr(A):
+    """
+    Computes QR factorization of A using Householder reflectors.
+    The upper triangle of the returned matrix is R.
+    The Householder vectors are stored in the lower triangle.
+    This is an in-place algorithm.
+    """
+    m, n = A.shape
+    A_factored = A.copy()
+    
+    for k in range(n):
+        # Extract the vector to be reflected
+        x = A_factored[k:m, k]
+        
+        # Compute the Householder vector v
+        # The sign choice enhances numerical stability
+        e1 = np.zeros_like(x)
+        e1[0] = 1.0
+        v = np.sign(x[0]) * np.linalg.norm(x) * e1 + x
+        v /= np.linalg.norm(v)
+        
+        # Apply the reflection to the remaining submatrix
+        # P*A = (I - 2vv^T)A = A - 2v(v^T A)
+        sub_matrix = A_factored[k:m, k:n]
+        update = 2 * np.outer(v, v.T @ sub_matrix)
+        A_factored[k:m, k:n] -= update
+        
+        # Store the Householder vector for later use (implicit Q)
+        A_factored[k+1:m, k] = v[1:]
+        
+    return A_factored
+
+def apply_q_transpose(A_factored, b):
+    """
+    Applies Q^T to a vector b, where Q is implicitly defined by the
+    Householder vectors stored in A_factored.
+    """
+    m, n = A_factored.shape
+    b_transformed = b.copy()
+    
+    for k in range(n):
+        # Reconstruct the Householder vector v from storage
+        v = np.zeros(m - k)
+        v[0] = 1.0
+        v[1:] = A_factored[k+1:m, k]
+        
+        # Apply the reflection P_k = (I - 2vv^T) to the sub-vector of b
+        sub_vector = b_transformed[k:m]
+        update = 2 * v * (v.T @ sub_vector)
+        b_transformed[k:m] -= update
+        
+    return b_transformed
+\end{minted}
+
+\subsubsection*{Example Usage: Solving Least Squares}
+We now use these functions to solve a least-squares problem and verify the results.
+
+\begin{minted}[
+    frame=lines,
+    framesep=2mm,
+    linenos,
+    numbersep=5pt,
+    fontfamily=tt,
+    fontsize=\small,
+    breaklines
+]{python}
+# Let's solve a least-squares problem min||Ax-b||
+A = np.array([[1., 1.], [2., 1.], [3., 1.], [4., 1.]])
+b = np.array([1., 3., 3., 5.])
+
+# --- Using Modified Gram-Schmidt ---
+print("--- Solving with Modified Gram-Schmidt ---")
+Q1_mgs, R1_mgs = modified_gram_schmidt(A)
+c1_mgs = Q1_mgs.T @ b
+x_mgs = np.linalg.solve(R1_mgs, c1_mgs) # Use a stable triangular solver
+print("Q1 (MGS):\n", np.round(Q1_mgs, 4))
+print("R1 (MGS):\n", np.round(R1_mgs, 4))
+print("Solution (MGS):", np.round(x_mgs, 4))
+
+# --- Using Householder Reflectors ---
+print("\n--- Solving with Householder QR ---")
+m, n = A.shape
+A_factored = householder_qr(A)
+R1_hh = np.triu(A_factored[:n, :]) # Extract R1 from the factored matrix
+Qtb = apply_q_transpose(A_factored, b)
+c1_hh = Qtb[:n] # Extract c1
+x_hh = np.linalg.solve(R1_hh, c1_hh)
+print("R1 (Householder):\n", np.round(R1_hh, 4))
+print("Solution (Householder):", np.round(x_hh, 4))
+
+# --- Verification with NumPy's built-in lstsq solver ---
+x_numpy, _, _, _ = np.linalg.lstsq(A, b, rcond=None)
+print("\nSolution (NumPy lstsq):", np.round(x_numpy, 4))
+\end{minted}

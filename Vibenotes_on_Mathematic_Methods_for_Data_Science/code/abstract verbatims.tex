@@ -1,0 +1,129 @@
+\begin{verbatim}
+\PY{k}{import} \PY{n}{numpy} \PY{k}{as} \PY{n}{np}
+
+\PY{k}{def} \PY{n+nf}{classical\PYZus{}gram\PYZus{}schmidt}\PY{p}{(}\PY{n}{A}\PY{p}{)}\PY{p}{:}
+    \PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{}}
+\PY{l+s+sd}{    Computes the reduced QR factorization of A using Classical Gram-Schmidt.}
+\PY{l+s+sd}{    WARNING: This algorithm is numerically unstable.}
+\PY{l+s+sd}{    \PYZdq{}\PYZdq{}\PYZdq{}}
+    \PY{n}{m}\PY{p}{,} \PY{n}{n} \PY{o}{=} \PY{n}{A}\PY{o}{.}\PY{n}{shape}
+    \PY{n}{Q} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{zeros}\PY{p}{(}\PY{p}{(}\PY{n}{m}\PY{p}{,} \PY{n}{n}\PY{p}{)}\PY{p}{,} \PY{n}{dtype}\PY{o}{=}\PY{n}{A}\PY{o}{.}\PY{n}{dtype}\PY{p}{)}
+    \PY{n}{R} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{zeros}\PY{p}{(}\PY{p}{(}\PY{n}{n}\PY{p}{,} \PY{n}{n}\PY{p}{)}\PY{p}{,} \PY{n}{dtype}\PY{o}{=}\PY{n}{A}\PY{o}{.}\PY{n}{dtype}\PY{p}{)}
+
+    \PY{k}{for} \PY{n}{j} \PY{k}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{n}\PY{p}{)}\PY{p}{:}
+        \PY{n}{v} \PY{o}{=} \PY{n}{A}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{n}{j}\PY{p}{]}\PY{o}{.}\PY{n}{copy}\PY{p}{(}\PY{p}{)}
+        \PY{k}{for} \PY{n}{i} \PY{k}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{j}\PY{p}{)}\PY{p}{:}
+            \PY{n}{R}\PY{p}{[}\PY{n}{i}\PY{p}{,} \PY{n}{j}\PY{p}{]} \PY{o}{=} \PY{n}{Q}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{n}{i}\PY{p}{]}\PY{o}{.}\PY{n}{T} \PY{o}{@} \PY{n}{A}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{n}{j}\PY{p}{]}  \PY{c+c1}{\PYZsh{} R\PYZus{}ij = q\PYZus{}i\PYZca{}T a\PYZus{}j}
+            \PY{n}{v} \PY{o}{-}\PY{o}{=} \PY{n}{R}\PY{p}{[}\PY{n}{i}\PY{p}{,} \PY{n}{j}\PY{p}{]} \PY{o}{*} \PY{n}{Q}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{n}{i}\PY{p}{]}       \PY{c+c1}{\PYZsh{} v = v - proj(v)}
+
+        \PY{n}{R}\PY{p}{[}\PY{n}{j}\PY{p}{,} \PY{n}{j}\PY{p}{]} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{linalg}\PY{o}{.}\PY{n}{norm}\PY{p}{(}\PY{n}{v}\PY{p}{)}
+        \PY{k}{if} \PY{n}{R}\PY{p}{[}\PY{n}{j}\PY{p}{,} \PY{n}{j}\PY{p}{]} \PY{o}{<} \PY{l+m+mf}{1e-12}\PY{p}{:}
+            \PY{k}{raise} \PY{n}{np}\PY{o}{.}\PY{n}{linalg}\PY{o}{.}\PY{n}{LinAlgError}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}Matrix is rank-deficient.\PYZdq{}}\PY{p}{)}
+        \PY{n}{Q}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{n}{j}\PY{p}{]} \PY{o}{=} \PY{n}{v} \PY{o}{/} \PY{n}{R}\PY{p}{[}\PY{n}{j}\PY{p}{,} \PY{n}{j}\PY{p}{]}
+
+    \PY{k}{return} \PY{n}{Q}\PY{p}{,} \PY{n}{R}
+
+\PY{k}{def} \PY{n+nf}{modified\PYZus{}gram\PYZus{}schmidt}\PY{p}{(}\PY{n}{A}\PY{p}{)}\PY{p}{:}
+    \PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{}}
+\PY{l+s+sd}{    Computes the reduced QR factorization of A using Modified Gram-Schmidt.}
+\PY{l+s+sd}{    This version is more numerically stable than the classical version.}
+\PY{l+s+sd}{    \PYZdq{}\PYZdq{}\PYZdq{}}
+    \PY{n}{m}\PY{p}{,} \PY{n}{n} \PY{o}{=} \PY{n}{A}\PY{o}{.}\PY{n}{shape}
+    \PY{n}{Q} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{zeros}\PY{p}{(}\PY{p}{(}\PY{n}{m}\PY{p}{,} \PY{n}{n}\PY{p}{)}\PY{p}{,} \PY{n}{dtype}\PY{o}{=}\PY{n}{A}\PY{o}{.}\PY{n}{dtype}\PY{p}{)}
+    \PY{n}{R} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{zeros}\PY{p}{(}\PY{p}{(}\PY{n}{n}\PY{p}{,} \PY{n}{n}\PY{p}{)}\PY{p}{,} \PY{n}{dtype}\PY{o}{=}\PY{n}{A}\PY{o}{.}\PY{n}{dtype}\PY{p}{)}
+    \PY{n}{V} \PY{o}{=} \PY{n}{A}\PY{o}{.}\PY{n}{copy}\PY{p}{(}\PY{p}{)}
+
+    \PY{k}{for} \PY{n}{j} \PY{k}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{n}\PY{p}{)}\PY{p}{:}
+        \PY{n}{R}\PY{p}{[}\PY{n}{j}\PY{p}{,} \PY{n}{j}\PY{p}{]} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{linalg}\PY{o}{.}\PY{n}{norm}\PY{p}{(}\PY{n}{V}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{n}{j}\PY{p}{]}\PY{p}{)}
+        \PY{k}{if} \PY{n}{R}\PY{p}{[}\PY{n}{j}\PY{p}{,} \PY{n}{j}\PY{p}{]} \PY{o}{<} \PY{l+m+mf}{1e-12}\PY{p}{:}
+            \PY{k}{raise} \PY{n}{np}\PY{o}{.}\PY{n}{linalg}\PY{o}{.}\PY{n}{LinAlgError}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}Matrix is rank-deficient.\PYZdq{}}\PY{p}{)}
+        \PY{n}{Q}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{n}{j}\PY{p}{]} \PY{o}{=} \PY{n}{V}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{n}{j}\PY{p}{]} \PY{o}{/} \PY{n}{R}\PY{p}{[}\PY{n}{j}\PY{p}{,} \PY{n}{j}\PY{p}{]}
+
+        \PY{c+c1}{\PYZsh{} Orthogonalize remaining vectors against the new q\PYZus{}j}
+        \PY{k}{for} \PY{n}{k} \PY{k}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{j} \PY{o}{+} \PY{l+m+mi}{1}\PY{p}{,} \PY{n}{n}\PY{p}{)}\PY{p}{:}
+            \PY{n}{R}\PY{p}{[}\PY{n}{j}\PY{p}{,} \PY{n}{k}\PY{p}{]} \PY{o}{=} \PY{n}{Q}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{n}{j}\PY{p}{]}\PY{o}{.}\PY{n}{T} \PY{o}{@} \PY{n}{V}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{n}{k}\PY{p}{]}
+            \PY{n}{V}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{n}{k}\PY{p}{]} \PY{o}{-}\PY{o}{=} \PY{n}{R}\PY{p}{[}\PY{n}{j}\PY{p}{,} \PY{n}{k}\PY{p}{]} \PY{o}{*} \PY{n}{Q}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{n}{j}\PY{p}{]}
+
+    \PY{k}{return} \PY{n}{Q}\PY{p}{,} \PY{n}{R}
+\end{verbatim}
+
+\subsubsection*{Householder QR Algorithm}
+The standard library approach does not form $\mathbf{Q}_1$ explicitly. Instead, it computes $\mathbf{R}_1$ while storing the vectors that define the Householder reflectors in the lower part of the matrix. $\mathbf{Q}_1^T$ is then applied implicitly when needed.
+
+\begin{verbatim}
+\PY{k}{def} \PY{n+nf}{householder\PYZus{}qr}\PY{p}{(}\PY{n}{A}\PY{p}{)}\PY{p}{:}
+    \PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{}}
+\PY{l+s+sd}{    Computes the implicit QR factorization of A using Householder reflectors.}
+\PY{l+s+sd}{    The upper triangle of the returned matrix is R1.}
+\PY{l+s+sd}{    The Householder vectors are stored compactly in the lower triangle.}
+\PY{l+s+sd}{    \PYZdq{}\PYZdq{}\PYZdq{}}
+    \PY{n}{m}\PY{p}{,} \PY{n}{n} \PY{o}{=} \PY{n}{A}\PY{o}{.}\PY{n}{shape}
+    \PY{n}{A\PYZus{}factored} \PY{o}{=} \PY{n}{A}\PY{o}{.}\PY{n}{copy}\PY{p}{(}\PY{p}{)}
+
+    \PY{k}{for} \PY{n}{k} \PY{k}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{n}\PY{p}{)}\PY{p}{:}
+        \PY{n}{x} \PY{o}{=} \PY{n}{A\PYZus{}factored}\PY{p}{[}\PY{n}{k}\PY{p}{:}\PY{n}{m}\PY{p}{,} \PY{n}{k}\PY{p}{]}
+        \PY{c+c1}{\PYZsh{} Use np.copysign for a robust sign function}
+        \PY{n}{v} \PY{o}{=} \PY{n}{x}\PY{o}{.}\PY{n}{copy}\PY{p}{(}\PY{p}{)}
+        \PY{n}{v}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]} \PY{o}{+}\PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{copysign}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{linalg}\PY{o}{.}\PY{n}{norm}\PY{p}{(}\PY{n}{x}\PY{p}{)}\PY{p}{,} \PY{n}{x}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{)}
+        \PY{n}{v} \PY{o}{/}\PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{linalg}\PY{o}{.}\PY{n}{norm}\PY{p}{(}\PY{n}{v}\PY{p}{)}
+
+        \PY{c+c1}{\PYZsh{} Apply the reflection P*A = A - 2v(v\PYZca{}T A) to the submatrix}
+        \PY{n}{sub\PYZus{}matrix} \PY{o}{=} \PY{n}{A\PYZus{}factored}\PY{p}{[}\PY{n}{k}\PY{p}{:}\PY{n}{m}\PY{p}{,} \PY{n}{k}\PY{p}{:}\PY{n}{n}\PY{p}{]}
+        \PY{n}{update} \PY{o}{=} \PY{l+m+mi}{2} \PY{o}{*} \PY{n}{np}\PY{o}{.}\PY{n}{outer}\PY{p}{(}\PY{n}{v}\PY{p}{,} \PY{n}{v}\PY{o}{.}\PY{n}{T} \PY{o}{@} \PY{n}{sub\PYZus{}matrix}\PY{p}{)}
+        \PY{n}{A\PYZus{}factored}\PY{p}{[}\PY{n}{k}\PY{p}{:}\PY{n}{m}\PY{p}{,} \PY{n}{k}\PY{p}{:}\PY{n}{n}\PY{p}{]} \PY{o}{-}\PY{o}{=} \PY{n}{update}
+
+        \PY{c+c1}{\PYZsh{} Store the essential part of the Householder vector}
+        \PY{n}{A\PYZus{}factored}\PY{p}{[}\PY{n}{k}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{:}\PY{n}{m}\PY{p}{,} \PY{n}{k}\PY{p}{]} \PY{o}{=} \PY{n}{v}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{:}\PY{p}{]}
+
+    \PY{k}{return} \PY{n}{A\PYZus{}factored}
+
+\PY{k}{def} \PY{n+nf}{solve\PYZus{}with\PYZus{}householder}\PY{p}{(}\PY{n}{A\PYZus{}factored}\PY{p}{,} \PY{n}{b}\PY{p}{)}\PY{p}{:}
+    \PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{}}
+\PY{l+s+sd}{    Solves the least-squares problem using the implicit Householder QR.}
+\PY{l+s+sd}{    \PYZdq{}\PYZdq{}\PYZdq{}}
+    \PY{n}{m}\PY{p}{,} \PY{n}{n} \PY{o}{=} \PY{n}{A\PYZus{}factored}\PY{o}{.}\PY{n}{shape}
+    \PY{n}{b\PYZus{}transformed} \PY{o}{=} \PY{n}{b}\PY{o}{.}\PY{n}{copy}\PY{p}{(}\PY{p}{)}
+
+    \PY{c+c1}{\PYZsh{} 1. Compute Q1\PYZca{}T * b by applying reflectors}
+    \PY{k}{for} \PY{n}{k} \PY{k}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{n}\PY{p}{)}\PY{p}{:}
+        \PY{n}{v} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{zeros}\PY{p}{(}\PY{n}{m} \PY{o}{-} \PY{n}{k}\PY{p}{)}
+        \PY{n}{v}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]} \PY{o}{=} \PY{l+m+mf}{1.0}
+        \PY{n}{v}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{:}\PY{p}{]} \PY{o}{=} \PY{n}{A\PYZus{}factored}\PY{p}{[}\PY{n}{k}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{:}\PY{n}{m}\PY{p}{,} \PY{n}{k}\PY{p}{]}
+
+        \PY{n}{sub\PYZus{}vector} \PY{o}{=} \PY{n}{b\PYZus{}transformed}\PY{p}{[}\PY{n}{k}\PY{p}{:}\PY{n}{m}\PY{p}{]}
+        \PY{n}{update} \PY{o}{=} \PY{l+m+mi}{2} \PY{o}{*} \PY{n}{v} \PY{o}{*} \PY{p}{(}\PY{n}{v}\PY{o}{.}\PY{n}{T} \PY{o}{@} \PY{n}{sub\PYZus{}vector}\PY{p}{)}
+        \PY{n}{b\PYZus{}transformed}\PY{p}{[}\PY{n}{k}\PY{p}{:}\PY{n}{m}\PY{p}{]} \PY{o}{-}\PY{o}{=} \PY{n}{update}
+
+    \PY{c+c1}{\PYZsh{} 2. Extract R1 and the relevant part of Q1\PYZca{}T * b}
+    \PY{n}{R1} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{triu}\PY{p}{(}\PY{n}{A\PYZus{}factored}\PY{p}{[}\PY{p}{:}\PY{n}{n}\PY{p}{,} \PY{p}{:}\PY{p}{]}\PY{p}{)}
+    \PY{n}{c1} \PY{o}{=} \PY{n}{b\PYZus{}transformed}\PY{p}{[}\PY{p}{:}\PY{n}{n}\PY{p}{]}
+
+    \PY{c+c1}{\PYZsh{} 3. Solve the upper-triangular system R1*x = c1}
+    \PY{k}{return} \PY{n}{np}\PY{o}{.}\PY{n}{linalg}\PY{o}{.}\PY{n}{solve}\PY{p}{(}\PY{n}{R1}\PY{p}{,} \PY{n}{c1}\PY{p}{)}
+\end{verbatim}
+
+\subsubsection*{Example Usage: Solving Least Squares}
+We now use these functions to solve a least-squares problem and verify the results.
+
+\begin{verbatim}
+\PY{c+c1}{\PYZsh{} Let's solve a least-squares problem min||Ax-b||}
+\PY{n}{A} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{p}{[}\PY{p}{[}\PY{l+m+mf}{1.}\PY{p}{,} \PY{l+m+mf}{1.}\PY{p}{]}\PY{p}{,} \PY{p}{[}\PY{l+m+mf}{2.}\PY{p}{,} \PY{l+m+mf}{1.}\PY{p}{]}\PY{p}{,} \PY{p}{[}\PY{l+m+mf}{3.}\PY{p}{,} \PY{l+m+mf}{1.}\PY{p}{]}\PY{p}{,} \PY{p}{[}\PY{l+m+mf}{4.}\PY{p}{,} \PY{l+m+mf}{1.}\PY{p}{]}\PY{p}{]}\PY{p}{)}
+\PY{n}{b} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{p}{[}\PY{l+m+mf}{1.}\PY{p}{,} \PY{l+m+mf}{3.}\PY{p}{,} \PY{l+m+mf}{3.}\PY{p}{,} \PY{l+m+mf}{5.}\PY{p}{]}\PY{p}{)}
+
+\PY{c+c1}{\PYZsh{} --- Using Modified Gram-Schmidt (explicit Q1, R1) ---}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}--- Solving with Modified Gram-Schmidt ---\PYZdq{}}\PY{p}{)}
+\PY{n}{Q1\PYZus{}mgs}\PY{p}{,} \PY{n}{R1\PYZus{}mgs} \PY{o}{=} \PY{n}{modified\PYZus{}gram\PYZus{}schmidt}\PY{p}{(}\PY{n}{A}\PY{p}{)}
+\PY{n}{c1\PYZus{}mgs} \PY{o}{=} \PY{n}{Q1\PYZus{}mgs}\PY{o}{.}\PY{n}{T} \PY{o}{@} \PY{n}{b}
+\PY{n}{x\PYZus{}mgs} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{linalg}\PY{o}{.}\PY{n}{solve}\PY{p}{(}\PY{n}{R1\PYZus{}mgs}\PY{p}{,} \PY{n}{c1\PYZus{}mgs}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}Solution (MGS):\PYZdq{}}\PY{p}{,} \PY{n}{np}\PY{o}{.}\PY{n}{round}\PY{p}{(}\PY{n}{x\PYZus{}mgs}\PY{p}{,} \PY{l+m+mi}{4}\PY{p}{)}\PY{p}{)}
+
+\PY{c+c1}{\PYZsh{} --- Using Householder Reflectors (implicit Q1) ---}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s2}{--- Solving with Householder QR ---\PYZdq{}}\PY{p}{)}
+\PY{n}{A\PYZus{}factored} \PY{o}{=} \PY{n}{householder\PYZus{}qr}\PY{p}{(}\PY{n}{A}\PY{p}{)}
+\PY{n}{x\PYZus{}hh} \PY{o}{=} \PY{n}{solve\PYZus{}with\PYZus{}householder}\PY{p}{(}\PY{n}{A\PYZus{}factored}\PY{p}{,} \PY{n}{b}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}Solution (Householder):\PYZdq{}}\PY{p}{,} \PY{n}{np}\PY{o}{.}\PY{n}{round}\PY{p}{(}\PY{n}{x\PYZus{}hh}\PY{p}{,} \PY{l+m+mi}{4}\PY{p}{)}\PY{p}{)}
+
+\PY{c+c1}{\PYZsh{} --- Verification with NumPy's built-in lstsq solver ---}
+\PY{n}{x\PYZus{}numpy}\PY{p}{,} \PY{n}{\PYZus{}}\PY{p}{,} \PY{n}{\PYZus{}}\PY{p}{,} \PY{n}{\PYZus{}} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{linalg}\PY{o}{.}\PY{n}{lstsq}\PY{p}{(}\PY{n}{A}\PY{p}{,} \PY{n}{b}\PY{p}{,} \PY{n}{rcond}\PY{o}{=}\PY{k+kc}{None}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s2}{Solution (NumPy lstsq):\PYZdq{}}\PY{p}{,} \PY{n}{np}\PY{o}{.}\PY{n}{round}\PY{p}{(}\PY{n}{x\PYZus{}numpy}\PY{p}{,} \PY{l+m+mi}{4}\PY{p}{)}\PY{p}{)}
+\end{verbatim}

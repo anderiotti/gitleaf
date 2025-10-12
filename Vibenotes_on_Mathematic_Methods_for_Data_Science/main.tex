@@ -1,0 +1,75 @@
+\documentclass[12pt, openany]{book}
+
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{graphicx}
+\usepackage{amsmath, amssymb, amsfonts, amsthm}
+\usepackage{geometry}
+
+\usepackage{verbatim}
+\usepackage{pygments}
+\usepackage{fancyvrb}
+
+\usepackage{etoolbox}
+\usepackage{comment}
+\usepackage{MnSymbol}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{hyperref}
+\usepackage{listings}
+\geometry{a4paper, margin=1in}
+
+% --- HYPERREF SETUP ---
+\hypersetup{
+    colorlinks=true,
+    linkcolor=purple,
+    filecolor=magenta,      
+    urlcolor=cyan,
+    citecolor=purple,
+    pdftitle={Foundations of Measure-Theoretic Probability},
+    pdfpagemode=FullScreen,
+}
+
+
+% --- MATHEMATICAL ENVIRONMENTS DEFINITION ---
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[section]
+\theoremstyle{plain}
+\newtheorem{theorem}[definition]{Theorem}
+\newtheorem{proposition}[definition]{Proposition}
+\newtheorem{lemma}[definition]{Lemma}
+\newtheorem{corollary}[definition]{Corollary}
+\theoremstyle{remark}
+\newtheorem{remark}[definition]{Remark}
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\B}{\mathcal{B}}
+\newcommand{\probP}{\mathbb{P}}
+\newcommand{\germS}{\mathfrak{S}} % Notation for a sigma-algebra
+\newcommand{\germF}{\mathfrak{F}} % Generic sigma-algebra
+
+\DeclareMathOperator{\E}{\mathbf{M}} % Expectation (M for mean value)
+\DeclareMathOperator{\V}{\mathbf{D}} % Variance (D for dispersion)
+\DeclareMathOperator{\M}{\mathbf{M}} % For Expected Value (Mean value)
+\DeclareMathOperator{\D}{\mathbf{D}} % For Variance (Dispersion)
+
+
+\begin{document}
+
+
+\input{1 Frontmatter}
+This page was unintentionally left blank, I never attend to this class.\\
+
+\tableofcontents
+
+\input{Chapter 1}
+\input{Chapter 1B}
+\input{Chapter 2}
+
+
+\begin{comment}
+pygmentize -S default -f latex > pygments.sty
+cd C:\gitleaf\Vibenotes_on_Mathematic_Methods_for_Data_Science\code
+pygmentize -l python -f latex code.py > code.tex
+\end{comment}
+\end{document}
