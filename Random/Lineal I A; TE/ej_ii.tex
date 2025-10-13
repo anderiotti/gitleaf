@@ -1,0 +1,62 @@
+2. (2.5 pts) Sea \( V \) el \( \mathbb{R} \) espacio vectorial de las matrices \( M_{3 \times 3}(\mathbb{R}), \beta=\left\{e_{11}, e_{12}, e_{13}, e_{21}, \ldots, e_{23}, e_{33}\right\} \) la base canónica y considere el endomorfismo \( f \) de \( M_{3 \times 3}(\mathbb{R}) \) que satisface:
+\[
+\Phi_{\beta}^{\beta}(f)=\left(\begin{array}{lllllllll}
+1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 \\
+0 & 0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 \\
+0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 \\
+0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 0 \\
+0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 \\
+0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 \\
+0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1
+\end{array}\right) .
+\]
+a) Obtenga a \( f \) como endomorfismo de \( M_{2 \times 2}(\mathbb{R}) \) \\
+b) Calcule el núcleo \( f \). \\
+c) Obtenga una base para el subespacio que encontró en el inciso anterior y determine su dimensión. Es decir, obtenga \( N u l(f) \). \\ 
+d) Calcule la imágen de \( f \). \\
+e) Obtenga una base para el subespacio que encontró en el inciso anterior y determine su dimensión. Es decir, obtenga \( \operatorname{Ran}(f) \). \\
+
+\begin{solution}
+
+a) Obtención del endomorfismo \( f \)\\
+La matriz de transformación \(\Phi_{\beta}^{\beta}(f)\) nos proporciona información sobre cómo f actúa sobre la base canónica. Para un espacio vectorial \( M_{3 \times 3}(\mathbb{R}) \), la base canónica $\beta$ está dada por las matrices \( e_{ij} \) que tienen un 1 en la posición $(i,j)$ y ceros en todas las demás posiciones.
+La matriz de transformación es:
+\[
+\Phi_{\beta}^{\beta}(f)=\left(\begin{array}{lllllllll}
+1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 \\
+0 & 0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 \\
+0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 \\
+0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 0 \\
+0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 \\
+0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 \\
+0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1
+\end{array}\right).
+\]
+Cada columna de esta matriz nos indica a qué vector de la base β se mapea cada vector base bajo f. Identificando estos mapeos, deducimos que:
+
+$f(e_{11})=e_{11},\; f(e_{12})=e_{21},\; f(e_{13})=e_{31},\; f(e_{21})=e_{12},\; f(e_{22})=e_{22},\; f(e_{23})=e_{32},\; f(e_{31})=e_{13},\; f(e_{32})=e_{23},\; f(e_{33})=e_{33}$ \\
+
+
+b) Cálculo del núcleo \( f \) \\
+Considerando las transformaciones, podemos observar que para $f$ ser cero, cada uno de los mapeos anteriores debe dar como resultado la matriz cero. Sin embargo, observamos que f sólo intercambia posiciones sin colapsar ninguna matriz al vector cero; dado que ninguna combinación lineal de \( e_{ij} \) mapea al vector cero, concluimos que:
+\[ \operatorname{ker}(f) = \{0\}, \] \\
+
+
+c) Base y dimensión del núcleo f \\
+Como $ker(f)={0}$, la base del núcleo es el conjunto vacío y su dimensión es:
+\[ \dim(\operatorname{ker}(f)) = null(f) =  0. \] \\
+
+
+d) Cálculo de la imagen de f \\
+Por ser una matriz cuadrada y haber deducido que su nulidad es cero, por Teorema de la Dimensión su dominio es exactamente el mismo que su imagen, i.e. \( M_{3 \times 3}(\mathbb{R})\); de una forma más práctica, la imagen $Im(f)$ es el conjunto de todas las matrices que pueden expresarse como $f(A)$ para alguna matriz \( A \in M_{3 \times 3}(\mathbb{R}) \). Dado que f es una permutación de las entradas de las matrices, la imagen de f incluye todas las matrices que puedan ser obtenidas por estas permutaciones. \\
+
+
+e) Base y dimensión de la imagen de $f$ \\
+Debido a que $f$ es una permutación de los elementos de la base, la imagen de $f$ es todo el espacio \( M_{3 \times 3}(\mathbb{R}) \). Por lo tanto, una base para $Im(f)$ es la misma base canónica $\beta$, y su dimensión es:
+\[ \dim(\operatorname{Im}(f)) = Rg(f) = 9. \]
+    
+\end{solution}

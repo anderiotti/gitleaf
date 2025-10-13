@@ -1,0 +1,54 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage{pgfplots}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage[thmmarks, amsmath, thref]{ntheorem}
+\usepackage{mdframed}
+\usepackage{amsthm}
+\usepackage{physics}
+\usepackage{derivative}
+\usepackage{hyperref}
+\usepackage{wrapfig}
+\usepackage{amsthm}
+\renewcommand{\theenumi}{\roman{enumi}}
+
+\theoremstyle{nonumberplain}
+\theoremheaderfont{\itshape}
+\theorembodyfont{\upshape}
+\theoremseparator{.}
+\theoremsymbol{\ensuremath{\square}}
+\theoremsymbol{\ensuremath{\blacksquare}}
+\newtheorem{solution}{Solution}
+\theoremseparator{. ---}
+\theoremsymbol{\mbox{\texttt{;o)}}}
+
+\geometry{a4paper, left=2cm, right=2cm, top=1cm, bottom=2cm}
+
+\pgfplotsset{compat=1.18}
+\begin{document}
+
+\begin{minipage}{0.7\textwidth}
+    \small \textbf{Álgebra Lineal I}  \\
+    \small {Facultad de Ciencias, Universidad Nacional Autónoma de México} \\
+    \small {Fecha de entrega: 28 de Noviembre de 2024} \\
+    \small {Tarea Examen Final} \\
+    \small {5 incisos a elección}
+\end{minipage}
+\hfill
+\begin{minipage}{0.12\textwidth}
+    \includegraphics[width=\linewidth]{logo_universidad}
+\end{minipage}
+
+\input{ej_i} \\
+\input{ej_ii} \\
+\input{ej_iii} \\
+\input{ej_iv} \\
+% \input{ej_v} \\
+\input{ej_vi} \\
+\input{ej_vii}
+
+\end{document}

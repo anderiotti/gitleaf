@@ -1,0 +1,747 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage{pgfplots}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage[thmmarks, amsmath, thref]{ntheorem}
+\usepackage{mdframed}
+\usepackage{amsthm}
+\usepackage{physics}
+\usepackage{proof}
+\usepackage{derivative}
+\usepackage{hyperref}
+\usepackage{wrapfig}
+\usepackage{amsthm}
+\usepackage{xcolor}
+\renewcommand{\theenumi}{\roman{enumi}}
+
+\theoremstyle{nonumberplain}
+\theoremheaderfont{\itshape}
+\theorembodyfont{\upshape}
+\theoremseparator{.}
+\theoremsymbol{\ensuremath{\square}}
+\theoremsymbol{\ensuremath{\blacksquare}}
+\newtheorem{solution}{Solution}
+\theoremseparator{. ---}
+\theoremsymbol{\mbox{\texttt{;o)}}}
+
+\pgfplotsset{compat=1.18}
+\begin{document}
+\hspace{12cm}$\mathfrak{Andres \,\, Lopez \,\, Gonzalez}$\\\\
+
+\subsubsection*{Ejercicio 1.} Sea \( V \) un \( k \)-espacio vectorial de dimensión finita y \( T \) un endomorfismo de \( V \). Supongamos que \( V=\bigoplus_{i=1}^{k} V_{i} \), donde para cada \( 1 \leq i \leq k, V_{i} \) es un subesapcio \( T \)-invariante. Sea \( T_{i} \) la restricción de \( T \) a \( V_{i} \). Prueba que
+1. \( \operatorname{im}(T)=\bigoplus_{i=1}^{k} \operatorname{im}\left(T_{i}\right) \) \\
+Primero, observemos que cada vector \( v \in V \) se puede escribir de manera única como
+\[
+v = v_1 + v_2 + \cdots + v_k, \quad \text{con } v_i \in V_i
+\]
+y que \( T(v) = T(v_1 + \cdots + v_k) = T(v_1) + \cdots + T(v_k) \), ya que \( T \) es lineal. \\
+
+Como \( V_i \) es \( T \)-invariante, \( T(v_i) \in V_i \), así que
+\[
+T(v) = T(v_1) + \cdots + T(v_k), \quad \text{con } T(v_i) \in V_i.
+\]
+
+Esto implica que
+\[
+\operatorname{im}(T) \subseteq V_1 \oplus \cdots \oplus V_k.
+\]
+Veamos ahora que
+\[
+\operatorname{im}(T) = \bigoplus_{i=1}^k \operatorname{im}(T_i).
+\]
+
+ (a) \( \operatorname{im}(T) \subseteq \bigoplus_{i=1}^k \operatorname{im}(T_i) \) \\
+Sea \( w \in \operatorname{im}(T) \). Entonces existe \( v \in V \) tal que \( T(v) = w \). Escribimos \( v = v_1 + \cdots + v_k \) con \( v_i \in V_i \). Entonces,
+\[
+T(v) = T(v_1) + \cdots + T(v_k),
+\]
+y cada \( T(v_i) \in \operatorname{im}(T_i) \subseteq V_i \). \\
+
+Por unicidad de la descomposición, se tiene que
+\[
+w = T(v) = w_1 + \cdots + w_k, \quad \text{con } w_i = T(v_i) \in \operatorname{im}(T_i).
+\]
+Luego \( w \in \bigoplus_{i=1}^k \operatorname{im}(T_i) \). \\
+
+ (b) \( \bigoplus_{i=1}^k \operatorname{im}(T_i) \subseteq \operatorname{im}(T) \) \\
+Sea \( w \in \bigoplus_{i=1}^k \operatorname{im}(T_i) \). Entonces \( w = w_1 + \cdots + w_k \) con \( w_i \in \operatorname{im}(T_i) \subseteq V_i \). \\
+
+Para cada \( i \), existe \( v_i \in V_i \) tal que \( T_i(v_i) = w_i \), es decir, \( T(v_i) = w_i \). \\
+
+Definamos \( v = v_1 + \cdots + v_k \in V \). Entonces,
+\[
+T(v) = T(v_1 + \cdots + v_k) = T(v_1) + \cdots + T(v_k) = w_1 + \cdots + w_k = w.
+\]
+Por lo tanto, \( w \in \operatorname{im}(T) \). \\
+
+ (c) La suma es directa
+Por la descomposición directa \( V = \bigoplus_{i=1}^k V_i \), la intersección de los \( V_i \) es \(\left\{0\right\}\), y los \( \operatorname{im}(T_i) \subseteq V_i \), así que la suma de las imágenes es también directa. \\
+
+Por lo tanto:
+\[
+\boxed{
+\operatorname{im}(T) = \bigoplus_{i=1}^k \operatorname{im}(T_i)
+}
+\]
+2. \( \operatorname{ker}(T)=\bigoplus_{i=1}^{k} \operatorname{ker}\left(T_{i}\right) \)
+Primero, notemos que
+\[
+\operatorname{ker}(T) = \left\{ v \in V \mid T(v) = 0 \right\}
+\]
+y
+\[
+\operatorname{ker}(T_i) = \left\{ v_i \in V_i \mid T_i(v_i) = 0 \right\}.
+\]
+
+Sea \( v \in V \), \( v = v_1 + \cdots + v_k \) con \( v_i \in V_i \). Entonces
+\[
+T(v) = T(v_1) + \cdots + T(v_k).
+\]
+Por unicidad de la descomposición, \( T(v) = 0 \) si y sólo si \( T(v_i) = 0 \) para todo \( i \), es decir, \( v_i \in \operatorname{ker}(T_i) \). \\
+
+Por tanto,
+\[
+\operatorname{ker}(T) = \left\{ v_1 + \cdots + v_k \mid v_i \in \operatorname{ker}(T_i) \right\} = \bigoplus_{i=1}^k \operatorname{ker}(T_i).
+\]
+
+Es decir:
+\[
+\boxed{
+\operatorname{ker}(T) = \bigoplus_{i=1}^k \operatorname{ker}(T_i)
+}
+\]
+
+\subsubsection*{Ejercicio 2.} Sea \( V \) u \( k \)-espcio vectorial de dimensión finita \( T \) un endomorfismo de \( V \) y \( f, g \) polinomios en \( k[x] \). Prueba que \\
+1. \( f(T) \circ T=T f(T) \).\\
+Observemos primero que \( T \) y \( f(T) \) son endomorfismos de \( V \). Bastará probar que \( f(T) \circ T = T \circ f(T) \) como aplicaciones lineales, es decir, que para todo \( v \in V \), \( f(T)(T(v)) = T(f(T)(v)) \).\\
+
+Desarrollemos \( f(T) \):
+\[
+f(T) = a_n T^n + a_{n-1} T^{n-1} + \cdots + a_1 T + a_0 \operatorname{Id}_V.
+\]
+Entonces,
+\[
+f(T) \circ T = a_n T^n T + a_{n-1} T^{n-1} T + \cdots + a_1 T T + a_0 \operatorname{Id}_V T.
+\]
+Como \( T^m T = T^{m+1} \) y \( \operatorname{Id}_V T = T \), esto se convierte en
+\[
+f(T) \circ T = a_n T^{n+1} + a_{n-1} T^n + \cdots + a_1 T^2 + a_0 T.
+\]
+Por otro lado,
+\[
+T f(T) = T(a_n T^n + a_{n-1} T^{n-1} + \cdots + a_1 T + a_0 \operatorname{Id}_V)
+= a_n T^{n+1} + a_{n-1} T^n + \cdots + a_1 T^2 + a_0 T.
+\]
+Por lo tanto,
+
+\[
+\boxed{f(T) \circ T = T f(T)}
+\]
+2. \( (f+g)(T)=f(T)+g(T) \) \\
+Si \( f(x) = \sum_{i=0}^n a_i x^i \) y \( g(x) = \sum_{i=0}^n b_i x^i \), entonces
+\[
+(f+g)(x) = \sum_{i=0}^n (a_i + b_i) x^i.
+\]
+Por definición,
+\[
+(f+g)(T) = \sum_{i=0}^n (a_i + b_i) T^i = \sum_{i=0}^n a_i T^i + \sum_{i=0}^n b_i T^i = f(T) + g(T).
+\]
+\[
+\therefore \boxed{(f+g)(T) = f(T) + g(T)}
+\]
+3. \( (f-g)(T)=f(T)-g(T) \) \\
+Análoga a la anterior,
+\[
+(f-g)(x) = \sum_{i=0}^n (a_i - b_i) x^i \implies (f-g)(T) = \sum_{i=0}^n (a_i - b_i) T^i = f(T) - g(T).
+\]
+\[
+\boxed{(f-g)(T) = f(T) - g(T)}
+\]
+
+4. \( (f g)(T)=f(T) \circ g(T)=g(T) \circ f(T) \)
+
+Sea \( f(x) = \sum_{i=0}^m a_i x^i \), \( g(x) = \sum_{j=0}^n b_j x^j \),
+\[
+f(T)g(T) = \left( \sum_{i=0}^m a_i T^i \right) \left( \sum_{j=0}^n b_j T^j \right) = \sum_{i=0}^m \sum_{j=0}^n a_i b_j T^{i+j} = (fg)(T) \;\textit{ y } \; (gf)(T).
+\]
+Así que
+\[
+\boxed{(fg)(T) = f(T) \circ g(T) = g(T) \circ f(T)}
+\]
+
+\subsubsection*{Ejercicio 3.} Sea \( V \) un \( k \)-espacio vectorial de dimensión finita y \( T \) un endomorfismo de \( V \).  \\
+Prueba que \\
+1. Sea \( f(x) \in k[x] \), si \( \lambda \in k \) es un valor propio de \( T \), entonces \( f(\lambda) \) es un valor propio de \( f(T) \). \\
+Supongamos que \( \lambda \in k \) es un valor propio de \( T \), es decir, existe \( v \in V \), \( v \neq 0 \), tal que
+\[
+T(v) = \lambda v.
+\]
+
+Sea \( f(x) = a_n x^n + \cdots + a_1 x + a_0 \in k[x] \). Consideremos la acción de \( f(T) \) sobre \( v \):
+\[
+f(T)(v) = a_n T^n(v) + a_{n-1} T^{n-1}(v) + \cdots + a_1 T(v) + a_0 v.
+\]
+Como \( T(v) = \lambda v \), \( T^2(v) = T(T(v)) = T(\lambda v) = \lambda T(v) = \lambda^2 v \), y en general \( T^k(v) = \lambda^k v \) por inducción. \\
+
+\begin{mdframed}
+    Demostración por inducción de que \( T^k(v) = \lambda^k v \) para \( v \) propio de \( T \) con valor propio \( \lambda \): \\
+
+Sea \( v \in V \) tal que \( T(v) = \lambda v \). \\
+
+Base de inducción:   \\
+Para \( k = 1 \),
+\[
+T^1(v) = T(v) = \lambda v = \lambda^1 v.
+\]
+Cierto. \\
+
+Hipótesis de inducción:   \\
+Supongamos que para algún \( k \geq 1 \),
+\[
+T^k(v) = \lambda^k v.
+\]
+
+Paso inductivo:   \\
+Consideremos \( k+1 \):
+\[
+T^{k+1}(v) = T(T^k(v)).
+\]
+Por la hipótesis de inducción,
+\[
+T^{k+1}(v) = T(\lambda^k v) = \lambda^k T(v) = \lambda^k (\lambda v) = \lambda^{k+1} v.
+\]
+
+Por lo tanto, por inducción matemática, para todo \( k \geq 1 \),
+\[
+\boxed{T^k(v) = \lambda^k v}
+\]
+cuando \( v \) es un vector propio de \( T \) con valor propio \( \lambda \).
+\end{mdframed}
+
+Por tanto,
+\[
+f(T)(v) = a_n \lambda^n v + a_{n-1} \lambda^{n-1} v + \cdots + a_1 \lambda v + a_0 v = f(\lambda) v.
+\]
+Como \( v \neq 0 \), \( f(\lambda) \) es un valor propio de \( f(T) \) con vector propio \( v \).
+2. Si \( T \) es invertible, entonce \( \lambda \in k \) es valor propio de \( T \) si y solo si \( \lambda \neq 0 \mathrm{y} \) \( \lambda^{-1} \) es valor propio de \( T^{-1} \). \\
+Supongamos \( T \) invertible.
+
+(\( \Rightarrow \))  
+Sea \( \lambda \) valor propio de \( T \), así que existe \( v \neq 0 \) con \( T(v) = \lambda v \). \\
+
+Como \( T \) es invertible, \( \lambda \) no puede ser cero:   \\
+Si \( \lambda = 0 \), entonces \( T(v) = 0 \), así que \( v \in \ker T \), pero \( T \) invertible implica \( \ker T = \left\{ 0 \right\} \), \textbf{contradicción}.   \\
+Por lo tanto, \( \lambda \neq 0 \). \\
+
+Aplicando \( T^{-1} \) a ambos lados de \( T(v) = \lambda v \):
+\[
+T^{-1}(T(v)) = T^{-1}(\lambda v) \implies v = \lambda T^{-1}(v) \implies T^{-1}(v) = \lambda^{-1} v.
+\]
+Así, \( v \) es vector propio de \( T^{-1} \) con valor propio \( \lambda^{-1} \). \\
+
+(\( \Leftarrow \))  
+Ahora, supongamos que \( \mu \) es valor propio de \( T^{-1} \) con vector propio \( w \neq 0 \):
+\[
+T^{-1}(w) = \mu w.
+\]
+Aplicando \( T \):
+\[
+T(T^{-1}(w)) = T(\mu w) \implies w = \mu T(w) \implies T(w) = \mu^{-1} w.
+\]
+Como \( T \) invertible, \( \mu \neq 0 \), y \( w \neq 0 \), así que \( \mu^{-1} \) es valor propio de \( T \). \\
+
+Entonces:
+\[
+\boxed{
+\lambda \text{ es valor propio de } T \iff \lambda \neq 0 \text{ y } \lambda^{-1} \text{ es valor propio de } T^{-1}
+}
+\]
+
+3. Si \( T \) es invertible, entonces \( T \) y \( T^{-1} \) tienen los mismos vectores propios. \\
+Sea \( v \neq 0 \) un vector propio de \( T \) con valor propio \( \lambda \):
+\[
+T(v) = \lambda v.
+\]
+Como vimos antes, \( T^{-1}(v) = \lambda^{-1} v \). \\
+
+Recíprocamente, si \( v \neq 0 \) es vector propio de \( T^{-1} \) con valor propio \( \mu \):
+\[
+T^{-1}(v) = \mu v \implies T(v) = \mu^{-1} v.
+\]
+
+Así, los vectores propios de \( T \) y \( T^{-1} \) coinciden (aunque los valores propios son recíprocos).
+
+i.e.
+\[
+\boxed{
+T \text{ y } T^{-1} \text{ tienen los mismos vectores propios.}
+}
+\]
+
+\subsubsection*{Ejercicio 4.} Sea \( V \) un \( k \)-espacio vectorial y \( T \) un endomorfismo de \( V \). Diremos que \( T \) es un endomorfismo nilpotente si existe un entero positivo \( k \) tal que \( T^{k}=0 \mathrm{y} \) se define el índice de nilpotencia de \( T \) como el menor entero positivo \( m \) tal que \( T^{m}=0 \).
+Si \( A \) es una matriz de \( n \times n \) con entradas en \( k \), diremos que \( A \) es nilpotente si existe un entero positivo \( k \) tal que \( A^{k}=0 \mathrm{y} \) se define el índice de nilpotencia de \( A \) como el menor entero positivo \( m \) tal que \( A^{m}=0 \).
+Observa que el endomorfismo cero y la matriz cero son nilpotentes con índice nilpotencia 1. \\
+1. Da un ejemplo de un endomorfismo nilpotente \( T \neq 0 \) \\
+
+Ejemplo en \( V = k^2 \): \\
+
+Sea \( T: k^2 \to k^2 \) definido por la matriz
+\[
+A = \begin{pmatrix}
+0 & 1 \\
+0 & 0
+\end{pmatrix}
+\]
+respecto de la base canónica. \\
+
+Verifiquemos la nilpotencia:
+\[
+A^2 = \begin{pmatrix}
+0 & 1 \\
+0 & 0
+\end{pmatrix}
+\begin{pmatrix}
+0 & 1 \\
+0 & 0
+\end{pmatrix}
+=
+\begin{pmatrix}
+0 & 0 \\
+0 & 0
+\end{pmatrix} = 0
+\]
+pero \( A \neq 0 \). Así, \( A \) (y el endomorfismo asociado) es nilpotente de índice 2 y es distinto de cero.
+
+2. Sea \( V \) un \( k \)-espacio vectorial y \( T \) un endomorfismo de \( V \). Prueba que
+\[
+\operatorname{ker}\left(T^{0}\right) \subseteq \operatorname{ker}(T) \subseteq \operatorname{ker}\left(T^{2}\right) \subseteq \ldots \operatorname{ker}\left(T^{n}\right) \subseteq \ldots
+\]
+
+Recordemos que \( T^0 = \operatorname{Id}_V \), entonces
+\[
+\operatorname{ker}(T^0) = \{v \in V : T^0(v) = 0\} = \{v \in V : v = 0\} = \{0\}
+\]
+Ahora, para cada \( m \geq 1 \), queremos ver que
+\[
+\operatorname{ker}(T^{m}) \subseteq \operatorname{ker}(T^{m+1})
+\]
+
+Sea \( v \in \operatorname{ker}(T^{m}) \), es decir, \( T^{m}(v) = 0 \). Entonces
+\[
+T^{m+1}(v) = T(T^{m}(v)) = T(0) = 0
+\]
+por lo que \( v \in \operatorname{ker}(T^{m+1}) \). \\
+
+Por inducción, todas las inclusiones son válidas.
+
+\[
+\boxed{
+\operatorname{ker}(T^{0}) \subseteq \operatorname{ker}(T) \subseteq \operatorname{ker}(T^{2}) \subseteq \ldots
+}
+\]
+
+3. Sea \( T \) un endomorfismo de \( V \) y supongamos que existe \( m \) un entero positivo tal \( \operatorname{ker}\left(T^{m}\right)=\operatorname{ker}\left(T^{m+1}\right. \), Prueba que \( \operatorname{ker}\left(T^{m}\right)=\operatorname{ker}\left(T^{m+k}\right) \) para cada \( k \geq 1 \) \\
+
+Procedamos por inducción sobre \( k \). \\
+
+Base: Para \( k = 1 \) es cierto por hipótesis.
+
+Paso inductivo:   \\
+Supón que \( \operatorname{ker}(T^{m}) = \operatorname{ker}(T^{m+k}) \) para algún \( k \geq 1 \).  \\ 
+Queremos probar que \( \operatorname{ker}(T^{m}) = \operatorname{ker}(T^{m+k+1}) \). \\
+
+Sabemos siempre que
+\[
+\operatorname{ker}(T^{m+k}) \subseteq \operatorname{ker}(T^{m+k+1})
+\]
+pero queremos la igualdad. \\
+
+Toma \( v \in \operatorname{ker}(T^{m+k+1}) \), es decir \( T^{m+k+1}(v) = 0 \).   \\
+Entonces \( T^{m+k}(T(v)) = 0 \implies T(v) \in \operatorname{ker}(T^{m+k}) = \operatorname{ker}(T^{m}) \) (por hipótesis inductiva). \\
+
+Así,
+\[
+T^{m}(T(v)) = 0 \implies T^{m+1}(v) = 0
+\]
+Pero también \( \operatorname{ker}(T^{m}) = \operatorname{ker}(T^{m+1}) \) por hipótesis inicial, entonces
+\[
+v \in \operatorname{ker}(T^{m+1}) = \operatorname{ker}(T^{m})
+\]
+Por lo tanto, \( v \in \operatorname{ker}(T^{m}) \). Como la inclusión opuesta siempre vale,
+\[
+\operatorname{ker}(T^{m+k+1}) \subseteq \operatorname{ker}(T^{m})
+\]
+
+Por inducción en \( k \), para todo \( k \geq 1 \),
+\[
+\boxed{
+\operatorname{ker}(T^{m}) = \operatorname{ker}(T^{m+k})
+}
+\]
+
+4. Si \( T \) es un endomorfismo de \( V \) y \( \operatorname{dim}(V)=n \) entonces \( \operatorname{ker}\left(T^{n}\right)=\operatorname{ker}\left(T^{n+k}\right) \) para cada \( k \geq 1 \).
+
+Como \( V \) es de dimensión finita, la sucesión de subespacios
+\[
+\{0\} = \operatorname{ker}(T^{0}) \subseteq \operatorname{ker}(T) \subseteq \cdots \subseteq \operatorname{ker}(T^{n}) \subseteq \cdots
+\]
+es una sucesión ascendente de subespacios de \( V \). En un espacio de dimensión finita, toda sucesión ascendente de subespacios se estabiliza a más tardar en el paso \( n \) (teorema de estabilización de cadenas ascendentes). Es decir, existe
+\[
+m \leq n
+\]
+tal que
+\[
+\operatorname{ker}(T^{m}) = \operatorname{ker}(T^{m+1}) = \cdots
+\]
+Pero, como la dimensión de \( \operatorname{ker}(T^{i}) \) es no decreciente y está acotada superiormente por \( n \), a más tardar en \( i = n \) se estabiliza. Por lo tanto,
+\[
+\operatorname{ker}(T^{n}) = \operatorname{ker}(T^{n+1}) = \cdots = \operatorname{ker}(T^{n+k}) \quad \forall k \geq 1
+\]
+
+\[
+\boxed{
+\operatorname{ker}(T^{n}) = \operatorname{ker}(T^{n+k}) \quad \forall k \geq 1
+}
+\]
+
+\subsubsection*{Ejercicio 5.} Muestra que la matriz
+\[
+A=\left(\begin{array}{lll}
+0 & 0 & 1 \\
+1 & 0 & 0 \\
+0 & 1 & 0
+\end{array}\right)
+\]
+es similar a una matriz diagonal en \( \mathcal{M}_{3 \times 3}(\mathbb{C}) \), pero no en \( \mathcal{M}_{3 \times 3}(\mathbb{R}) \)
+
+Buscamos los valores propios resolviendo el polinomio característico:
+\[
+\det(A - \lambda I) = 0
+\]
+Calculamos:
+\[
+A - \lambda I = \begin{pmatrix}
+-\lambda & 0 & 1 \\
+1 & -\lambda & 0 \\
+0 & 1 & -\lambda
+\end{pmatrix}
+\]
+
+El determinante es:
+\[
+\begin{aligned}
+\det(A - \lambda I)
+&= -\lambda \begin{vmatrix}
+-\lambda & 0 \\
+1 & -\lambda
+\end{vmatrix}
+- 0 \cdot \begin{vmatrix}
+1 & 0 \\
+0 & -\lambda
+\end{vmatrix}
++ 1 \cdot \begin{vmatrix}
+1 & -\lambda \\
+0 & 1
+\end{vmatrix}\\
+&= -\lambda [(-\lambda)(-\lambda) - (0)(1)] + 1 [(1)(1) - (0)(-\lambda)]\\
+&= -\lambda [\lambda^2] + 1 \cdot 1\\
+&= -\lambda^3 + 1
+\end{aligned}
+\]
+
+Así, el polinomio característico es:
+\[
+\chi_A(\lambda) = -\lambda^3 + 1 = 0 \implies \lambda^3 = 1
+\]
+Por lo tanto, los valores propios de \( A \) son las raíces cúbicas de la unidad. \\
+En \( \mathbb{C} \):
+\[
+\lambda_1 = 1, \quad \lambda_2 = \omega, \quad \lambda_3 = \omega^2
+\]
+donde \( \omega = e^{2\pi i/3} = -\frac{1}{2} + i \frac{\sqrt{3}}{2} \) y \( \omega^2 = e^{4\pi i/3} = -\frac{1}{2} - i \frac{\sqrt{3}}{2} \). \\
+
+En \( \mathbb{R} \), sólo \( 1 \) es real; los otros son complejos no reales. \\
+Para diagonalizar una matriz, necesitamos que tenga una base de vectores propios.  \\
+Como \( A \) tiene 3 valores propios distintos en \( \mathbb{C} \), y su polinomio minimal se descompone completamente en factores lineales distintos, \( A \) es diagonalizable sobre \( \mathbb{C} \). \\
+
+Sea \( P \) la matriz cuyas columnas son los vectores propios correspondientes a \( 1, \omega, \omega^2 \), entonces
+\[
+P^{-1}AP = D = \begin{pmatrix}
+1 & 0 & 0 \\
+0 & \omega & 0 \\
+0 & 0 & \omega^2
+\end{pmatrix}
+\]
+con \( D \) diagonal y compleja. \\
+
+La diagonalización sobre \( \mathbb{R} \) requeriría que todos los valores propios fueran reales, o que \( A \) fuera semejante a una matriz diagonal real. \\
+
+Sin embargo, sólo uno de los valores propios es real. Además, los vectores propios asociados a \( \omega \), \( \omega^2 \) necesariamente tienen entradas complejas (pues las ecuaciones \( (A - \omega I) v = 0 \) sólo admiten soluciones no reales). \\
+
+Por lo tanto, no existe una base de \( \mathbb{R}^3 \) formada por vectores propios de \( A \) sobre \( \mathbb{R} \), y por ende, \( A \) no es semejante a una matriz diagonal real. \\
+
+\subsubsection*{Ejercicio 6.} Sea \( V \) el espacio de funciones infinitamente diferenciables de \( \mathbb{R} \) en \( \mathbb{R} \). Sean \( \alpha_{1}, \ldots, \alpha_{r} \) números reales distntos entre si. Prueba que la funciones \( \left\{e^{\alpha_{1} t}, \ldots, e^{\alpha_{r} t}\right\} \) son linealmente independientes. \\
+Sugerencia: Considera el endomorfismo derivación \( D: V \rightarrow V \), prueba que \( \alpha_{i} \) es valor propio de \( D \) y que \( e^{\alpha_{i} t} \) es vector propio de \( D \) asociado a \( \alpha_{i} \) \\
+
+Definimos el operador derivación:
+\[
+D: V \to V, \quad D(f) = f'
+\]
+donde \( V \) es el espacio de funciones infinitamente diferenciables de \( \mathbb{R} \) en \( \mathbb{R} \).\\
+
+Para cada \( i \), consideremos la función \( f_i(t) = e^{\alpha_i t} \).  \\
+Calculamos:
+\[
+D(f_i) = \frac{d}{dt}e^{\alpha_i t} = \alpha_i e^{\alpha_i t} = \alpha_i f_i
+\]
+Por lo tanto, \( f_i \) es un vector propio de \( D \) con valor propio \( \alpha_i \). \\
+
+Supongamos que existe una combinación lineal nula:
+\[
+c_1 e^{\alpha_1 t} + c_2 e^{\alpha_2 t} + \ldots + c_r e^{\alpha_r t} = 0 \quad \text{para todo } t \in \mathbb{R}
+\]
+Debemos probar que todos los coeficientes \( c_i = 0 \).\\
+
+Supón, por contradicción, que no todos los \( c_i \) son cero. Sea \( m \leq r \) el menor índice tal que \( c_m \neq 0 \). Sin pérdida de generalidad, podemos suponer que \( \alpha_1, \dots, \alpha_r \) están ordenados arbitrariamente.\\
+
+Consideremos la acción del operador \( D-\alpha_1 \operatorname{Id} \) sobre la combinación:
+\[
+L(t) := \sum_{i=1}^r c_i e^{\alpha_i t} = 0
+\]
+Entonces
+\[
+(D - \alpha_1 \operatorname{Id})(L)(t) = \sum_{i=1}^r c_i (D - \alpha_1 \operatorname{Id})(e^{\alpha_i t}) = \sum_{i=1}^r c_i (\alpha_i - \alpha_1) e^{\alpha_i t}
+\]
+Pero para \( i=1 \), \( \alpha_1 - \alpha_1 = 0 \), así que el término \( i=1 \) desaparece:
+\[
+(D - \alpha_1 \operatorname{Id})(L)(t) = \sum_{i=2}^r c_i (\alpha_i - \alpha_1) e^{\alpha_i t} = 0
+\]
+Repitiendo el mismo argumento, aplicando sucesivamente \( D - \alpha_2 \operatorname{Id}, D - \alpha_3 \operatorname{Id}, \ldots \), llegamos finalmente a
+\[
+c_r \prod_{j=1}^{r-1} (\alpha_r - \alpha_j) e^{\alpha_r t} = 0
+\]
+para todo \( t \). Como las \( \alpha_i \) son todas distintas, todos los factores \( (\alpha_r - \alpha_j) \neq 0 \), por lo que
+\[
+c_r e^{\alpha_r t} = 0 \implies c_r = 0
+\]
+Retrocediendo inductivamente, se obtiene que todos los \( c_i = 0 \).\\
+
+Por lo tanto, las funciones \( \left\{e^{\alpha_{1} t}, \ldots, e^{\alpha_{r} t}\right\} \) son linealmente independientes.
+
+\[
+\boxed{
+\left\{e^{\alpha_{1} t}, \ldots, e^{\alpha_{r} t}\right\} \text{ es un conjunto linealmente independiente en } V
+}
+\]
+
+\subsubsection*{Ejercicio 7.} Sea \( T \) el endomorfismo de \( \mathbb{R}^{3} \) dado por
+\[
+T(a, b, c)=(-2 a-b+c, 2 a+b-3 c,-c)
+\]
+
+Determina si \( T \) es diagonalizable, en caso afirmativo, encuentra una base \( \beta \) de \( V \) que consista de vectores propios de \( T \). Encuentra una matriz invertible \( P \) tal que
+\[
+[T]_{\epsilon}=P^{-1} D P
+\]
+donde \( \epsilon \) es la base canónica y \( D \) es una matriz diagonal. \\
+
+Sea \( (a, b, c) \) el vector genérico de \( \mathbb{R}^3 \).  
+\[
+T(a, b, c) = (-2a - b + c,\ 2a + b - 3c,\ -c)
+\]
+
+La matriz asociada es:
+\[
+[T]_\epsilon =
+\begin{pmatrix}
+-2 & -1 & 1 \\
+2 & 1 & -3 \\
+0 & 0 & -1
+\end{pmatrix}
+\]
+
+Calculamos \( \det(T - \lambda I) \):
+
+\[
+T - \lambda I =
+\begin{pmatrix}
+-2-\lambda & -1 & 1 \\
+2 & 1-\lambda & -3 \\
+0 & 0 & -1-\lambda
+\end{pmatrix}
+\]
+
+El determinante es (usando la tercera fila, que tiene dos ceros):
+\[
+\det(T - \lambda I) = (-1-\lambda) \cdot
+\begin{vmatrix}
+-2-\lambda & -1 \\
+2 & 1-\lambda
+\end{vmatrix}
+\]
+
+Calculamos el menor:
+\[
+\begin{vmatrix}
+-2-\lambda & -1 \\
+2 & 1-\lambda
+\end{vmatrix}
+= (-2-\lambda)(1-\lambda) - (2)(-1)
+= (-2-\lambda)(1-\lambda) + 2
+\]
+
+Expandimos:
+\[
+(-2-\lambda)(1-\lambda) + 2
+= [-2(1-\lambda) - \lambda(1-\lambda)] + 2
+= [-2 + 2\lambda - \lambda + \lambda^2] + 2
+= [-2 + 2\lambda - \lambda + \lambda^2 + 2]
+= (2\lambda - \lambda) + \lambda^2
+= \lambda + \lambda^2
+\]
+
+Por lo tanto,
+\[
+\det(T - \lambda I) = (-1-\lambda)(\lambda^2 + \lambda)
+= (-1-\lambda)\lambda(\lambda+1)
+\]
+
+Desarrollamos:
+\[
+(-1-\lambda)\lambda(\lambda+1) = -\lambda(\lambda+1)(1+\lambda) = -\lambda(\lambda+1)^2
+\]
+
+Por lo tanto, el polinomio característico es:
+\[
+\chi_T(\lambda) = -\lambda(\lambda+1)^2
+\]
+
+Los valores propios son \( \lambda_1 = 0 \), \( \lambda_2 = -1 \) (con multiplicidad algebraica 2).\\
+a) Para \( \lambda = 0 \): \\
+
+Resolvemos \( T(v) = 0v \), es decir, \( T(v) = 0 \):
+
+\[
+\begin{pmatrix}
+-2 & -1 & 1 \\
+2 & 1 & -3 \\
+0 & 0 & -1
+\end{pmatrix}
+\begin{pmatrix}
+a\\b\\c
+\end{pmatrix}
+= \begin{pmatrix}
+0\\0\\0
+\end{pmatrix}
+\]
+Esto nos da el sistema:
+\[
+\begin{cases}
+-2a - b + c = 0 \\
+2a + b - 3c = 0 \\
+-c = 0
+\end{cases}
+\]
+La última ecuación da \( c = 0 \).  \\
+Sustituimos en las dos primeras:
+\[
+\begin{cases}
+-2a - b = 0 \\
+2a + b = 0
+\end{cases}
+\]
+Sumando ambas:
+\[
+(-2a-b) + (2a+b) = 0 \implies 0 = 0
+\]
+Son dependientes. Tomemos la primera: \( -2a - b = 0 \implies b = -2a \).  \\
+Entonces \( c = 0 \), \( b = -2a \), \( a \) libre.
+
+Por lo tanto, un vector propio es:
+\[
+v_1 = (a, -2a, 0) = a \cdot (1, -2, 0)
+\]
+b) Para \( \lambda = -1 \):\\
+
+Resolvemos \( (T + I)v = 0 \):
+
+\[
+T + I = \begin{pmatrix}
+-1 & -1 & 1 \\
+2 & 2 & -3 \\
+0 & 0 & 0
+\end{pmatrix}
+\]
+
+Sistema:
+\[
+\begin{cases}
+-1 a - 1 b + 1 c = 0 \\
+2 a + 2 b - 3 c = 0
+\end{cases}
+\]
+La tercera ecuación es trivial.\\
+
+Simplificamos:
+\[
+\begin{cases}
+-a - b + c = 0 \\
+2a + 2b - 3c = 0
+\end{cases}
+\]
+La segunda ecuación es \( 2a + 2b = 3c \implies a + b = \frac{3}{2}c \),  \\
+la primera es \( -a - b + c = 0 \implies a + b = c \).\\
+
+Igualando,
+\[
+c = a + b = \frac{3}{2}c \implies c = 0
+\]
+Por lo tanto, \( a + b = 0 \implies b = -a \), y \( c = 0 \).\\
+
+Entonces, los vectores propios para \( \lambda = -1 \):
+\[
+v_2 = (a, -a, 0) = a \cdot (1, -1, 0)
+\]
+
+Pero el valor propio \( -1 \) tiene multiplicidad algebraica 2. ¿Existen más vectores propios linealmente independientes? \\
+
+Observemos que en la matriz original, la última fila es \( (0, 0, -1) \), así que si intentamos \( c \neq 0 \), tenemos \( -c = -1 \cdot c \), pero la ecuación es siempre \( 0 \).\\
+
+De hecho, ya que la tercera fila es todo ceros en \( T + I \), cualquier \( c \) es posible. Pero veamos si existe una segunda dirección linealmente independiente:\\
+
+Tomemos \( c = 1 \), entonces:\\
+
+Primera ecuación: \( -a - b + 1 = 0 \implies a + b = 1 \)\\
+
+Segunda: \( 2a + 2b - 3(1) = 0 \implies 2a + 2b = 3 \implies a + b = \frac{3}{2} \) \\
+
+Incompatibilidad: \( a + b = 1 \) y \( a + b = \frac{3}{2} \) sólo es posible si \( c = 0 \).  \\
+Por lo tanto, para \( c \neq 0 \) no hay soluciones. \\
+
+Así, el espacio propio de \( -1 \) es de dimensión 1. Es decir, el polinomio minimal es \( x(x+1)^2 \), pero la multiplicidad geométrica de \( -1 \) es 1. \\
+
+Para ser diagonalizable, la suma de las dimensiones de los espacios propios debe ser igual a 3.  
+Aquí, para \( \lambda = 0 \) una dimensión, para \( \lambda = -1 \) una dimensión:
+
+\[
+\dim(E_0) = 1, \quad \dim(E_{-1}) = 1,\quad 1 + 1 = 2 < 3
+\]
+
+No es diagonalizable. \\
+
+- El polinomio característico es \( -\lambda (\lambda + 1)^2 \). \\
+- Los únicos vectores propios son los asociados a \( \lambda = 0 \) y \( \lambda = -1 \), y ambos espacios propios son unidimensionales. \\
+- No hay suficientes vectores propios para formar una base de \( \mathbb{R}^3 \).
+
+\[
+\boxed{
+T \text{ no es diagonalizable sobre } \mathbb{R}.
+}
+\]
+
+
+\end{document}

@@ -1,0 +1,129 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage{pgfplots}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{mdframed}
+\usepackage{amsthm}
+\usepackage{physics}
+\usepackage{derivative}
+\usepackage{hyperref}
+\renewcommand{\theenumi}{\roman{enumi}}
+
+\geometry{a4paper, left=2cm, right=2cm, top=1cm, bottom=2cm}
+
+\pgfplotsset{compat=1.18}
+\begin{document}
+
+\begin{minipage}{0.7\textwidth}
+    \small \textbf{LABORATORIO DE MECÁNICA VECTORIAL}  \\
+    \small {Facultad de Ciencias, Universidad Nacional Autónoma de México} \\
+    \small {Profesor: Radamés Ricardo Reynoso Manríquez} \\
+    \small {Ayudante: Ana Laura Córdova Lara}\\
+    \small {Fecha de entrega: 23 de Abril de 2024} \\
+    \small {Nombre completo: Andrés López González} \\
+    \small {Tarea número X}
+\end{minipage}
+\hfill
+\begin{minipage}{0.12\textwidth}
+    \includegraphics[width=\linewidth]{logo_universidad}
+\end{minipage}
+
+\section*{Cuestionario X}
+
+\subsection*{Pregunta 1. ¿Cuáles son las principales restricciones para desarrollar una máquina de movimiento perpetuo?}
+
+Las principales restricciones para desarrollar una máquina de movimiento perpetuo son:
+
+\begin{enumerate}
+    \item \textbf{Primera ley de la termodinámica}: Esta ley establece la conservación de la energía. En cualquier proceso, la energía no puede crearse ni destruirse, solo transformarse de una forma a otra. Una máquina de movimiento perpetuo de primera especie (que produce trabajo sin consumir energía) violaría esta ley.
+    \item \textbf{Segunda ley de la termodinámica}: Esta ley implica que en cualquier proceso real siempre hay una pérdida de energía utilizable debido a la entropía. Una máquina de movimiento perpetuo de segunda especie (que transforma toda la energía térmica en trabajo sin pérdidas) violaría esta ley.
+    \item \textbf{Fricción y resistencia}: En cualquier sistema mecánico real, existen fuerzas de fricción y resistencia (como la resistencia del aire) que disipan energía en forma de calor, haciendo imposible el mantenimiento del movimiento perpetuo sin una fuente externa de energía.
+\end{enumerate}
+
+\subsection*{Pregunta 2. Diseñe o dé una idea realista de una máquina o dispositivo que sea energéticamente autosuficiente.}
+
+Un ejemplo realista de un dispositivo energéticamente autosuficiente es un panel solar fotovoltaico con almacenamiento de batería.
+
+\textbf{Descripción:}
+
+\begin{enumerate}
+    \item \textbf{Paneles solares}: Capturan la energía solar y la convierten en electricidad.
+    \item \textbf{Baterías}: Almacenan la energía eléctrica generada durante el día para su uso nocturno o en días nublados.
+    \item \textbf{Sistema de gestión de energía}: Optimiza el uso de la energía generada y almacenada, asegurando el funcionamiento continuo del sistema.
+\end{enumerate}
+
+Este sistema es energéticamente autosuficiente en el sentido de que puede operar indefinidamente mientras reciba suficiente luz solar, aunque requiere mantenimiento y reemplazo de componentes a lo largo del tiempo.
+
+\subsection*{Pregunta 3. Además del caso ejemplificado en la actividad experimental 13, ¿en qué otro fenómeno o experiencia cotidiana está presente el concepto de velocidad terminal? Explique en detalle y presente el modelo teórico que lo describe.}
+
+Otro ejemplo cotidiano donde está presente el concepto de velocidad terminal es el paracaidismo.
+
+\textbf{Descripción:}
+
+\begin{itemize}
+    \item \textbf{Fenómeno}: Cuando un paracaidista salta de un avión, inicialmente acelera hacia abajo debido a la gravedad. A medida que su velocidad aumenta, la resistencia del aire también aumenta.
+    \item \textbf{Velocidad terminal}: Llega un momento en que la fuerza de resistencia del aire iguala la fuerza gravitacional, y el paracaidista deja de acelerar, alcanzando su velocidad terminal.
+\end{itemize}
+
+\textbf{Modelo teórico:}
+
+\begin{itemize}
+    \item \textbf{Fuerza gravitacional} ($ F_g $): $ F_g = mg $ donde $ m $ es la masa del paracaidista y $ g $ es la aceleración debida a la gravedad.
+    \item \textbf{Fuerza de resistencia} ($ F_d $): $ F_d = \frac{1}{2} C_d \rho A v^2 $ donde $ C_d $ es el coeficiente de arrastre, $ \rho $ es la densidad del aire, $ A $ es el área frontal del paracaidista y $ v $ es la velocidad.
+\end{itemize}
+
+En la velocidad terminal $ v_t $:
+
+\[ mg = \frac{1}{2} C_d \rho A v_t^2 \]
+
+Resolviendo para $ v_t $:
+
+\[ v_t = \sqrt{\frac{2mg}{C_d \rho A}} \]
+
+\subsection*{Pregunta 4. Hasta ahora se ha considerado a sistemas en los cuales la masa se mantiene como una constante, ¿En qué fenómenos o sistemas físicos conocidos, la masa no se mantiene constante? Dé al menos tres ejemplos.}
+En clase no se ha abarcado este tipo de sistemas pero los mas conocidos e interesantes a mi parecer son:
+
+\begin{enumerate}
+    \item \textbf{Cohetes}: La masa de un cohete disminuye continuamente a medida que quema combustible para generar empuje según la ecuación del cohete de Tsiolkovsky.
+    \item \textbf{Desintegración radiactiva}: En la desintegración nuclear, los núcleos atómicos se transforman en otros elementos y partículas, cambiando la masa del material radiactivo.
+    \item \textbf{Sistemas biológicos}: Los organismos vivos pueden ganar o perder masa a través de la ingesta de alimentos y la excreción de desechos, así como el consumo de reservas energéticas internas.
+\end{enumerate}
+
+\subsection*{Pregunta 5. ¿Qué función conoces, que represente un fenómeno en el cual la fuerza sea función tanto de la posición como de la velocidad? Explica en detalle.}
+
+Un ejemplo de una fuerza que depende tanto de la posición como de la velocidad es la fuerza de arrastre en un oscilador armónico amortiguado.
+
+\textbf{Descripción:}
+
+\begin{itemize}
+    \item \textbf{Oscilador armónico amortiguado}: Un sistema donde un objeto está sujeto a una fuerza restauradora proporcional a su desplazamiento ($ -kx $) y una fuerza de amortiguamiento proporcional a su velocidad ($ -bv $).
+\end{itemize}
+
+\textbf{Ecuación de movimiento:}
+
+\[ m \ddot{x} + b \dot{x} + kx = 0 \]
+
+Aquí:
+\begin{itemize}
+    \item $ m $ es la masa del objeto.
+    \item $ \ddot{x} $ es la aceleración.
+    \item $ b $ es el coeficiente de amortiguamiento.
+    \item $ \dot{x} $ es la velocidad.
+    \item $ k $ es la constante del resorte.
+    \item $ x $ es la posición.
+\end{itemize}
+
+La fuerza total $ F $ es:
+
+\[ F = -kx - b \dot{x} \]
+
+Esta ecuación representa cómo la fuerza en el sistema depende tanto de la posición ($ x $) como de la velocidad ($ \dot{x} $).
+
+\end{document}
+
+
+\end{document}

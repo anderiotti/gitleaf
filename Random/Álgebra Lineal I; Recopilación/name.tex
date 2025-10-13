@@ -1,0 +1,486 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage{pgfplots}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{mdframed}
+\usepackage{amsthm}
+\usepackage{physics}
+\usepackage{derivative}
+\usepackage{hyperref}
+\usepackage{wrapfig}
+\renewcommand{\theenumi}{\roman{enumi}}
+
+\geometry{a4paper, left=2cm, right=2cm, top=1cm, bottom=2cm}
+
+\pgfplotsset{compat=1.18}
+\begin{document}
+
+\begin{minipage}{0.7\textwidth}
+    \small \textbf{Álgebra Lineal I}  \\
+    \small {Facultad de Ciencias, Universidad Nacional Autónoma de México} \\
+    \small {Fecha de entrega: 4 de Noviembre de 2024} \\
+    \small {Problemas variados} \\
+    \small {Desarrollo selecto por inciso}
+\end{minipage}
+\hfill
+\begin{minipage}{0.12\textwidth}
+    \includegraphics[width=\linewidth]{logo_universidad}
+\end{minipage}
+
+
+\subsection*{Inciso i)}
+
+
+Se tiene al espacio vectorial V definido de la forma
+\( V = \{ p(x) \in \mathbb{R}[x] : \partial(p(x)) \leq 2 \} \), i.e., \( V \) es el espacio de los polinomios de grado a lo sumo 2, en donde se entiende que el término cuadrático es no nulo. \\
+La aplicación lineal abordada mapea V en W quien por su parte está definido de la forma
+\( W = \{ p(x) \in \mathbb{R}[x] : \partial(p(x)) \leq 3 \} \), i.e., \( W \) es el espacio de los polinomios de grado a lo sumo 3. \\
+
+Defínase el homomorfismo \( f : V \rightarrow W \) caracterizado como
+\[
+f(a_0 + a_1 x + a_2 x^2) = (a_0 + a_1) + (a_1 + a_2) x + (a_0 + a_2) x^2 + (a_0 + a_1) x^3.
+\]
+Véase que aquí el enunciado nos menciona una etiqueta para cada coeficiente del polinomio de grado a lo sumo 2, de modo que $V := span(1,x,x^2)=a_0 + a_1 x + a_2 x^2$ en donde $\forall i\in I, \; a_i \in \mathbb{R} : I = \{0,1,2\}$. De forma simple cada elemento de V se expresa como \( p(x) = a_0 + a_1 x + a_2 x^2 \), y \( f \) le asigna un polinomio en \( W \) de la forma
+\[
+f(p(x)) = (a_0 + a_1) + (a_1 + a_2) x + (a_0 + a_2) x^2 + (a_0 + a_1) x^3.
+\]
+
+Se nos proporcionan las bases que caracterizan a cada espacio vectorial:
+\begin{enumerate}
+\item Para \( V \): \( \beta = \{1, 1 + x, 1 + x + x^2\} \).
+\item Para \( W \): \( \gamma = \{1, x - 1, x^2 - x, x^3 - x^2\} \).
+\end{enumerate}
+
+El objetivo es encontrar la matriz de \( f \) con respecto a las bases \( \beta \) y \( \gamma \), i.e., queremos hallar la matriz \( [f]_\beta^\gamma \); para este propósito tomaremos el isomorfismo $\Tilde{f}:F^3 \rightarrow F^4$, en particular por ser polinomios de coeficientes reales $F=\mathbb{R}$.
+
+\begin{mdframed}
+    \textit{Nota: recuérdese que el isomorfismo polinomial de a lo sumo grado enésimo se establece con $F^{n+1}$ de la forma}
+    \begin{equation}
+        \sum_{i=0}^n \alpha_i x^i \longmapsto \sum_{i=0}^n \alpha_i \mathfrak{e}_{\hat{i}}
+    \end{equation}
+    De modo que esta aplicación lineal es revertible.
+\end{mdframed}
+
+Paso I: Haremos un mapeo de los elementos de la base $\beta$ bajo los criterios del homomorfismo, viz., debe calcularse \( f(1) \), \( f(1 + x) \) y \( f(1 + x + x^2) \), posteriormente expresarse en términos de una combinación lineal de elementos de la base \( \gamma \). \\
+
+\noindent \textit{i. Cálculo de \( f(1) \):}
+
+   Tomamos \( p(x) = 1 \), es decir, \( a_0 = 1 \), \( a_1 = 0 \), y \( a_2 = 0 \).
+
+   Entonces:
+   \[
+   f(1) = (a_0 + a_1) + (a_1 + a_2)x + (a_0 + a_2)x^2 + (a_0 + a_1)x^3 = 1 + 0 + 1 \cdot x^2 + 1 \cdot x^3 = 1 + x^2 + x^3.
+   \]
+
+   Ahora expresamos \( 1 + x^2 + x^3 \) en términos de la base \( \gamma \):
+   \[
+   1 + x^2 + x^3 = 1 \cdot (1) + 0 \cdot (x - 1) + 1 \cdot (x^2 - x) + 1 \cdot (x^3 - x^2).
+   \]
+   Por lo tanto:
+   \[
+   f(1) = 1 \cdot (1) + 0 \cdot (x - 1) + 1 \cdot (x^2 - x) + 1 \cdot (x^3 - x^2).
+   \]
+   Los coeficientes de \( f(1) \) en la base \( \gamma \) son \( (1, 0, 1, 1) \). \\
+
+\noindent \textit{ii. Cálculo de \( f(1 + x) \):}
+
+   Tomamos \( p(x) = 1 + x \), es decir, \( a_0 = 1 \), \( a_1 = 1 \), y \( a_2 = 0 \).
+
+   Entonces:
+   \[
+   f(1 + x) = (a_0 + a_1) + (a_1 + a_2)x + (a_0 + a_2)x^2 + (a_0 + a_1)x^3 = 2 + x + x^3.
+   \]
+
+   Expresamos \( 2 + x + x^3 \) en términos de la base \( \gamma \):
+   \[
+   2 + x + x^3 = 2 \cdot (1) + 1 \cdot (x - 1) + 0 \cdot (x^2 - x) + 1 \cdot (x^3 - x^2).
+   \]
+   Los coeficientes de \( f(1 + x) \) en la base \( \gamma \) son \( (2, 1, 0, 1) \). \\
+
+\noindent\textit{iii. Cálculo de \( f(1 + x + x^2) \):}
+
+   Tomamos \( p(x) = 1 + x + x^2 \), es decir, \( a_0 = 1 \), \( a_1 = 1 \), y \( a_2 = 1 \).
+
+   Entonces:
+   \[
+   f(1 + x + x^2) = (a_0 + a_1) + (a_1 + a_2)x + (a_0 + a_2)x^2 + (a_0 + a_1)x^3 = 2 + 2x + 2x^2 + 2x^3.
+   \]
+
+   Expresamos \( 2 + 2x + 2x^2 + 2x^3 \) en términos de la base \( \gamma \):
+   \[
+   2 + 2x + 2x^2 + 2x^3 = 2 \cdot (1) + 2 \cdot (x - 1) + 2 \cdot (x^2 - x) + 2 \cdot (x^3 - x^2).
+   \]
+   Los coeficientes de \( f(1 + x + x^2) \) en la base \( \gamma \) son \( (2, 2, 2, 2) \).
+
+Paso II: Construir la matriz de \( f \) en las bases \( \beta \) y \( \gamma \)
+
+Ahora que tenemos las imágenes de los elementos de \( \beta \) en términos de \( \gamma \), podemos construir la matriz de \( f \) dado que el homomorfismo está bien definido podemos construir nuestra aplicación lineal en forma matricial utilizando los resultados previos como columnas:
+\[
+\therefore [f]_\beta^\gamma = \begin{pmatrix} 1 & 2 & 2 \\ 0 & 1 & 2 \\ 1 & 0 & 2 \\ 1 & 1 & 2 \end{pmatrix}.
+\]
+ \textit{ }
+\hline
+\subsection*{Inciso (ii)}
+
+Dado los siguientes parámetros:
+\begin{enumerate}
+\item \( V = M_{2 \times 2}(\mathbb{R}) \), el espacio de matrices \( 2 \times 2 \) con entradas reales.
+\item Una matriz fija \( A = \begin{pmatrix} a & b \\ c & d \end{pmatrix} \).
+\item El homomorfismo \( f : V \rightarrow V \) está definido por \( f(B) = BA \), es decir, \( f \) es una transformación lineal en \( V \) que toma una matriz \( B \in M_{2 \times 2}(\mathbb{R}) \) y le asigna el producto \( BA \).
+\end{enumerate}
+
+Considérese la base canónica de \( V \):
+\[
+\beta = \left\{ E_{11} = \begin{pmatrix} 1 & 0 \\ 0 & 0 \end{pmatrix}, E_{12} = \begin{pmatrix} 0 & 1 \\ 0 & 0 \end{pmatrix}, E_{21} = \begin{pmatrix} 0 & 0 \\ 1 & 0 \end{pmatrix}, E_{22} = \begin{pmatrix} 0 & 0 \\ 0 & 1 \end{pmatrix} \right\}.
+\]
+Que como se observa, es la base estándard para las matrices $2x2$; queremos encontrar la matriz de \( f \) en la base canónica \( \beta \), es decir, buscamos la matriz \( [f]_\beta \) que representa la transformación \( f \) en términos de esta base.\\
+
+Paso I: Aplicar \( f \) a cada uno de los elementos de la base \( \beta \)
+
+Para construir la matriz de \( f \), necesitamos calcular \( f(E_{11}) \), \( f(E_{12}) \), \( f(E_{21}) \) y \( f(E_{22}) \) y expresar cada resultado como una combinación lineal de los elementos de la base \( \beta \).
+
+\textit{i. Cálculo de \( f(E_{11}) \):}
+
+   \[
+   f(E_{11}) = E_{11} \cdot A = \begin{pmatrix} 1 & 0 \\ 0 & 0 \end{pmatrix} \begin{pmatrix} a & b \\ c & d \end{pmatrix} = \begin{pmatrix} a & b \\ 0 & 0 \end{pmatrix}.
+   \]
+
+   Ahora expresamos \( f(E_{11}) = \begin{pmatrix} a & b \\ 0 & 0 \end{pmatrix} \) como combinación lineal de los elementos de la base \( \beta \), dado que es la base canónica es inmediato ver qué coeficientes son no nulos de valor uno y cuales son cero:
+   \[
+   f(E_{11}) = a \cdot E_{11} + b \cdot E_{12} + 0 \cdot E_{21} + 0 \cdot E_{22}.
+   \]
+   Los coeficientes de \( f(E_{11}) \) en términos de la base \( \beta \) son \( (a, b, 0, 0) \).
+
+\textit{ii. Cálculo de \( f(E_{12}) \):}
+
+   \[
+   f(E_{12}) = E_{12} \cdot A = \begin{pmatrix} 0 & 1 \\ 0 & 0 \end{pmatrix} \begin{pmatrix} a & b \\ c & d \end{pmatrix} = \begin{pmatrix} c & d \\ 0 & 0 \end{pmatrix}.
+   \]
+
+   Expresamos \( f(E_{12}) = \begin{pmatrix} c & d \\ 0 & 0 \end{pmatrix} \) como combinación lineal de los elementos de la base \( \beta \):
+   \[
+   f(E_{12}) = c \cdot E_{11} + d \cdot E_{12} + 0 \cdot E_{21} + 0 \cdot E_{22}.
+   \]
+   Los coeficientes de \( f(E_{12}) \) en términos de la base \( \beta \) son \( (c, d, 0, 0) \).
+
+\textit{iii. Cálculo de \( f(E_{21}) \):}
+
+   \[
+   f(E_{21}) = E_{21} \cdot A = \begin{pmatrix} 0 & 0 \\ 1 & 0 \end{pmatrix} \begin{pmatrix} a & b \\ c & d \end{pmatrix} = \begin{pmatrix} 0 & 0 \\ a & b \end{pmatrix}.
+   \]
+
+   Expresamos \( f(E_{21}) = \begin{pmatrix} 0 & 0 \\ a & b \end{pmatrix} \) como combinación lineal de los elementos de la base \( \beta \):
+   \[
+   f(E_{21}) = 0 \cdot E_{11} + 0 \cdot E_{12} + a \cdot E_{21} + b \cdot E_{22}.
+   \]
+   Los coeficientes de \( f(E_{21}) \) en términos de la base \( \beta \) son \( (0, 0, a, b) \).
+
+\textit{iv. Cálculo de \( f(E_{22}) \):}
+
+   \[
+   f(E_{22}) = E_{22} \cdot A = \begin{pmatrix} 0 & 0 \\ 0 & 1 \end{pmatrix} \begin{pmatrix} a & b \\ c & d \end{pmatrix} = \begin{pmatrix} 0 & 0 \\ c & d \end{pmatrix}.
+   \]
+
+   Expresamos \( f(E_{22}) = \begin{pmatrix} 0 & 0 \\ c & d \end{pmatrix} \) como combinación lineal de los elementos de la base \( \beta \):
+   \[
+   f(E_{22}) = 0 \cdot E_{11} + 0 \cdot E_{12} + c \cdot E_{21} + d \cdot E_{22}.
+   \]
+   Los coeficientes de \( f(E_{22}) \) en términos de la base \( \beta \) son \( (0, 0, c, d) \). \\
+
+Paso II: Construir la matriz de \( f \) en la base \( \beta \)
+
+Con los resultados obtenidos en el Paso I, podemos construir la matriz de \( f \) en la base \( \beta \), donde cada columna corresponde a los coeficientes de \( f(E_{ij}) \) en la base \( \beta \) (esto empleando el teorema del ejercicio anterior), en general, este inciso aplica un algoritmo bastante análogo al inciso anterior.
+\[
+\therefore [f]_\beta = \begin{pmatrix} a & c & 0 & 0 \\ b & d & 0 & 0 \\ 0 & 0 & a & c \\ 0 & 0 & b & d \end{pmatrix}.
+\]
+
+\newpage
+
+\subsection*{Ejercicio 3}
+Sea \( f \in \text{End}(\mathbb{R}^3) \) dado por:
+\[
+f\left( \begin{pmatrix} x \\ y \\ z \end{pmatrix} \right) = \begin{pmatrix} 2x + 4y - z \\ 0 \\ 3x + 2y - z \end{pmatrix}.
+\]
+Calcule \( \text{Im}(f) \) y \( \text{Nuc}(f) \), determine si son ajenos, y calcule una base tanto para \( \text{Im}(f) \) como para \( \text{Nuc}(f) \). \\\\
+
+Primero, vease que \( f \) es una aplicación lineal de \( \mathbb{R}^3 \) en sí mismo, pues mapea elementos de $\mathbb{R}^3$ en $\mathbb{R}^3$.
+
+Paso I: Determinar la Imagen de \( f \) (\( \text{Im}(f) \))
+
+Para encontrar \( \text{Im}(f) \), calcularemos la matriz asociada a la aplicación lineal \( f \) y luego determinaremos su rango; la matriz de \( f \) en la base canónica de \( \mathbb{R}^3 \) se obtiene calculando \( f \) en cada vector de la base canónica:
+\begin{enumerate}
+\item \( f\left( \begin{pmatrix} 1 \\ 0 \\ 0 \end{pmatrix} \right) = \begin{pmatrix} 2 \\ 0 \\ 3 \end{pmatrix} \).
+\item \( f\left( \begin{pmatrix} 0 \\ 1 \\ 0 \end{pmatrix} \right) = \begin{pmatrix} 4 \\ 0 \\ 2 \end{pmatrix} \).
+\item \( f\left( \begin{pmatrix} 0 \\ 0 \\ 1 \end{pmatrix} \right) = \begin{pmatrix} -1 \\ 0 \\ -1 \end{pmatrix} \).
+\end{enumerate}
+
+Por lo tanto, la matriz asociada a \( f \) es:
+\[
+A = \begin{pmatrix} 2 & 4 & -1 \\ 0 & 0 & 0 \\ 3 & 2 & -1 \end{pmatrix}.
+\]
+
+De inmediato podemos observar que el determinante de esta matriz es cero lo cual nos dice que la aplicación lineal no es isomorfa y por lo tanto la nulidad de $f$ es distinta de cero, i.e., el kernel de $f$ es un espacio vectorial distinto al cero vector. Calculamos el rango de \( A \) para encontrar la dimensión de \( \text{Im}(f) \).
+
+Realizamos operaciones por filas para llevar \( A \) a su forma de Jordan: \\
+i. Restamos \( \frac{3}{2} \) veces la primera fila a la tercera fila para obtener:
+   \[
+   A \sim \begin{pmatrix} 2 & 4 & -1 \\ 0 & 0 & 0 \\ 0 & -4 & \frac{1}{2} \end{pmatrix}.
+   \]
+ii. Dividimos la tercera fila por \( -4 \):
+   \[
+   A \sim \begin{pmatrix} 2 & 4 & -1 \\ 0 & 0 & 0 \\ 0 & 1 & -\frac{1}{8} \end{pmatrix}.
+   \]
+
+El rango de \( A \) es \( 2 \), por lo que \( \dim(\text{Im}(f)) = 2 \), de aquí vemos que la nulidad de A es uno.
+
+Para encontrar una base para \( \text{Im}(f) \), tomamos las columnas independientes de \( A \), que corresponden a las primeras dos columnas:
+\[
+\text{Im}(f) = \text{span} \left\{ \begin{pmatrix} 2 \\ 0 \\ 3 \end{pmatrix}, \begin{pmatrix} 4 \\ 0 \\ 2 \end{pmatrix} \right\}.
+\]
+
+Simplificando, una base para \( \text{Im}(f) \) es:
+\[
+\left\{ \begin{pmatrix} 2 \\ 0 \\ 3 \end{pmatrix}, \begin{pmatrix} 2 \\ 0 \\ 1 \end{pmatrix} \right\}.
+\]
+
+Paso II: Determinar el Núcleo de \( f \).
+
+El núcleo de \( f \), \( \text{Nuc}(f) \), es el conjunto de vectores \( \begin{pmatrix} x \\ y \\ z \end{pmatrix} \) en \( \mathbb{R}^3 \) tales que f los mapea al cero, formalmente \[ f\left( \begin{pmatrix} x \\ y \\ z \end{pmatrix} \right) = \begin{pmatrix} 0 \\ 0 \\ 0 \end{pmatrix} \].
+
+Esto implica resolver el sistema de ecuaciones:
+\[
+\begin{cases} 
+2x + 4y - z = 0, \\ 
+0 = 0, \\
+3x + 2y - z = 0.
+\end{cases}
+\]
+
+Véase que por un teorema de Álgebra Superior I el conjunto solución es un espacio vectorial y en particular, al tener k filas linealmente dependientes de un sistema nxn entonces la base de este espacio vectorial es de cardinalidad n-k. En este caso la segunda fila es linealmente dependiente a la primera o a la segunda, i.e. k=2. El sistema se reduce a las dos ecuaciones:
+\begin{align*}
+2x + 4y - z &= 0 \\
+3x + 2y - z &= 0
+\end{align*}
+
+Restamos la primera ecuación de la segunda para simplificar:
+\[
+(3x + 2y - z) - (2x + 4y - z) = 0.
+\]
+Esto nos da:
+\[
+x - 2y = 0 \Rightarrow x = 2y.
+\]
+
+Sustituyendo \( x = 2y \) en la primera ecuación:
+\[
+2(2y) + 4y - z = 0 \Rightarrow 4y + 4y - z = 0 \Rightarrow 8y = z.
+\]
+Por lo tanto, tenemos que:
+\[
+x = 2y \quad \text{y} \quad z = 8y.
+\]
+
+El conjunto de soluciones es de la forma:
+\[
+\begin{pmatrix} x \\ y \\ z \end{pmatrix} = \begin{pmatrix} 2y \\ y \\ 8y \end{pmatrix} = y \begin{pmatrix} 2 \\ 1 \\ 8 \end{pmatrix}.
+\]
+
+Nótese que efectivamente en nuestro sistema de 3x3 obtuvimos el espacio vectorial conjunto solución de dimensión $n-k=3-2$. Entonces, una base para \( \text{Nuc}(f) \) es:
+\[
+\left\{ \begin{pmatrix} 2 \\ 1 \\ 8 \end{pmatrix} \right\}.
+\]
+
+Ya que esta base tiene un solo vector (y de hecho anteriormente lo habíamos deducido), obtenemos que la nulidad de A es 1.
+
+Paso III: Determinar si \( \text{Im}(f) \) y \( \text{Nuc}(f) \) son espacios ajenos
+
+Dos subespacios de un espacio vectorial son ajenos/disjuntos si su intersección contiene solo el vector cero.
+\begin{enumerate}
+\item Sabemos que el rango de f es 2 y la nulidad de f es 1.
+\item Como estamos en \( \mathbb{R}^3 \), y la suma de las dimensiones de \( \text{Im}(f) \) y \( \text{Nuc}(f) \) es igual a 3, que es la dimensión del espacio total, concluimos que:
+   \[
+   \text{Im}(f) \cap \text{Nuc}(f) = \{ 0 \}.
+   \]
+\end{enumerate}
+Pues de no ser así contradeciría el teorema de la dimensión; por lo tanto, \( \text{Im}(f) \) y \( \text{Nuc}(f) \) son espacios ajenos.
+
+
+
+\section*{Problema 4}
+
+Argumente y calcule cuántos monomorfismos distintos existen en \( \text{Hom} \left( F^2, F^4 \right) \) si \( F = \mathbb{Z}_7 \).\\\\
+
+Primero, recordemos que un monomorfismo es una transformación lineal inyectiva, veamos las hipótesis que tenemos:
+
+\begin{enumerate}
+\item \( F^2 \) es un espacio vectorial de dimensión 2 sobre el campo \( F = \mathbb{Z}_7 \).
+\item \( F^4 \) es un espacio vectorial de dimensión 4 sobre el mismo campo \( F = \mathbb{Z}_7 \).
+\item El espacio \( \text{Hom}(F^2, F^4) \) consiste en todas las aplicaciones lineales de \( F^2 \) en \( F^4 \). Dado que cada aplicación lineal se representa por una matriz de tamaño \( 4 \times 2 \), podemos identificar cada aplicación lineal con una matriz de este tipo.
+\end{enumerate}
+
+Queremos contar cuántos de estos mapeos son inyectivos; para que una transformación lineal \( T : F^2 \rightarrow F^4 \) sea inyectiva, su matriz asociada (de tamaño \( 4 \times 2 \)) debe tener rango 2 (es decir, sus columnas deben ser linealmente independientes), de aquí nacen dos nuevas condiciones.
+
+\begin{enumerate}
+\item Dado que \( F = \mathbb{Z}_7 \), cada vector en \( F^4 \) tiene \( 7 \) opciones para cada componente.
+\item Para construir una matriz de rango 2, seleccionamos dos vectores en \( F^4 \) que sean linealmente independientes.
+\end{enumerate}
+
+El número de maneras de escoger el primer vector (no nulo) es \( 7^4 - 1 \) (pues hay \( 7^4 \) vectores posibles y estamos excluyendo el vector cero). Para el segundo vector, necesitamos que sea linealmente independiente del primero. Esto equivale a seleccionar un vector que no esté en el subespacio generado por el primer vector, que contiene \( 7 \) elementos (los múltiplos del primer vector).
+
+Por lo tanto, el número de opciones para el segundo vector es \( 7^4 - 7 \), vease que se ha formado un patrón... Entonces, el número total de matrices de rango 2 (es decir, el número de monomorfismos distintos) es:
+\[
+(7^4 - 1)(7^4 - 7).
+\]
+
+Calculando:
+\[
+7^4 = 2401,
+\]
+por lo que:
+\[
+7^4 - 1 = 2400 \quad \text{y} \quad 7^4 - 7 = 2394.
+\]
+Así, el número total de monomorfismos es:
+\[
+2400 \cdot 2394 = 5,745,600.
+\]
+
+$\therefore$ Existen \( 5,745,600 \) monomorfismos distintos en \( \text{Hom}(F^2, F^4) \) si \( F = \mathbb{Z}_7 \).
+
+
+
+
+\section*{Ejercicio 6}
+
+Determinaremos si existe un subespacio de \( V = F^4 \) de dimensión 2 que sea invariante bajo la transformación lineal \( f \) dada por:
+
+\[
+f \begin{pmatrix} a \\ b \\ c \\ d \end{pmatrix} = \begin{pmatrix} a - b \\ a - b \\ a - b \\ c - b - d \end{pmatrix}.
+\]
+
+Para ello, analizaremos la estructura de la transformación \( f \) y buscaremos un subespacio de dimensión 2 que cumpla con la condición de invariancia bajo \( f \).\\
+
+
+Paso I: Compréndase la Naturaleza de la Transformación \( f \)
+
+Para obtener una visión más clara de \( f \), examinemos la acción de \( f \) sobre vectores generales en \( V = F^4 \).
+
+Sea \( \mathbf{v} = \begin{pmatrix} a \\ b \\ c \\ d \end{pmatrix} \). Entonces, la imagen de \( \mathbf{v} \) bajo \( f \) es:
+
+\[
+f(\mathbf{v}) = f \begin{pmatrix} a \\ b \\ c \\ d \end{pmatrix} = \begin{pmatrix} a - b \\ a - b \\ a - b \\ c - b - d \end{pmatrix}.
+\]
+
+Observamos que las primeras tres entradas de \( f(\mathbf{v}) \) son iguales a \( a - b \), mientras que la cuarta entrada es \( c - b - d \). Esto sugiere que la transformación \( f \) tiene una estructura particular, lo cual podemos explorar descomponiéndola en términos de ciertos vectores básicos.
+
+Paso II: Expresar \( f \) en Términos de una Matriz
+
+Podemos representar \( f \) por una matriz que actúa en \( V \) (con respecto a la base estándar de \( F^4 \)) de la siguiente forma:
+
+\[
+f \begin{pmatrix} a \\ b \\ c \\ d \end{pmatrix} = \begin{pmatrix} 1 & -1 & 0 & 0 \\ 1 & -1 & 0 & 0 \\ 1 & -1 & 0 & 0 \\ 0 & -1 & 1 & -1 \end{pmatrix} \begin{pmatrix} a \\ b \\ c \\ d \end{pmatrix}.
+\]
+
+Por lo tanto, la matriz asociada a \( f \) es simplemente:
+
+\[
+A = \begin{pmatrix} 1 & -1 & 0 & 0 \\ 1 & -1 & 0 & 0 \\ 1 & -1 & 0 & 0 \\ 0 & -1 & 1 & -1 \end{pmatrix}.
+\]
+
+Paso III: Análisis de los eigenvectores y eigenvalores de \( A \) para la determinación del subespacio invariante.
+
+Calculemos los eigenvalores de \( A \) resolviendo la ecuación característica \( \det(A - \lambda I) = 0 \), donde \( I \) es la matriz identidad de tamaño \( 4 \times 4 \).
+
+La matriz \( A - \lambda I \) es:
+   \[
+   A - \lambda I = \begin{pmatrix} 1 - \lambda & -1 & 0 & 0 \\ 1 & -1 - \lambda & 0 & 0 \\ 1 & -1 & -\lambda & 0 \\ 0 & -1 & 1 & -1 - \lambda \end{pmatrix}.
+   \]
+
+Para calcular el determinante de \( A - \lambda I \), expandimos por cofactores:
+
+\[
+\det(A - \lambda I) = \begin{vmatrix} 1 - \lambda & -1 & 0 & 0 \\ 1 & -1 - \lambda & 0 & 0 \\ 1 & -1 & -\lambda & 0 \\ 0 & -1 & 1 & -1 - \lambda \end{vmatrix}.
+\]
+
+Observemos que esta matriz tiene varios ceros en la tercera columna, lo que simplifica el cálculo. Expandiendo a lo largo de la tercera columna:
+
+\[
+\det(A - \lambda I) = (-1)^{3+3}(-\lambda) \begin{vmatrix} 1 - \lambda & -1 & 0 \\ 1 & -1 - \lambda & 0 \\ 0 & -1 & -1 - \lambda \end{vmatrix} = -\lambda \begin{vmatrix} 1 - \lambda & -1 & 0 \\ 1 & -1 - \lambda & 0 \\ 0 & -1 & -1 - \lambda \end{vmatrix}.
+\]
+
+Ahora, calculemos el determinante de la submatriz \( 3 \times 3 \):
+
+\[
+\begin{vmatrix} 1 - \lambda & -1 & 0 \\ 1 & -1 - \lambda & 0 \\ 0 & -1 & -1 - \lambda \end{vmatrix}.
+\]
+
+Expandiendo por cofactores en la tercera columna:
+
+\[
+= (-1)(-1 - \lambda) \begin{vmatrix} 1 - \lambda & -1 \\ 1 & -1 - \lambda \end{vmatrix}.
+\]
+
+Ahora, calculemos el determinante de la submatriz \( 2 \times 2 \):
+
+\[
+\begin{vmatrix} 1 - \lambda & -1 \\ 1 & -1 - \lambda \end{vmatrix} = (1 - \lambda)(-1 - \lambda) - (-1)(1) = (1 - \lambda)(-1 - \lambda) + 1.
+\]
+
+Desarrollando los términos, obtenemos:
+
+\[
+= -\lambda^2 + \lambda - 1 + 1 = -\lambda^2 + \lambda.
+\]
+
+Entonces, el determinante es:
+
+\[
+\det(A - \lambda I) = -\lambda (-\lambda^2 + \lambda) = \lambda^3 - \lambda^2 = \lambda^2(\lambda - 1).
+\]
+
+De aquí obtenemos los eigenvalores:
+
+\[
+\lambda = 0 \quad \text{(con multiplicidad 2)} \quad \text{y} \quad \lambda = 1 \quad \text{(con multiplicidad 1)}.
+\]
+
+Paso IV: Encontrar los eigenvectores asociados
+
+Sustituyendo \( \lambda = 0 \) en \( A - \lambda I = A \), resolvemos el sistema:
+\[
+\begin{pmatrix} 1 & -1 & 0 & 0 \\ 1 & -1 & 0 & 0 \\ 1 & -1 & 0 & 0 \\ 0 & -1 & 1 & -1 \end{pmatrix} \begin{pmatrix} a \\ b \\ c \\ d \end{pmatrix} = \begin{pmatrix} 0 \\ 0 \\ 0 \\ 0 \end{pmatrix}.
+\]
+
+Vease que realmente estamos calculando el kernel de f, las primeras tres filas nos dan la ecuación \( a - b = 0 \), o sea \( a = b \). La última fila nos da \( -b + c - d = 0 \), es decir, \( c = b + d \).
+
+Entonces, los vectores en el subespacio propio asociado a \( \lambda = 0 \) tienen la forma:
+\[
+\begin{pmatrix} a \\ b \\ c \\ d \end{pmatrix} = \begin{pmatrix} b \\ b \\ b + d \\ d \end{pmatrix} = b \begin{pmatrix} 1 \\ 1 \\ 1 \\ 0 \end{pmatrix} + d \begin{pmatrix} 0 \\ 0 \\ 1 \\ 1 \end{pmatrix}.
+\]
+
+Por lo tanto, una base para el subespacio propio asociado a \( \lambda = 0 \) es:
+\[
+\left\{ \begin{pmatrix} 1 \\ 1 \\ 1 \\ 0 \end{pmatrix}, \begin{pmatrix} 0 \\ 0 \\ 1 \\ 1 \end{pmatrix} \right\}.
+\]
+
+Este subespacio, quien es de hecho el kernel de f, es de dimensión 2, lo cual satisface la condición de buscar un subespacio de dimensión 2 que sea invariante bajo \( f \); ya no necesitamos explorar con el siguiente eigenvalor pues el ejercicio ya ha sido resuelto y obsérvese que el cálculo es mucho más complejo.
+
+Sustituyendo \( \lambda = 1 \) en \( A - \lambda I \), tenemos:
+\[
+A - \lambda I = \begin{pmatrix} 0 & -1 & 0 & 0 \\ 1 & -2 & 0 & 0 \\ 1 & -1 & -1 & 0 \\ 0 & -1 & 1 & -2 \end{pmatrix}.
+\]
+
+Por lo que...
+\[
+span \left\{ \begin{pmatrix} 1 \\ 1 \\ 1 \\ 0 \end{pmatrix}, \begin{pmatrix} 0 \\ 0 \\ 1 \\ 1 \end{pmatrix} \right\}
+\]
+sí existe un subespacio de $F^4$ que es invariante bajo \( f \) y tiene dimensión 2. 
+
+\end{document}
+
+
+

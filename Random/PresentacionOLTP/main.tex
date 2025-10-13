@@ -1,0 +1,65 @@
+\documentclass{beamer}
+\usetheme{Madrid}
+\usecolortheme{default}
+
+\title{Proyecto 1 - OLTP - Colecciones}
+\subtitle{Bases de Datos a Gran Escala}
+\author{Equipo 13: \\ Andres Lopez Gonzalez \\ Carlos Fabian Esteva Gallegos}
+\date{}
+
+\begin{document}
+
+%---------------------------
+\begin{frame}
+  \titlepage
+\end{frame}
+
+%---------------------------
+\begin{frame}{Descripción del Proyecto}
+  \begin{itemize}
+    \item Encuentro mundial de coleccionistas de tarjetas deportivas.
+    \item Se diseña un sistema OLTP para gestionar deportes, equipos, jugadores y tarjetas.
+    \item Información clave:
+    \begin{itemize}
+      \item Deporte: nombre, descripción.
+      \item Equipo: nombre, ciudad, fechas de partidos.
+      \item Jugador: nombre, género, puesto, fechas, lugar de nacimiento.
+      \item Tarjeta: número, estado, fecha venta, medio adquisición.
+    \end{itemize}
+  \end{itemize}
+\end{frame}
+
+%---------------------------
+\begin{frame}{Modelo y Reglas}
+  \begin{itemize}
+    \item Se aplicaron \textbf{constraints} para integridad:
+    \begin{itemize}
+      \item Validación de nombres, géneros y estados.
+      \item Reglas de consistencia en fechas (ej. nacimiento $<$ pertenencia equipo).
+      \item Restricciones de adquisición y estado de tarjetas.
+    \end{itemize}
+    \item Procedimientos almacenados:
+    \begin{itemize}
+      \item \texttt{sp\_inserta}: inserción de deportes.
+      \item \texttt{sp\_borra}: eliminación segura de deportes (con validación de dependencias).
+    \end{itemize}
+  \end{itemize}
+\end{frame}
+
+%---------------------------
+\begin{frame}{Consultas y Resultados}
+  \begin{itemize}
+    \item \texttt{sp\_consultas} implementa 5 consultas parametrizadas:
+    \begin{enumerate}
+      \item Estado de tarjetas por equipo.
+      \item Medio de adquisición por jugador.
+      \item Relación deporte-equipo-tarjeta.
+      \item Equipos según estado de colección.
+      \item Jugadores y puesto dentro de un equipo.
+    \end{enumerate}
+    \item Resultados exportados a archivos de texto (\texttt{.txt}) para su análisis.
+  \end{itemize}
+\end{frame}
+
+\end{document}
+

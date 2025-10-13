@@ -1,0 +1,118 @@
+La radiometría es la rama de la óptica que estudia y cuantifica la propagación de la luz en términos de su energía e intensidad dentro del espectro electromagnético, que abarca longitudes de onda desde los 10 nm hasta los 1000 $\mu$m. Existen cuatro magnitudes fundamentales en radiometría que permiten describir el comportamiento de la luz:
+
+\begin{itemize}
+\item \textbf{Flujo de Radiación} $\Phi$ [W]: Es la tasa de flujo de energía por unidad de tiempo:
+
+\begin{mdframed}
+\begin{equation}
+\Phi = \frac{dQ}{dt}
+\end{equation}
+\end{mdframed}
+
+\item \textbf{Irradiancia} $I$ [W/m²]: Es la densidad de flujo de radiación por unidad de área en una superficie:
+
+\begin{mdframed}
+\begin{equation}
+    I = \frac{d\Phi}{ds_0}
+\end{equation}
+\end{mdframed}
+
+donde $ds_0$ es un elemento de área sobre la superficie de estudio.
+
+\item \textbf{Intensidad Radiante} $E$ [W/sr]: Se define como el flujo por unidad de ángulo sólido:
+
+\begin{mdframed}
+\begin{equation}
+    E = \frac{d\Phi}{d\omega}
+\end{equation}
+\end{mdframed}
+
+donde $d\omega$ es un elemento de ángulo sólido.
+
+\item \textbf{Radiancia} $L$ [W/m²sr]: Representa la densidad de flujo por unidad de área proyectada y por unidad de ángulo sólido:
+
+\begin{mdframed}
+\begin{equation}
+    L = \frac{d^2\Phi}{ds_0 d\omega} = \frac{d^2\Phi}{ds \cos\theta d\omega}
+\end{equation}
+\end{mdframed}
+
+donde $ds$ es la proyección del área $ds_0$ en la dirección del ángulo sólido $d\omega$.
+
+\end{itemize}
+
+El flujo total de radiación se obtiene integrando la radiancia sobre el área de detección y el ángulo sólido:
+
+\begin{mdframed}
+\begin{equation}
+\Phi = \int_A \int_{\Omega} L(x,y,\theta,\phi) \cos\theta d\omega ds_0
+\end{equation}
+\end{mdframed}
+
+Para describir la propagación de la luz desde una fuente, se consideran dos modelos teóricos principales: la propagación según la \textbf{ley del inverso del cuadrado} y la propagación mediante un \textbf{haz colimado}.
+
+\subsection{Ley del Inverso del Cuadrado}
+
+Cuando una fuente de luz puede aproximarse como puntual y la distancia entre la fuente y el detector es suficientemente grande (por convención, esto es cuando la diagonal de mayor tamaño de la fuente luminosa es a lo más $\frac{R}{20}$, en donde R es la distancia entre la fuente y el sensor), la irradiancia sigue la ley del inverso del cuadrado:
+
+\begin{mdframed}
+\begin{equation}
+I_{Det} = \frac{K}{R^2}
+\end{equation}
+\end{mdframed}
+
+donde $K$ es una constante y $R$ la distancia entre la fuente y el detector. Esta relación se deduce a partir de la geometría de emisión y la conservación del flujo radiante.
+
+\subsection{Haz Colimado}
+
+Para un haz colimado, la radiancia se mantiene constante en la dirección de propagación, lo que implica que la irradiancia no depende de la distancia:
+
+\begin{mdframed}
+\begin{equation}
+I = L_0
+\end{equation}
+\end{mdframed}
+
+donde $L_0$ es la radiancia constante del haz.
+
+Dado que las fuentes reales no son perfectamente puntuales ni perfectamente colimadas, en la práctica la irradiancia sigue un modelo generalizado:
+
+\begin{mdframed}
+\begin{equation}
+I = K r^m
+\end{equation}
+\end{mdframed}
+
+donde $m$ es el \textbf{exponente de decaimiento} tal que $m \in [0,2]$, su valor es monótono creciente en cuanto su divergencia comienza a aumentar (de aquí se muestra que una fuente perfectamente colimada tendría divergencia cero y por ende exponente cero); en este estudio, consideraremos que un sistema sigue la "Ley del Inverso del Cuadrado" cuando su exponente \( m \) se aproxima a 2 desde valores ligeramente menores. Por otro lado, clasificaremos como "Haz Colimado" aquellos casos en los que el exponente de la distancia tienda a cero desde valores ligeramente positivos.
+
+\begin{comment}
+En este experimento se estudió la propagación de la luz de un LED y un láser, encontrando que:
+\begin{itemize}
+\item Para el LED: $I(r) \propto r^{-2.00 \pm 0.02}$, lo que concuerda con la ley del inverso del cuadrado.
+\item Para el láser: $I(r) \propto r^{-0.081 \pm 0.006}$, lo que indica un haz casi colimado.
+\end{itemize}
+
+Estos resultados confirman que la propagación de la luz depende de la naturaleza de la fuente y permiten validar los modelos teóricos de radiometría.
+\end{comment}
+
+\subsection{Hipótesis}
+
+La irradiancia de una fuente de luz depende de la distancia a la que se mide. En el caso de una \textbf{fuente puntual}, se espera que la irradiancia siga la \textbf{Ley del Inverso del Cuadrado}, es decir, que la relación entre la irradiancia \( I \) y la distancia \( r \) siga la forma:
+
+\begin{mdframed}
+\begin{equation}
+    I(r) \propto r^{-2}
+\end{equation}
+\end{mdframed}
+
+Por otro lado, para un \textbf{haz colimado} (como un láser), la irradiancia debería mantenerse aproximadamente constante con la distancia, siguiendo el modelo:
+
+\begin{mdframed}
+\begin{equation}
+    I(r) \propto r^{0}
+\end{equation}
+\end{mdframed}
+
+\subsection{Objetivos}
+
+Se busca medir la irradiancia de una fuente puntual y un haz colimado a distintas distancias, determinar su relación funcional con la distancia mediante la ecuación \( I(r) = K r^m \), comparar el exponente \( m \) obtenido con los valores teóricos esperados y evaluar la validez del modelo considerando posibles errores experimentales.

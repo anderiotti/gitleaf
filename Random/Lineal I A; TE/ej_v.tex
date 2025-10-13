@@ -1,0 +1,85 @@
+5. (1 pt) Para \( a \in F \), encuentre el conjunto solución del sistema:
+\[
+\begin{array}{r}
+x_{1}+x_{2}+a x_{3}=a \\
+x_{1}+a x_{2}-x_{3}=1 \\
+x_{1}+x_{2}-x_{3}=1
+\end{array}
+\]
+
+\begin{solution}
+
+La matriz aumentada correspondiente es:
+\[
+\begin{bmatrix}
+1 & 1 & a & | & a \\
+1 & a & -1 & | & 1 \\
+1 & 1 & -1 & | & 1
+\end{bmatrix}
+\]
+Procedemos a transformar esta matriz en su forma escalonada reducida por filas, restamos la primera fila de la segunda y la tercera para eliminar $x_1$ de estas ecuaciones:
+
+\[
+\begin{bmatrix}
+1 & 1 & a & | & a \\
+0 & a-1 & -a-1 & | & 1-a \\
+0 & 0 & -a-1 & | & 1-a
+\end{bmatrix}
+\]
+
+Observamos que las filas segunda y tercera dependen de a. Si $a=-1$, entonces el sistema se reduce a:
+
+\[
+\begin{bmatrix}
+1 & 1 & -1 & | & -1 \\
+0 & -2 & 0 & | & 2 \\
+0 & 0 & 0 & | & 2
+\end{bmatrix}
+\]
+La tercera fila indica una inconsistencia si $a=-1$, ya que implicaría $0=2$. Por lo tanto, no hay solución si $a=-1$.
+
+Si $a\neq-1$, dividimos la segunda fila por $a-1$:
+
+\[
+\begin{bmatrix}
+1 & 1 & a & | & a \\
+0 & 1 & \frac{-a-1}{a-1} & | & \frac{1-a}{a-1} \\
+0 & 0 & -a-1 & | & 1-a
+\end{bmatrix}
+\]
+
+Ya que la tercera fila es una combinación lineal de las otras dos, podemos omitirla. Ahora, hacemos sustituciones para despejar $x_1$ y $x_2$:
+
+
+Sustituimos en la primera fila para despejar $x_1$:
+
+\[
+x_1 = a - x_2 - a x_3
+\]
+
+La segunda fila nos da:
+
+\[
+x_2 = \frac{1-a}{a-1} + \frac{a+1}{a-1} x_3
+\]
+Así, el conjunto solución para $a \neq -1$ es:
+\[
+\left\{ \left( a - \left( \frac{1-a}{a-1} + \frac{a+1}{a-1} x_3 \right) - a x_3, \frac{1-a}{a-1} + \frac{a+1}{a-1} x_3, x_3 \right) \mid x_3 \in F \right\}
+\]
+Este conjunto representa las soluciones en términos del parámetro libre $x_3$. Cuando $a=-1$, como se ha demostrado, no hay soluciones debido a la inconsistencia del sistema. Escrito de forma más elegante.
+\[
+\text{span}\left\{
+\begin{bmatrix}
+-\left(a + \frac{a+1}{a-1}\right) \\
+\frac{a+1}{a-1} \\
+1
+\end{bmatrix}
+\right\} + 
+\begin{bmatrix}
+a - \frac{1-a}{a-1} \\
+\frac{1-a}{a-1} \\
+0
+\end{bmatrix}
+\]
+    
+\end{solution}

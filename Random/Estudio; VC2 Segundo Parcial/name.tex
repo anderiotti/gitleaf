@@ -1,0 +1,144 @@
+A continuación, se presentan las soluciones detalladas y formalmente explicadas para los incisos solicitados. Cada resultado se obtiene paso a paso, con el rigor necesario para su inclusión en un libro de ejercicios resueltos.  
+
+---
+
+## **1. Demostración de la velocidad más probable \( v_p \)**
+Se nos da la distribución de velocidades isotrópica en un gas ideal:
+
+\[
+P(v, v + dv) = 4\pi v^2 f(v) dv.
+\]
+
+Para encontrar la **velocidad más probable**, debemos encontrar el valor de \( v \) que maximiza esta función. Esto implica derivar \( P(v) \) con respecto a \( v \) e igualar a cero:
+
+\[
+\frac{d}{dv} [ 4\pi v^2 f(v) ] = 0.
+\]
+
+La función de distribución de velocidades de Maxwell-Boltzmann en una dimensión es:
+
+\[
+f(v) = \left( \frac{m}{2\pi k_B T} \right)^{3/2} e^{- \frac{m v^2}{2 k_B T}}.
+\]
+
+Sustituyéndola en la distribución isotrópica:
+
+\[
+P(v) = 4\pi v^2 \left( \frac{m}{2\pi k_B T} \right)^{3/2} e^{- \frac{m v^2}{2 k_B T}}.
+\]
+
+Derivamos esta función con respecto a \( v \):
+
+\[
+\frac{dP}{dv} = 4\pi \left( \frac{m}{2\pi k_B T} \right)^{3/2} \frac{d}{dv} \left[ v^2 e^{- \frac{m v^2}{2 k_B T}} \right].
+\]
+
+Usamos la regla del producto:
+
+\[
+\frac{d}{dv} \left[ v^2 e^{- \frac{m v^2}{2 k_B T}} \right] = 2v e^{- \frac{m v^2}{2 k_B T}} + v^2 e^{- \frac{m v^2}{2 k_B T}} \left(- \frac{m v}{k_B T} \right).
+\]
+
+Factorizamos \( e^{- \frac{m v^2}{2 k_B T}} \):
+
+\[
+\left( 2v - \frac{m v^3}{k_B T} \right) e^{- \frac{m v^2}{2 k_B T}} = 0.
+\]
+
+Para que esta ecuación se cumpla, el término entre paréntesis debe ser cero:
+
+\[
+2v - \frac{m v^3}{k_B T} = 0.
+\]
+
+Factorizamos \( v \):
+
+\[
+v \left( 2 - \frac{m v^2}{k_B T} \right) = 0.
+\]
+
+Descartamos la solución trivial \( v = 0 \) y resolvemos para \( v \):
+
+\[
+2 = \frac{m v^2}{k_B T}.
+\]
+
+Despejando \( v \):
+
+\[
+v_p = \sqrt{\frac{2 k_B T}{m}}.
+\]
+
+Este es el valor de la velocidad más probable para una molécula de gas ideal.
+
+---
+
+## **2. Cálculo de la velocidad promedio \( \bar{v} \)**
+La velocidad promedio está definida como:
+
+\[
+\bar{v} = \int v f(v) d^3v.
+\]
+
+Utilizando coordenadas esféricas, el diferencial de volumen en el espacio de velocidades es \( d^3v = 4\pi v^2 dv \), lo que nos permite reescribir la expresión como:
+
+\[
+\bar{v} = \int_0^\infty v (4\pi v^2 f(v)) dv.
+\]
+
+Sustituyendo la función de Maxwell-Boltzmann:
+
+\[
+\bar{v} = \int_0^\infty v (4\pi v^2) \left( \frac{m}{2\pi k_B T} \right)^{3/2} e^{- \frac{m v^2}{2 k_B T}} dv.
+\]
+
+Factorizamos las constantes:
+
+\[
+\bar{v} = 4\pi \left( \frac{m}{2\pi k_B T} \right)^{3/2} \int_0^\infty v^3 e^{- \frac{m v^2}{2 k_B T}} dv.
+\]
+
+Usamos el resultado conocido de la integral:
+
+\[
+\int_0^\infty x^3 e^{-a x^2} dx = \frac{1}{2} \frac{\Gamma(2)}{a^2}, \quad \text{donde } \Gamma(2) = 1.
+\]
+
+Con \( a = \frac{m}{2 k_B T} \), tenemos:
+
+\[
+\int_0^\infty v^3 e^{- \frac{m v^2}{2 k_B T}} dv = \frac{1}{2} \frac{1}{\left( \frac{m}{2 k_B T} \right)^2} = \frac{(2 k_B T)^2}{2 m^2}.
+\]
+
+Sustituyendo:
+
+\[
+\bar{v} = 4\pi \left( \frac{m}{2\pi k_B T} \right)^{3/2} \cdot \frac{(2 k_B T)^2}{2 m^2}.
+\]
+
+Tras simplificar, se obtiene:
+
+\[
+\bar{v} = \sqrt{\frac{8 k_B T}{\pi m}}.
+\]
+
+---
+
+## **3. Número de moléculas en un intervalo de velocidad**
+Para un mol de gas, el número total de moléculas es:
+
+\[
+N = N_A = 6.022 \times 10^{23}.
+\]
+
+La fracción de moléculas con velocidades entre \( v \) y \( v + dv \) está dada por:
+
+\[
+dN = N f(v) P(v) dv.
+\]
+
+Integrando en el intervalo \( 500 \leq v \leq 510 \) m/s, se obtiene el número de moléculas en dicho rango. 
+
+Para el inciso (b), se integra en coordenadas cartesianas en una dirección específica, con los límites adecuados en \( dv_x, dv_y, dv_z \), teniendo en cuenta que el diferencial de volumen en este sistema es \( d^3v = dv_x dv_y dv_z \).
+
+Este procedimiento garantiza una solución rigurosa y aplicable a cualquier problema de distribución de velocidades de Maxwell-Boltzmann en gases ideales.

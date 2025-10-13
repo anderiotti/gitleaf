@@ -1,0 +1,1878 @@
+\chapter{Introducción a la Programación en Python para Ciencia de Datos}
+\label{chap:python_intro}
+
+\section{Tipos de Datos y Operadores Básicos}
+\label{sec:data_types_operators}
+
+En el núcleo de cualquier lenguaje de programación se encuentran las unidades fundamentales de información que puede manipular. En Python, estas unidades se representan como \textbf{objetos}, cada uno con un \textbf{tipo} distinto que dicta la clase de datos que puede contener y las operaciones que admite. A diferencia de los lenguajes de tipado estático como C++ o Java, donde los tipos de las variables deben declararse explícitamente antes de su uso, Python es de \textbf{tipado dinámico}. Esto significa que el tipo de una variable se determina en tiempo de ejecución por el objeto al que hace referencia. Esta elección de diseño otorga flexibilidad y simplifica la sintaxis, pero también impone al desarrollador la responsabilidad de comprender el comportamiento de los diferentes tipos para evitar errores en tiempo de ejecución. Esta sección establece los tipos de datos fundamentales —los primitivos— y los operadores utilizados para interactuar con ellos, formando los bloques de construcción esenciales para todas las estructuras de datos y algoritmos posteriores.
+
+\subsection{Tipos Primitivos: \code{int}, \code{float} y \code{bool}}
+\label{subsec:primitive_types}
+Las formas más simples de datos son los valores numéricos y lógicos. Python proporciona tres tipos primitivos principales para representarlos: enteros (\code{int}), números de punto flotante (\code{float}) y valores booleanos (\code{bool}). Cada uno está implementado como un objeto sofisticado, con detalles de gestión de memoria que son cruciales para entender el rendimiento y el comportamiento, especialmente en aplicaciones con uso intensivo de datos.
+
+\subsubsection*{Enteros (\code{int})}
+El tipo \code{int} se utiliza para representar números enteros, tanto positivos como negativos, sin componente fraccionario. Una característica clave de los enteros de Python es su naturaleza de \textbf{precisión arbitraria}. Esto significa que pueden crecer para acomodar cualquier valor, limitados únicamente por la memoria disponible de la máquina, evitando así los errores de "desbordamiento de entero" comunes en los tipos de enteros de tamaño fijo que se encuentran en otros lenguajes.
+
+\text{ }\begin{minted}{python}
+# Un entero puede ser un número pequeño
+entero_pequeno = 42
+print(f"Valor: {entero_pequeno}, Tipo: {type(entero_pequeno)}")
+
+# O un número muy grande, que excede con creces la capacidad de un entero de 64 bits
+entero_grande = 10**100
+print(f"\nUn entero muy grande:\n{entero_grande}")
+print(f"Tipo: {type(entero_grande)}")
+\end{minted}
+
+\begin{remark}[Representación en Memoria de \code{int}]
+En CPython, la implementación de referencia de Python, un \code{int} no es un entero de máquina en bruto. Es una estructura de C (\texttt{PyLongObject}) que contiene metadatos, incluyendo un contador de referencias para la recolección de basura y un campo de tamaño. El valor en sí se almacena como un arreglo de "dígitos" en una base superior a 10 (típicamente base $2^{30}$ o $2^{15}$ dependiendo de la arquitectura del sistema). Para un número que cabe en un solo "dígito", la representación es compacta. Para números que exceden esto, Python asigna dinámicamente un arreglo más grande para contener todos los dígitos necesarios. Esta estructura es lo que permite su precisión arbitraria, pero introduce una sobrecarga de memoria y rendimiento en comparación con los enteros de hardware de tamaño fijo.
+\end{remark}
+
+\subsubsection*{Números de Punto Flotante (\code{float})}
+El tipo \code{float} representa números reales, que pueden tener una parte fraccionaria. Son esenciales para la computación científica, la estadística y cualquier dominio que requiera una representación numérica continua.
+
+\text{ }\begin{minted}{python}
+# Un float se define usando un punto decimal
+pi_aprox = 3.14159
+print(f"Valor: {pi_aprox}, Tipo: {type(pi_aprox)}")
+
+# También se puede usar notación científica
+numero_avogadro = 6.022e23
+print(f"Valor: {numero_avogadro}, Tipo: {type(numero_avogadro)}")
+\end{minted}
+
+\begin{remark}[Representación en Memoria de \code{float}]
+El tipo \code{float} de Python es un envoltorio alrededor del tipo \texttt{double} de C, que implementa casi universalmente el \textbf{estándar IEEE 754 para números de punto flotante de doble precisión}. Esta es una representación fija de 64 bits compuesta por tres partes:
+\begin{itemize}
+    \item \textbf{Bit de Signo (1 bit):} Determina si el número es positivo o negativo.
+    \item \textbf{Exponente (11 bits):} Representa la escala del número, permitiendo valores tanto muy grandes como muy pequeños.
+    \item \textbf{Mantisa o Significando (52 bits):} Representa los dígitos significativos del número, determinando su precisión.
+\end{itemize}
+Esta representación finita implica que no todos los números reales pueden almacenarse perfectamente. Esto puede llevar a errores de precisión pequeños y, a veces, sorprendentes. Por ejemplo, el valor decimal $0.1$ no puede representarse exactamente en punto flotante binario, lo cual es una consideración crucial en el análisis numérico.
+\end{remark}
+
+\subsubsection*{Booleanos (\code{bool})}
+El tipo \code{bool} representa valores de verdad lógicos. Solo tiene dos instancias posibles: \code{True} y \code{False}. Los booleanos son la piedra angular de las estructuras de control de flujo, permitiendo que los programas tomen decisiones basadas en condiciones.
+
+\text{ }\begin{minted}{python}
+es_cientifico_de_datos = True
+es_fisico = True
+necesita_cafe = es_cientifico_de_datos or es_fisico
+
+print(f"Valor: {necesita_cafe}, Tipo: {type(necesita_cafe)}")
+\end{minted}
+
+\begin{remark}[Representación en Memoria y Comportamiento de \code{bool}]
+Internamente, el tipo \code{bool} de Python es una subclase de \code{int}. \code{True} es simplemente un alias para el entero \code{1}, y \code{False} es un alias para \code{0}. Esto significa que pueden ser utilizados en operaciones aritméticas, aunque hacerlo generalmente se desaconseja ya que puede llevar a un código menos legible.
+\text{ }\begin{minted}{python}
+# True se comporta como 1, False como 0
+resultado = True + True + False # 1 + 1 + 0
+print(f"True + True + False = {resultado}")
+\end{minted}
+Los objetos \code{True} y \code{False} son \textbf{singletons} (objetos únicos). Esto significa que cada instancia de \code{True} en un programa de Python se refiere exactamente al mismo objeto en memoria, y lo mismo para \code{False}. Esta es una optimización de memoria que es posible porque su estado es inmutable.
+\end{remark}
+
+\subsection{Operadores Aritméticos y Precedencia}
+\label{subsec:arithmetic_operators}
+Los operadores aritméticos realizan cálculos matemáticos en tipos numéricos. Python soporta un conjunto estándar de operadores que siguen un orden de operaciones bien definido, a menudo recordado por el acrónimo PEMDAS (Paréntesis, Exponentes, Multiplicación/División, Adición/Sustracción).
+
+Los principales operadores aritméticos son:
+\begin{itemize}
+    \item \textbf{Adición} (\code{+}), \textbf{Sustracción} (\code{-})
+    \item \textbf{Multiplicación} (\code{*}), \textbf{División} (\code{/})
+    \item \textbf{División Entera} (\code{//}): Realiza la división y redondea el resultado hacia abajo al número entero más cercano.
+    \item \textbf{Módulo} (\code{\%}): Devuelve el resto de una división.
+    \item \textbf{Exponenciación} (\code{**}): Eleva el operando izquierdo a la potencia del operando derecho.
+\end{itemize}
+
+Las \textbf{reglas de precedencia} dictan el orden de evaluación. La exponenciación (\code{**}) tiene la precedencia más alta, seguida por la multiplicación y los tres tipos de división, y finalmente por la adición y la sustracción.
+
+\begin{example}[Precedencia de Operadores]
+Considere la evaluación de una expresión compleja.
+\text{ }\begin{minted}{python}
+# Precedencia de operadores en acción
+# 1. Exponenciación: 2**3 = 8
+# 2. Multiplicación/División (de izquierda a derecha): 5 * 3 = 15; 8 / 4 = 2.0
+# 3. Adición/Sustracción (de izquierda a derecha): 10 + 15 = 25; 25 - 2.0 = 23.0
+resultado = 10 + 5 * 3 - 2**3 / 4
+
+print(f"Resultado: {resultado}") # Salida: 23.0
+\end{minted}
+Los paréntesis \code{()} pueden usarse para controlar explícitamente el orden de evaluación, anulando las reglas de precedencia predeterminadas. Las operaciones dentro de los paréntesis siempre se realizan primero.
+\text{ }\begin{minted}{python}
+# Usando paréntesis para alterar el orden de las operaciones
+# 1. Paréntesis: (10 + 5) = 15; (3 - 2) = 1
+# 2. Exponenciación: 1**3 = 1
+# 3. Multiplicación: 15 * 1 = 15
+# 4. División: 15 / 4 = 3.75
+resultado_con_parentesis = (10 + 5) * (3 - 2)**3 / 4
+
+print(f"Resultado con paréntesis: {resultado_con_parentesis}") # Salida: 3.75
+\end{minted}
+\end{example}
+
+Cuando se realiza una operación entre un \code{int} y un \code{float}, Python automáticamente \textbf{convierte} el entero a un float para realizar la operación, y el resultado es siempre un \code{float}.
+
+\subsection{Operadores de Comparación e Identidad}
+\label{subsec:comparison_identity}
+Estos operadores se utilizan para comparar objetos. Los operadores de comparación evalúan la relación entre los \textit{valores} de dos objetos, mientras que los operadores de identidad comprueban si dos variables se refieren al mismo \textit{objeto} en memoria. Esta distinción es fundamental.
+
+\subsubsection*{Operadores de Comparación}
+Estos operadores evalúan a un valor booleano (\code{True} o \code{False}).
+\begin{itemize}
+    \item \code{==}: Igual a
+    \item \code{!=}: No igual a
+    \item \code{<}: Menor que
+    \item \code{>}: Mayor que
+    \item \code{<=}: Menor o igual que
+    \item \code{>=}: Mayor o igual que
+\end{itemize}
+\text{ }\begin{minted}{python}
+x = 10
+y = 20.5
+
+print(f"¿Es x igual a 10? {x == 10}")         # True
+print(f"¿Es x no igual a y? {x != y}")        # True
+print(f"¿Es y mayor que x? {y > x}")      # True
+\end{minted}
+
+\subsubsection*{Operadores de Identidad: \code{is} vs. \code{==}}
+Este es un punto común de confusión.
+\begin{itemize}
+    \item \code{a == b} comprueba si el valor de \code{a} es igual al valor de \code{b}. Llama al método interno \code{__eq__()} de los objetos.
+    \item \code{a is b} comprueba si \code{a} y \code{b} apuntan a la misma ubicación de memoria. Es equivalente a comparar \code{id(a) == id(b)}.
+\end{itemize}
+
+\begin{example}[Valor vs. Identidad]
+Consideremos dos listas. Pueden contener los mismos elementos, lo que hace que sus valores sean iguales, pero son objetos distintos en memoria.
+\text{ }\begin{minted}{python}
+lista_a = [1, 2, 3]
+lista_b = [1, 2, 3] # Una nueva lista con los mismos valores
+lista_c = lista_a   # lista_c es solo otro nombre para lista_a
+
+# --- Comparación de Valor (==) ---
+print(f"lista_a == lista_b: {lista_a == lista_b}") # True, los valores son los mismos
+print(f"lista_a == lista_c: {lista_a == lista_c}") # True, los valores son los mismos
+
+print("-" * 20)
+
+# --- Comparación de Identidad (is) ---
+print(f"lista_a is lista_b: {lista_a is lista_b}") # False, son objetos diferentes
+print(f"lista_a is lista_c: {lista_a is lista_c}") # True, son el mismo objeto
+
+print("-" * 20)
+
+# Podemos verificarlo comprobando sus direcciones de memoria
+print(f"id(lista_a): {id(lista_a)}")
+print(f"id(lista_b): {id(lista_b)}")
+print(f"id(lista_c): {id(lista_c)}")
+\end{minted}
+\end{example}
+
+\begin{remark}[El Peligro de Usar \code{is} para Enteros]
+Por razones de rendimiento, CPython preasigna y almacena en caché objetos enteros en el rango [-5, 256]. Cada vez que se usa un entero en este rango, se obtiene una referencia al mismo objeto preexistente. Esto puede hacer que \code{is} parezca funcionar para la comparación de valores, lo cual es engañoso.
+\text{ }\begin{minted}{python}
+a = 256
+b = 256
+print(f"Para 256: a is b = {a is b}") # True, porque 256 está en caché
+
+c = 257
+d = 257
+print(f"Para 257: c is d = {c is d}") # False, porque 257 no está en caché
+\end{minted}
+La regla definitiva es: \textbf{Siempre use \code{==} para comparar por igualdad numérica.} Use \code{is} solo cuando necesite específicamente verificar si dos variables se refieren al mismo objeto, lo cual es común al verificar el objeto único \code{None}.
+\end{remark}
+
+\subsection{Operadores Lógicos y Evaluación de Cortocircuito}
+\label{subsec:logical_operators}
+Los operadores lógicos (\code{and}, \code{or}, \code{not}) se utilizan para combinar expresiones booleanas. Su comportamiento, particularmente su implementación de cortocircuito, es esencial para escribir lógica condicional eficiente y segura.
+
+\subsubsection*{Valores Verdaderos (Truthy) y Falsos (Falsy)}
+En Python, las operaciones lógicas no se limitan a los tipos \code{bool}. Cada objeto tiene un valor booleano inherente. Un objeto se considera "falsy" si es:
+\begin{itemize}
+    \item El número cero (\code{0}, \code{0.0})
+    \item El booleano \code{False}
+    \item El objeto especial \code{None}
+    \item Cualquier secuencia o colección vacía (p. ej., una cadena vacía \code{""}, una lista vacía \code{[]}, un diccionario vacío \code{{}})
+\end{itemize}
+Todos los demás objetos se consideran "truthy".
+
+\subsubsection*{Operadores y Cortocircuito}
+\begin{itemize}
+    \item \code{x and y}: Si \code{x} es falsy, devuelve \code{x} inmediatamente sin evaluar \code{y}. Si \code{x} es truthy, evalúa y devuelve \code{y}.
+    \item \code{x or y}: Si \code{x} es truthy, devuelve \code{x} inmediatamente sin evaluar \code{y}. Si \code{x} es falsy, evalúa y devuelve \code{y}.
+    \item \code{not x}: Devuelve \code{True} si \code{x} es falsy, y \code{False} si \code{x} es truthy. A diferencia de \code{and} y \code{or}, siempre devuelve un valor booleano estándar.
+\end{itemize}
+Este comportamiento se conoce como \textbf{evaluación de cortocircuito}. No es simplemente una optimización; es una característica garantizada del lenguaje en la que se puede confiar para controlar el flujo del programa.
+
+\begin{example}[Uso de Cortocircuito por Seguridad]
+El cortocircuito se usa comúnmente para prevenir errores. Por ejemplo, se puede verificar si una lista no está vacía antes de intentar acceder a su primer elemento, todo en una línea.
+\text{ }\begin{minted}{python}
+mi_lista = [10, 20, 30]
+# El operador 'and' proporciona una forma segura de acceder al elemento.
+# Como mi_lista es truthy (no vacía), la expresión procede a
+# evaluar y devolver la segunda parte: mi_lista[0] > 5
+resultado = mi_lista and mi_lista[0] > 5
+print(f"Resultado para lista no vacía: {resultado}") # True
+
+lista_vacia = []
+# Aquí, lista_vacia es falsy. El operador 'and' cortocircuita
+# y devuelve lista_vacia inmediatamente, sin intentar
+# acceder a lista_vacia[0], previniendo así un IndexError.
+resultado_seguro = lista_vacia and lista_vacia[0] > 5
+print(f"Resultado para lista vacía: {resultado_seguro}") # []
+\end{minted}
+
+El operador \code{or} se usa a menudo para proporcionar valores predeterminados.
+\text{ }\begin{minted}{python}
+# El usuario podría proporcionar un nombre, o podría ser una cadena vacía.
+nombre_usuario = ""
+
+# Si nombre_usuario es falsy (vacío), el operador 'or' procede a
+# evaluar y devolver la segunda parte, "Invitado".
+nombre_a_mostrar = nombre_usuario or "Invitado"
+print(f"Nombre a mostrar: {nombre_a_mostrar}") # Invitado
+\end{minted}
+\end{example}
+
+\section{Operaciones sobre Cadenas de Caracteres}
+\label{sec:string_operations}
+En el ámbito de la ciencia de datos, los datos textuales son omnipresentes. Desde archivos de registro en bruto y reseñas de usuarios hasta informes estructurados, la capacidad de manipular texto es una habilidad no negociable. La herramienta principal de Python para esto es el objeto cadena (\code{str}), un tipo de datos potente y flexible diseñado para manejar secuencias de caracteres. A diferencia de algunos lenguajes más antiguos que tratan las cadenas como meros arreglos de bytes, las cadenas de Python se basan en el \textbf{estándar Unicode}, lo que les permite representar de forma nativa caracteres de prácticamente todos los sistemas de escritura del mundo. Esta sección explora las propiedades fundamentales de las cadenas y las operaciones básicas utilizadas para analizarlas, transformarlas y formatearlas.
+
+\subsection{La Inmutabilidad de las Cadenas y sus Implicaciones}
+\label{subsec:string_immutability}
+La propiedad más crítica a entender sobre las cadenas de Python es que son \textbf{inmutables}. Esto significa que una vez que se crea un objeto de cadena en la memoria, su contenido no puede ser alterado in-situ. Cualquier operación que parezca "modificar" una cadena, como la concatenación o el reemplazo, en realidad creará y devolverá un objeto de cadena completamente nuevo.
+
+\text{ }\begin{minted}{python}
+# Cadena inicial
+mi_cadena = "Hola"
+print(f"Cadena inicial: '{mi_cadena}', ID de Memoria: {id(mi_cadena)}")
+
+# La concatenación parece modificar la cadena...
+mi_cadena = mi_cadena + ", Mundo!"
+
+# ...pero en realidad crea un nuevo objeto y reasigna la variable
+print(f"Cadena final: '{mi_cadena}', ID de Memoria: {id(mi_cadena)}")
+\end{minted}
+
+Esta elección de diseño tiene varias implicaciones profundas:
+\begin{enumerate}
+    \item \textbf{Consideraciones de Rendimiento:} Construir una cadena repetidamente mediante concatenación en un bucle puede ser ineficiente. Cada concatenación crea un nuevo objeto y copia el contenido de los objetos antiguos, lo que lleva a una complejidad de tiempo cuadrática en la longitud total de la cadena. Para construir cadenas a partir de múltiples piezas, usar métodos como \code{str.join()} es mucho más eficiente.
+    \item \textbf{Previsibilidad y Seguridad:} La inmutabilidad hace que el comportamiento de las cadenas sea predecible. Cuando pasas una cadena a una función, puedes estar seguro de que la función no puede cambiarla. Esto previene efectos secundarios que pueden ser difíciles de rastrear.
+    \item \textbf{Uso como Claves de Diccionario:} Debido a que el valor de una cadena nunca puede cambiar, su valor hash (un entero utilizado para búsquedas en diccionarios) también es constante. Esto hace que las cadenas sean candidatas fiables y eficientes para claves de diccionario. Si las cadenas fueran mutables, su valor hash cambiaría cuando su contenido cambiara, rompiendo la estructura interna del diccionario.
+\end{enumerate}
+
+\subsection{Indexación y Rebanado (Slicing) para Manipulación}
+\label{subsec:string_indexing_slicing}
+Como secuencias ordenadas de caracteres, las cadenas admiten el acceso a su contenido mediante indexación y rebanado. Estas operaciones permiten la extracción precisa de subcadenas sin modificar la cadena original.
+
+\subsubsection*{Indexación}
+La indexación se utiliza para recuperar un solo carácter en una posición específica. Python utiliza \textbf{indexación basada en cero}, donde el primer carácter está en el índice 0. También admite la indexación negativa, que proporciona una forma conveniente de acceder a los caracteres desde el final de la cadena.
+
+\text{ }\begin{minted}{python}
+#    H  o  l  a  ,     M  u  n  d  o  !
+#    0  1  2  3  4  5  6  7  8  9 10 11 12  (Positivo)
+#  -13-12-11-10 -9 -8 -7 -6 -5 -4 -3 -2 -1  (Negativo)
+oracion = "Hola, Mundo!"
+
+# Accediendo al primer carácter
+primer_caracter = oracion[0]
+print(f"Primer carácter (oracion[0]): {primer_caracter}")
+
+# Accediendo al último carácter usando indexación negativa
+ultimo_caracter = oracion[-1]
+print(f"Último carácter (oracion[-1]): {ultimo_caracter}")
+\end{minted}
+
+\subsubsection*{Rebanado (Slicing)}
+El rebanado se utiliza para extraer una subcadena. La sintaxis es \code{[inicio:fin:paso]}, donde:
+\begin{itemize}
+    \item \code{inicio}: El índice donde comienza el rebanado (inclusivo). Por defecto es 0.
+    \item \code{fin}: El índice donde termina el rebanado (exclusivo). Por defecto es el final de la cadena.
+    \item \code{paso}: La cantidad a incrementar. Por defecto es 1.
+\end{itemize}
+
+\begin{example}[Técnicas de Rebanado]\text{ }
+\text{ }\begin{minted}{python}
+cadena_de_datos = "PYTHON_PARA_CIENCIA_DE_DATOS"
+
+# Extraer 'PYTHON' (desde el índice 0 hasta, pero sin incluir, 6)
+subcadena1 = cadena_de_datos[0:6]
+print(f"cadena_de_datos[0:6]  -> {subcadena1}")
+
+# Una forma más Pythónica de hacer lo mismo (omitiendo el índice de inicio)
+subcadena2 = cadena_de_datos[:6]
+print(f"cadena_de_datos[:6]   -> {subcadena2}")
+
+# Extraer 'DATOS' (desde el índice 24 hasta el final)
+subcadena3 = cadena_de_datos[24:]
+print(f"cadena_de_datos[24:] -> {subcadena3}")
+
+# Extraer cada segundo carácter de toda la cadena
+cada_otro = cadena_de_datos[::2]
+print(f"cadena_de_datos[::2]   -> {cada_otro}")
+
+# Un modismo clásico para invertir una cadena
+cadena_invertida = cadena_de_datos[::-1]
+print(f"cadena_de_datos[::-1] -> {cadena_invertida}")
+\end{minted}
+\end{example}
+
+\subsection{Métodos Esenciales: \code{.split()}, \code{.join()}, \code{.replace()}, \code{.strip()}}
+\label{subsec:string_methods}
+Las cadenas de Python vienen equipadas con una rica biblioteca de métodos para tareas comunes de procesamiento de texto. Debido a que las cadenas son inmutables, estos métodos nunca modifican la cadena original; siempre devuelven una nueva cadena transformada.
+
+\begin{itemize}
+    \item \textbf{\code{str.split(separador)}}: Divide una cadena en una \code{list} de subcadenas basadas en un \code{separador} dado. Si no se proporciona un separador, divide por cualquier secuencia de espacios en blanco.
+    
+    \item \textbf{\code{separador.join(iterable)}}: El inverso de \code{split}. Concatena los elementos de un iterable (como una lista) en una sola cadena, con la cadena \code{separador} colocada entre cada elemento.
+    
+    \item \textbf{\code{str.replace(antiguo, nuevo)}}: Devuelve una nueva cadena donde todas las ocurrencias de la subcadena \code{antiguo} son reemplazadas por \code{nuevo}.
+    
+    \item \textbf{\code{str.strip()}}: Devuelve una nueva cadena con los espacios en blanco iniciales y finales eliminados. Las variantes \code{.lstrip()} y \code{.rstrip()} eliminan los espacios en blanco solo de la izquierda o la derecha, respectivamente.
+
+    \item \textbf{\code{str.maketrans() y str.translate()}}: Un método altamente eficiente de dos pasos para realizar sustituciones complejas, carácter por carácter. El método estático \code{str.maketrans(desde, hacia)} crea una tabla de traducción (un mapeo de códigos de caracteres), que luego se pasa al método \code{.translate(tabla)} de la cadena para realizar las sustituciones.
+\end{itemize}
+
+\begin{example}[Normalizando Texto con \code{maketrans}]
+Este método es excepcionalmente útil para limpiar datos textuales normalizando caracteres, como la eliminación de diacríticos (acentos, diéresis, etc.). Este es un requisito común en el Procesamiento del Lenguaje Natural (PLN) antes del análisis de texto.
+\text{ }\begin{minted}{python}
+# Texto con diacríticos del español y alemán
+texto_original = "El análisis de la lingüística computacional es un área fascinante."
+
+# Paso 1: Definir los caracteres a reemplazar y con qué reemplazarlos.
+# Las dos cadenas deben tener la misma longitud.
+caracteres_a_quitar = "áéíóúÁÉÍÓÚü"
+caracteres_reemplazo = "aeiouAEIOUu"
+
+# Paso 2: Crear la tabla de traducción usando str.maketrans()
+tabla_traduccion = str.maketrans(caracteres_a_quitar, caracteres_reemplazo)
+
+# Paso 3: Aplicar la traducción a la cadena
+texto_normalizado = texto_original.translate(tabla_traduccion)
+
+print(f"Original: {texto_original}")
+print(f"Normalizado: {texto_normalizado}")
+\end{minted}
+\end{example}
+
+\begin{example}[Métodos Comunes de Cadenas en Acción]\text{ }
+\text{ }\begin{minted}{python}
+# .split()
+linea_csv = "2025-09-26,AAPL,315.75"
+puntos_de_datos = linea_csv.split(',')
+print(f".split(): {puntos_de_datos}")
+
+# .join()
+# Nota la sintaxis: el separador llama al método
+partes_url = ['https:', '', 'www.ejemplo.com', 'datos']
+url_completa = '/'.join(partes_url)
+print(f".join(): {url_completa}")
+
+# .replace()
+mensaje = "Los datos están sucios."
+mensaje_limpio = mensaje.replace("sucios", "limpios")
+print(f".replace(): '{mensaje_limpio}'")
+
+# .strip()
+entrada_usuario = "   algunos datos con espacios   "
+entrada_limpia = entrada_usuario.strip()
+print(f".strip(): '{entrada_limpia}'")
+\end{minted}
+\end{example}
+
+\subsection{F-Strings y \code{format()} para la Presentación de Datos}
+\label{subsec:string_formatting}
+Construir cadenas que incrustan los valores de las variables es una necesidad frecuente. Aunque la concatenación simple con \code{+} funciona, es engorrosa e ineficiente. Python proporciona mecanismos sofisticados para el formato de cadenas que son tanto potentes como legibles.
+
+\subsubsection*{El Método \code{str.format()}}
+Introducido en Python 2.6, el método \code{.format()} es una forma flexible de incrustar valores en una cadena. Utiliza llaves \code{\{\}} como marcadores de posición.
+
+\text{ }\begin{minted}{python}
+# Usando .format() con argumentos posicionales
+plantilla1 = "La acción {} cerró a ${} el {}."
+formateado1 = plantilla1.format("AAPL", 315.75, "2025-09-26")
+print(formateado1)
+
+# Usando .format() con argumentos de palabra clave para mayor claridad
+plantilla2 = "La acción {ticker} cerró a ${precio:.2f} el {fecha}."
+formateado2 = plantilla2.format(precio=315.75, fecha="2025-09-26", ticker="AAPL")
+print(formateado2)
+\end{minted}
+
+\subsubsection*{F-Strings (Literales de Cadena Formateados)}
+Introducidas en Python 3.6, las f-strings son el estándar moderno para el formato de cadenas. Son más concisas, más legibles y a menudo más rápidas que \code{.format()} porque se evalúan en tiempo de ejecución. Una f-string se prefija con la letra \code{f}, y las expresiones dentro de las llaves \code{\{\}} se evalúan e incrustan directamente.
+
+\begin{example}[El Poder y la Claridad de las F-Strings]
+\text{ }\begin{minted}{python}
+# Definir algunas variables
+ticker = "GOOG"
+precio = 2850.918
+cambio = 12.55
+
+# Incrustar variables directamente
+print(f"Ticker: {ticker}, Precio: {precio}")
+
+# Controlar la precisión del punto flotante directamente dentro de las llaves
+# El :.2f es un especificador de formato: formatear como un float con 2 decimales.
+print(f"El precio de cierre para {ticker} fue ${precio:.2f}.")
+
+# Realizar cálculos y llamar a funciones dentro de las llaves
+print(f"El precio antes del cambio era ${precio - cambio:.2f}.")
+print(f"Nombre de la compañía en minúsculas: {ticker.lower()}.")
+\end{minted}
+\end{example}
+Para la ciencia de datos, la capacidad de las f-strings para aplicar especificadores de formato es particularmente valiosa para producir informes y visualizaciones bien alineados y legibles.
+
+\section{Estructuras de Control}
+\label{sec:control_structures}
+El poder de un programa no proviene de ejecutar instrucciones en una secuencia fija, sino de su capacidad para tomar decisiones y repetir acciones basadas en condiciones y datos variables. Las estructuras de control proporcionan esta lógica. Son las construcciones que dirigen el \textbf{flujo de ejecución}, permitiendo que un programa sea dinámico y responsivo. Las estructuras de control de Python son notables por su claridad, que es impuesta por el uso sintáctico de la indentación en lugar de llaves o palabras clave como \code{end}. Esta filosofía de diseño, delineada en "El Zen de Python", prioriza la legibilidad.
+
+\subsection{Condicionales: \code{if}/\code{elif}/\code{else}}
+\label{subsec:conditionals}
+Las sentencias condicionales permiten a un programa ejecutar ciertos bloques de código solo si se cumple una condición específica. La estructura fundamental es la cadena \code{if}/\code{elif}/\code{else}.
+
+\begin{itemize}
+    \item \code{if}: El bloque de código que sigue a una sentencia \code{if} se ejecuta si su condición se evalúa como \code{True}.
+    \item \code{elif}: Abreviatura de "else if", permite verificar múltiples condiciones alternativas en secuencia. Un bloque \code{elif} solo se verifica si todas las condiciones \code{if} y \code{elif} precedentes fueron \code{False}.
+    \item \code{else}: Este es un bloque final opcional que se ejecuta si y solo si todas las condiciones precedentes (\code{if} y todos los \code{elif}s) fueron \code{False}.
+\end{itemize}
+Los bloques de código se definen por \textbf{indentación} (típicamente cuatro espacios por nivel).
+
+\begin{example}[Una Decisión Multi-Condición]\text{ }
+\text{ }\begin{minted}{python}
+# Determinar la categoría de la puntuación de predicción de un modelo
+puntuacion = 0.82
+
+if puntuacion >= 0.9:
+    categoria = "Confianza Alta"
+elif puntuacion >= 0.7:
+    categoria = "Confianza Media"
+elif puntuacion >= 0.5:
+    categoria = "Confianza Baja"
+else:
+    categoria = "Predicción Negativa"
+
+print(f"La puntuación {puntuacion} cae en la categoría: '{categoria}'.")
+\end{minted}
+\end{example}
+
+\subsubsection*{Expresiones Condicionales (El Operador Ternario)}
+Para casos simples donde a una variable se le debe asignar uno de dos valores basados en una condición, un bloque completo \code{if}/\code{else} puede ser verboso. Python ofrece una sintaxis más concisa conocida como expresión condicional u operador ternario.
+La sintaxis es: \code{valor_si_verdadero if condicion else valor_si_falso}.
+
+\text{ }\begin{minted}{python}
+# Bloque if/else estándar
+x = 10
+if x > 0:
+    signo = "positivo"
+else:
+    signo = "no-positivo"
+
+# Operador ternario equivalente
+# Es más conciso y es una expresión, no una sentencia.
+signo_ternario = "positivo" if x > 0 else "no-positivo"
+
+print(f"Estándar: {signo}, Ternario: {signo_ternario}")
+\end{minted}
+\begin{remark}
+Aunque el operador ternario es elegante para asignaciones simples, debe usarse con prudencia. Para condiciones o lógica complejas, un bloque \code{if}/\code{else} estándar sigue siendo mucho más legible y mantenible.
+\end{remark}
+
+\subsection{Bucles de Repetición: \code{for} y \code{while}}
+\label{subsec:loops}
+Los bucles se utilizan para ejecutar un bloque de código múltiples veces. Python proporciona dos tipos principales de bucles: bucles \code{for} para iterar sobre secuencias y bucles \code{while} para repetir basándose en una condición.
+
+\subsubsection*{El Bucle \code{for}}
+El bucle \code{for} de Python es un bucle for-each; itera directamente sobre los elementos de cualquier objeto \textbf{iterable} (como una lista, tupla, cadena o diccionario). Este es un nivel de abstracción más alto en comparación con los bucles basados en contadores que se encuentran en lenguajes como C.
+
+\text{ }\begin{minted}{python}
+# Iterando sobre una lista de cadenas
+caracteristicas = ["longitud_sepalo", "ancho_sepalo", "longitud_petalo"]
+for caracteristica in caracteristicas:
+    print(f"Procesando característica: {caracteristica.upper()}")
+
+# La función range() se usa a menudo para iterar un número específico de veces
+# range(5) genera números desde 0 hasta, pero sin incluir, 5.
+print("\nEjecutando una simulación 5 veces:")
+for i in range(5):
+    print(f"  Ejecución de simulación #{i+1}")
+\end{minted}
+
+\subsubsection*{El Bucle \code{while}}
+Un bucle \code{while} ejecuta un bloque de código mientras una condición especificada permanezca \code{True}. Se utiliza cuando el número de iteraciones no se conoce de antemano. Es fundamental asegurarse de que el código dentro del bucle eventualmente haga que la condición se vuelva \code{False}, de lo contrario, resultará en un bucle infinito.
+
+\text{ }\begin{minted}{python}
+# Ejemplo: Procesar elementos de una cola hasta que esté vacía
+# En un escenario real, esta lista podría ser poblada por otro proceso.
+cola_de_tareas = [5.1, 3.2, 8.9]
+contador_procesados = 0
+
+while len(cola_de_tareas) > 0:
+    elemento = cola_de_tareas.pop(0) # .pop(0) elimina y devuelve el primer elemento
+    print(f"Procesando elemento con valor {elemento}...")
+    contador_procesados += 1
+
+print(f"\nFinalizado. Total de elementos procesados: {contador_procesados}")
+\end{minted}
+
+\subsection{Control del Flujo del Bucle: \code{break}, \code{continue} y la Cláusula \code{else}}
+\label{subsec:loop_control}
+A veces es necesario alterar el flujo estándar de un bucle. Python proporciona sentencias para terminar un bucle prematuramente o para saltar una sola iteración.
+
+\begin{itemize}
+    \item \code{break}: Termina inmediatamente el bucle más interno en el que se encuentra. La ejecución continúa en la primera sentencia después del bloque del bucle.
+    \item \code{continue}: Detiene inmediatamente la iteración actual y salta al comienzo de la siguiente.
+\end{itemize}
+
+Una característica única de los bucles de Python es la cláusula opcional \code{else}. El bloque \code{else} se ejecuta \textbf{solo si el bucle completa su secuencia completa de iteraciones sin ser terminado por una sentencia \code{break}}.
+
+\begin{example}[Control de Bucle y la Cláusula \code{else}]
+Este es un patrón común para buscar un elemento en una colección.
+\text{ }\begin{minted}{python}
+# Buscar el primer número primo mayor que 20 en una lista
+numeros = [15, 18, 21, 22, 23, 25, 29]
+primo_encontrado = -1
+
+for num in numeros:
+    if num <= 1:
+        continue # Omitir números menores o iguales a 1
+
+    # Prueba de primalidad simple
+    es_primo = True
+    for i in range(2, int(num**0.5) + 1):
+        if num % i == 0:
+            es_primo = False
+            break # Encontró un factor, no es primo. Sale del bucle interno.
+    
+    if es_primo:
+        primo_encontrado = num
+        print(f"Número primo encontrado: {primo_encontrado}")
+        break # Sale del bucle principal ya que encontramos lo que buscábamos
+else:
+    # Este bloque solo se ejecuta si el bucle 'for' termina sin un 'break'.
+    print("No se encontró ningún número primo en la lista.")
+
+# Si ejecutamos esto con una lista sin primos, p. ej., [10, 12, 14],
+# la cláusula 'else' se ejecutaría.
+\end{minted}
+\end{example}
+
+\subsection{Comprensiones: Construyendo Colecciones Eficientemente}
+\label{subsec:comprehensions}
+Las comprensiones son un sello distintivo del Python idiomático. Proporcionan una sintaxis concisa y legible para crear listas, conjuntos y diccionarios a partir de iterables. Más allá de ser solo azúcar sintáctico, a menudo son más eficientes en memoria y más rápidas que crear las mismas colecciones con bucles \code{for} explícitos y llamadas a \code{.append()}, ya que la iteración está optimizada en C a nivel del intérprete.
+
+\subsubsection*{Comprensiones de Lista}
+El tipo más común. La sintaxis es \code{[expresion for elemento in iterable if condicion]}.
+
+\text{ }\begin{minted}{python}
+# Bucle for tradicional para obtener los cuadrados de los números pares
+cuadrados_bucle = []
+for i in range(10):
+    if i % 2 == 0:
+        cuadrados_bucle.append(i**2)
+
+# Comprensión de lista equivalente
+# Más concisa y a menudo más rápida.
+cuadrados_comp = [i**2 for i in range(10) if i % 2 == 0]
+
+print(f"Desde bucle: {cuadrados_bucle}")
+print(f"Desde comprensión: {cuadrados_comp}")
+\end{minted}
+
+\subsubsection*{Comprensiones de Conjunto y Diccionario}
+La misma sintaxis elegante se aplica para crear conjuntos (para almacenar elementos únicos) y diccionarios (para almacenar pares clave-valor).
+
+\text{ }\begin{minted}{python}
+# Comprensión de conjunto para obtener las longitudes únicas de las palabras
+palabras = ["datos", "ciencia", "es", "genial", "y", "datos", "es", "clave"]
+longitudes_unicas = {len(palabra) for palabra in palabras}
+print(f"\nLongitudes de palabra únicas: {longitudes_unicas}")
+
+# Comprensión de diccionario para crear un mapeo de palabra a su longitud
+mapa_longitud_palabra = {palabra: len(palabra) for palabra in palabras}
+print(f"Mapa de longitud de palabra: {mapa_longitud_palabra}")
+\end{minted}
+Las comprensiones son una herramienta poderosa para la manipulación de datos, permitiendo la transformación rápida de una colección de datos en otra. Dominarlas es un paso clave para escribir código eficiente y Pythónico.
+
+\section{Estructuras de Datos Centrales: Listas, Tuplas, Diccionarios y Conjuntos}
+\label{sec:core_data_structures}
+Mientras que los tipos primitivos son los átomos de los datos, el verdadero poder de un programa emerge de su capacidad para agrupar estos átomos en colecciones estructuradas. Las estructuras de datos incorporadas de Python son las herramientas principales para esta tarea. Son objetos sofisticados y altamente optimizados, diseñados para diferentes casos de uso en la organización, recuperación y manipulación de datos. Esta sección cubre los cuatro tipos de colecciones fundamentales: la versátil \textbf{lista}, la inmutable \textbf{tupla}, el potente \textbf{diccionario} de clave-valor y el \textbf{conjunto} de elementos únicos. Una comprensión profunda de sus respectivas propiedades —particularmente la distinción entre colecciones mutables e inmutables— es esencial para escribir código eficiente, robusto y Pythónico.
+
+\subsection{Listas (\code{list}): Mutabilidad y Métodos Esenciales}
+\label{subsec:lists}
+Una lista es una colección ordenada y mutable de objetos. "Ordenada" significa que sus elementos se almacenan en una secuencia definida, y cada uno tiene un índice. "Mutable" significa que la lista puede ser modificada in-situ después de su creación —se pueden agregar, eliminar o cambiar elementos sin crear un objeto de lista completamente nuevo—. Esta flexibilidad hace de las listas una de las estructuras de datos más utilizadas en Python.
+
+La mutabilidad de las listas es un concepto crítico. Las operaciones que modifican una lista, como agregar un elemento o ordenarla, cambian el objeto internamente pero no alteran su identidad (es decir, su dirección de memoria).
+
+\begin{example}[Modificación In-Situ de una Lista]
+\text{ }\begin{minted}{python}
+# Crear una lista de puntuaciones de rendimiento del modelo
+puntuaciones = [0.88, 0.91, 0.76]
+print(f"Lista inicial: {puntuaciones}, ID de Memoria: {id(puntuaciones)}")
+
+# Añadir una nueva puntuación. Esto modifica la lista in-situ.
+puntuaciones.append(0.95)
+print(f"Después de append: {puntuaciones}, ID de Memoria: {id(puntuaciones)}")
+
+# Ordenar la lista in-situ. La identidad del objeto permanece igual.
+puntuaciones.sort()
+print(f"Después de sort:   {puntuaciones}, ID de Memoria: {id(puntuaciones)}")
+\end{minted}
+\end{example}
+
+Los métodos esenciales para la manipulación de listas incluyen:
+\begin{itemize}
+    \item \textbf{\code{list.append(elemento)}}: Agrega un solo elemento al final de la lista.
+    \item \textbf{\code{list.remove(elemento)}}: Busca la primera instancia del \code{elemento} y la elimina. Lanza un \code{ValueError} si el elemento no se encuentra.
+    \item \textbf{\code{list.pop([indice])}}: Elimina y \textbf{devuelve} el elemento en el \code{indice} dado. Si no se especifica ningún índice, elimina y devuelve el último elemento, haciéndolo efectivo para implementar una pila (Last-In, First-Out).
+    \item \textbf{\code{list.sort()}}: Ordena los elementos de la lista in-situ (de menor a mayor por defecto).
+\end{itemize}
+
+\begin{remark}[Ordenamiento In-Situ vs. Devolver una Nueva Lista Ordenada]
+El método \code{list.sort()} modifica la lista directamente y devuelve \code{None}. En contraste, la función incorporada \code{sorted(iterable)} toma cualquier iterable como entrada y devuelve una \textbf{nueva} lista ordenada, dejando el objeto original intacto. La elección entre ellos depende de si necesitas preservar el orden original de los datos.
+\end{remark}
+
+\subsection{Tuplas (\code{tuple}): Inmutabilidad, Empaquetado y Desempaquetado}
+\label{subsec:tuples}
+Una tupla es una colección ordenada e \textbf{inmutable} de objetos. Una vez que se crea una tupla, su contenido no puede ser cambiado, añadido o eliminado. Esta inmutabilidad es el diferenciador clave con respecto a las listas y dicta sus principales casos de uso. Las tuplas se utilizan a menudo para representar colecciones fijas de elementos, como coordenadas (\code{(x, y)}), valores de color RGB o registros de una consulta de base de datos.
+
+Su inmutabilidad las hace \textbf{hasheables}, lo que significa que pueden ser utilizadas como claves en un diccionario, mientras que las listas no pueden. El intérprete de Python también puede aplicar ciertas optimizaciones a las tuplas, haciéndolas a veces ligeramente más eficientes en memoria y tiempo que las listas para almacenar datos que no cambiarán.
+
+Una característica sintáctica poderosa asociada con las tuplas es el empaquetado y desempaquetado.
+\begin{itemize}
+    \item \textbf{Empaquetado}: La creación de una tupla agrupando valores, a menudo sin paréntesis explícitos.
+    \item \textbf{Desempaquetado}: La asignación de los elementos de una secuencia (como una tupla o lista) a múltiples variables en una sola declaración.
+\end{itemize}
+
+\begin{example}[Empaquetado y Desempaquetado de Tuplas]
+\text{ }\begin{minted}{python}
+# Empaquetado de Tupla: un_punto es una tupla de tres coordenadas
+un_punto = 10, 20, 5 # Los paréntesis son opcionales pero una buena práctica
+print(f"Tupla empaquetada: {un_punto}")
+
+# Desempaquetado de Secuencia: Los valores se asignan a x, y, y z
+x, y, z = un_punto
+print(f"Desempaquetado: x={x}, y={y}, z={z}")
+
+# Esto es extremadamente común para funciones que devuelven múltiples valores
+def obtener_estadisticas(datos):
+    """Devuelve la media y la desviación estándar de una lista de números."""
+    media = sum(datos) / len(datos)
+    desv_est = (sum([(x - media)**2 for x in datos]) / len(datos))**0.5
+    return media, desv_est # Esto devuelve una tupla (media, desv_est)
+
+# Desempaquetar la tupla devuelta directamente en variables
+mis_datos = [10, 12, 15, 11, 13]
+promedio, desv = obtener_estadisticas(mis_datos)
+print(f"\nEstadísticas de datos: Media={promedio:.2f}, Desv. Est.={desv:.2f}")
+\end{minted}
+\end{example}
+
+\subsection{Diccionarios (\code{dict}): Pares Clave-Valor y Métodos de Acceso}
+\label{subsec:dictionaries}
+Un diccionario es una colección de \textbf{pares clave-valor}. Proporciona un mapeo desde un conjunto de claves únicas e inmutables a un conjunto de valores. Los diccionarios son la implementación central de los mapas hash o arreglos asociativos en Python. Son increíblemente eficientes para recuperar un valor cuando se conoce su clave (complejidad de tiempo promedio de O(1)).
+
+\begin{remark}[Orden de los Diccionarios]
+Históricamente, los diccionarios no estaban ordenados. Sin embargo, a partir de Python 3.7, se garantiza que la implementación estándar de \code{dict} preserva el orden de inserción de sus elementos. Esto es ahora una característica fiable del lenguaje.
+\end{remark}
+
+Se accede a los datos utilizando la notación de corchetes \code{mi_diccionario[clave]}. Sin embargo, esto lanzará un \code{KeyError} si la clave no está presente. Para un acceso más seguro, se prefiere el método \code{.get()}.
+
+Los métodos clave para el acceso y las actualizaciones incluyen:
+\begin{itemize}
+    \item \textbf{\code{dict.get(clave, [default])}}: Recupera de forma segura el valor para \code{clave}. Si la clave no existe, devuelve el valor \code{default} en lugar de lanzar un error. Si no se proporciona un valor por defecto, devuelve \code{None}.
+    \item \textbf{\code{dict.update(otro_diccionario)}}: Fusiona los pares clave-valor de \code{otro_diccionario} en el diccionario original. Si una clave ya existe, su valor se sobrescribe con el nuevo.
+\end{itemize}
+
+\begin{example}[Uso de Diccionarios]
+\text{ }\begin{minted}{python}
+# Un diccionario que representa la configuración de un modelo de machine learning
+config_modelo = {
+    "nombre_modelo": "ResNet50",
+    "tasa_aprendizaje": 0.001,
+    "epocas": 20
+}
+
+# Accediendo a datos con [] - funciona, pero no es seguro si la clave es incierta
+print(f"Nombre del Modelo: {config_modelo['nombre_modelo']}")
+
+# Acceso seguro con .get()
+# 'tamano_lote' no existe, por lo que devuelve el valor por defecto (32)
+tamano_lote = config_modelo.get("tamano_lote", 32)
+print(f"Tamaño del Lote: {tamano_lote}")
+
+# Actualizando el diccionario con parámetros nuevos o modificados
+params_actualizacion = {
+    "tasa_aprendizaje": 0.0005,
+    "tamano_lote": 64
+}
+config_modelo.update(params_actualizacion)
+print(f"Configuración actualizada: {config_modelo}")
+\end{minted}
+\end{example}
+
+\subsection{Conjuntos (\code{set}): Unicidad y Operaciones de Conjuntos}
+\label{subsec:sets}
+Un conjunto es una colección no ordenada de objetos \textbf{únicos} e inmutables. Las características principales de un conjunto son que no permite elementos duplicados y que la prueba de pertenencia es extremadamente rápida (complejidad de tiempo promedio de O(1)), al igual que las búsquedas de claves en diccionarios. Los conjuntos son análogos a los conjuntos de la teoría matemática.
+
+Sus casos de uso más comunes son eliminar duplicados de una lista y realizar operaciones matemáticas estándar de conjuntos.
+
+\begin{itemize}
+    \item \textbf{Unión} (\code{|} o \code{.union()}): Todos los elementos de ambos conjuntos.
+    \item \textbf{Intersección} (\code{&} o \code{.intersection()}): Elementos que existen en ambos conjuntos.
+    \item \textbf{Diferencia} (\code{-} o \code{.difference()}): Elementos en el primer conjunto pero no en el segundo.
+    \item \textbf{Diferencia Simétrica} (\code{^} o \code{.symmetric_difference()}): Elementos en cualquiera de los conjuntos, pero no en ambos.
+\end{itemize}
+
+\begin{example}[Operaciones de Conjuntos para Análisis de Datos]
+\text{ }\begin{minted}{python}
+# Eliminando duplicados de una lista de IDs de usuario
+logins_usuarios = [101, 102, 103, 101, 104, 102, 105]
+usuarios_unicos = set(logins_usuarios)
+print(f"Usuarios únicos: {usuarios_unicos}")
+
+# Operaciones de conjuntos: comparando características en dos modelos
+caracteristicas_modelo_A = {'edad', 'genero', 'ingresos', 'educacion'}
+caracteristicas_modelo_B = {'edad', 'ingresos', 'codigo_postal', 'puntaje_credito'}
+
+# Unión: Todas las características usadas en total
+todas_las_caracteristicas = caracteristicas_modelo_A.union(caracteristicas_modelo_B)
+print(f"\nUnión: {todas_las_caracteristicas}")
+
+# Intersección: Características comunes a ambos modelos
+caracteristicas_comunes = caracteristicas_modelo_A.intersection(caracteristicas_modelo_B)
+print(f"Intersección: {caracteristicas_comunes}")
+
+# Diferencia: Características en A pero no en B
+caracteristicas_solo_A = caracteristicas_modelo_A.difference(caracteristicas_modelo_B)
+print(f"Diferencia (A - B): {caracteristicas_solo_A}")
+\end{minted}
+\end{example}
+
+\section{Arreglos Multidimensionales: Una Introducción a NumPy}
+\label{sec:numpy_intro}
+Aunque las estructuras de datos incorporadas de Python son potentes para la programación de propósito general, carecen del rendimiento y la funcionalidad necesarios para el cálculo numérico de alto volumen. Este es el dominio de las bibliotecas especializadas, y la piedra angular indiscutible de todo el ecosistema científico de Python es \textbf{NumPy} (Numerical Python). La contribución fundamental de NumPy es el objeto \textbf{\code{ndarray}}: un arreglo multidimensional rápido y eficiente. Proporciona la estructura de datos y una vasta biblioteca de funciones matemáticas que forman la base sobre la cual se construyen otras bibliotecas de ciencia de datos, como Pandas, Scikit-learn y Matplotlib.
+
+\subsection{El Concepto de Arreglo: Estructura, Dimensiones y Ejes}
+\label{subsec:numpy_array_concept}
+Un \code{ndarray} de NumPy es una cuadrícula de valores, todos los cuales deben ser del mismo tipo de dato. Se caracteriza por su forma (\textit{shape}), que es una tupla de enteros que define el tamaño del arreglo a lo largo de cada una de sus dimensiones. Las dimensiones también se conocen como \textbf{ejes}.
+
+\begin{itemize}
+    \item Un arreglo 1-D es un vector. Tiene 1 eje.
+    \item Un arreglo 2-D es una matriz. Tiene 2 ejes: el \textbf{eje 0} (las filas) y el \textbf{eje 1} (las columnas).
+    \item Un arreglo 3-D es un tensor, y así sucesivamente.
+\end{itemize}
+Los atributos clave de un arreglo son:
+\begin{itemize}
+    \item \code{ndarray.ndim}: El número de ejes (dimensiones).
+    \item \code{ndarray.shape}: Una tupla que representa el tamaño en cada dimensión.
+    \item \code{ndarray.size}: El número total de elementos.
+    \item \code{ndarray.dtype}: El tipo de dato de los elementos.
+\end{itemize}
+
+\begin{example}[Inspeccionando un \code{ndarray}]
+\text{ }\begin{minted}{python}
+import numpy as np
+
+# Un arreglo 2-D (3 filas, 4 columnas)
+matriz = np.array([
+    [1, 2, 3, 4],   # Fila 0
+    [5, 6, 7, 8],   # Fila 1
+    [9, 10, 11, 12] # Fila 2
+])
+
+print(f"Arreglo:\n{matriz}")
+print(f"\nNúmero de dimensiones (ndim): {matriz.ndim}")
+print(f"Forma del arreglo (shape): {matriz.shape}")
+print(f"Número total de elementos (size): {matriz.size}")
+print(f"Tipo de dato de los elementos (dtype): {matriz.dtype}")
+\end{minted}
+\end{example}
+
+\subsection{Tipos de Datos Uniformes (\code{dtypes}) y la Ventaja de Memoria}
+\label{subsec:numpy_dtypes}
+A diferencia de una lista de Python, que es una colección de punteros a objetos de Python dispares dispersos por la memoria, un arreglo de NumPy es un \textbf{bloque contiguo de memoria} que contiene valores de datos en bruto (p. ej., enteros de 64 bits o flotantes de 64 bits). Todos los elementos deben tener el mismo tipo de dato, especificado por el \code{dtype} del arreglo.
+
+Este diseño proporciona dos ventajas monumentales:
+\begin{enumerate}
+    \item \textbf{Eficiencia de Memoria:} Un arreglo de un millón de flotantes en NumPy requiere significativamente menos memoria que una lista de Python que contiene un millón de objetos flotantes, porque se elimina la sobrecarga del envoltorio del objeto de Python para cada elemento.
+    \item \textbf{Rendimiento a través de la Vectorización:} Debido a que los datos se almacenan de forma contigua en la memoria, NumPy puede realizar operaciones en arreglos enteros de una sola vez. Este proceso, llamado \textbf{vectorización}, delega los bucles a código C o Fortran altamente optimizado y precompilado. Una operación vectorizada (p. ej., \code{arreglo_a + arreglo_b}) puede ser órdenes de magnitud más rápida que realizar el cálculo equivalente con un bucle \code{for} explícito en Python. Esta es la razón más importante por la que NumPy es central para la ciencia de datos.
+\end{enumerate}
+
+\subsection{Creando Arreglos}
+\label{subsec:numpy_creation}
+NumPy proporciona numerosas funciones para crear arreglos.
+\text{ }\begin{minted}{python}
+import numpy as np
+
+# 1. Desde una lista de Python
+arr_desde_lista = np.array([1, 2, 3, 4, 5], dtype=np.float64)
+print(f"Desde lista:\n{arr_desde_lista}")
+
+# 2. Un arreglo de ceros (la forma se pasa como una tupla)
+arr_ceros = np.zeros((2, 3))
+print(f"\nArreglo de ceros:\n{arr_ceros}")
+
+# 3. Como el range de Python, pero devuelve un arreglo
+arr_rango = np.arange(0, 10, 2) # Inicio, fin (exclusivo), paso
+print(f"\nArreglo desde arange:\n{arr_rango}")
+
+# 4. Un arreglo de valores espaciados uniformemente
+# Crear 5 puntos desde 0 hasta 1, inclusive
+arr_linspace = np.linspace(0, 1, 5)
+print(f"\nArreglo desde linspace:\n{arr_linspace}")
+\end{minted}
+
+\subsection{Indexación y Rebanado Básicos}
+\label{subsec:numpy_indexing}
+El acceso a elementos en arreglos de NumPy es similar a las listas, pero se extiende para múltiples dimensiones.
+\begin{itemize}
+    \item \textbf{Indexación}: Para un arreglo multidimensional, se proporciona una tupla de índices separados por comas: \code{arr[fila, columna]}.
+    \item \textbf{Rebanado}: Se puede rebanar a lo largo de cada eje. Se utiliza la sintaxis \code{arr[rebanada_fila, rebanada_col]}.
+\end{itemize}
+
+\begin{example}[Indexación y Rebanado Multidimensional]
+\text{ }\begin{minted}{python}
+import numpy as np
+arr = np.arange(1, 10).reshape((3, 3)) # Crear una matriz 3x3 del 1 al 9
+print(f"Arreglo original:\n{arr}\n")
+
+# Obtener un solo elemento (Fila 1, Columna 2, que es 6)
+elemento = arr[1, 2]
+print(f"Elemento en [1, 2]: {elemento}\n")
+
+# Obtener la segunda fila completa (índice 1)
+segunda_fila = arr[1, :] # : significa todas las columnas
+print(f"Segunda fila:\n{segunda_fila}\n")
+
+# Obtener las primeras dos columnas
+primeras_dos_cols = arr[:, 0:2] # : significa todas las filas
+print(f"Primeras dos columnas:\n{primeras_dos_cols}")
+\end{minted}
+\end{example}
+
+\begin{remark}[Los Rebanados son Vistas, no Copias]
+Esta es una distinción crítica con respecto a las listas de Python. Cuando rebanas un arreglo de NumPy, obtienes una \textbf{vista} de los datos del arreglo original, no una copia. Esta es una optimización de rendimiento para evitar la duplicación innecesaria de memoria. Sin embargo, significa que modificar el rebanado también modificará el arreglo original.
+\text{ }\begin{minted}{python}
+# Crear un arreglo
+arr_original = np.array([10, 20, 30, 40, 50])
+print(f"Arreglo original: {arr_original}")
+
+# Crear un rebanado (una vista)
+vista_rebanada = arr_original[1:4] # Elementos en índice 1, 2, 3 -> [20, 30, 40]
+print(f"Vista del rebanado: {vista_rebanada}")
+
+# Modificar el primer elemento del rebanado
+vista_rebanada[0] = 999
+
+# ¡El arreglo original también cambia!
+print(f"Arreglo original después de la modificación: {arr_original}")
+
+# Para crear una copia, debes usar explícitamente el método .copy()
+# rebanada_segura = arr_original[1:4].copy()
+\end{minted}
+\end{remark}
+
+\section{Datos Tabulares: Una Introducción a Pandas}
+\label{sec:pandas_intro}
+Mientras que NumPy proporciona la base para la computación numérica, los flujos de trabajo de la ciencia de datos rara vez se limitan a arreglos numéricos en bruto. Los datos en el mundo real son a menudo \textbf{tabulares}, conteniendo filas de observaciones y columnas de características, completas con etiquetas descriptivas y una mezcla de tipos de datos (números, texto, fechas, etc.). Para manejar dichos datos estructurados, el ecosistema de Python se apoya en \textbf{Pandas}, el estándar de facto para la manipulación y análisis de datos. Pandas se construye directamente sobre NumPy, proporcionando dos estructuras de datos indispensables y de alto nivel: la \textbf{\code{Serie}} unidimensional y el \textbf{\code{DataFrame}} bidimensional. Estas herramientas están diseñadas para hacer que el proceso de limpieza, transformación, fusión y análisis de datos tabulares sea tanto intuitivo como de alto rendimiento.
+
+\subsection{La \code{Serie}: Creación, Índices y Alineación}
+\label{subsec:pandas_series}
+Una \code{Serie} de Pandas es un arreglo unidimensional y etiquetado, capaz de contener datos de cualquier tipo único. Se puede conceptualizar como una sola columna en una hoja de cálculo o un diccionario especializado. Una \code{Serie} se compone de dos componentes principales:
+\begin{itemize}
+    \item \textbf{Los Datos}: Una secuencia de valores, que internamente es un \code{ndarray} de NumPy.
+    \item \textbf{El Índice}: Un arreglo asociado de etiquetas. Estas etiquetas proporcionan una forma poderosa de identificar y acceder a los puntos de datos. El índice puede consistir en números, cadenas, fechas u otros tipos inmutables.
+\end{itemize}
+
+\text{ }\begin{minted}{python}
+import pandas as pd
+
+# Creando una Serie desde una lista. Pandas crea un índice de enteros por defecto.
+poblacion = pd.Series([8.8, 4.0, 3.9, 3.1], name='Población (Millones)')
+print(f"Serie con índice por defecto:\n{poblacion}\n")
+
+# Creando una Serie con un índice de cadenas personalizado
+poblacion_etiquetada = pd.Series(
+    [8.8, 4.0, 3.9, 3.1],
+    index=['Nueva York', 'Los Ángeles', 'Chicago', 'Houston'],
+    name='Población (Millones)'
+)
+print(f"Serie con índice personalizado:\n{poblacion_etiquetada}")
+
+# Acceder a los datos usando las etiquetas del índice
+print(f"\nPoblación de Chicago: {poblacion_etiquetada['Chicago']}")
+\end{minted}
+
+Una característica fundamental de Pandas es su capacidad para \textbf{alinear datos basándose en las etiquetas del índice} al realizar operaciones entre dos \code{Series}. Esta alineación automática previene errores comunes que surgen de datos desordenados.
+
+\begin{example}[Alineación de Índices en Operaciones]
+Cuando se combinan dos \code{Series}, Pandas empareja los valores basándose en sus etiquetas. Si una etiqueta existe en una \code{Serie} pero no en la otra, el resultado para esa etiqueta será \code{NaN} (Not a Number), el marcador estándar para datos faltantes.
+\text{ }\begin{minted}{python}
+import pandas as pd
+import numpy as np
+
+s1 = pd.Series([10, 20, 30], index=['a', 'b', 'c'])
+s2 = pd.Series([5, 50, 500], index=['b', 'c', 'd']) # Nota el orden y las etiquetas diferentes
+
+# Pandas alinea en el índice antes de sumar
+resultado = s1 + s2
+print(f"s1:\n{s1}\n")
+print(f"s2:\n{s2}\n")
+print(f"Resultado de s1 + s2:\n{resultado}")
+# 'a' y 'd' son NaN porque solo existen en una Serie.
+# 'b' es 20 + 5 = 25.
+# 'c' es 30 + 50 = 80.
+\end{minted}
+\end{example}
+
+\subsection{El \code{DataFrame}: Estructura de Filas y Columnas}
+\label{subsec:pandas_dataframe}
+El \code{DataFrame} es la estructura de datos principal en Pandas. Es una estructura de datos tabular bidimensional, de tamaño mutable y potencialmente heterogénea. Se visualiza mejor como una hoja de cálculo, una tabla SQL o un diccionario de objetos \code{Series}. Un \code{DataFrame} tiene tanto un índice de filas como un índice de columnas, proporcionando etiquetas explícitas para ambos ejes.
+
+\text{ }\begin{minted}{python}
+import pandas as pd
+
+# Creando un DataFrame desde un diccionario de listas
+# Las claves del diccionario se convierten en los nombres de las columnas.
+datos = {
+    'Ciudad': ['Nueva York', 'Los Ángeles', 'Chicago', 'Houston'],
+    'Estado': ['NY', 'CA', 'IL', 'TX'],
+    'Población': [8.8, 4.0, 3.9, 3.1],
+    'Área (sq mi)': [302.6, 468.7, 227.3, 637.4]
+}
+ciudades_df = pd.DataFrame(datos)
+
+print("DataFrame de Ciudades:")
+print(ciudades_df)
+
+# Podemos inspeccionar sus componentes
+print(f"\nÍndice de Filas: {ciudades_df.index}")
+print(f"Índice de Columnas: {ciudades_df.columns}")
+# .values devuelve los datos subyacentes como un arreglo de NumPy
+print(f"\nDatos NumPy subyacentes (.values):\n{ciudades_df.values}")
+\end{minted}
+
+\subsection{Lectura de Datos de Fuentes Comunes (\code{.read_csv()})}
+\label{subsec:pandas_read_csv}
+Aunque crear DataFrames manualmente es instructivo, la ciencia de datos del mundo real implica cargar datos de archivos externos. La función \code{pd.read_csv()} es la herramienta principal para leer datos de archivos de valores separados por comas (CSV) y otros archivos de texto delimitado en un \code{DataFrame}. Es una función altamente flexible con docenas de parámetros para manejar una amplia variedad de formatos de archivo.
+
+\begin{example}[Lectura de un archivo CSV]
+Para hacer este ejemplo autocontenido, simulamos un archivo usando el módulo \code{io.StringIO} de Python.
+\text{ }\begin{minted}{python}
+import pandas as pd
+from io import StringIO
+
+# esta cadena simula el contenido de un archivo CSV.
+datos_csv = """id_modelo,tipo_modelo,precision,parametros
+101,CNN,0.92,152000
+102,Transformer,0.95,3500000
+103,SVM,0.89,5000
+"""
+
+# Usar StringIO para leer la cadena como si fuera un archivo en disco
+archivo_datos = StringIO(datos_csv)
+
+# Usar read_csv para cargar los datos. Especificaremos 'id_modelo' como el índice de fila.
+modelos_df = pd.read_csv(archivo_datos, index_col='id_modelo')
+
+print(modelos_df)
+print(f"\nTipo de datos cargados: {type(modelos_df)}")
+\end{minted}
+Otros parámetros esenciales incluyen \code{sep} para especificar un delimitador diferente (p. ej., \code{sep='\t'} para archivos separados por tabuladores) y \code{header} para indicar qué fila contiene los nombres de las columnas.
+\end{example}
+
+\subsection{Selección Básica de Datos (Notación tipo Diccionario para Columnas)}
+\label{subsec:pandas_selection}
+Una de las operaciones más comunes es seleccionar o subconjuntar columnas de un \code{DataFrame}. Pandas proporciona una sintaxis intuitiva, similar a la de un diccionario, para esta tarea.
+
+\begin{itemize}
+    \item Para seleccionar una \textbf{única columna}, usa corchetes con el nombre de la columna: \code{df['nombre_columna']}. Esto devuelve una \code{Serie} de Pandas.
+    \item Para seleccionar \textbf{múltiples columnas}, usa una lista de nombres de columna dentro de los corchetes: \code{df[['col1', 'col2']]}. La lista interna especifica las columnas deseadas, y esta operación devuelve un nuevo \code{DataFrame}.
+\end{itemize}
+
+\begin{example}[Selección de Columnas de un DataFrame]
+Usando el \code{modelos_df} del ejemplo anterior:
+\text{ }\begin{minted}{python}
+# Seleccionar una única columna ('precision')
+# El resultado es una Serie de Pandas.
+serie_precision = modelos_df['precision']
+print("Seleccionando la columna 'precision':")
+print(serie_precision)
+print(f"\nTipo del resultado: {type(serie_precision)}")
+
+# Seleccionar múltiples columnas ('tipo_modelo' y 'parametros')
+# El resultado es un nuevo DataFrame.
+subconjunto_df = modelos_df[['tipo_modelo', 'parametros']]
+print("\nSeleccionando las columnas 'tipo_modelo' y 'parametros':")
+print(subconjunto_df)
+print(f"\nTipo del resultado: {type(subconjunto_df)}")
+\end{minted}
+\end{example}
+
+\section{Entrada y Salida de Archivos}
+\label{sec:file_io}
+El análisis de datos comienza con datos, que deben leerse de una fuente, y concluye con resultados, que deben guardarse. La Entrada/Salida (E/S) de archivos es el puente entre la memoria transitoria de un programa y el almacenamiento persistente de un disco. Entender cómo manejar archivos es una habilidad fundamental para hacer que el trabajo sea reproducible y para interactuar con datos que son demasiado grandes para crearlos manualmente. Esta sección cubre la mecánica central de leer y escribir archivos de texto plano, así como el proceso de \textbf{serialización}, que permite almacenar objetos complejos de Python.
+
+\subsection{Abrir y Cerrar Archivos (\code{open()} y \code{close()})}
+\label{subsec:open_close}
+La función incorporada \code{open()} es la forma estándar de interactuar con un archivo. Toma una ruta de archivo y un modo como argumentos y devuelve un \textbf{manejador de archivo} (file handle), un objeto que representa la conexión con el archivo a nivel del sistema operativo. Una vez completadas las operaciones, esta conexión debe terminarse llamando al método \code{.close()} en el manejador. Cerrar un archivo es crítico, ya que vuelca cualquier escritura en búfer al disco y libera el recurso del archivo. Gestionar manualmente \code{open()} y \code{close()} es posible, pero no se recomienda debido a su falta de seguridad.
+
+\subsection{Lectura y Escritura de Texto (Modos 'r' y 'w')}
+\label{subsec:read_write_modes}
+El argumento de \textbf{modo} en \code{open()} especifica la operación deseada. Los modos más comunes para archivos de texto son:
+\begin{itemize}
+    \item \code{'r'}: \textbf{Read} (lectura, el predeterminado). Abre un archivo para leer. Se lanza un error si el archivo no existe.
+    \item \code{'w'}: \textbf{Write} (escritura). Abre un archivo para escribir. Si el archivo existe, su contenido es \textbf{truncado} (eliminado). Si no existe, se crea.
+    \item \code{'a'}: \textbf{Append} (añadir). Abre un archivo para escribir, pero los nuevos datos se añaden al final del archivo. Si el archivo no existe, se crea.
+\end{itemize}
+
+\text{ }\begin{minted}{python}
+# Esto demuestra el ciclo manual de abrir/cerrar (menos seguro)
+ruta_archivo = "ejemplo_manual.txt"
+
+# --- Escritura ---
+f_salida = open(ruta_archivo, 'w')
+f_salida.write("Esta es la primera línea.\n")
+f_salida.write("Esta es la segunda línea.\n")
+f_salida.close() # Cerrar manualmente el archivo
+
+# --- Lectura ---
+f_entrada = open(ruta_archivo, 'r')
+contenido = f_entrada.read()
+f_entrada.close() # Cerrar manualmente de nuevo
+
+print("Contenido leído del archivo:")
+print(contenido)
+\end{minted}
+
+\subsection{Gestión de Contexto: La Sentencia \code{with open(...)}}
+\label{subsec:with_open}
+El enfoque manual \code{open()}/\code{close()} tiene un defecto significativo: si ocurre un error entre las dos llamadas, el método \code{.close()} podría no ejecutarse nunca, lo que lleva a una "fuga de recursos". La forma moderna, idiomática y segura de manejar archivos en Python es con la sentencia \code{with}.
+
+La sentencia \code{with} crea un \textbf{contexto} temporal, y el manejador de archivo está disponible solo dentro de este bloque indentado. La gran ventaja es que Python garantiza que el archivo se cerrará \textbf{automática y correctamente} tan pronto como se salga del bloque, por cualquier motivo, ya sea que se complete con éxito o que se lance un error.
+
+\begin{example}[Manejo Seguro de Archivos con un Gestor de Contexto]
+\text{ }\begin{minted}{python}
+# Esta es la forma recomendada de trabajar con archivos.
+ruta_archivo_seguro = "ejemplo_seguro.txt"
+
+# Abrir el archivo para escribir en un bloque 'with'
+with open(ruta_archivo_seguro, 'w') as f:
+    f.write("Usar un gestor de contexto es más seguro.\n")
+    f.write("El archivo se cierra automáticamente.\n")
+    # ¡No se necesita f.close()!
+
+# Abrir el mismo archivo para leer
+with open(ruta_archivo_seguro, 'r') as f:
+    contenido_seguro = f.read()
+
+print("Contenido del ejemplo seguro:")
+print(contenido_seguro)
+\end{minted}
+\end{example}
+
+\subsection{Serialización de Objetos: JSON y Pickle}
+\label{subsec:serialization}
+Los archivos de texto plano son útiles, pero a menudo necesitamos guardar y cargar objetos complejos de Python como listas o diccionarios. El proceso de convertir un objeto en memoria a un formato que se puede almacenar en disco se llama \textbf{serialización}. Python proporciona dos módulos principales para esto.
+
+\subsubsection*{JSON (\code{json})}
+\textbf{JSON} (JavaScript Object Notation) es un formato de texto ligero, legible por humanos e independiente del lenguaje. Es el formato dominante para el intercambio de datos en la web (p. ej., APIs) y es excelente para archivos de configuración. El módulo \code{json} puede serializar un conjunto limitado de objetos de Python (diccionarios, listas, cadenas, números, booleanos, \code{None}).
+\begin{itemize}
+    \item \code{json.dump(obj, manejador_archivo)}: Serializa el objeto a un archivo abierto.
+    \item \code{json.load(manejador_archivo)}: Deserializa desde un archivo abierto de nuevo a un objeto de Python.
+\end{itemize}
+
+\subsubsection*{Pickle (\code{pickle})}
+\textbf{Pickle} es un formato de serialización \textbf{binario} específico de Python. Su ventaja clave es su capacidad para serializar casi cualquier objeto de Python, incluidas las instancias de clases personalizadas. Debido a que es un formato binario, los archivos deben abrirse en modo binario (\code{'wb'} para escribir, \code{'rb'} para leer).
+
+\begin{remark}[Advertencia de Seguridad para Pickle]
+El formato pickle no es seguro. Deserializar un archivo pickle de una fuente no confiable puede ejecutar código arbitrario en tu máquina. \textbf{Solo deserializa datos en los que confíes.}
+\end{remark}
+
+\begin{example}[Guardando y Cargando un Diccionario]
+\text{ }\begin{minted}{python}
+import json
+import pickle
+
+# El objeto de Python que queremos guardar
+params_modelo = {
+    'nombre': 'DecisionTree',
+    'profundidad_max': 10,
+    'caracteristicas': ['edad', 'ingresos', 'educacion'],
+    'esta_entrenado': True
+}
+
+# --- Guardar en JSON ---
+with open('params.json', 'w') as f_json:
+    json.dump(params_modelo, f_json, indent=4) # indent lo hace legible
+
+# --- Guardar en Pickle (nota el modo binario 'wb') ---
+with open('params.pkl', 'wb') as f_pkl:
+    pickle.dump(params_modelo, f_pkl)
+
+# --- Cargar desde JSON ---
+with open('params.json', 'r') as f_json:
+    cargado_de_json = json.load(f_json)
+print(f"Cargado desde JSON: {cargado_de_json}")
+
+# --- Cargar desde Pickle (nota el modo binario 'rb') ---
+with open('params.pkl', 'rb') as f_pkl:
+    cargado_de_pickle = pickle.load(f_pkl)
+print(f"Cargado desde Pickle: {cargado_de_pickle}")
+\end{minted}
+\end{example}
+
+\section{Funciones: Reutilización de Código y Abstracción}
+\label{sec:functions}
+A medida que los programas crecen en complejidad, la necesidad de organizar el código se vuelve primordial. Las funciones son la unidad principal de organización y abstracción del código en Python. Una función es un bloque de código nombrado y autónomo, diseñado para realizar una tarea específica. Al encapsular la lógica dentro de una función, nos adherimos al principio \textbf{DRY (Don't Repeat Yourself - No te repitas)}, haciendo nuestro código más modular, legible y fácil de depurar y mantener. Las funciones toman entradas (como \textbf{argumentos}), realizan cálculos y producen salidas (como \textbf{valores de retorno}), formando los bloques de construcción de cualquier aplicación no trivial.
+
+\subsection{Definición y Llamada de Funciones}
+\label{subsec:function_definition}
+Una función se define usando la palabra clave \code{def}, seguida del nombre de la función, un par de paréntesis que contienen sus parámetros y dos puntos. El bloque de código que constituye el cuerpo de la función debe estar indentado.
+
+Es una convención muy recomendada incluir un \textbf{docstring} (una cadena de varias líneas) como la primera declaración en el cuerpo de la función. El docstring explica el propósito de la función, sus parámetros y lo que devuelve. Esta documentación es invaluable para la colaboración y para referencia futura.
+
+La declaración \code{return} se usa para salir de la función y enviar un valor de vuelta a la parte del código que la llamó. Si una función no tiene una declaración \code{return}, o tiene un \code{return} vacío, implícitamente devuelve el valor especial \code{None}.
+
+\begin{example}[Definiendo y Llamando una Función de Utilidad]
+En ciencia de datos, a menudo necesitamos funciones personalizadas para calcular métricas específicas. Aquí hay una función para calcular el Error Cuadrático Medio (MSE).
+\text{ }\begin{minted}{python}
+import numpy as np
+
+def calcular_mse(y_verdadero, y_predicho):
+    """Calcula el Error Cuadrático Medio entre valores verdaderos y predichos.
+
+    Args:
+        y_verdadero (np.ndarray): Un arreglo NumPy de valores objetivo verdaderos.
+        y_predicho (np.ndarray): Un arreglo NumPy de valores predichos.
+
+    Returns:
+        float: El Error Cuadrático Medio calculado.
+    """
+    # Asegurar que las entradas son arreglos NumPy para operaciones vectorizadas
+    y_verdadero = np.asarray(y_verdadero)
+    y_predicho = np.asarray(y_predicho)
+    
+    # Calcular el error cuadrático para cada predicción y luego encontrar la media
+    error_cuadratico = (y_verdadero - y_predicho)**2
+    mse = np.mean(error_cuadratico)
+    
+    return mse
+
+# --- Llamando a la función ---
+valores_reales = [2.5, 3.0, 4.2, 5.0]
+valores_predichos = [2.7, 3.1, 4.0, 5.3]
+
+# El valor devuelto por la función se asigna a la variable 'error'
+error = calcular_mse(valores_reales, valores_predichos)
+
+print(f"El Error Cuadrático Medio es: {error:.4f}")
+\end{minted}
+\end{example}
+
+\subsection{Ámbito de las Variables: La Regla LEGB}
+\label{subsec:scope}
+El \textbf{ámbito} (scope) de una variable define la región de un programa desde la cual se puede acceder a ella. Una comprensión clara del ámbito es crucial para evitar conflictos de nombres y gestionar el estado del programa de manera efectiva. Cuando accedes a una variable, Python sigue una estricta jerarquía de búsqueda conocida como la \textbf{regla LEGB} para encontrarla:
+
+\begin{enumerate}
+    \item \textbf{L - Local}: El ámbito más interno, que contiene los nombres definidos dentro de la función actual (incluidos los argumentos). Este es el primer lugar donde Python busca.
+    \item \textbf{E - Enclosing (Envolvente)}: El ámbito de cualquier función contenedora. Esto es relevante para funciones anidadas (clausuras), donde una función interna puede acceder a variables de su función contenedora.
+    \item \textbf{G - Global}: El ámbito de nivel superior del módulo. Los nombres definidos aquí son accesibles desde cualquier lugar dentro del módulo.
+    \item \textbf{B - Built-in (Incorporado)}: El ámbito más externo, que contiene todos los nombres incorporados de Python como \code{list}, \code{str}, \code{print()} y \code{len()}. Python busca aquí en último lugar.
+\end{enumerate}
+Si no se encuentra un nombre después de buscar en los cuatro ámbitos, Python lanza un \code{NameError}.
+
+\begin{example}[Demostración de la Regla LEGB]
+\text{ }\begin{minted}{python}
+# G: Ámbito Global
+x_global = "Soy global"
+
+def funcion_externa():
+    # E: Ámbito Envolvente para funcion_interna
+    x_envolvente = "Soy envolvente"
+    
+    def funcion_interna():
+        # L: Ámbito Local
+        x_local = "Soy local"
+        
+        # Python encontrará x_local primero
+        print(f"Dentro de interna: {x_local}")
+        
+        # Luego buscará en el ámbito envolvente
+        print(f"Accediendo a envolvente: {x_envolvente}")
+        
+        # Finalmente, buscará en el ámbito global
+        print(f"Accediendo a global: {x_global}")
+        
+        # Y puede acceder a los incorporados
+        print(f"El len() incorporado de x_local es: {len(x_local)}")
+        
+    funcion_interna()
+
+funcion_externa()
+\end{minted}
+\end{example}
+\begin{remark}[Modificando Ámbitos con \code{global} y \code{nonlocal}]
+Por defecto, una asignación dentro de una función crea una variable local. Para modificar una variable global desde dentro de una función, debes usar la palabra clave \code{global}. De manera similar, para modificar una variable en un ámbito envolvente (pero no global), debes usar la palabra clave \code{nonlocal}. El uso generalizado de estas se desaconseja a menudo, ya que puede hacer que el estado del programa sea más difícil de razonar.
+\end{remark}
+
+\subsection{Parámetros y Argumentos}
+\label{subsec:parameters_arguments}
+Los términos "parámetro" y "argumento" se usan a menudo indistintamente, pero tienen significados distintos:
+\begin{itemize}
+    \item \textbf{Parámetros} son los nombres de marcador de posición en la definición de una función.
+    \item \textbf{Argumentos} son los valores reales que se pasan a la función cuando se la llama.
+\end{itemize}
+Python ofrece varias formas flexibles de pasar argumentos a una función.
+
+\begin{enumerate}
+    \item \textbf{Argumentos Posicionales}: El tipo más común. Los argumentos se emparejan con los parámetros según su orden.
+    \item \textbf{Argumentos de Palabra Clave}: Los argumentos se pasan usando la sintaxis \code{nombre_parametro=valor}. Esto hace que la llamada a la función sea más explícita y legible, y el orden de los argumentos ya no importa.
+    \item \textbf{Valores de Parámetro por Defecto}: A un parámetro se le puede dar un valor por defecto en la definición de la función. Esto hace que el argumento correspondiente sea opcional cuando se llama a la función.
+\end{enumerate}
+
+\begin{example}[Paso Flexible de Argumentos]
+\text{ }\begin{minted}{python}
+# Una función con parámetros posicionales, de palabra clave y por defecto
+def entrenar_modelo(tipo_modelo, dataset, epocas=10, tasa_aprendizaje=0.01):
+    """Una función de marcador de posición para demostrar los tipos de argumentos."""
+    print(f"--- Entrenando ---")
+    print(f"  Modelo: {tipo_modelo}")
+    print(f"  Dataset: {dataset}")
+    print(f"  Épocas: {epocas}")
+    print(f"  Tasa de Aprendizaje: {tasa_aprendizaje}")
+    print(f"----------------\n")
+
+# 1. Usando solo argumentos posicionales
+entrenar_modelo("CNN", "ImageNet")
+
+# 2. Usando argumentos posicionales y de palabra clave (mejora la claridad)
+entrenar_modelo("LSTM", dataset="Series Temporales Financieras", tasa_aprendizaje=0.005)
+
+# 3. Usando argumentos de palabra clave fuera de orden
+entrenar_modelo(dataset="Abandono de Clientes", tipo_modelo="XGBoost", epocas=50)
+\end{minted}
+\end{example}
+
+\begin{remark}[Argumentos por Defecto Mutables]
+Un error común es usar un objeto mutable, como una lista o un diccionario, como valor de parámetro por defecto. El valor por defecto se crea \textit{una sola vez}, cuando se define la función, no cada vez que se llama. Esto puede llevar a un comportamiento inesperado, ya que las modificaciones al objeto por defecto en una llamada persistirán en las llamadas posteriores.
+\end{remark}
+
+\subsection{Funciones Lambda para Operaciones Concisas}
+\label{subsec:lambda}
+Una \textbf{función lambda} es una pequeña función anónima definida con la palabra clave \code{lambda}. Está restringida a una única expresión y es sintácticamente conveniente para situaciones donde se requiere una función corta y desechable.
+La sintaxis es: \code{lambda argumentos: expresion}.
+
+Las funciones lambda no están destinadas a lógica compleja. Su principal caso de uso es como argumento para funciones de orden superior (funciones que toman otras funciones como entrada), como \code{sorted()}, \code{map()}, \code{filter()}, o muchos métodos en la biblioteca Pandas.
+
+\begin{example}[Usando una Lambda para Ordenar]
+Las funciones lambda se utilizan frecuentemente como la \code{clave} para operaciones de ordenamiento, permitiendo criterios de ordenación personalizados.
+\text{ }\begin{minted}{python}
+# Una lista de diccionarios que representan resultados experimentales
+experimentos = [
+    {'id': 'exp_A', 'f1_score': 0.85, 'params': 12000},
+    {'id': 'exp_B', 'f1_score': 0.92, 'params': 35000},
+    {'id': 'exp_C', 'f1_score': 0.89, 'params': 8000},
+]
+
+# Ordenar la lista de experimentos según su F1-score, de mayor a menor.
+# La función lambda le dice a sorted() que mire el valor 'f1_score' de cada dict.
+ordenado_por_score = sorted(experimentos, key=lambda x: x['f1_score'], reverse=True)
+
+print("Experimentos ordenados por F1-score:")
+for exp in ordenado_por_score:
+    print(exp)
+\end{minted}
+\end{example}
+
+\section{Clases: Planos para Objetos}
+\label{sec:classes_objects}
+Mientras que las funciones proporcionan abstracción procedural, la \textbf{Programación Orientada a Objetos (POO)} ofrece una forma de estructurar programas agrupando datos y funcionalidad en unidades autónomas. El concepto central en POO es la \textbf{clase}, que sirve como un plano para crear \textbf{objetos}. Un objeto es una instancia de una clase, que posee su propio estado (\textbf{atributos}) y comportamiento (\textbf{métodos}). Este paradigma es excepcionalmente poderoso para modelar entidades complejas del mundo real y sus interacciones, lo que conduce a un software más organizado y escalable.
+
+\subsection{Definición de Clases y Objetos}
+\label{subsec:class_definition}
+Una clase se define usando la palabra clave \code{class}, seguida del nombre de la clase (por convención, en \code{PascalCase}) y dos puntos. El bloque indentado contiene la definición de la clase. Un objeto se crea, o \textbf{instancia}, llamando al nombre de la clase como si fuera una función. Se puede acceder y asignar atributos usando la notación de punto (\code{objeto.atributo}).
+
+\text{ }\begin{minted}{python}
+# Definir una clase simple para representar un conjunto de datos
+class ConjuntoDeDatos:
+    # Usar 'pass' para un bloque vacío
+    pass
+
+# Instanciar dos objetos (instancias) de la clase ConjuntoDeDatos
+datos_entrenamiento = ConjuntoDeDatos()
+datos_validacion = ConjuntoDeDatos()
+
+# Asignar atributos a las instancias
+datos_entrenamiento.nombre = "Entrenamiento MNIST"
+datos_entrenamiento.num_muestras = 60000
+datos_entrenamiento.esta_mezclado = True
+
+datos_validacion.nombre = "Validación MNIST"
+datos_validacion.num_muestras = 10000
+
+print(f"El conjunto de datos '{datos_entrenamiento.nombre}' tiene {datos_entrenamiento.num_muestras} muestras.")
+print(f"El tipo de datos_entrenamiento es: {type(datos_entrenamiento)}")
+\end{minted}
+
+\subsection{El Constructor (\code{__init__}) y el Argumento \code{self}}
+\label{subsec:init_self}
+Asignar atributos manualmente después de la creación es engorroso. Un mejor enfoque es inicializar el estado de un objeto en el momento de su creación. Esto se hace usando un método especial llamado el \textbf{constructor}, llamado \code{__init__} (con dobles guiones bajos, lo que lo convierte en un método "dunder"). Este método es llamado automáticamente por Python cuando se instancia un nuevo objeto.
+
+El primer parámetro de cada método de instancia, incluido \code{__init__}, debe ser una referencia a la instancia misma. Por convención, este parámetro siempre se llama \textbf{\code{self}}. Dentro de un método, \code{self} se usa para acceder a los propios atributos y métodos del objeto (p. ej., \code{self.nombre = nombre}).
+
+\begin{example}[Inicializando Objetos con un Constructor]
+\text{ }\begin{minted}{python}
+class PreprocesadorDatos:
+    """Una clase para encapsular los pasos de preprocesamiento de datos."""
+    
+    # El método __init__ es el constructor.
+    # Se ejecuta cuando creamos un nuevo objeto PreprocesadorDatos.
+    def __init__(self, estrategia_valor_faltante='mean', metodo_escalado='standard'):
+        """Inicializa el preprocesador con las estrategias especificadas."""
+        print("Se está creando un objeto PreprocesadorDatos...")
+        
+        # 'self' se refiere a la instancia específica que se está creando.
+        # Adjuntamos los argumentos como atributos a esta instancia.
+        self.estrategia_faltante = estrategia_valor_faltante
+        self.escalador = metodo_escalado
+        self.esta_ajustado = False
+
+# Instanciar un objeto. Los argumentos se pasan a __init__.
+preprocesador = PreprocesadorDatos(metodo_escalado='min_max')
+
+# Acceder a los atributos que fueron establecidos por el constructor
+print(f"Estrategia para valores faltantes: {preprocesador.estrategia_faltante}")
+print(f"Método de escalado: {preprocesador.escalador}")
+\end{minted}
+\end{example}
+
+\subsection{Herencia y Métodos Básicos}
+\label{subsec:inheritance}
+La \textbf{herencia} es un principio fundamental de la POO que permite que una nueva clase (la \textbf{hija} o \textbf{subclase}) se base en una clase existente (la \textbf{madre} o \textbf{superclase}). La clase hija hereda todos los atributos y métodos de la madre, lo que permite la reutilización de código y la creación de jerarquías lógicas.
+
+Un \textbf{método} es simplemente una función definida dentro de una clase. Opera sobre los datos contenidos en una instancia de esa clase. Una clase hija también puede \textbf{sobrescribir} un método heredado proporcionando su propia implementación.
+
+\begin{example}[Una Jerarquía de Modelos usando Herencia]
+\text{ }\begin{minted}{python}
+# Clase madre: define una interfaz general para todos los modelos
+class ModeloBase:
+    def __init__(self, nombre):
+        self.nombre = nombre
+
+    def entrenar(self, datos):
+        print(f"Entrenando el modelo genérico '{self.nombre}'...")
+        # Lógica de entrenamiento genérica aquí
+    
+    def predecir(self, datos_entrada):
+        return f"Predicción de '{self.nombre}' para {datos_entrada}"
+
+# Clase hija: hereda de ModeloBase
+class RegresionLineal(ModeloBase):
+    # Obtiene automáticamente __init__ y predecir de ModeloBase
+    
+    # Podemos sobrescribir el método entrenar para ser más específicos
+    def entrenar(self, datos):
+        print(f"Entrenando modelo de Regresión Lineal '{self.nombre}' con MCO...")
+        # Lógica específica para la regresión lineal
+
+# Otra clase hija
+class RandomForest(ModeloBase):
+    def __init__(self, nombre, n_estimadores=100):
+        # Llamar al constructor de la clase madre para establecer el nombre
+        super().__init__(nombre)
+        self.n_estimadores = n_estimadores
+    
+    def entrenar(self, datos):
+        print(f"Entrenando Random Forest '{self.nombre}' con {self.n_estimadores} árboles...")
+
+# --- Uso ---
+rl = RegresionLineal("Predictor de Precio de Vivienda")
+rf = RandomForest("Detector de Fraude", n_estimadores=200)
+
+rl.entrenar("datos_vivienda.csv")
+print(rl.predecir("[area=1500, dormitorios=3]"))
+
+rf.entrenar("datos_transacciones.csv")
+print(rf.predecir("[monto=950, pais='US']"))
+\end{minted}
+\end{example}
+
+\subsection{Encapsulación Básica: Atributos Públicos y Privados}
+\label{subsec:encapsulation}
+La \textbf{encapsulación} es el principio de agrupar los datos de un objeto (atributos) junto con su funcionalidad (métodos) y restringir el acceso directo a su estado interno. Esto ayuda a prevenir la modificación accidental de datos y crea una interfaz pública clara para interactuar con el objeto.
+
+Python no impone una privacidad estricta como lenguajes como Java o C++. En su lugar, se basa en convenciones de nomenclatura:
+\begin{itemize}
+    \item \textbf{Público}: Los atributos sin guion bajo inicial (p. ej., \code{self.nombre}) se consideran parte de la API pública.
+    \item \textbf{Protegido/Interno}: Un \textbf{único guion bajo inicial} (p. ej., \code{self._estado_interno}) es una fuerte convención que indica que un atributo es para uso interno únicamente y no debe ser accedido directamente desde fuera de la clase.
+    \item \textbf{Name Mangling (Ofuscación de Nombres)}: Un \textbf{doble guion bajo inicial} (p. ej., \code{self.__clave_privada}) activa el mecanismo de ofuscación de nombres de Python. El intérprete cambia el nombre del atributo a \code{_NombreClase__clave_privada}, lo que dificulta (pero no imposibilita) su acceso desde el exterior. Se utiliza principalmente para evitar conflictos de nombres en jerarquías de herencia.
+\end{itemize}
+
+\begin{example}[Convenciones de Nomenclatura de Atributos]
+\text{ }\begin{minted}{python}
+class EnvoltorioModelo:
+    def __init__(self, clave_api):
+        self.nombre_publico = "Mi Modelo Asombroso"
+        self._version_interna = "v1.2.3" # Convención de uso interno
+        self.__clave_api = clave_api # El nombre será ofuscado
+
+    def obtener_version(self):
+        # Método público para acceder a un atributo interno
+        return self._version_interna
+
+envoltorio = EnvoltorioModelo("ABC-123-XYZ")
+
+# Acceder al atributo público está bien
+print(f"Nombre del Modelo: {envoltorio.nombre_publico}")
+
+# Acceder al atributo interno es posible, pero desaconsejado
+print(f"Versión Interna: {envoltorio._version_interna}")
+
+# El acceso directo al atributo ofuscado falla
+try:
+    print(envoltorio.__clave_api)
+except AttributeError as e:
+    print(f"Error al acceder a __clave_api directamente: {e}")
+
+# El acceso es posible a través del nombre ofuscado (para introspección/depuración)
+print(f"Acceso con nombre ofuscado: {envoltorio._EnvoltorioModelo__clave_api}")
+\end{minted}
+\end{example}
+
+\section{Visualización de Datos: Una Introducción a Matplotlib}
+\label{sec:matplotlib_intro}
+El análisis de datos está incompleto sin la visualización. Un gráfico bien elaborado puede revelar patrones, anomalías y conocimientos que son invisibles en una tabla de números brutos. Es la herramienta más efectiva para explorar datos y comunicar hallazgos. La biblioteca fundamental para crear visualizaciones estáticas, animadas e interactivas en Python es \textbf{Matplotlib}. Aunque existen numerosas otras bibliotecas (como Seaborn y Plotly), la mayoría se construyen sobre la potente base de Matplotlib. Por lo tanto, dominar los conceptos básicos de Matplotlib es una piedra angular de la ciencia de datos en Python.
+
+\subsection{El Flujo de Trabajo Básico: Figura y Ejes usando Pyplot}
+\label{subsec:matplotlib_workflow}
+Matplotlib ofrece dos interfaces principales para crear gráficos. La más común, especialmente para el trabajo interactivo y gráficos simples, es la interfaz con estado proporcionada por el módulo \textbf{Pyplot}, que convencionalmente se importa como \code{plt}.
+
+Esta interfaz funciona como una máquina de estados. Matplotlib, a través de \code{plt}, realiza un seguimiento implícito de la figura y los ejes "actuales". Cada vez que se llama a una función como \code{plt.plot()}, actúa sobre los ejes actuales de la figura actual. Esto hace que el flujo de trabajo sea muy directo: se llama a una secuencia de funciones de \code{plt} para construir el gráfico paso a paso.
+
+Los componentes centrales siguen siendo la \textbf{Figura} (la ventana o lienzo general) y los \textbf{Ejes} (el gráfico individual), pero se interactúa con ellos implícitamente a través del módulo \code{plt}.
+
+\begin{example}[El Flujo de Trabajo con Estado (pyplot)]
+\text{ }\begin{minted}{python}
+import matplotlib.pyplot as plt
+import numpy as np
+
+# --- 1. Preparar Datos ---
+# Crear algunos datos para una simple onda sinusoidal
+x = np.linspace(0, 10, 100) # 100 puntos de 0 a 10
+y = np.sin(x)
+
+# --- 2. (Opcional) Crear una Figura ---
+# Una figura se crea automáticamente la primera vez que se llama a plt.plot(),
+# pero se puede crear explícitamente para establecer propiedades como el tamaño.
+plt.figure(figsize=(8, 4)) # figsize controla las dimensiones en pulgadas
+
+# --- 3. Graficar Datos ---
+# plt.plot() actúa sobre los ejes "actuales" activos.
+plt.plot(x, y)
+
+# --- 4. Personalizar el Gráfico ---
+# Todas las funciones de personalización en plt se aplican a los ejes actuales.
+plt.title("Una Simple Onda Sinusoidal")
+plt.xlabel("Eje X")
+plt.ylabel("Eje Y")
+
+# --- 5. Mostrar el Gráfico ---
+# Este comando muestra la figura
+plt.show()
+\end{minted}
+\end{example}
+
+\begin{remark}[API con Estado vs. Orientada a Objetos]
+La API con estado que usa \code{plt} es conveniente e imita la sintaxis de MATLAB, lo que la hace ideal para la exploración rápida de datos. La alternativa es la API orientada a objetos, donde se crean explícitamente objetos de figura y ejes (p. ej., \code{fig, ax = plt.subplots()}) y luego se llaman métodos directamente sobre los ejes (\code{ax.plot()}). Aunque el enfoque con estado es a menudo más rápido para gráficos simples, el enfoque orientado a objetos generalmente se recomienda para visualizaciones complejas (p. ej., múltiples subgráficos, cuadrículas anidadas) ya que proporciona un control más explícito y conduce a un código más organizado y reutilizable. Este capítulo utilizará la interfaz con estado \code{plt}.
+\end{remark}
+
+\subsection{Tipos de Gráficos Esenciales para Ciencia de Datos}
+\label{subsec:plot_types}
+Matplotlib soporta una vasta gama de tipos de gráficos, cada uno diseñado para responder diferentes preguntas sobre los datos. Aunque un estudio exhaustivo está más allá del alcance de una introducción, dominar un conjunto básico de visualizaciones es esencial para cualquier científico de datos. Exploraremos gráficos para visualizar relaciones entre variables, entender la distribución de los datos, comparar proporciones y representar datos tridimensionales. Todos los ejemplos continuarán usando la interfaz con estado \code{plt}.
+
+\subsubsection*{Gráfico de Líneas (\code{plt.plot()})}
+Los gráficos de líneas son ideales para visualizar datos sobre un intervalo o secuencia continua, como una serie temporal. Conectan puntos de datos individuales, lo que los hace excelentes para observar tendencias, estacionalidad o ciclos.
+
+\begin{example}[Visualizando una Tendencia con un Gráfico de Líneas]
+\text{ }\begin{minted}{python}
+import matplotlib.pyplot as plt
+import numpy as np
+
+plt.figure(figsize=(8, 4))
+x_linea = np.linspace(0, 10, 100)
+y_linea = 0.5 * x_linea + np.sin(x_linea) # Una tendencia lineal con variación sinusoidal
+plt.plot(x_linea, y_linea)
+plt.title("Gráfico de Líneas Mostrando una Tendencia en el Tiempo")
+plt.xlabel("Tiempo (unidades arbitrarias)")
+plt.ylabel("Valor de la Señal")
+plt.grid(True, linestyle=':')
+plt.show()
+\end{minted}
+\end{example}
+
+\subsubsection*{Gráfico de Dispersión (\code{plt.scatter()})}
+El estándar para visualizar la relación entre dos variables numéricas. Cada punto representa una observación, permitiendo la identificación de patrones de correlación (lineal, no lineal), cúmulos de datos y valores atípicos.
+
+\begin{example}[Identificando Correlación con un Gráfico de Dispersión]
+\text{ }\begin{minted}{python}
+import matplotlib.pyplot as plt
+import numpy as np
+
+plt.figure(figsize=(8, 4))
+# Generar datos con una clara correlación positiva más algo de ruido
+x_dispersion = np.random.rand(100) * 20
+y_dispersion = x_dispersion * 3 + np.random.randn(100) * 5
+plt.scatter(x_dispersion, y_dispersion, alpha=0.7, edgecolors='b')
+plt.title("Gráfico de Dispersión de Horas de Estudio vs. Puntuación de Examen")
+plt.xlabel("Horas Estudiadas")
+plt.ylabel("Puntuación de Examen")
+plt.grid(True, linestyle=':')
+plt.show()
+\end{minted}
+\end{example}
+
+\subsubsection*{Histograma (\code{plt.hist()})}
+La herramienta más fundamental para ver la distribución de una única variable numérica. Agrupa los datos en intervalos (bins) y grafica la frecuencia de observaciones en cada intervalo, revelando la forma subyacente de los datos, la tendencia central y la dispersión.
+
+\begin{example}[Visualizando una Distribución con un Histograma]
+\text{ }\begin{minted}{python}
+import matplotlib.pyplot as plt
+import numpy as np
+
+plt.figure(figsize=(8, 4))
+# Datos de una distribución bimodal (dos picos)
+datos1 = np.random.normal(-3, 1, 500)
+datos2 = np.random.normal(3, 1, 500)
+datos_hist = np.concatenate([datos1, datos2])
+plt.hist(datos_hist, bins=30, density=True, color='purple', alpha=0.7)
+plt.title("Histograma de una Distribución Bimodal")
+plt.xlabel("Valor")
+plt.ylabel("Densidad")
+plt.show()
+\end{minted}
+\end{example}
+
+\subsubsection*{Gráfico de Barras (\code{plt.bar()})}
+Se utiliza para comparar un valor numérico entre múltiples categorías discretas. La altura (o longitud, para barras horizontales) de cada barra es proporcional al valor que representa, facilitando la comparación de cantidades.
+
+\begin{example}[Comparando Categorías con un Gráfico de Barras]
+\text{ }\begin{minted}{python}
+import matplotlib.pyplot as plt
+
+plt.figure(figsize=(8, 4))
+modelos = ['Random Forest', 'XGBoost', 'LightGBM', 'SVM']
+precision = [0.88, 0.91, 0.92, 0.85]
+plt.bar(modelos, precision, color='skyblue')
+plt.title("Comparación del Rendimiento de Modelos")
+plt.xlabel("Tipo de Modelo")
+plt.ylabel("Puntuación de Precisión")
+plt.ylim(0.8, 0.95) # Acercar el rango relevante
+plt.show()
+\end{minted}
+\end{example}
+
+\subsubsection*{Gráfico Circular (\code{plt.pie()})}
+Un gráfico circular se utiliza para representar las proporciones de diferentes categorías que componen un todo. El ángulo de cada porción es proporcional al porcentaje de la categoría sobre el total.
+
+\begin{example}[Visualizando Proporciones con un Gráfico Circular]
+\text{ }\begin{minted}{python}
+import matplotlib.pyplot as plt
+
+plt.figure(figsize=(6, 6))
+# Datos que representan la cuota de mercado de diferentes proveedores de nube
+etiquetas = ['AWS', 'Azure', 'GCP', 'Otros']
+tamanos = [45, 30, 15, 10] # Porcentajes
+explode = (0.1, 0, 0, 0) # "Explosionar" la primera porción (AWS)
+
+plt.pie(tamanos, explode=explode, labels=etiquetas, autopct='%1.1f%%',
+        shadow=True, startangle=90)
+plt.title("Cuota de Mercado de Proveedores de Nube")
+plt.axis('equal')  # La relación de aspecto igual asegura que el gráfico sea un círculo.
+plt.show()
+\end{minted}
+\end{example}
+
+\begin{remark}[Una Precaución sobre los Gráficos Circulares]
+Aunque populares, los gráficos circulares son a menudo criticados en la comunidad de visualización de datos. El ojo humano es notablemente malo para comparar ángulos con precisión, lo que dificulta juzgar los tamaños relativos de las porciones, especialmente cuando son similares o cuando hay muchas categorías. Para comparar proporciones, un \textbf{gráfico de barras} es casi siempre una alternativa más efectiva y perceptualmente precisa. Use gráficos circulares con moderación y solo para un pequeño número de categorías distintas.
+\end{remark}
+
+\subsubsection*{Diagrama de Caja (\code{plt.boxplot()}) y Diagrama de Violín (\code{plt.violinplot()})}
+Estos gráficos proporcionan resúmenes concisos de las estadísticas clave de una distribución (mediana, cuartiles, rango) y son excepcionalmente útiles para comparar distribuciones entre múltiples categorías. Un diagrama de violín mejora aún más un diagrama de caja al agregar una estimación de densidad de kernel para mostrar la densidad de probabilidad completa de los datos.
+
+\begin{example}[Comparando Distribuciones con Diagramas de Caja y Violín]
+\text{ }\begin{minted}{python}
+import matplotlib.pyplot as plt
+import numpy as np
+
+# Generar datos para tres grupos diferentes
+np.random.seed(10)
+grupo_A = np.random.normal(5, 1.5, 200)
+grupo_B = np.random.normal(6, 3.0, 200)
+grupo_C = np.random.gamma(2, 2, 200) # Una distribución sesgada
+datos_grafico = [grupo_A, grupo_B, grupo_C]
+etiquetas = ['Grupo A', 'Grupo B', 'Grupo C']
+
+# Crear una figura con dos subgráficos
+plt.figure(figsize=(12, 5))
+
+# Diagrama de Caja
+plt.subplot(1, 2, 1)
+plt.boxplot(datos_grafico, labels=etiquetas, patch_artist=True)
+plt.title("Comparación con Diagrama de Caja")
+plt.ylabel("Valor")
+
+# Diagrama de Violín
+plt.subplot(1, 2, 2)
+plt.violinplot(datos_grafico, showmedians=True)
+plt.xticks([1, 2, 3], etiquetas) # Establecer manualmente las etiquetas del eje x
+plt.title("Comparación con Diagrama de Violín")
+plt.ylabel("Valor")
+
+plt.show()
+\end{minted}
+\end{example}
+
+\subsubsection*{Mapa de Calor (\code{plt.imshow()})}
+Un mapa de calor es una representación gráfica de datos 2D, como una matriz, donde los valores se representan por color. Es una herramienta indispensable para visualizar matrices de correlación, matrices de confusión o cualquier otra estructura de datos tipo cuadrícula.
+
+\begin{example}[Visualizando una Matriz de Correlación con un Mapa de Calor]
+\text{ }\begin{minted}{python}
+import matplotlib.pyplot as plt
+import numpy as np
+import pandas as pd
+
+# Crear algunos datos correlacionados
+np.random.seed(42)
+datos = {'A': np.random.rand(100),
+         'B': np.random.rand(100) * 0.5 + 0.5,
+         'C': np.random.rand(100) * -0.8 + 0.8,
+         'D': np.random.rand(100)}
+df = pd.DataFrame(datos)
+df['B'] += df['A']
+df['C'] -= df['A']
+matriz_correlacion = df.corr()
+
+plt.figure(figsize=(8, 6))
+plt.imshow(matriz_correlacion, cmap='coolwarm', interpolation='nearest')
+plt.colorbar(label='Coeficiente de Correlación')
+plt.title('Mapa de Calor de una Matriz de Correlación')
+plt.xticks(ticks=np.arange(len(df.columns)), labels=df.columns)
+plt.yticks(ticks=np.arange(len(df.columns)), labels=df.columns)
+plt.show()
+\end{minted}
+\end{example}
+
+\begin{example}[Creando Diferentes Tipos de Gráficos con Subgráficos]
+Para crear múltiples gráficos en una figura usando la API con estado, usamos el comando \code{plt.subplot()}. Toma tres argumentos: el número de filas, el número de columnas y el índice del gráfico a activar.
+\text{ }\begin{minted}{python}
+import matplotlib.pyplot as plt
+import numpy as np
+
+# Crear una única figura para contener todos nuestros gráficos
+plt.figure(figsize=(6, 12))
+
+# --- 1. Gráfico de Líneas (activar el primer subgráfico) ---
+# Crear una cuadrícula de 3x1 y activar el 1er gráfico
+plt.subplot(3, 1, 1)
+x_linea = np.linspace(0, 2 * np.pi, 100)
+y_cos = np.cos(x_linea)
+plt.plot(x_linea, y_cos, color='blue')
+plt.title("Gráfico de Líneas: Función Coseno")
+
+# --- 2. Gráfico de Dispersión (activar el segundo subgráfico) ---
+# Activar el 2do gráfico en la cuadrícula de 3x1
+plt.subplot(3, 1, 2)
+x_dispersion = np.random.rand(50) * 10
+y_dispersion = 2 * x_dispersion + np.random.randn(50) * 2 # y = 2x + ruido
+plt.scatter(x_dispersion, y_dispersion, color='green', alpha=0.6)
+plt.title("Gráfico de Dispersión: Datos Correlacionados")
+
+# --- 3. Gráfico de Barras (activar el tercer subgráfico) ---
+# Activar el 3er gráfico en la cuadrícula de 3x1
+plt.subplot(3, 1, 3)
+categorias = ['Modelo A', 'Modelo B', 'Modelo C']
+precision = [0.85, 0.92, 0.88]
+plt.bar(categorias, precision, color=['red', 'blue', 'orange'])
+plt.title("Gráfico de Barras: Comparación de Precisión de Modelos")
+plt.ylim(0, 1) # Establecer límites del eje y
+
+# Ajustar el diseño para evitar que los títulos y etiquetas se superpongan
+plt.tight_layout(pad=3.0)
+plt.show()
+\end{minted}
+\end{example}
+
+\subsection{Personalización: Etiquetas, Títulos y Leyendas}
+\label{subsec:plot_customization}
+Un gráfico sin etiquetas a menudo carece de sentido. La personalización es el paso final y crucial en la creación de una visualización efectiva. Usando la interfaz de pyplot, puedes agregar títulos, etiquetas de ejes, leyendas y mucho más llamando a las funciones correspondientes de \code{plt}.
+
+\begin{example}[Un Gráfico Totalmente Personalizado]
+\text{ }\begin{minted}{python}
+import matplotlib.pyplot as plt
+import numpy as np
+
+# Preparar los datos
+x = np.linspace(0, 10, 100)
+y1 = np.sin(x)
+y2 = np.cos(x)
+
+# Crear la figura con un tamaño específico
+plt.figure(figsize=(10, 6))
+
+# Graficar múltiples conjuntos de datos, añadiendo una 'label' para la leyenda
+plt.plot(x, y1, color='navy', linestyle='-', linewidth=2, label='Onda Sinusoidal')
+plt.plot(x, y2, color='crimson', linestyle='--', linewidth=2, label='Onda Cosenoidal')
+
+# --- Personalización ---
+# Título y etiquetas de ejes con tamaños de fuente especificados
+plt.title('Funciones Seno y Coseno', fontsize=16)
+plt.xlabel('Eje X (radianes)', fontsize=12)
+plt.ylabel('Amplitud', fontsize=12)
+
+# Establecer límites para los ejes
+plt.xlim(0, 10)
+plt.ylim(-1.5, 1.5)
+
+# Añadir una cuadrícula para una mejor legibilidad
+plt.grid(True, linestyle=':', alpha=0.7)
+
+# Añadir la leyenda. Matplotlib usa los argumentos 'label' de las llamadas a plot.
+plt.legend(loc='upper right', fontsize=10)
+
+plt.show()
+\end{minted}
+\end{example}
+
+\section{Bibliotecas Estadísticas}
+\label{sec:statistical_libraries}
+Mientras que NumPy y Pandas proporcionan las estructuras de datos fundamentales y las herramientas matemáticas básicas, un análisis estadístico más profundo requiere funciones más especializadas. El ecosistema científico de Python ofrece potentes bibliotecas dedicadas al modelado estadístico, las pruebas de hipótesis y la teoría de la probabilidad. Esta sección introduce \textbf{SciPy}, la biblioteca central para algoritmos científicos, demuestra cómo calcular estadísticas descriptivas de manera eficiente con NumPy/Pandas y revisa el concepto de distribuciones de probabilidad en un contexto práctico.
+
+\subsection{Introducción a SciPy y sus Submódulos}
+\label{subsec:scipy_intro}
+\textbf{SciPy} (Scientific Python) es una biblioteca que se construye sobre NumPy para proporcionar una gran colección de algoritmos y funciones de alto nivel para la computación científica y técnica. Está organizada en submódulos dedicados, cada uno dirigido a un dominio específico. Para la ciencia de datos, algunos de los submódulos más importantes son:
+\begin{itemize}
+    \item \textbf{\code{scipy.stats}}: El módulo principal para estadísticas. Contiene un vasto número de distribuciones de probabilidad (y herramientas para trabajar con ellas), funciones para pruebas de hipótesis (p. ej., pruebas t, pruebas de chi-cuadrado) y otras funciones estadísticas.
+    \item \textbf{\code{scipy.integrate}}: Proporciona herramientas para la integración numérica, incluida la resolución de ecuaciones diferenciales ordinarias (EDOs).
+    \item \textbf{\code{scipy.optimize}}: Ofrece un conjunto de algoritmos de optimización, incluyendo minimización de funciones, ajuste de curvas y búsqueda de raíces.
+    \item \textbf{\code{scipy.linalg}}: Contiene rutinas avanzadas de álgebra lineal que amplían la funcionalidad de \code{numpy.linalg}.
+\end{itemize}
+
+\begin{example}[Usando \code{scipy.stats} para una Prueba T]
+Una tarea común es determinar si las medias de dos muestras independientes son significativamente diferentes. La prueba t independiente es una prueba estadística estándar para este propósito.
+
+\text{ }\begin{minted}{python}
+from scipy import stats
+import numpy as np
+
+# Generar dos muestras de datos
+# Muestra A: de una distribución normal con media=5.0
+muestra_A = np.random.normal(loc=5.0, scale=1.0, size=100)
+# Muestra B: de una distribución normal con media=5.5
+muestra_B = np.random.normal(loc=5.5, scale=1.0, size=100)
+
+# Realizar una prueba t independiente
+# Esto devuelve el estadístico t y el valor p
+estadistico_t, valor_p = stats.ttest_ind(muestra_A, muestra_B)
+
+print(f"Estadístico T: {estadistico_t:.4f}")
+print(f"Valor P: {valor_p:.4f}")
+
+# Interpretar el resultado
+alpha = 0.05 # Nivel de significancia
+if valor_p < alpha:
+    print("La diferencia entre las medias de las muestras es estadísticamente significativa.")
+else:
+    print("No podemos concluir que haya una diferencia significativa entre las medias.")
+\end{minted}
+\end{example}
+
+\noindent Debido a nuestra falta de herramientas, entraremos en detalles más adelante.
+
+\subsection{Estadística Descriptiva con NumPy/Pandas}
+\label{subsec:descriptive_stats}
+Antes de aplicar modelos complejos, el primer paso en cualquier análisis es comprender las propiedades básicas de los datos a través de la \textbf{estadística descriptiva}. Estas son estadísticas de resumen que describen cuantitativamente las características principales de una colección de información. Los arreglos de NumPy y las Series/DataFrames de Pandas tienen métodos incorporados y altamente optimizados para calcular estas métricas.
+
+Las estadísticas descriptivas clave incluyen:
+\begin{itemize}
+    \item \textbf{Medidas de Tendencia Central}:
+    \begin{itemize}
+        \item \textbf{Media} (\code{.mean()}): El promedio aritmético.
+        \item \textbf{Mediana} (\code{.median()}): El valor central de un conjunto de datos ordenado. Es más robusto a los valores atípicos que la media.
+    \end{itemize}
+    \item \textbf{Medidas de Dispersión (Variabilidad)}:
+    \begin{itemize}
+        \item \textbf{Desviación Estándar} (\code{.std()}): Mide la cantidad de variación o dispersión de un conjunto de valores. Una desviación estándar baja indica que los valores tienden a estar cerca de la media.
+        \item \textbf{Varianza} (\code{.var()}): El cuadrado de la desviación estándar.
+        \item \textbf{Mínimo (\code{.min()}) y Máximo (\code{.max()})}: Los valores más pequeños y más grandes.
+    \end{itemize}
+\end{itemize}
+
+\begin{example}[Calculando Estadísticas en un DataFrame de Pandas]
+Pandas hace trivial el cálculo de estas estadísticas en datos tabulares. Cuando se llaman en un DataFrame, los métodos operan en cada columna por defecto.
+\text{ }\begin{minted}{python}
+import pandas as pd
+import numpy as np
+
+# Crear un DataFrame de muestra
+datos = {
+    'puntuacion_examen': np.random.normal(loc=75, scale=10, size=100),
+    'horas_estudio': np.random.normal(loc=15, scale=4, size=100)
+}
+df = pd.DataFrame(datos)
+
+# Calcular estadísticas individuales
+media_puntuacion = df['puntuacion_examen'].mean()
+mediana_horas = df['horas_estudio'].median()
+desv_est_puntuacion = df['puntuacion_examen'].std()
+
+print(f"Media de Puntuación de Examen: {media_puntuacion:.2f}")
+print(f"Mediana de Horas de Estudio: {mediana_horas:.2f}")
+print(f"Desviación Estándar de Puntuaciones: {desv_est_puntuacion:.2f}\n")
+
+# El método .describe() proporciona un resumen rápido y completo
+print("--- Resumen Completo usando .describe() ---")
+print(df.describe())
+\end{minted}
+\end{example}
+
+\subsection{Distribuciones de Probabilidad y Generación de Números Aleatorios}
+\label{subsec:distributions_rng}
+Una \textbf{distribución de probabilidad} es una función matemática que describe la probabilidad de obtener los posibles valores que una variable aleatoria puede tomar. En ciencia de datos, a menudo asumimos que nuestros datos observados son una muestra extraída de alguna distribución de probabilidad subyacente (y a menudo desconocida).
+
+El submódulo \code{random} de NumPy es la herramienta esencial para generar números aleatorios y simular extracciones de diversas distribuciones de probabilidad. Esto es fundamental para tareas como la creación de datos sintéticos, la realización de simulaciones de Monte Carlo y el bootstrapping.
+
+\begin{example}[Generando Datos de una Distribución Normal]
+La distribución Normal (o Gaussiana) es posiblemente la más importante en estadística. Se define por su media (\code{loc}) y su desviación estándar (\code{scale}).
+\text{ }\begin{minted}{python}
+import numpy as np
+import matplotlib.pyplot as plt
+
+# --- Generar los Datos ---
+# Generar 1000 números aleatorios de una distribución normal
+# con una media de 0 y una desviación estándar de 1 (una "normal estándar")
+media = 0
+desv_est = 1
+tamano_muestra = 1000
+datos_aleatorios = np.random.normal(loc=media, scale=desv_est, size=tamano_muestra)
+
+# --- Visualizar la Distribución ---
+# Un histograma es una excelente manera de visualizar la distribución de una muestra.
+fig, ax = plt.subplots(figsize=(8, 5))
+ax.hist(datos_aleatorios, bins=30, density=True, alpha=0.7, label='Histograma de Muestra')
+ax.set_title(f'Histograma de {tamano_muestra} Muestras de una Distribución Normal')
+ax.set_xlabel('Valor')
+ax.set_ylabel('Densidad')
+
+# Para comparación, graficar la verdadera función de densidad de probabilidad (PDF)
+from scipy.stats import norm
+x = np.linspace(-4, 4, 100)
+pdf = norm.pdf(x, loc=media, scale=desv_est)
+ax.plot(x, pdf, 'r-', linewidth=2, label='PDF Verdadera')
+ax.legend()
+
+plt.show()
+\end{minted}
+\end{example}

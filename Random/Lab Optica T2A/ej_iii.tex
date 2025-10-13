@@ -1,0 +1,54 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{geometry}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage[thmmarks, amsmath, thref]{ntheorem}
+\usepackage{times} % Fuente Times New Roman
+\geometry{a4paper, left=2cm, right=2cm, top=1cm, bottom=1.5cm}
+\setlength{\parskip}{0pt} % Espaciado compacto
+\setlength{\parindent}{0em}
+
+% Configuración del entorno "Solución"
+\theoremstyle{nonumberplain}
+\theoremheaderfont{\itshape}
+\theorembodyfont{\upshape}
+\theoremseparator{.}
+\theoremsymbol{\ensuremath{\square}}
+\newtheorem{solucion}{Solución}
+
+\begin{document}
+
+\textbf{Problema:} Pruebe que la función \( f(x, y) = -y^3 + 3x^2y \) es armónica. \\
+
+\begin{solucion}
+Una función \( C^2 \) que satisface \( \nabla^2 f = 0 \), es decir:
+\[
+\frac{\partial^2 f}{\partial x^2} + \frac{\partial^2 f}{\partial y^2} = 0
+\]
+se llama función armónica. Demostraremos que \( f(x, y) = -y^3 + 3x^2y \) cumple esta condición.
+
+**Cálculo de derivadas parciales:**
+\[
+\frac{\partial f}{\partial x} = \frac{\partial}{\partial x} \left(-y^3 + 3x^2y\right) = 0 + 6xy = 6xy
+\]
+\[
+\frac{\partial^2 f}{\partial x^2} = \frac{\partial}{\partial x} \left(6xy\right) = 6y
+\]
+\[
+\frac{\partial f}{\partial y} = \frac{\partial}{\partial y} \left(-y^3 + 3x^2y\right) = -3y^2 + 3x^2
+\]
+\[
+\frac{\partial^2 f}{\partial y^2} = \frac{\partial}{\partial y} \left(-3y^2 + 3x^2\right) = -6y
+\]
+
+**Verificación de la ecuación de Laplace:**
+\[
+\nabla^2 f = \frac{\partial^2 f}{\partial x^2} + \frac{\partial^2 f}{\partial y^2} = 6y + (-6y) = 0
+\]
+Por lo tanto, \( f(x, y) = -y^3 + 3x^2y \) es una función armónica, ya que satisface \( \nabla^2 f = 0 \).
+
+\end{solucion}
+
+\end{document}

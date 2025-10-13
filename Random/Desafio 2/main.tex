@@ -1,0 +1,108 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+\usepackage{xcolor} % usar colores
+\usepackage{color} % para el color de la página
+\usepackage{amsmath} % para usar \boxed en \colorboxed
+\usepackage{geometry} % para definir las distancias de margen
+\usepackage{pgothic} % para usar letras góticas
+\usepackage[T1]{fontenc}
+\usepackage{ragged2e}
+
+%%%%%%%%%%%%%%%%%%%% Caja de color %%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+% Syntax: \colorboxed[<color model>]{<color specification>}{<math formula>}
+\newcommand*{\colorboxed}{}
+\def\colorboxed#1#{%
+  \colorboxedAux{#1}%
+}
+\newcommand*{\colorboxedAux}[3]{%
+  % #1: optional argument for color model
+  % #2: color specification
+  % #3: formula
+  \begingroup
+    \colorlet{cb@saved}{.}%
+    \color#1{#2}%
+    \boxed{%
+      \color{cb@saved}%
+      #3%
+    }%
+  \endgroup
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Configuración de longitud de los márgenes de la hoja
+\geometry{ 
+    letterpaper,
+    top = 2cm ,
+    bottom = 3cm ,
+    left = 1cm ,
+    right = 2cm 
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%Color de página
+
+\definecolor{antiquewhite}{rgb}{0.98, 0.92, 0.84}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\pagestyle{empty}
+\pagecolor{antiquewhite}
+\colorboxed{red}{
+\begin{minipage}{\textwidth}
+\colorboxed{red}{
+\begin{minipage}{0.987\textwidth}
+    \begin{center}
+            {\Huge \pgothfamily Sixty-sixth Congress of the United States of America; 
+            At the First Session,}\\
+            \vspace{1cm}
+            {\Large Begun and held at the City of Washington on Monday, the nineteenth day of May,\\ 
+            one thousand nine hundred and nineteen.}\\
+            \vspace{0.3cm}
+            \rule{0.6\textwidth}{.4pt}\\[\dimexpr-\baselineskip+1mm+2pt]
+            \rule{0.6\textwidth}{2pt}\\
+            \vspace{0.3cm}
+            {\Huge JOINT RESOLUTION}\\
+            \vspace{0.5cm}
+            {\Large Proposing an amendment to the Constitution extending the right of suffrage \\
+            to women.}\\
+            \vspace{0.3cm}
+            \rule{0.6\textwidth}{.1pt}\\[\dimexpr-\baselineskip+1mm+2pt]
+            \rule{0.6\textwidth}{1pt}\\
+            \vspace{0.3cm}
+                {\itshape\large Resolved by the Senate and House of Representatives of the United States \\
+                \hspace*{1.5cm}of America in Congress assembled (two-thirds of each House concurring therein),\\
+                \hspace{0.5cm}That the following article is proposed as an amendment to the Constitution, \\
+                \hspace{1.2cm}which shall be valid to all intents and purposes as part of the Constitution when \\
+                \hspace{-2cm}ratified by the legislature of three-fourths of the several States.}\\
+                \vspace{0.5cm}
+                \mdseries 
+                {\Large \textbf{"\ ARTICLE }}\rule{0.15\textwidth}{1pt}{\Large \textbf{.}}\\
+                \vspace{0.5cm}
+                \hspace*{2.5cm} {\large "The right of citizens of the United States to vote shall not be denied or \\
+                abridged by the United States or by any State on account of sex.\\
+                \hspace*{2.5cm}"Congress shall have power to enforce this article by appropriate \\
+                \hspace*{-10cm}legislation."}
+            \end{center}
+            \vspace{2cm}
+            \hspace{10cm}\textit{\large Speaker of the House of Representatives.}\\
+            \ \\
+            \ \\
+            \ \\
+            \ \\
+            \ \\
+            \hspace*{10cm}\textit{Vice President of the United States and}\\ 
+            \hspace*{14cm}\textit{President of the Senate.}\\
+            \vspace{2.1cm}
+\end{minipage}
+}
+\end{minipage}
+}
+
+\end{document}

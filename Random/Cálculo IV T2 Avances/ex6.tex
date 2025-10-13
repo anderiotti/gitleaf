@@ -1,0 +1,172 @@
+6. Use el Teorema de Cambio de Variable en los siguientes incisos. \\
+a) Sea \( T: \mathbb{R}^{2} \rightarrow \mathbb{R}^{2} \) la transformación definida por \( T(u, v)=(4 u, 2 u+3 v) \) y sea \( D^{*}=[0,1] \times[1,2] \). Encuentre \( D \subset \mathbb{R}^{2} \) tal que \( D=T\left(D^{*}\right) \) y resuelva \( \iint_{D}(x-y) d x d y \). \\
+Para encontrar D, transformamos los límites de u y v en distintas fases...\\
+Cuando u=0 y v varía de 1 a 2:
+\[
+  (x, y) = T(0, v) = (0, 3v) \implies (x=0, y \in [3, 6])
+  \]
+
+
+Cuando u=1 y v varía de 1 a 2:
+\[
+  (x, y) = T(1, v) = (4, 2 + 3v) \implies (x=4, y \in [5, 8])
+  \]
+
+
+Cuando v=1 y u varía de 0 a 1:
+\[
+  (x, y) = T(u, 1) = (4u, 2u + 3) \implies (x \in [0, 4], y = 2u + 3)
+  \]
+
+
+Cuando v=2 y u varía de 0 a 1:
+\[
+  (x, y) = T(u, 2) = (4u, 2u + 6) \implies (x \in [0, 4], y = 2u + 6)
+  \]
+
+
+Por lo tanto, se descubrió que la región D es un paralelogramo con vértices en (0,3), (0,6), (4,5), y (4,8); calcúlese ahora el jacobiano de T.
+
+\[
+J = \begin{vmatrix}
+\frac{\partial x}{\partial u} & \frac{\partial x}{\partial v} \\
+\frac{\partial y}{\partial u} & \frac{\partial y}{\partial v}
+\end{vmatrix}
+= \begin{vmatrix}
+4 & 0 \\
+2 & 3
+\end{vmatrix}
+= 4 \cdot 3 - 0 \cdot 2 = 12
+\]
+
+La integral queda como sigue,
+\[
+\iint_{D^*} (4u - (2u + 3v)) \cdot 12 \, du \, dv = \iint_{D^*} (2u - 3v) \cdot 12 \, du \, dv = 12 \int_{0}^{1} \int_{1}^{2} (2u - 3v) \, dv \, du
+\]
+
+Primero resolvemos la integral interna respecto a v: \\
+\begin{align*}
+\int_{1}^{2} (2u - 3v) \, dv &= \left[ 2uv - \frac{3v^2}{2} \right]_{v=1}^{v=2} \\
+&= \left(2u \cdot 2 - \frac{3 \cdot 2^2}{2}\right) - \left(2u \cdot 1 - \frac{3 \cdot 1^2}{2}\right) \\
+&= \left(4u - 6\right) - \left(2u - \frac{3}{2}\right) \\
+&= 4u - 6 - 2u + \frac{3}{2} \\
+&= 2u - \frac{9}{2}
+\end{align*}
+
+Finalmente respecto a u:
+\begin{align*}
+12 \int_{0}^{1} \left(2u - \frac{9}{2}\right) \, du
+&= 12 \left[ u^2 - \frac{9}{2}u \right]_{0}^{1}  \\
+&= 12 \left(1^2 - \frac{9}{2} \cdot 1\right) - 12 \left(0^2 - \frac{9}{2} \cdot 0\right)  \\
+&= 12 \left(1 - \frac{9}{2}\right) \\
+&= 12 \left(\frac{2}{2} - \frac{9}{2}\right) \\
+&= 12 \left(-\frac{7}{2}\right) \\
+&= -42 
+\end{align*}
+
+b) Calcule la integral \( \iint_{R}(x-y)^{2} \operatorname{sen}^{2}(x+y) d x d y \); donde \( R \) es el paralelogramo de vértices \( (0, \pi) \), \( (\pi, 0),(2 \pi, \pi) \) y \( (\pi, 2 \pi) \). \\
+
+Dado el paralelogramo con vértices $(0,\pi), (\pi,0), (2\pi,\pi),\text{ y }(\pi,2\pi)$, utilizamos una transformación lineal para simplificar el cálculo; usamos $T(u,v)=(u+v,u−v)$. Nótese que.
+\begin{itemize}
+    \item Esta transformación mapea $(0,\pi)\textit{ a }(0,0)$
+    \item Mapea $(\pi,0)\text{ a }(\pi,0)$
+    \item Mapea $(2\pi,\pi)\text{ a }(2\pi,0)$
+    \item Mapea $(\pi,2\pi)\text{ a }(\pi,−\pi)$
+\end{itemize}
+
+Calculamos el jacobiano de T que es simplemente el determinante de la siguiente matriz.
+\[
+   J = \left| \begin{matrix} 
+   1 & 1 \\ 
+   1 & -1 
+   \end{matrix} \right| = -2
+   \]
+
+La integral entonces es:
+\[
+   \iint_{R} (x-y)^2 \sin^2(x+y) \, dx \, dy = \iint_{R'} (2v)^2 \sin^2(2u) \cdot (-2) \, du \, dv
+   \]
+
+Veamos que $u$ varía de $0 \rightarrow 2\pi$, $v$ varía de $0 \rightarrow \pi$, se sigue que.
+\[
+   = -8 \int_{0}^{2\pi} \int_{0}^{\pi} v^2 \sin^2(2u) \, dv \, du
+   \]
+
+De aquí puede observarse que la integral se puede calcular por separado con respecto a $u$ y $v$. Por un lado
+
+\[
+     \int_{0}^{\pi} v^2 \, dv = \left[ \frac{v^3}{3} \right]_{0}^{\pi} = \frac{\pi^3}{3}, \text{por el otro...}
+     \]
+
+\[
+     -8 \cdot \frac{\pi^3}{3} \int_{0}^{2\pi} \sin^2(2u) \, du
+     \]
+
+
+Usamos la identidad \(\sin^2(\theta) = \frac{1 - \cos(2\theta)}{2}\):
+\[
+     \int_{0}^{2\pi} \sin^2(2u) \, du = \int_{0}^{2\pi} \frac{1 - \cos(4u)}{2} \, du = \pi
+     \]
+
+Finalmente al multiplicar estas dos integrales obtenemos lo siguiente.
+\[
+   -8 \cdot \frac{\pi^3}{3} \cdot \pi = -\frac{8\pi^4}{3}
+   \]
+
+c) Sea \( D=\left\{(x, y) \in \mathbb{R}^{2} \mid x^{2}+y^{2} \leq 4\right\} \). Resuelva \( \iint_{D} e^{\left(x^{2}+y^{2}\right)} d x d y \). \\
+
+Para esta integral, es conveniente usar coordenadas polares porque la región D es un disco. Consideramos la transformación a coordenadas polares ($x=rcos\theta, \qquad y=rsin\theta, \qquad r^2 = x^2+y^2, \qquad dxdy=rdrd\theta$). Establezcamos los límites de integración, por la desigualdad presentada se sabe que $r$ varía de 0 a 2, el ángulo en tanto al ser un disco varía de 0 a $2\pi$.
+
+\[
+   \iint_{D} e^{x^2 + y^2} \, dx \, dy = \int_{0}^{2\pi} \int_{0}^{2} e^{r^2} \cdot r \, dr \, d\theta
+   \]
+
+Usamos la misma técnica de separar la integral doble en un producto de integrales pues la función se separa en una parte términos de $u$ y otra parte en términos de $v$. Primero resolvemos para $u$.
+
+\[
+     \frac{1}{2} \int_{0}^{4} e^u \, du = \frac{1}{2} \left[ e^u \right]_{0}^{4} = \frac{1}{2} (e^4 - e^0) = \frac{1}{2} (e^4 - 1)
+     \]
+
+Véase que aunque parezca que la función en términos de $\theta$ es cero en realidad es $1\circ\theta=1$.
+\[
+     \int_{0}^{2\pi} d\theta = 2\pi
+     \]
+Multiplicando tenemos el resultado final.
+\[
+   2\pi \cdot \frac{1}{2} (e^4 - 1) = \pi (e^4 - 1)
+   \]
+
+d) Use la transformación \( T(u, v)=(u-u v, u v) \) para calcular \( \iint_{R} \frac{1}{x+y} d x d y \) donde \( R \) es la región acotada por los planos \( x=0, y=0, x+y=1 \) y \( x+y=4 \). \\
+
+La región está acotada por los planos $x=0, y=0, x+y=1, \text{ y  } x+y=4$. Calculamos el determinante del jacobiano de T:
+\[
+   J = \begin{vmatrix}
+   \frac{\partial x}{\partial u} & \frac{\partial x}{\partial v} \\
+   \frac{\partial y}{\partial u} & \frac{\partial y}{\partial v}
+   \end{vmatrix}
+   = \begin{vmatrix}
+   1 - v & -u \\
+   v & u
+   \end{vmatrix}
+   = u(1-v) + uv = u
+   \]
+
+
+Notemos que los límites de integración varían para $u$ de $1 \rightarrow 4$ (determinado por x+y=1 y x+y=4). Por otro lado $v$ varía de $0 \rightarrow 1$ (ya que $y=uv$ y $y$ varía de $0 \rightarrow u$). \\
+
+La integral transformada es.
+\[
+   \iint_{R} \frac{1}{x+y} \, dx \, dy = \iint_{R'} \frac{1}{u} \cdot u \, dv \, du = \int_{1}^{4} \int_{0}^{1} 1 \, dv \, du
+   \]
+
+Separamos la integral nuevamente; respecto a $v$,
+\[
+     \int_{0}^{1} 1 \, dv = [v]_{0}^{1} = 1
+     \]
+
+Respecto a $u$.
+\[
+     \int_{1}^{4} 1 \, du = [u]_{1}^{4} = 4 - 1 = 3
+     \]
+
+La multiplicación es simplemente 3 que es el resultado final.\\\\

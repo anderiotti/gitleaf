@@ -1,0 +1,212 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage{pgfplots}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{mdframed}
+\usepackage{amsthm}
+\usepackage{tikz}
+\usepackage{multicol}
+\usepackage{cancel}
+\usepackage{hyperref}
+\newcommand{\cls}{^{\circ}C}
+
+\geometry{a4paper, left=2cm, right=2cm, top=1cm, bottom=2cm}
+
+\pgfplotsset{compat=1.18}
+\begin{document}
+
+\begin{minipage}{0.7\textwidth}
+    \small \textbf{Fenómenos Colectivos}  \\
+    \small {Facultad de Ciencias, Universidad Nacional Autónoma de México} \\
+    \small {Profesora: Dra. Catalina Elizabeth Stern Forgach} \\
+    \small {Ayudante: M. Tyra Delgadillo Mendoza} \\
+    \small {Fecha de entrega: Lunes 11 de febrero del 2024} \\
+    \small {Nombre completo: Andrés López González} \\
+    \small {Tarea II}
+\end{minipage}
+\hfill
+\begin{minipage}{0.12\textwidth}
+    \includegraphics[width=\linewidth]{logo_universidad}
+\end{minipage}\\\\
+
+I. Demuestra que a) $ \nabla \text{x} (\nabla \phi) = 0 $, donde φ es una función escalar y b) $\nabla \cdot (\nabla \text{x} A) = 0$ donde A es una función vectorial.
+\textit{Por definición nabla es.}
+\begin{equation}
+\nabla = \frac{\partial}{\partial x} \mathbf{i} + \frac{\partial}{\partial y} \mathbf{j} + \frac{\partial}{\partial z} \mathbf{k}
+\end{equation}
+\textit{Ahora, consideremos $ \phi $ como una función escalar. La operación $ \nabla $ aplicada a $ \phi $ resulta en un vector, cuyas componentes son las derivadas parciales de $ \phi $ con respecto a $ x $, $ y $, $ z $. Entonces, tenemos:}
+
+$$
+\nabla \phi = \frac{\partial \phi}{\partial x} \mathbf{i} + \frac{\partial \phi}{\partial y} \mathbf{j} + \frac{\partial \phi}{\partial z} \mathbf{k}
+$$
+
+\textit{Ahora, tomemos el rotacional de este vector, haciendo el "determinante" para el producto cruz entre nabla y el gradiente:}
+
+$$
+\nabla \times (\nabla \phi) = \begin{vmatrix} \mathbf{i} & \mathbf{j} & \mathbf{k} \\ \frac{\partial}{\partial x} & \frac{\partial}{\partial y} & \frac{\partial}{\partial z} \\ \frac{\partial \phi}{\partial x} & \frac{\partial \phi}{\partial y} & \frac{\partial \phi}{\partial z} \end{vmatrix}
+$$
+
+\textit{Usando la regla de Sarrus para calcular el determinante, obtendremos:}
+
+$$
+\nabla \times (\nabla \phi) = \left( \frac{\partial^2 \phi}{\partial y \partial z} - \frac{\partial^2 \phi}{\partial z \partial y} \right) \mathbf{i} + \left( \frac{\partial^2 \phi}{\partial z \partial x} - \frac{\partial^2 \phi}{\partial x \partial z} \right) \mathbf{j} + \left( \frac{\partial^2 \phi}{\partial x \partial y} - \frac{\partial^2 \phi}{\partial y \partial x} \right) \mathbf{k}
+$$
+
+\textit{Debido a que las derivadas parciales son continuas y las segundas derivadas mixtas son iguales (según el teorema de las derivadas cruzadas de Clairaut), se cancelan entre sí "por una especie de conmutatividad en respecto a quién se deriva", y nos queda:}
+
+$$
+\nabla \times (\nabla \phi) = 0
+$$
+
+\textit{$\therefore$ Hemos demostrado que $ \nabla \times (\nabla \phi) = 0 $}. \\
+
+\textit{b) Para demostrar que $ \nabla \cdot (\nabla \times A) = 0 $, utilizaremos el rotacional ya obtenido en la demostración anterior pero en vez de considerar las parciales en x,y,z de la función phi simplemente reemplazaremos por $A_{x,y,z}$ depende qué entrada sea, obtenemos que $ \nabla \times A $ en coordenadas cartesianas:}
+
+$$
+\nabla \times A = \left( \frac{\partial A_z}{\partial y} - \frac{\partial A_y}{\partial z} \right) \mathbf{i} + \left( \frac{\partial A_x}{\partial z} - \frac{\partial A_z}{\partial x} \right) \mathbf{j} + \left( \frac{\partial A_y}{\partial x} - \frac{\partial A_x}{\partial y} \right) \mathbf{k}
+$$
+
+\textit{Ahora, apliquemos el operador de divergencia $ \nabla \cdot $ a lo antes obtenido $ \nabla \times A $:}
+
+$$
+\nabla \cdot (\nabla \times A) = \frac{\partial}{\partial x} \left( \frac{\partial A_z}{\partial y} - \frac{\partial A_y}{\partial z} \right) + \frac{\partial}{\partial y} \left( \frac{\partial A_x}{\partial z} - \frac{\partial A_z}{\partial x} \right) + \frac{\partial}{\partial z} \left( \frac{\partial A_y}{\partial x} - \frac{\partial A_x}{\partial y} \right)
+$$
+
+\textit{Expandiendo las derivadas parciales, obtenemos términos que se cancelan mutuamente debido al teorema de las derivadas cruzadas de Clairaut, es demasiado intuitivo verlo pues al "distribuir" los diferenciales parciales los $A_{x,y,z}$ se cancelaran con el A de mismo subíndice. De modo que.}
+
+$$
+\nabla \cdot (\nabla \times A) = 0
+$$
+
+$\therefore$ \textit{Hemos demostrado que $ \nabla \cdot (\nabla \times A) = 0 $. \\}
+
+II. ¿Por qué es importante que la amalgama que se usa para curar una carie tenga el mismo
+coeficiente de expansión que el diente? \\
+\textit{Radica en la necesidad de evitar tensiones y fracturas en la estructura dental. Cuando se somete a cambios de temperatura, los materiales experimentan expansión o contracción térmica. Si la amalgama y el diente tienen coeficientes de expansión significativamente diferentes, durante los cambios de temperatura, se generan fuerzas internas que podrían causar fracturas en el diente o desprendimiento de la amalgama, comprometiendo el desarrollo del tratamiento y potencialmente causando daño adicional al tejido dental. Además en el caso de algún movimiento o crecimiento posible en el caso de niños si estos presentan diferentes coeficientes de expansión es probable que alguno de los dos ceda a la fuerza del otro lo que ocasionaría desviamientos.}\\\\
+
+III. El péndulo de un reloj está hecho de bronce. Cuando la temperatura aumenta, ¿el reloj se
+adelanta, se atrasa o funciona bien? \\
+\textit{Cuando la temperatura aumenta, el péndulo de bronce se expande debido al incremento en la energía térmica, en consecuencia puede llegar a derretirse si la temperatura aumenta mucho más de la cuenta. Esta expansión provoca un alargamiento del péndulo, lo que hace que el periodo de oscilación aumente ligeramente. Como resultado, el reloj tiende a atrasarse en el tiempo, ya que cada oscilación del péndulo dura un poco más; este efecto es debido a que el aumento en la longitud del péndulo conlleva a una disminución en su frecuencia de oscilación, lo que se traduce en un avance del tiempo más lento mostrado por el reloj, si la gravedad de esta temperatura es muy pronunciada puede ocurrir algo curioso, pues al estar el reloj en la zona derecha que comprende de las 12-6hrs este calor hará que avance más rápido mientras que la zona comprendida de 6-12hrs hará que vaya más lento, esto porque en el primer caso la caída al derretirse ínfima pero notoriamente va a favor del movimiento (clockwise) pero en el caso contrario va en contra del movimiento.} \\\\
+
+IV. One mole of oxygen gas is at a pressure of 6.00 atm and a temperature of $27.0\cls$.\\
+(a) If the gas is heated at constant volume until the pressure triples, what is the final temperature?\\
+\textit{De acuerdo a la ley de Gay-Lussac para sistemas isocóricos}
+\begin{equation}
+    P_1T_1 = P_2T_2
+\end{equation}
+\textit{Aislamos la temperatura 2, según el texto la presión 2 es la presión 1 triplicada así que.}
+\begin{equation*}
+    \frac{P_1T_1}{3P_1} = T_2 = \frac{T_1}{3} = \frac{27\cls}{3} = 9
+\end{equation*}
+(b) If the gas is heated until both the pressure and the volume are doubled, what is the final temperature? \\
+\textit{De acuerdo a la ley combinada de los gases.}
+\begin{equation}
+    \frac{P_1V_1}{T_1} = \frac{P_2V_2}{T_2}
+\end{equation}
+\textit{Es esta ecuación aislamos $T_2$, y posteriormente sustituimos $V_2,P_2$ por el doble del inicial}
+\begin{equation*}
+    T_2 = \frac{P_2V_2T_1}{P_1V_1} = \frac{2P_1\cdot2V_1T_1}{P_1V_1} = 4T_1 = 4\cdot24.0\cls = 96.0 \cls
+\end{equation*}
+
+V. ¿Por qué se siente “más frío” un piso de mosaico que uno con una alfombra, aunque estén
+en equilibrio térmico? \\
+\textit{A pesar de que ambos están en equilibrio térmico esto se debe a la diferencia en las conductividades térmicas de los materiales. El mosaico al ser un material más conductor (semejante pero inferior en su coeficiente al metal), transfiere más eficientemente el calor del cuerpo humano al suelo, así como los conductores eléctricos que favorecen el flujo de electrones en este caso favorece "el flujo de temperaturas", provocando una sensación de enfriamiento más rápida (desprendimiento de calor, equilibrio térmico de forma más correcta). Por otro lado, la alfombra actúa como un aislante térmico, lo que dificulta la transferencia de calor entre el cuerpo y el suelo, manteniendo una sensación de calidez en comparación con el piso de mosaico.} \\\\
+
+VI. ¿Se puede convertir energía interna en energía mecánica? Explica.
+\textit{Claro que es posible convertir energía interna en energía mecánica, de no ser el caso considerando por ejemplo una habitación como una infinidad de sistemas contenidos en él entonces al coexistir estaríamos restringiendo la conversión de sus energías internas en trabajo. Este proceso está relacionado con la conversión de energía térmica en energía cinética mediante un motor térmico, en un motor térmico, el calor proveniente de una fuente de energía externa se convierte en energía térmica, la cual se utiliza para expandir un fluido, como un gas, que a su vez realiza trabajo mecánico al mover pistones u otros componentes del motor. Este proceso cumple con los principios de la termodinámica, específicamente con la ley de conservación de la energía, donde la energía interna del sistema se convierte en energía mecánica útil, esto ya lo hemos visto al hablar sobre las máquinas y refrigeradores de Carnot.} \\\\
+
+VII. Gas in a container is at a pressure of 1.50 atm and a volume of 4.00 $m^3$. What is the work done by the gas (a) if it expands at constant pressure to twice its initial volume? \\
+\textit{Considérese la siguiente ecuación del trabajo en termodinámica.}
+\begin{equation}
+    W = -\int_{Vi}^{V_f} P \, dV
+\end{equation}
+\textit{Para este inciso consideramos $V_i=4m^3=2^{-1}V_f$}
+ \begin{align*}
+      W &= -\int_{Vi}^{V_f} P \, dV \\
+      &= -\int_{4}^{8} P \, dV \\
+      &= -PV \Big|_4^8 \\
+      &= -1.50atm(8.0-4.0)m^3 \\
+      &= -6atm \cdot m^3 \\
+      &= -6atm\cdot \frac{101,325Pa}{1atm} \cdot m^3 \\
+      &= -607.950 J
+      \end{align*}
+(b) If it is compressed at constant pressure to one quarter of its initial volume?\\
+\textit{Este lo haremos un poco más rápido conociendo estas operaciones.}
+\begin{align*}
+    W &= -PV \Big|_4^1 \\
+    &= -1.5atm\cdot \frac{101,325Pa}{1atm} (1-4)m^3 \\
+    &= 455,962.5 J
+\end{align*}
+
+VIII. A thermodynamic system undergoes a process in which its internal energy decreases by 500 J. If, at the same time, 220 J of work is done on the system, what is the energy transferred to or from it by heat? \\
+\textit{Por la ecuación de la energía interna.}
+\begin{equation}
+    \Delta E = Q - W
+\end{equation}
+\textit{Despejamos el calor, considérese que el trabajo es positivo .}
+\begin{equation*}
+    Q = \Delta E + W = -500J + (-220J) = -720J
+\end{equation*}
+
+\noindent IX. ¿Podemos demostrar a partir de la 1ra Ley de la Termodinámica que el movimiento perpetuo es imposible?\\
+\textit{De alguna forma un poco extraña a primera vista del lector pero es posible usar el principio de conservación de la energía para ello. Recordemos que esta ley establece que la energía no puede ser creada ni destruida, solo transformada de una forma a otra, dentro de un sistema cerrado. El movimiento perpetuo se refiere a un dispositivo que puede realizar trabajo de manera continua sin la necesidad de una fuente externa de energía, o generando con el calor suministrado (en una máquina de Carnot por ejemplo) mayor trabajo del que debería teniendo una eficiencia mayor a 100\%. Sin embargo, si existiera un dispositivo de este tipo estaría generando energía de la nada, lo que es imposible según este principio.}
+\textit{De hecho, la imposibilidad del movimiento perpetuo se deriva directamente de la primera ley de la termodinámica, que establece que la energía total de un sistema cerrado se conserva y no puede aumentar espontáneamente.} \\\\
+
+X. Twenty particles, each of mass m and confined to a volume V, have various speeds: two have speed v; three have speed 2v; five have speed 3v; four have speed 4v; three have speed 5v; two have speed 6v; one has speed 7v. Find (a) the average speed, (b) the rms speed, (c) the most probable speed, (d) the pressure that the particles exert on the walls of the vessel, and (e) the average kinetic energy per particle. \\\\
+\textit{Para la velocidad promedio simplemente usaremos la fórmula de media aritmética.}
+\begin{equation}
+    n^{-1}\sum_{i=1}^{n} v_i
+\end{equation}
+\textit{En este caso tenemos n=20.}
+\begin{equation*}
+    20^{-1}(2(v)+3(2v)+5(3v)+4(4v)+3(5v)+2(6v)+7v) = 3.65v
+\end{equation*}
+\textit{Para la Root Mean Square tenemos la misma suma pero con sus cuadrados para cada $v_i$ y a todo eso se le aplica la raíz.}
+$$\sqrt{20^{-1}(2(v)^2+3(2v)^2+5(3v)^2+4(4v)^2+3(5v)^2+2(6v)^2+(7v)^2)} = 3.99374v$$
+\textit{La velocidad más probable es simplemente la de mayor coeficiente, que en este caso es 3v con coeficiente de 5}
+\[   v_{mp} = 3v   \]
+\textit{Para la presión que las partículas ejercen en las paredes del recipiente necesitamos una fórmula mítica ancestral variada de la Ley de la Distribución de Velocidades de Maxwell-Boltzmann que a su vez debemos hacer un pequeño cambio. Está fundamentada por el siguiente repositorio de la UNAM.}\\
+\href{https://repositorio-uapa.cuaieed.unam.mx/repositorio/moodle/pluginfile.php/1989/mod_resource/content/3/contenido/index.html}{https://repositorio-uapa.cuaieed.unam.mx/Teoria-Cinetica}
+\begin{equation}
+    P = \frac{2}{3}nK = \frac{1N}{3V}mv_{rms}^2
+\end{equation}
+\textit{Ahora sustituyendo los valores conocidos tenemos que la presión es.}
+\begin{equation*}
+    P = \frac{2}{3V}m\cdot(3.99374v)^2 \approx 10.63330\frac{v^2m}{V}
+\end{equation*}
+
+
+\textit{La energía cinética promedio por cada partícula está dada precisamente por la ecuación de la energía cinética $K=\frac{1}{2}mv^2$}
+\begin{equation*}
+    K = \frac{1}{2}mv^2 = \frac{1}{2}m(3.65v)^2 = 6.66125mv^2
+\end{equation*}\\
+XI. A “solar cooker” consists of a curved reflecting mirror that focuses sunlight onto the object to be warmed (Fig. P20.63). The solar power per unit area reaching the Earth at the location is 600 W/m2, and the cooker has a diameter of 0.600 m. Assuming that 40.0\% of the incident energy is transferred to the water, how long does it take to completely boil off 0.500 L of water initially at 20.0°C? (Neglect the heat capacity of the container.).\\
+\textit{Primero obtenemos la potencia incidente, para ello necesitamos la siguiente ecuación.}
+\begin{equation}
+    P_{inc} = \%_{inc} \cdot P = \%_{inc} \cdot (I \cdot A) = \%_{inc} \cdot (I \cdot \pi r^2)
+\end{equation}
+\textit{Operamos bajo esta última igualdad.}
+\begin{equation*}
+    P_{inc} = \%_{inc} \cdot (I \cdot \pi r^2) = 40\% \cdot (600\frac{W}{m^2} \cdot \pi (0.300m)^2) = 67.85840 \frac{J}{s}
+\end{equation*}
+\textit{Sabemos que el agua inicia a 20$\cls$, debe incrementar hasta llegar a $100\cls$ y en ese momento comenzará a evaporar. Por lo cual es en este punto cuando actua el calor latente mientras en el intervalo de 20 a 100 grados Celsius actua el calor específico pues no está ocurriendo todavía algún cambio de fase.}
+\begin{equation}
+    \delta Q = Q_1 + Q_2 = mc\Delta T + mL = m(c\Delta T + L) = \rho V(c\Delta T + L)
+\end{equation}
+\textit{Es demasiado interesante esta ecuación pues ahora todos son datos que ya conocíamos, por lo que sustituimos, considerando $\rho_{h2o}=\frac{997g}{L}$, $c_{h2o}=4.182\frac{J}{g \cls}$ y $L_{h20}= 2.26 \cdot 10^3 \frac{J}{g}$}
+\begin{equation*}
+    \delta Q = \rho_{h20} V(c_{h20}\Delta T + L_{h20}) = \frac{997g}{L} 0.500L(4.182\frac{J}{g \cls}(100-20)\cls + 2.26 \cdot 10^3 \frac{J}{g}) \approx 1,293,388.16J
+\end{equation*}
+\textit{Finalmente simplemente usamos la ecuación de la potencia térmica.}
+\begin{equation}
+    P = \frac{Q}{\Delta t}
+\end{equation}
+\textit{Despejamos nuestra variación del tiempo para ahora sí saber cuánto tarda en hervirlo completamente.}
+$$\Delta t = \frac{\delta Q}{P_{inc}} \approx \frac{1,293,388.16J}{67.85840 \frac{J}{s}} \approx 19,060.10398s \approx 19060.10398s \frac{1hr}{3600s} \approx 5.29447hr $$
+$\therefore$ Tardará 5.29447 horas en hervir por completo... ¿Esto tiene sentido?
+
+\end{document}

@@ -1,0 +1,66 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage{pgfplots}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{mdframed}
+\usepackage{amsthm}
+\usepackage{physics}
+\usepackage{derivative}
+\usepackage{hyperref}
+\renewcommand{\theenumi}{\roman{enumi}}
+
+\geometry{a4paper, left=2cm, right=2cm, top=1cm, bottom=2cm}
+
+\pgfplotsset{compat=1.18}
+\begin{document}
+
+\begin{minipage}{0.7\textwidth}
+    \small \textbf{ASTROFÍSICA GENERAL}  \\
+    \small {Facultad de Ciencias, Universidad Nacional Autónoma de México} \\
+    \small {Profesor: Margarita Rosado Solis} \\
+    \small {Ayudante: Isidro Ramírez Ballinas}\\
+    \small {Fecha de entrega: 22 de Agosto de 2024} \\
+    \small {Nombre completo: Andrés López González} \\
+    \small {Tarea número I}
+\end{minipage}
+\hfill
+\begin{minipage}{0.12\textwidth}
+    \includegraphics[width=\linewidth]{logo_universidad}
+\end{minipage}
+
+\section*{Preguntas Semana II}
+
+I. Reseñar página de interés del Instituto de Astronomía.\\
+\textit{Planetary Astrophishing es una reunión semanal que me parece fascinante, donde se exploran artículos recientes sobre sistemas planetarios. Es un espacio que permite a los interesados en la ciencia planetaria mantenerse al día con investigaciones nuevas y conectar con otros investigadores y estudiantes de la UNAM. La diversidad de conocimientos en estas reuniones me resulta enriquecedora, ya que todos, desde estudiantes hasta doctores, pueden contribuir a la discusión.}\\
+\textit{La dinámica es bastante directa: varias personas presentan artículos recientes en la literatura durante 5-10 minutos, utilizando únicamente el PDF del artículo en lugar de diapositivas. Lo que me gusta de este enfoque es la posibilidad de centrarse más en el contenido y abrir la discusión a preguntas y reflexiones en tiempo real. Además, el ambiente es muy colaborativo, lo que fomenta la participación y el aprendizaje continuo.}\\
+\textit{Estas reuniones se llevan a cabo todos los martes de 12:00 a 13:00 horas, y tienen un formato híbrido, lo que permite asistir tanto en persona en el Instituto de Astronomía en Ciudad Universitaria como virtualmente por Zoom.}\\
+\textit{El acceso me parece demasiado conveniente pues solo necesitas enviar un correo a la Dra. Yilen Gómez Maqueo Chew y registrarte en Benty Fields, una plataforma donde se votan los artículos que se discutirán cada semana. Luego, puedes unirte a la discusión y contribuir con tus propias presentaciones o preguntas.}\\
+
+I.I Reseña de artículo de la revista de Astronomía y Astrofísica del repositorio UNAM.\\
+
+\textit{El artículo "Radio Continuum Emission from FS CMa Stars" de Luis F. Rodríguez y colaboradores analiza por primera vez las características en radio de las estrellas tipo FS CMa, un grupo aún poco comprendido. Mediante el uso de datos archivados del Very Large Array (VLA), los autores logran detectar emisión de radio en cinco de siete estrellas de la muestra, incluyendo detecciones inéditas en FS CMa, AS 381 y MWC 922. La principal fortaleza del artículo radica en la identificación de un posible patrón de emisión de radio libre-libre, lo que sugiere la presencia de gas ionizado en torno a estas estrellas.}\\
+
+\textit{Sin embargo, la investigación tiene limitaciones importantes: los datos analizados son de baja resolución y la muestra es pequeña, lo que impide extraer conclusiones más definitivas sobre la naturaleza de estas emisiones. A pesar de esto, el estudio constituye un avance significativo al abrir una nueva vía de investigación para entender mejor las estrellas FS CMa. El artículo también resalta la necesidad de futuras observaciones más detalladas, sugiriendo que la emisión de radio podría ser una característica más común en estas estrellas de lo que se pensaba anteriormente.}\\
+
+II. Conversión de años luz a centímetros. \\
+
+\textit{Hemos definido en clase al año luz como 9.5 trillones de km tal que se entiende al trillón como el trillón de la escala corta, i.e. $10^{12}$. Esto es $9.5 \cdot 10^{12}km$, ahora bien, se sabe que en un kilómetro obviamente hay 1,000 metros por su etimología del prefijo "kilo", asímismo sabemos que en un metro hay 100 centímetros. Es por ello que nos queda la siguiente ecuación que es en realidad muy evidente.}
+$$ 1\textit{ año luz }= 9.5 \cdot 10^{12}km = 9.5 \cdot 10^{12} \frac{1 km}{1} \frac{1000m}{1km} \frac{100cm}{1m} = 9.5 \cdot 10^{17} cm$$
+
+III. Describir 5 telescopios grandes que sigan en funcionamiento.
+
+\textit{Uno de los telescopios más notables es el Gran Telescopio Canarias (GTC), ubicado en el Observatorio del Roque de los Muchachos en La Palma, España. Este telescopio es un telescopio óptico e infrarrojo de tipo reflector con un espejo primario segmentado que mide 10,4 metros de diámetro, compuesto por 36 segmentos hexagonales que trabajan en conjunto como una única superficie reflectante. Su construcción utiliza materiales avanzados, incluyendo cerámica Zerodur para el espejo y una estructura de soporte de acero de alta resistencia, lo que le permite mantener una precisión excepcional. El GTC se utiliza principalmente para observar objetos celestes tenues y lejanos, proporcionando datos cruciales en estudios sobre la formación de estrellas, galaxias y la búsqueda de exoplanetas.}\\
+
+\textit{Otro telescopio destacado es el Observatorio Keck, situado en Mauna Kea, Hawái. Este observatorio alberga dos telescopios gemelos, Keck I y Keck II, cada uno con un espejo primario de 10 metros compuesto por 36 segmentos hexagonales. Ambos telescopios son reflectores y están optimizados para la observación en longitudes de onda ópticas e infrarrojas. Los materiales de construcción incluyen cerámica Zerodur para los espejos y una estructura de acero que soporta el conjunto óptico. Los telescopios Keck son pioneros en la utilización de óptica adaptativa, una tecnología que corrige en tiempo real las distorsiones causadas por la atmósfera terrestre, lo que permite obtener imágenes extremadamente nítidas del cosmos. Estos telescopios han sido fundamentales en el estudio de agujeros negros supermasivos, galaxias en formación y la caracterización de exoplanetas. El astrofísico Trinh Xuân Thuan escribió un libro que recientemente he empezado a leer el cual se titula "La noche: Un maravilloso viaje del crepúsculo" en el cual curiosamente es enviado a una misión por la NASA al lugar donde se ubica este telescopio.}\\
+
+\textit{El Very Large Telescope (VLT), operado por el Observatorio Europeo Austral (ESO) en el desierto de Atacama, Chile, es otro de los gigantes de la astronomía. El VLT es un conjunto de cuatro telescopios unitarios, cada uno con un espejo primario de 8,2 metros de diámetro, hechos de cerámica Zerodur. Estos telescopios pueden trabajar de forma independiente o combinados como un interferómetro, lo que les permite obtener una resolución angular sin precedentes. La estructura del VLT está hecha de acero y otros materiales compuestos que permiten una estabilidad extrema, necesaria para la observación de objetos celestes en condiciones ópticas excepcionales. El VLT se utiliza en una amplia gama de investigaciones, desde la detección de exoplanetas hasta la observación de las primeras galaxias formadas en el universo.}\\
+
+\textit{Otro importante instrumento es el Telescopio Subaru, también ubicado en Mauna Kea, Hawái. Este telescopio reflector cuenta con un espejo primario monolítico de 8,2 metros de diámetro, fabricado con vidrio ultrafino y cubierto con una capa reflectante de aluminio. La estructura del telescopio está construida con acero y materiales compuestos para minimizar la expansión térmica, lo que es crucial para mantener la precisión durante las observaciones. El Telescopio Subaru está optimizado para la observación en longitudes de onda ópticas e infrarrojas y es conocido por su capacidad para realizar levantamientos de cielo profundo, así como estudios detallados de la estructura a gran escala del universo.}\\
+
+\textit{Finalmente, el Gran Telescopio Milimétrico Alfonso Serrano (GTM), ubicado en la Sierra Negra, México, es el radiotelescopio más grande del mundo diseñado para observar en longitudes de onda milimétricas. El GTM tiene un diámetro de 50 metros, con una superficie de reflector segmentada y ajustable para corregir deformaciones y maximizar la calidad de la señal. Su estructura está compuesta principalmente de acero y materiales ligeros que permiten ajustar con precisión la forma del espejo durante las observaciones. El GTM es utilizado principalmente para el estudio de fenómenos como la formación estelar, los discos protoplanetarios y la evolución de galaxias en el universo temprano. Este telescopio es crucial para entender los procesos que ocurren en las etapas más frías y densas del universo.}\\
+
+\end{document}

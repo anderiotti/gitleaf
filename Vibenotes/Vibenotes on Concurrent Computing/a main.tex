@@ -1,0 +1,91 @@
+\documentclass[11pt, oneside]{book}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{listings}
+\usepackage{wrapfig}
+\usepackage{geometry}
+\usepackage{tikz}
+\usepackage[greek, english]{babel}
+\usetikzlibrary{positioning, decorations.pathreplacing, arrows.meta, shapes.geometric, chains, decorations.pathreplacing}
+\usetikzlibrary{shapes.geometric, positioning, arrows.meta, backgrounds}
+\usepackage[colorlinks=true, linkcolor=blue, urlcolor=magenta]{hyperref}
+
+\geometry{a4paper, margin=1in}
+
+% --- Configuration for code listings (Python) ---
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{pythonstyle}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2,
+    language=Python
+}
+\lstset{style=pythonstyle}
+
+% --- No necesitamos estos comandos si usamos el entorno titlepage ---
+% \title{Concurrent Programming}
+% \author{Elaborated from source document}
+% \date{\today}
+
+\begin{document}
+
+% --- Inicio de la Portada Personalizada ---
+\begin{titlepage}
+    \centering
+    \vspace*{2cm} % Espacio en la parte superior
+    
+    {\Huge\bfseries Vibenotes on Concurrent Computing\par}
+
+    
+    
+    {\Large\itshape somehow by\par}
+    \vspace{0.5cm}
+    {\Large Andres Lopez\par}
+
+\begin{figure}[h]
+        \centering
+        \includegraphics[width=0.6\linewidth]{iimas.png}
+        \label{fig:placeholder}
+    \end{figure}
+    
+    \vspace{2.5cm} % Espacio entre título y autor
+    
+    \vfill % Empuja el contenido hacia arriba y abajo
+    
+    {\large Institute of Applied Mathematics and Systems (IIMAS)\par}
+    
+    \vspace{1.5cm} % Espacio sobre la fecha
+    
+    {\large \today\par}
+    
+    \vspace*{2cm} % Espacio en la parte inferior
+\end{titlepage}
+% --- Fin de la Portada ---
+
+This page was unintentionally left blank, Fabian loves femboys.
+
+\tableofcontents
+
+\input{chapters/chapter 1}
+
+\end{document}

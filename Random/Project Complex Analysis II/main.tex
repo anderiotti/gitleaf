@@ -1,0 +1,381 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage{pgfplots}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage[margin=0.5cm]{geometry}
+\usepackage[thmmarks, amsmath, thref]{ntheorem}
+\usepackage{mdframed}
+\usepackage{amsthm}
+\usepackage{physics}
+\usepackage{proof}
+\usepackage{derivative}
+\usepackage{comment}
+\usepackage{hyperref}
+\usepackage{wrapfig}
+\usepackage{amsthm}
+\usepackage{xcolor}
+\renewcommand{\theenumi}{\roman{enumi}}
+
+\theoremstyle{nonumberplain}
+\theoremheaderfont{\itshape}
+\theorembodyfont{\upshape}
+\theoremseparator{.}
+\theoremsymbol{\ensuremath{\square}}
+\theoremsymbol{\ensuremath{\blacksquare}}
+\newtheorem{solution}{Solution}
+\theoremseparator{. }
+\theoremsymbol{\mbox{\texttt{;o)}}}
+
+\pgfplotsset{compat=1.18}
+\begin{document}
+
+\section*{Productos Infinitos}
+\subsection{Productos Infinitos de Números Complejos}
+
+Dado una sucesión \(\{p_n\}_{n=1}^\infty\) de números complejos, consideramos el producto infinito
+\[
+\prod_{n=1}^{\infty} p_n = p_1 p_2 \cdots p_n \cdots
+\]
+El valor de este producto se define como el límite de los productos parciales
+\[
+P_n = \prod_{k=1}^n p_k
+\]
+y decimos que el producto converge al valor \(P = \lim_{n\to\infty} P_n\) si este límite existe y \(P \neq 0\).
+
+Excluir el valor cero es natural: si se permitiese \(P = 0\), la convergencia sería trivial si existe algún factor nulo, y ello haría que la convergencia dependiese sólo de una parte finita de la sucesión. Sin embargo, en contextos funcionales, a veces deseamos admitir productos con ceros (por ejemplo, al factorizar funciones con ceros), por lo que adoptamos el siguiente convenio:
+
+$>$ Definición: El producto infinito \(\prod_{n=1}^\infty p_n\) converge si y solo si a lo sumo un número finito de los factores son cero, y los productos parciales formados por los factores no nulos tienden a un límite finito distinto de cero.
+
+Si el producto converge, es inmediato que el factor general \(p_n\) tiende a 1. En efecto, \(p_n = P_n / P_{n-1}\) (ignorando los ceros), y la sucesión \(\{P_n\}\) converge. Por ello, es más conveniente escribir los productos infinitos en la forma:
+\[
+\prod_{n=1}^{\infty} (1+a_n)
+\]
+con \(a_n \to 0\) como condición necesaria para la convergencia.
+
+Si ningún factor es cero, es natural comparar este producto con la serie
+\[
+\sum_{n=1}^\infty \log(1 + a_n)
+\]
+Debido a que los \(a_n\) son complejos, debemos fijar una rama del logaritmo; tomamos la rama principal. Denotando por \(S_n\) la suma parcial de la serie, se tiene \(P_n = e^{S_n}\). Así, si \(S_n \to S\), entonces \(P_n \to P = e^S \neq 0\). Por tanto, la convergencia de la serie implica la del producto.
+
+Para la necesidad, supongamos que \(P_n \to P \neq 0\). No es cierto, en general, que la serie construida con los logaritmos principales converja al logaritmo principal de \(P\), pero sí converge a algún valor de \(\log P\). Denotando Log la rama principal y Arg su parte imaginaria, se tiene que \(P_n / P \to 1\) y así \(\log(P_n / P) \to 0\). Entonces, existe un entero \(h_n\) tal que
+\[
+\log\left(\frac{P_n}{P}\right) = S_n - \log P + h_n \cdot 2\pi i
+\]
+Al tomar diferencias,
+\[
+(h_{n+1} - h_n) 2\pi i = \log\left(\frac{P_{n+1}}{P}\right) - \log\left(\frac{P_n}{P}\right) - \log(1 + a_{n+1})
+\]
+y pasando a partes imaginarias,
+\[
+(h_{n+1} - h_n) 2\pi = \operatorname{Arg}\left(\frac{P_{n+1}}{P}\right) - \operatorname{Arg}\left(\frac{P_n}{P}\right) - \operatorname{Arg}(1 + a_{n+1})
+\]
+Pero \(|\operatorname{Arg}(1 + a_{n+1})| \leq \pi\) y \(\operatorname{Arg}\left(\frac{P_{n+1}}{P}\right) - \operatorname{Arg}\left(\frac{P_n}{P}\right) \to 0\), por lo que para \(n\) suficientemente grande, necesariamente \(h_{n+1} = h_n\). Por tanto, \(h_n\) es eventualmente constante, digamos \(h\), y se concluye que
+\[
+S_n \to \log P - h\cdot 2\pi i
+\]
+Esto muestra el siguiente resultado fundamental.
+
+Teorema I.  
+El producto infinito \(\prod_{n=1}^\infty (1+a_n)\) con \(1+a_n \neq 0\) converge si y solo si la serie \(\sum_{n=1}^\infty \log(1 + a_n)\), formada con la rama principal, converge.
+
+Así, el estudio de la convergencia de un producto infinito se reduce al de la convergencia de una serie numérica. Más aún, la serie
+\[
+\sum_{n=1}^\infty \log(1 + a_n)
+\]
+converge absolutamente si y solo si lo hace la serie \(\sum_{n=1}^\infty |a_n|\). Esto se deduce del desarrollo de Taylor:
+\[
+\lim_{z \to 0} \frac{\log(1+z)}{z} = 1
+\]
+Por lo tanto, para todo \(\varepsilon > 0\), existe \(N\) tal que para \(n > N\),
+\[
+(1-\varepsilon)|a_n| < |\log(1 + a_n)| < (1+\varepsilon)|a_n|
+\]
+lo que implica que las dos series convergen absolutamente simultáneamente.
+
+$>$ Definición: El producto infinito es absolutamente convergente si la serie \(\sum_{n=1}^\infty \log(1 + a_n)\) converge absolutamente.
+
+Teorema II.  
+Una condición necesaria y suficiente para la convergencia absoluta del producto \(\prod_{n=1}^\infty (1+a_n)\) es la convergencia de la serie \(\sum_{n=1}^\infty |a_n|\).
+
+Es importante notar que la convergencia de la serie \(\sum_{n=1}^\infty a_n\) no es ni necesaria ni suficiente para la convergencia del producto \(\prod_{n=1}^\infty (1+a_n)\).
+
+Cuando los factores son funciones de una variable, el concepto de convergencia uniforme del producto infinito se entiende de modo natural. La presencia de ceros puede causar dificultades menores, pero usualmente basta con restringirse a conjuntos donde a lo sumo un número finito de factores se anulan y estudiar la convergencia uniforme del producto restante. Los teoremas anteriores admiten formulaciones análogas para convergencia uniforme, pues todas las estimaciones pueden hacerse uniformes en conjuntos compactos.
+
+\subsection{Productos Canónicos}
+
+Una función entera es aquella que es analítica en todo el plano complejo. Entre los ejemplos más básicos de funciones enteras que no son polinomios destacan \(\exp(z)\), \(\sin z\) y \(\cos z\).
+
+\textit{Presentemos una breve pausa para pedir disculpas al lector por el cambio de notación, dado que trabajaremos con información muy larga dentro de la exponencial, usaremos la convención \(e^x = \exp(x)\).} Si \(g(z)\) es entera, entonces \(f(z)=\exp\bigl(g(z)\bigr)\) es entera y no se anula nunca. Recíprocamente, toda función entera \(f\) sin ceros puede escribirse como
+\[
+f(z)=\exp\bigl(g(z)\bigr)\!,
+\]
+donde \(g\) es otra función entera obtenida integrando la función
+\[
+\frac{f'(z)}{f(z)},
+\]
+cuyos singularidades se anulan tras mostrar que su integral define una entera \(g\). De hecho, \(f(z)e^{-g(z)}\) tiene derivada cero y, por tanto, es constante; esta constante puede incorporarse a \(g(z)\).
+
+Cuando \(f\) tiene un número finito de ceros, digamos un cero de orden \(m\) en el origen y ceros \(a_{1},\dots,a_{N}\) (con sus multiplicidades), se obtiene inmediatamente la factorización
+\[
+f(z)
+=
+z^{m}\,\exp\!\bigl(g(z)\bigr)\,
+\prod_{n=1}^{N}\Bigl(1-\frac{z}{a_{n}}\Bigr).
+\]
+Para una sucesión infinita de ceros \(\{a_{n}\}\) que tiende a infinito, el intento obvio
+\[
+f(z)
+=
+z^{m}\,\exp\bigl(g(z)\bigr)\,
+\prod_{n=1}^{\infty}\Bigl(1-\frac{z}{a_{n}}\Bigr)
+\]
+requiere la convergencia uniforme del producto infinito en compactos. Bajo la condición
+\[
+\sum_{n=1}^\infty\frac{1}{|a_{n}|}<\infty,
+\]
+el producto converge absolutamente y uniformemente en cada disco \(\{\,|z|\le R\}\), y se recupera la forma anterior.
+
+En el caso general se introducen factores de convergencia. Sean \(\{a_{n}\}\) números complejos no nulos con \(\lim a_{n}=\infty\). Para cada \(n\) elegimos un entero \(m_{n}\ge0\) y definimos
+\[
+p_{n}(z)
+=\frac{z}{a_{n}}
++\frac{1}{2}\Bigl(\frac{z}{a_{n}}\Bigr)^{2}
++\cdots
++\frac{1}{m_{n}}\Bigl(\frac{z}{a_{n}}\Bigr)^{m_{n}},
+\]
+y el término
+\[
+r_{n}(z)
+=\log\Bigl(1-\frac{z}{a_{n}}\Bigr)\;+\;p_{n}(z),
+\]
+donde se toma la rama principal de \(\log\) con parte imaginaria en \([-\pi,\pi]\). En \(|z|\le R\) se expande
+\[
+\log\Bigl(1-\frac{z}{a_{n}}\Bigr)
+=-\sum_{k=1}^\infty\frac{1}{k}\Bigl(\frac{z}{a_{n}}\Bigr)^{k},
+\]
+y tras cancelar los primeros \(m_{n}\) términos obtenemos la estimación
+\[
+\bigl|r_{n}(z)\bigr|
+\le
+\frac{1}{m_{n}+1}\Bigl(\tfrac{R}{|a_{n}|}\Bigr)^{m_{n}+1}
+\bigl(1-\tfrac{R}{|a_{n}|}\bigr)^{-1}.
+\]
+Si para todo \(R\) la serie
+\[
+\sum_{n=1}^\infty
+\frac{1}{m_{n}+1}\Bigl(\tfrac{R}{|a_{n}|}\Bigr)^{m_{n}+1}
+\]
+converge, entonces \(\sum r_{n}(z)\) converge absolutamente y uniformemente en \(|z|\le R\), y por tanto el producto
+\[
+\prod_{n=1}^\infty
+\Bigl(1-\tfrac{z}{a_{n}}\Bigr)
+\exp\bigl(p_{n}(z)\bigr)
+\]
+define una función entera con ceros exactamente en los \(a_{n}\).
+
+Teorema III. Dada una sucesión \(\{a_{n}\}\) de números complejos no nulos con \(\lim a_{n}=\infty\), existe una función entera cuya lista de ceros (contando multiplicidades) sea precisamente \(\{0,0,\dots,0,a_{1},a_{2},\dots\}\). Además, toda función entera con esos y ningún otro cero se factoriza de manera única como
+\[
+f(z)
+= z^{m}\,\exp\bigl(g(z)\bigr)\,
+\prod_{n=1}^{\infty}
+\Bigl(1-\tfrac{z}{a_{n}}\Bigr)\,
+\exp\!\Bigl(\tfrac{z}{a_{n}}
++\tfrac12\bigl(\frac{z}{a_{n}}\bigr)^{2}
++\cdots
++\tfrac{1}{m_{n}}\bigl(\tfrac{z}{a_{n}}\bigr)^{m_{n}}\Bigr),
+\]
+donde \(g\) es un cierto entero y \(\{m_{n}\}\) se eligen para asegurar convergencia.
+
+Corolario I. Toda función meromorfa en \(\mathbb{C}\) puede escribirse como cociente de dos funciones enteras.
+
+\medskip
+Se llama \emph{producto canónico de orden \(h\)} al caso en que todos los exponentes de convergencia \(m_{n}\) se eligen iguales a \(h\). Entonces el producto
+\[
+\prod_{n=1}^{\infty}
+\Bigl(1-\tfrac{z}{a_{n}}\Bigr)
+\exp\!\Bigl(\tfrac{z}{a_{n}}
++\tfrac12\bigl(\tfrac{z}{a_{n}}\bigr)^{2}
++\cdots
++\tfrac{1}{h}\bigl(\tfrac{z}{a_{n}}\bigr)^{h}\Bigr)
+\]
+converge si y solo si \(\sum|a_{n}|^{-(h+1)}<\infty\). El entero mínimo \(h\) para el que esto ocurre se llama \emph{género} del producto, y la representación canónica de una función entera \(f\) con dicho producto y un polinomio \(g\) se dice que tiene \emph{género finito} igual al grado máximo de \(g\) o al género del producto, lo que sea mayor.
+
+Por ejemplo:
+\begin{itemize}
+  \item Género \(0\): 
+  \(\displaystyle
+    f(z)
+    =C\,z^{m}
+    \prod_{n=1}^{\infty}
+    \Bigl(1-\tfrac{z}{a_{n}}\Bigr),
+    \quad
+    \sum\frac1{|a_{n}|}<\infty.
+  \)
+  \item Género \(1\):
+  \(\displaystyle
+    f(z)
+    =C\,z^{m}\exp(\alpha z)
+    \prod_{n=1}^{\infty}
+    \Bigl(1-\tfrac{z}{a_{n}}\Bigr)
+    \exp\!\Bigl(\tfrac{z}{a_{n}}\Bigr),
+  \)
+  con \(\sum|a_{n}|^{-2}<\infty\) y \(\sum|a_{n}|^{-1}=\infty\), o bien 
+  \(\sum|a_{n}|^{-1}<\infty\) y \(\alpha\neq0\).
+\end{itemize}
+
+\subsection*{La Función Gamma}
+
+La función \( \sin \pi z \) posee la propiedad de tener a todos los enteros como ceros, constituyendo así la función más simple con dicha característica. Sin embargo, es posible construir funciones que tengan como ceros únicamente a los enteros positivos o solo a los negativos. Por ejemplo, la función más sencilla cuyos ceros son exactamente los enteros negativos está dada por el producto canónico:
+\[
+G(z) = \prod_{n=1}^{\infty} \left(1 + \frac{z}{n}\right) e^{-z/n}
+\]
+Es inmediato que \( G(-z) \) tendrá como ceros a los enteros positivos. Comparando con la representación en producto de \( \sin \pi z \), se obtiene de manera inmediata:
+
+\[
+z\, G(z)\, G(-z) = \frac{\sin \pi z}{\pi}
+\]
+
+Debido a su construcción, \( G(z) \) está destinada a satisfacer otras propiedades funcionales sencillas. Notamos que \( G(z-1) \) tiene los mismos ceros que \( G(z) \), pero además posee un cero en el origen. Por lo tanto, es natural escribir
+\[
+G(z-1) = z\, e^{\gamma(z)}\, G(z)
+\]
+donde \( \gamma(z) \) es una función entera. Para determinar \( \gamma(z) \), derivamos logarítmicamente ambos lados, obteniendo:
+\[
+\sum_{n=1}^{\infty} \left( \frac{1}{z-1+n} - \frac{1}{n} \right) = \frac{1}{z} + \gamma'(z) + \sum_{n=1}^{\infty} \left( \frac{1}{z+n} - \frac{1}{n} \right)
+\]
+
+En la suma de la izquierda, reemplazando \( n \) por \( n+1 \), se obtiene:
+\[
+\begin{aligned}
+\sum_{n=1}^{\infty} \left( \frac{1}{z-1+n} - \frac{1}{n} \right)
+&= \frac{1}{z} - 1 + \sum_{n=1}^{\infty} \left( \frac{1}{z+n} - \frac{1}{n+1} \right) \\
+&= \frac{1}{z} - 1 + \sum_{n=1}^{\infty} \left( \frac{1}{z+n} - \frac{1}{n} \right) + \sum_{n=1}^{\infty} \left( \frac{1}{n} - \frac{1}{n+1} \right)
+\end{aligned}
+\]
+La última serie es telescópica y suma 1, por lo que la ecuación se reduce a \( \gamma'(z) = 0 \).
+
+Así, \( \gamma(z) \) es una constante, que denotamos \( \gamma \), y la función \( G(z) \) satisface la relación funcional
+\[
+G(z-1) = e^{\gamma} z\, G(z)
+\]
+Es conveniente considerar la función \( H(z) = G(z) e^{\gamma z} \), la cual satisface la ecuación funcional:
+\[
+H(z-1) = z\, H(z)
+\]
+
+El valor de \( \gamma \) se determina evaluando en \( z=1 \):
+\[
+1 = G(0) = e^{\gamma} G(1) \quad \implies \quad e^{-\gamma} = G(1)
+\]
+donde
+\[
+e^{-\gamma} = \prod_{n=1}^{\infty} \left(1 + \frac{1}{n}\right) e^{-1/n}
+\]
+El producto parcial n-ésimo se puede escribir como
+\[
+(n+1) \exp\left( -\left(1 + \frac{1}{2} + \cdots + \frac{1}{n} \right) \right)
+\]
+y por tanto,
+\[
+\gamma = \lim_{n \to \infty} \left( 1 + \frac{1}{2} + \frac{1}{3} + \cdots + \frac{1}{n} - \log n \right)
+\]
+Esta constante \( \gamma \) es la constante de Euler, cuyo valor aproximado es 0.57722.
+
+Si \( H(z) \) satisface \( H(z-1) = z\, H(z) \), entonces la función
+\[
+\Gamma(z) = \frac{1}{z H(z)}
+\]
+satisface
+\[
+\Gamma(z-1) = \frac{\Gamma(z)}{z-1}
+\]
+o, de forma equivalente,
+\[
+\Gamma(z+1) = z\, \Gamma(z)
+\]
+
+Esta relación es fundamental y motiva la extensión del concepto de factorial a valores complejos mediante la función gamma de Euler. Nuestra construcción conduce a la representación explícita:
+\[
+\Gamma(z) = \frac{e^{-\gamma z}}{z} \prod_{n=1}^{\infty} \left(1 + \frac{z}{n} \right)^{-1} e^{z/n}
+\]
+
+\textbf{Teorema 4.} (Fórmula de reflexión)
+\[
+\Gamma(z)\, \Gamma(1-z) = \frac{\pi}{\sin \pi z}
+\]
+La función \( \Gamma(z) \) es meromorfa, con polos simples en \( z=0, -1, -2, \ldots \), pero no tiene ceros.
+
+Tenemos que \( \Gamma(1) = 1 \) y, por la ecuación funcional, \( \Gamma(2) = 1 \), \( \Gamma(3) = 1 \cdot 2 \), \( \Gamma(4) = 1 \cdot 2 \cdot 3 \), y en general \( \Gamma(n) = (n-1)! \). Así, la función gamma puede verse como una generalización del factorial. De la fórmula de reflexión se deduce que \( \Gamma\left( \frac{1}{2} \right) = \sqrt{\pi} \).
+
+Considerando la segunda derivada del logaritmo de la función gamma, se obtiene una expresión de suma simple:
+\[
+\frac{d}{dz} \left( \frac{\Gamma'(z)}{\Gamma(z)} \right) = \sum_{n=0}^{\infty} \frac{1}{(z+n)^2}
+\]
+
+\textbf{Corolario 2.} Sea \( S(z) = \Gamma(z)\, \Gamma\left(z+\frac{1}{2}\right) \). Entonces, usando la fórmula anterior para la derivada logarítmica, se tiene:
+\[
+\begin{aligned}
+&\frac{d}{dz}\left( \frac{\Gamma'(z)}{\Gamma(z)} \right) + \frac{d}{dz}\left( \frac{\Gamma'(z+\frac{1}{2})}{\Gamma(z+\frac{1}{2})} \right) \\
+&= \sum_{n=0}^{\infty} \frac{1}{(z+n)^2} + \sum_{n=0}^{\infty} \frac{1}{(z+n+\frac{1}{2})^2} \\
+&= 4 \sum_{m=0}^{\infty} \frac{1}{(2z+m)^2} \\
+&= 2 \frac{d}{dz} \left( \frac{\Gamma'(2z)}{\Gamma(2z)} \right)
+\end{aligned}
+\]
+
+Integrando, se obtiene:
+\[
+\Gamma(z)\, \Gamma\left(z+\frac{1}{2}\right) = e^{a z + b} \Gamma(2z)
+\]
+donde \( a \) y \( b \) son constantes que se determinan usando valores particulares de la función gamma:
+\[
+\Gamma\left( \frac{1}{2} \right) = \sqrt{\pi}, \quad \Gamma(1) = 1, \quad \Gamma\left( \frac{3}{2} \right) = \frac{1}{2} \sqrt{\pi}, \quad \Gamma(2) = 1
+\]
+Esto lleva a las ecuaciones:
+\[
+\frac{1}{2} a + b = \frac{1}{2} \log \pi, \qquad a + b = \frac{1}{2} \log \pi - \log 2
+\]
+de donde se deduce:
+\[
+a = -2 \log 2, \qquad b = \frac{1}{2} \log \pi + \log 2
+\]
+
+\textbf{Teorema 5.} (Fórmula de duplicación de Legendre)
+\[
+\sqrt{\pi}\, \Gamma(2z) = 2^{2z-1}\, \Gamma(z)\, \Gamma\left(z+\frac{1}{2}\right)
+\]
+
+Esta fórmula constituye una de las identidades más notables de la función gamma, y juega un papel fundamental en el análisis complejo y en aplicaciones posteriores.
+
+\subsection*{Apendix}
+Teorema (Producto de Weierstrass generalizado).  Sea \(\Omega \subset \mathbb{C}\) un dominio abierto y sean \(\{a_n\}_{n=1}^\infty, \{b_n\}_{n=1}^\infty \subset \Omega \setminus \{0\}\) dos sucesiones de puntos distintos sin puntos de acumulación finitos en \(\Omega\). Sean \(m \in \mathbb{Z}\) y \(\{m_n\}_{n=1}^\infty, \{p_n\}_{n=1}^\infty \subset \mathbb{Z}_{>0}\), así como \(\{p_n\}_{n=1}^\infty, \{q_n\}_{n=1}^\infty \subset \mathbb{Z}_{\geq 0}\) secuencias tales que las sumas logarítmicas\[\sum_{n=1}^\infty m_n \left| \frac{z}{a_n} \right|^{p_n + 1} \quad \text{y} \quad \sum_{n=1}^\infty p_n \left| \frac{z}{b_n} \right|^{q_n + 1}\]convergen uniformemente en subconjuntos compactos de \(\Omega\). Supóngase que \(f: \Omega \to \hat{\mathbb{C}}\) es una función meromorfa que tiene ceros en \(\{a_n\}\) de multiplicidad \(m_n\), polos en \(\{b_n\}\) de orden \(p_n\), y un cero o polo de orden \(m \in \mathbb{Z}\) en \(z=0\). Entonces existe una función entera (holomorfa tal que \(g: \Omega \to \mathbb{C}\)) tal que se cumple la siguiente factorización:
+\[f(z) = z^{m} e^{g(z)} \cdot\prod_{n=1}^\infty \left[\left(1 - \frac{z}{a_n}\right) \exp\left( \frac{z}{a_n} + \frac{1}{2} \left( \frac{z}{a_n} \right)^2 + \cdots + \frac{1}{p_n} \left( \frac{z}{a_n} \right)^{p_n} \right)\right]^{m_n}\cdot\prod_{n=1}^\infty \left[\left(1 - \frac{z}{b_n}\right) \exp\left( \frac{z}{b_n} + \frac{1}{2} \left( \frac{z}{b_n} \right)^2 + \cdots + \frac{1}{q_n} \left( \frac{z}{b_n} \right)^{q_n} \right)\right]^{-p_n}\]
+para todo \(z \in \Omega\), donde el producto infinito converge uniformemente en subconjuntos compactos de \(\Omega \setminus \left(\{a_n\} \cup \{b_n\} \cup \{0\}\right)\).
+
+\begin{thebibliography}{9}
+
+\bibitem{ahlfors} 
+L. V. Ahlfors. 
+\textit{Complex Analysis}. 
+3rd ed. McGraw-Hill, 1979. 
+(Capítulos V: Productos infinitos, teorema de Weierstrass y función Gamma).
+
+\bibitem{conway} 
+J. B. Conway. 
+\textit{Functions of One Complex Variable II}. 
+Springer, 1995. 
+(Capítulo VII: Productos canónicos).
+
+\bibitem{remmert} 
+R. Remmert. 
+\textit{Classical Topics in Complex Function Theory}. 
+Springer, 1998. 
+(Capítulos III: Convergencias.
+
+\end{thebibliography}
+
+\end{document}
+

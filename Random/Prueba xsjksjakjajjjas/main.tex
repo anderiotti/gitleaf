@@ -1,0 +1,129 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage{pgfplots}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{mdframed}
+\usepackage{amsthm}
+\usepackage{physics}
+\usepackage{derivative}
+
+\geometry{a4paper, left=2cm, right=2cm, top=1cm, bottom=2cm}
+
+\pgfplotsset{compat=1.18}
+\begin{document}
+
+Dado que la matriz \( M \in \mathbb{R}^{2 \times 3} \) es:
+
+\[ M = \begin{pmatrix}
+1 & 4 & 2 \\
+-1 & 0 & 2
+\end{pmatrix} \]
+
+### Paso 1: Determinar el núcleo de \(M\)
+
+El núcleo de \(M\) está compuesto por todos los vectores \( v \in \mathbb{R}^3 \) tales que \( Mv = 0 \).
+
+\[ Mv = \begin{pmatrix}
+1 & 4 & 2 \\
+-1 & 0 & 2
+\end{pmatrix} \begin{pmatrix}
+x_1 \\
+x_2 \\
+x_3
+\end{pmatrix} = \begin{pmatrix}
+1 \cdot x_1 + 4 \cdot x_2 + 2 \cdot x_3 \\
+-1 \cdot x_1 + 0 \cdot x_2 + 2 \cdot x_3
+\end{pmatrix} = \begin{pmatrix}
+x_1 + 4 x_2 + 2 x_3 \\
+-x_1 + 2 x_3
+\end{pmatrix} = \begin{pmatrix}
+0 \\
+0
+\end{pmatrix} \]
+
+Esto nos da el siguiente sistema de ecuaciones lineales:
+
+1. \( x_1 + 4 x_2 + 2 x_3 = 0 \)
+2. \( -x_1 + 2 x_3 = 0 \)
+
+De la segunda ecuación, tenemos que:
+
+\[ -x_1 + 2 x_3 = 0 \implies x_1 = 2 x_3 \]
+
+Sustituimos \( x_1 = 2 x_3 \) en la primera ecuación:
+
+\[ 2 x_3 + 4 x_2 + 2 x_3 = 0 \implies 4 x_3 + 4 x_2 = 0 \implies x_3 + x_2 = 0 \implies x_2 = -x_3 \]
+
+Por lo tanto, cualquier vector en el núcleo es de la forma:
+
+\[ \begin{pmatrix}
+x_1 \\
+x_2 \\
+x_3
+\end{pmatrix} = \begin{pmatrix}
+2 x_3 \\
+-x_3 \\
+x_3
+\end{pmatrix} = x_3 \begin{pmatrix}
+2 \\
+-1 \\
+1
+\end{pmatrix} \]
+
+Por lo tanto, el núcleo de \(M\) es:
+
+\[ \ker(M) = \text{span}\left\{ \begin{pmatrix}
+2 \\
+-1 \\
+1
+\end{pmatrix} \right\} \]
+
+### Paso 2: Determinar el espacio cociente \(\mathbb{R}^3 / \ker(M)\)
+
+La dimensión del espacio cociente \(\mathbb{R}^3 / \ker(M)\) se puede encontrar usando el Teorema de la Dimensión (o Teorema del Rango-Nulidad), que nos dice que:
+
+\[ \dim(\mathbb{R}^3) = \dim(\ker(M)) + \dim(\text{Im}(M)) \]
+
+Sabemos que \(\dim(\mathbb{R}^3) = 3\). La dimensión del núcleo, \(\dim(\ker(M))\), es 1 porque \(\ker(M)\) es el span de un solo vector.
+
+Para encontrar \(\dim(\text{Im}(M))\), observamos que \(M\) es una matriz de \(2 \times 3\). La dimensión de la imagen de \(M\) es el rango de \(M\), que es el número de filas linealmente independientes de \(M\).
+
+Reduzcamos \(M\) a su forma escalonada:
+
+\[ \begin{pmatrix}
+1 & 4 & 2 \\
+-1 & 0 & 2
+\end{pmatrix} \]
+
+Suma la primera fila a la segunda fila:
+
+\[ \begin{pmatrix}
+1 & 4 & 2 \\
+0 & 4 & 4
+\end{pmatrix} \]
+
+Ahora, la matriz tiene dos filas no nulas y, por lo tanto, el rango de \(M\) es 2.
+
+Por lo tanto,
+
+\[ \dim(\text{Im}(M)) = 2 \]
+
+Usando el Teorema de la Dimensión:
+
+\[ \dim(\mathbb{R}^3) = \dim(\ker(M)) + \dim(\text{Im}(M)) \]
+
+\[ 3 = 1 + \dim(\text{Im}(M)) \]
+
+Entonces,
+
+\[ \dim(\mathbb{R}^3 / \ker(M)) = \dim(\mathbb{R}^3) - \dim(\ker(M)) = 3 - 1 = 2 \]
+
+En resumen, la dimensión del espacio cociente \(\mathbb{R}^3 / \ker(M)\) es \(2\).
+
+
+
+\end{document}

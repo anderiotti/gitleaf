@@ -1,0 +1,66 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage{pgfplots}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage[thmmarks, amsmath, thref]{ntheorem}
+\usepackage{mdframed}
+\usepackage{amsthm}
+\usepackage{multirow}
+\usepackage{physics}
+\usepackage{proof}
+\usepackage{booktabs}
+\usepackage[table]{xcolor}
+\usepackage{derivative}
+\usepackage{hyperref}
+\usepackage{wrapfig}
+\usepackage{amsthm}
+\usepackage{xcolor}
+\usepackage{longtable}
+\renewcommand{\theenumi}{\roman{enumi}}
+
+\theoremstyle{nonumberplain}
+\theoremheaderfont{\itshape}
+\theorembodyfont{\upshape}
+\theoremseparator{.}
+\theoremsymbol{\ensuremath{\square}}
+\theoremsymbol{\ensuremath{\blacksquare}}
+\newtheorem{solution}{Solution}
+\theoremseparator{.}
+\theoremsymbol{\mbox{\texttt{;o)}}}
+
+\pgfplotsset{compat=1.18}
+\begin{document}
+
+\section{Introduccion a SQL y Base de Datos}
+\subsection*{Que es SQL}
+###Fill###
+
+\subsection*{Que son las bases de datos?}
+
+Una base de datos en terminos informaticos es un lugar digital donde se guardan datos de dforma estructurado para poder acceder a ellos cuando se requiera. Se puede almacenar, gestionar y recuperar datos, incluso una pequeña tabla de excel puede ser una base de datos.
+
+Están diseñadas para manejar grandes volúmenes de datos. Se pueden almacenar una inmensa cantidad de registros, y usar consultas complejas.
+
+Hay muchos tipos de bases pero se dividen en bases de datos relacionales o no relacionales (no sql). Las primeras se dividen en tablas y se llaman relacionales porque se pueden relacionar entre sí, así como en power BI puedes enlazarlas.
+
+Las bases de datos no sql son menos estructuradas, mucho más flexibles y pueden guardar datos en formatos muy distintos a las tablas tradicionales. No pueden gestionarse con SQL; por ende, no puede trabajarse en este curso con aquel tipo de datos.
+
+\subsection*{Componentes de las bases de datos}
+
+Para fines practicos, en este curso a las bases de datos relacionales solo se les dira bases de datos. Conozcamos los componentes principales, las database estan compuestas por datos y es el componente mas basico; el siguiente componente son las filas y columnas (campos) de una tabla, que son informacion relacionada con el label de la columna, las columnas representan un atributo o propiedad de los datos; otro componente indispensable son las claves primarias, es uno de los campos o columnas para identificar de forma unica algun elemento en una tabla, por ej en un registro de clientes pueden llamarse dos personas exactamente igual, por ello requerimos una columna ID clientes para que cada registro puede ser identificado de forma unica.
+
+\subsection*{Sistemas de Gestion de Bases de Datos}
+Por donde nos comunicamos a las bases de datos? Esencialmente es donde vamos a escribir nuestro codigo de SQL, nos falta conocer el instrumento que usaremos para toda la comunicasion, aqui entran en juego los sistemas de gestion de bases de datos DBS, es un software intermediario software-usuario con todas las herramientas sql para crear-leer-borrar-actualizar datos de forma mas amigable. Haciendo una metafora con la biblioteca, el DBMS es el bibliotecario que intermedia entre nosotros y la base de datos, y almacena adecuadamente los libros que le entreguemos. Hay varios sistemas de gestion de basaes de datos cada uno con caracts. unicas, optimizacion mejor, etc, algunos del mercado son mySQL, postgresql, oracle database, microsoft sql server, para bases de datos relacionales, debemos elegir nuestro instrumento para hablar con la database en el idioma de SQL. En este curso se usara mySQL, te diremos por que se elige este motor y sus caracteristicas principales.
+
+\subsection*{MySQL y MySQL Workbench}
+mysql es un sistema de gestion de database relacional open code, se creo en 1995 se convirtio muy usado en todo el mundo por eficiencia escalibidlidad y efectividad, veremos 4 motivos por que usaremos mysql en este curso y porque se piensa que es lo mejor. accesibilidad: es opencode, mysql es libre de instalar gratuitamente y funciona en varios OS; popularidad: ya existe hace muchos a;os por lo que hay muchisima comunidad empresas=personas que ya tienen errores comunes, conocimiento, funcionalidades y podemos usarlo como recursos y afianzar lo que incorporemos en el curso. hay muchos foros con soporte y recursos donde las preguntas ya probablemente fueron respondidas; compatiilidad y soporte: ya esta disponible para windows, linux, max y hay muhco soporte alredeedro de el por lo que nos invita a hacer actividaddes y tareas con comunidad de respaldo, se integra bien con varios lenguajes de programacion es muy utilizado para aplicaciones web como wordpress por lo que nos sirve para salida laboral, aplicaciones del dia a dia; fundamentos transferibles: todo lo que aprendamos podemos transferir a otros lenguajes de database, quiza cambie levemente sintaxis y palabras en la codificacion pero la idea general es totalmente transferible.
+
+\section{}
+\subsection*{Instalacion de mysql}
+
+
+\end{document}

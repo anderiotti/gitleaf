@@ -1,0 +1,129 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage{pgfplots}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{mdframed}
+\usepackage{amsthm}
+\usepackage{tikz}
+\usepackage{multicol}
+\usepackage{cancel}
+
+\geometry{a4paper, left=2cm, right=2cm, top=1cm, bottom=2cm}
+
+\pgfplotsset{compat=1.18}
+\begin{document}
+
+\begin{minipage}{0.7\textwidth}
+    \small \textbf{Fenómenos Colectivos}  \\
+    \small {Facultad de Ciencias, Universidad Nacional Autónoma de México} \\
+    \small {Profesora: Dra. Catalina Elizabeth Stern Forgach} \\
+    \small {Ayudante: M. Tyra Delgadillo Mendoza} \\
+    \small {Fecha de entrega: Viernes 08 de febrero del 2024} \\
+    \small {Nombre completo: Andrés López González} \\
+    \small {Actividad en clase}
+\end{minipage}
+\hfill
+\begin{minipage}{0.12\textwidth}
+    \includegraphics[width=\linewidth]{logo_universidad}
+\end{minipage}\\\\
+
+1. ¿Cuál es el incremento de energía interna de un sistema si se le suministran 700 calorías de energía en forma de calor y se le aplica un trabajo de 900Joules?\\
+Considérese la siguiente ecuación de la energía interna.
+\begin{equation}
+    \Delta E = Q - W
+\end{equation}
+Al ejercerse un trabajo sobre el sistema este acota signo positivo.
+\begin{align*}
+    \Delta E &= 700cal + 900J \\
+    &= 700\cdot4.2J + 900J \\
+    &= 3,840J
+\end{align*}
+
+2. Suponga que un sistema pasa de un estado a otro de manera cuasi estática y reversible e intercambia energía con sus alrededores. Calcule la variación de energía interna en los siguientes casos: a) El sistema absorbe 100cal y realiza un trabajo de 200Joules, b) el sistema absorbe 100Joules y se realiza sobre él un trabajo de 200Joules y c) el sistema libera 100cal a sus alrededores y sobre él se realiza un trabajo de 200 Joules.\\\\
+Caso a)
+\[ \Delta E = Q - W = 100cal - 200J = 100\cdot4.2J - 200J = 220J \]
+Caso b)
+\[ \Delta E = Q - W = 100J + 200J = 300J \]
+Caso c)
+\[ \Delta E = Q - W = -100cal + 200J = -100\cdot4.2J + 200J = -220J \]\\
+
+
+
+3. ¿Cuál es la eficiencia de una máquina térmica a la cual se le suministran 8000 calorías y cede 25500 Joules en cada ciclo?
+\textit{Primero convertimos las calorías a su equivalencia en Joules.}
+\[ 8,000cal = 8,000 \cdot 4.2 J = 33,600J \]
+Utilizamos la siguiente ecuación de la eficiencia.
+\begin{equation}
+    e = 1 - \frac{Q_1}{Q_2}
+\end{equation}
+Consideremos como $Q_1$ a la energía cedida y $Q_2$ las suministradas.
+\begin{align*}
+    e &= 1 - \frac{Q_1}{Q_2} \\
+    &= 1 - \frac{25,000J}{33,600J} \\
+    &\approx 0.25595 \\
+    &\approx 25.595 \% \\
+\end{align*}
+
+4. Suponga que un amigo le comenta que construyó una máquina térmica a la cual se le suministran 100 cal en cada ciclo y realiza un trabajo de 420 Joules. ¿Le creería? ¿Por qué?\\\\
+\textit{No porque mis amigos nunca tienen dinero. Pero con argumentos más analíticos, veamos qué representa la afirmación de este amigo, tómese Equation (2) para observar la eficiencia de esta máquina.}
+\begin{align*}
+    e &= 1 - \frac{Q_1}{Q_2} \\
+    &= 1 - \frac{420J}{100\cdot4.2J} \\
+    &= 0 \\
+    &= 0 \% \\
+\end{align*}
+
+\textit{No existen máquinas térmicas con esta cantidad de eficiencia, debería ser un sistema perfectamente sin fricción, sin pérdidas de energía en el recorrido y completamente aislado en la frontera de su sistema, algo claramente imposible; ahora solo por curiosidad tomaremos la equivalencia de la caloría a joules del libro de Halliday-Resnick, en donde $1cal=4.184J$, vemos nuestra eficiencia en este caso.}
+\begin{align*}
+    e &= 1 - \frac{Q_1}{Q_2} \\
+    &= 1 - \frac{420J}{100\cdot4.184J} \\
+    &\approx -0.00382 \\
+    &\approx -0.38240 \% \\
+\end{align*}
+\textit{Nuestra eficiencia es negativa, lo cual desde luego es un factor que nos indica todavía con más peso que su afirmación es falsa.} \\
+
+5. Una máquina térmica de Carnot opera entre dos fuentes termales a 127C y
+427C. ¿Cuál es su eficiencia? \\
+\textit{En clase se ha demostrado que la eficiencia en un ciclo de Carnot puede calcularse meramente usando la proporción entre la temperatura fría y caliente, pues la proporción del calor es igual a la proporción entre temperaturas: $\dfrac{Q_1}{Q_2} = \dfrac{T_1}{T_2} $. Sabiendo esto usamos una variante de Equation (2), consideramos la fuente termal más caliente como $T_2$.}
+\begin{align*}
+    e &= 1 - \frac{Q_1}{Q_2} \\
+    &= 1 - \frac{T_1}{T_2} \\
+    &= 1 - \frac{127C}{427C} \\
+    &= \frac{300}{427} \\
+    &\approx 0.70257 \\
+    &\approx 70.25761 \%
+\end{align*}
+
+6. ¿Cuál es la eficiencia de una máquina térmica a la que se le suministran
+70,000cal, de las cuales cede 20,000cal al medio ambiente? Calcule también el
+trabajo realizado en Joules. \\
+\begin{align*}
+    e &= 1 - \frac{20,000cal}{70,000cal} \\
+    &= \frac{5}{7} \\
+    &\approx 0.71428 \\
+    &\approx 71.42857 \% \\
+\end{align*}
+
+7. Determine la temperatura en grados centígrados de la fuente fría en una
+máquina térmica cuya eficiencia es de 36\% y la temperatura de la fuente caliente es de 310C \\
+\textit{Despejamos de Equation (2) la fuente fría que es $Q_1$, de modo que obtenemos la siguiente nueva ecuación}.
+\begin{equation*}
+    Q_1 = Q_2(1 - e)
+\end{equation*}
+No le he puesto numeración pues aún no es digna, hemos visto en clase que para máquinas térmicas es útil usar la razón entre el calor es igual a la razón entre las temperaturas, de modo que $\dfrac{Q_1}{Q_2} = \dfrac{T_1}{T_2} $, esto finalmente nos implica la siguiente nueva ecuación.
+\begin{equation*}
+    T_1 = T_2(1 - e)
+\end{equation*}
+Ahora sí podemos calcular la temperatura de la fuente fría.
+\begin{align*}
+     T_1 &= T_2(1 - e) \\
+     &= 310C(1 - 36 \%) \\
+     &= 310C(1 - 0.36) \\
+     &= 198.4C \\
+\end{align*}
+
+\end{document}

@@ -1,0 +1,179 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage{pgfplots}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{mdframed}
+\usepackage{amsthm}
+\usepackage{tikz}
+\usepackage{multicol}
+\usepackage[dvipsnames]{xcolor}
+
+\geometry{a4paper, left=2cm, right=2cm, top=1cm, bottom=2cm}
+
+\pgfplotsset{compat=1.18}
+\begin{document}
+
+Con este capítulo entramos en el dominio de la teoría geométrica de las funciones de una variable compleja. Estudiaremos los problemas fundamentales de la teoría de las aplicaciones conformes, así como los principios geométricos relacionados con las propiedades más generales de las funciones holomorfas.
+
+\section*{Principios geométricos}
+
+\subsection*{Principio del argumento}
+\textbf{34. Principio del argumento.} Sea \( f \) una función holomorfa y no nula en un entorno punteado \( \{ 0 < |z - a| < r \} \) de un punto \( a \in \mathbb{C} \). Se llamará \textit{residuo logarítmico} de la función \( f \) en \( a \) al residuo de la derivada logarítmica  
+\[
+\frac{f'(z)}{f(z)} = \frac{\mathrm{d}}{\mathrm{d}z} \ln f(z)
+\]
+de \( f \) en \( a \).  
+
+Además de los puntos singulares aislados (de carácter único), la función \( f \) puede presentar un residuo logarítmico no nulo en sus ceros.  
+Sea \( a \in \mathbb{C} \) un cero de orden \( n \) de una función \( f \) holomorfa en \( a \); entonces en un entorno \( U_a \) de \( a \) se tiene \( f(z) = (z - a)^n \varphi(z) \), donde \( \varphi \) es una función holomorfa y no nula en \( U_a \). Por lo tanto, en \( U_a \)  
+\[
+\frac{f'(z)}{f(z)} = \frac{n (z - a)^{n-1} \varphi(z) + (z - a)^n \varphi'(z)}{(z - a)^n \varphi(z)} = \frac{1}{z-a} \cdot \frac{n \varphi(z) + (z-a) \varphi'(z)}{\varphi(z)},
+\]
+donde el segundo factor es holomorfo y por lo tanto desarrollable en una serie de Taylor cuyo término libre es exactamente \( n \) (su valor en \( z = a \)). En \( U_a \) se tiene entonces  
+\[
+\frac{f'(z)}{f(z)} = \frac{1}{z-a} \{ n + c_1 (z - a) + c_2 (z - a)^2 + \dots \}
+\]
+\[
+= \frac{n}{z-a} + c_1 + c_2 (z - a) + \dots, \quad (2)
+\]
+de donde se deduce que un cero de orden \( n \) de una función holomorfa genera un polo simple de residuo \( n \) en su derivada logarítmica.  
+\textbf{El residuo logarítmico en un cero es igual al orden de dicho cero.}  
+
+Si \( a \) es un polo de orden \( p \) de una función \( f \), entonces \( 1/f \) posee en este punto un cero de orden \( p \) y, dado que  
+\[
+\frac{f'(z)}{f(z)} = - \frac{d}{dz} \ln \left(\frac{1}{f(z)}\right),
+\]
+se deduce, teniendo en cuenta (2), que un polo de orden \( p \) de la derivada logarítmica de una función presenta un polo de orden \( p \) con residuo \( -p \).  
+\textbf{El residuo logarítmico en un polo es igual al orden de dicho polo tomado con signo opuesto.}  
+
+Estas observaciones nos permiten sugerir un método de cálculo del número de ceros y polos de las funciones meromorfas. En lo que sigue, se convenirá en contar un cero de orden \( n \) \( n \) veces y un polo de orden \( p \), \( p \) veces.  
+
+Sea \( f \) una función meromorfa en un dominio \( D \subset \mathbb{C} \), con \( G \subset D \) un dominio cuya frontera \( \partial G \) es una curva cerrada y simple que no contiene ceros ni polos de \( f \). Si \( N \) y \( P \) denotan respectivamente el número de ceros y polos de \( f \) en el dominio \( G \), entonces  
+\[
+N - P = \frac{1}{2\pi i} \oint_{\partial G} \frac{f'(z)}{f(z)} dz, \quad (3)
+\]
+donde \( \partial G \) está orientada positivamente.  
+
+Dado que \( G \subset D \), la función \( f \) posee en \( G \) un número finito de ceros \( a_1, \dots, a_t \) y de polos \( b_1, \dots, b_m \). Por otro lado, como \( \partial G \) no contiene ni ceros ni polos de \( f \), la función \( g = f'/f \) es holomorfa en un entorno de \( \partial G \). Aplicando el teorema de los residuos a esta función, obtenemos  
+\[
+\frac{1}{2\pi i} \oint_{\partial G} \frac{f'}{f} dz = \sum_{v=1}^{t} \operatorname{res}_{a_v} g + \sum_{v=1}^{m} \operatorname{res}_{b_v} g, \quad (4)
+\]
+pero según la observación anterior  
+\[
+\operatorname{res}_{a_v} g = n_v, \quad \operatorname{res}_{b_v} g = - p_v,
+\]
+donde \( n_v \) y \( p_v \) son los órdenes respectivos del cero \( a_v \) y del polo \( b_v \). Sustituyendo esto en (4) y teniendo en cuenta la convención de conteo para los ceros y polos (en virtud de la cual \( N = \sum n_v \) y \( P = \sum p_v \)), se obtiene (3).  
+
+\textbf{Si \( f \) es una función que satisface las condiciones del teorema 1 en un dominio \( G \subset D \) y si \( g \) es una función holomorfa en dicho dominio, entonces:}
+
+\begin{center}
+(*) Se dice que una función \( f \) es \textit{meromorfa} en un dominio \( D \) si es holomorfa en todo \( D \) excepto quizás en sus polos.
+\end{center}
+
+Demostrar que
+
+\[\frac{1}{2\pi i}\int_{\partial G} g(z) \frac{f'(z)}{f(z)}\, dz = \sum_{h=1}^{l} g(a_h) - \sum_{h=1}^{m} g(b_h),\] 
+(5)
+
+donde la primera suma se extiende a todos los ceros y la segunda a todos los polos de la función \(f\) en el dominio \(G\). Esto generaliza el teorema 1: la relación (5) implica (3) para \(g \equiv 1\) (cada cero y cada polo se cuenta un número de veces igual a su orden). ❤
+
+Este teorema puede enunciarse bajo una forma geométrica. Supongamos que \(\partial G\) es un camino \(z = z(t)\), \(\alpha \leq t \leq \beta\) y designemos por \(\Phi(t)\) una primitiva de la función \(f'/f\) a lo largo de este camino; la fórmula de Newton--Leibniz nos da
+
+\[\int_{\partial G} \frac{f'}{f}\, dz = \Phi(\beta) - \Phi(\alpha).\] 
+(6)
+
+Pero es evidente que \(\Phi(t) = \operatorname{In} f\{z(t)\}\), donde \(\operatorname{In}\) designa una determinación cualquiera del logaritmo, que varía continuamente a lo largo del camino \(\partial G\). Puesto que \(\ln|f| = \operatorname{In}|f| + i \arg f\) y que la función \(\operatorname{In}|f(z)|\) es univaluada, para definir esta determinación basta con definir una determinación de \(\arg f\) que varíe continuamente a lo largo de \(\partial G\). El incremento de \(\operatorname{In}|f|\) a lo largo del camino cerrado \(\partial G\) es nulo, por tanto
+
+\[\Phi(\beta) - \Phi(\alpha) = i \left\{ \operatorname{Arg} f\{z(\beta)\} - \operatorname{Arg} f\{z(\alpha)\} \right\}.\]
+
+El segundo miembro es el producto por \(i\) del incremento de la determinación escogida. Designando este incremento por \(\Delta_{\partial G} \operatorname{Arg} f\), podemos escribir (6) en la forma
+
+\[\int_{\partial G} \frac{f'}{f}\, dz = i \Delta_{\partial G} \operatorname{Arg} f.\]
+
+El teorema 1 puede entonces enunciarse de la siguiente manera:
+
+\begin{theorem}[Principio del argumento]
+\textbf{Teorema 2}. \textit{En las condiciones del teorema 1, la diferencia entre el número \(N\) de ceros y el número \(P\) de polos de una función \(f\) en \(D\) es igual al incremento del argumento de \(f\) a lo largo de la frontera orientada \(\partial G\) dividido por \(2\pi\):}
+
+\[N - P = \frac{1}{2\pi} \Delta_{\partial G} \operatorname{Arg} f.\] 
+(7)
+\end{theorem}
+
+Es evidente que el segundo miembro de (7) es el número total de rotaciones efectuadas por el vector \(w = f(z)\) alrededor del punto \(w = 0\) cuando \(z\) recorre el camino \(\partial G\). Sea \(\partial G^*\) la imagen del camino \(\partial G\) por la aplicación \(f\), es decir, el camino \(w = f\{z(t)\}\), \(\alpha \leq t \leq \beta\); este número será entonces igual al número de rotación del vector \(w\) cuando \(z\) recorre el camino \(\partial G^*\) (fig. 70). Este número se llama \textit{índice} del camino \(\partial G^*\) respecto al punto \(w = 0\) y se denota por \(\text{ind}_0\, \partial G^*\). El principio del argumento se convierte ahora en:
+
+\[N - P = \frac{1}{2\pi} \Delta_{\partial G^*} \operatorname{Arg} w = \text{ind}_0\, \partial G^*.\] 
+(8)
+
+\textbf{Observación 1.} En lugar de los ceros de la función \(f\) se pueden considerar sus \(a\)-puntos, es decir, las raíces de la ecuación \(f(z) = a\); basta para ello reemplazar en nuestros razonamientos la función \(f\) por la función \(f(z) - a\). Si \(\partial G\) no contiene \(a\)-puntos (ni polos, como antes) de la función \(f\), entonces
+
+\[N_a - P = \frac{1}{2\pi i} \int_{\partial G} \frac{f'(z)}{f(z) - a}\, dz = \frac{1}{2\pi} \Delta_{\partial G} \operatorname{Arg} \{f(z) - a\},\] 
+(9)
+
+donde \(N_a\) es el número total de \(a\)-puntos de \(f\) en \(D\). Situándonos en el plano \(w = f(z)\) e introduciendo la noción de índice del camino \(\partial G^*\) respecto al punto \(a\), podemos escribir (9) como
+
+\[N_a - P = \frac{1}{2\pi} \Delta_{\partial G^*} \operatorname{Arg} (w - a) = \text{ind}_a\, \partial G^*.\] 
+(10)
+
+\textbf{Observación 2.} La segunda parte de la fórmula (7) --el incremento del argumento de la función a lo largo de un camino-- tiene sentido para funciones continuas \(f\), no nulas a lo largo de dicho camino (aunque su primera definición mediante una integral está subordinada a la existencia de la derivada \(f'\), es decir, implica la holomorfía de \(f\)). Esta cantidad, igual al índice de la imagen \(\partial G^*\) del camino, es de naturaleza topológica: es invariante por cualquier transformación topológica de los planos \(z\) y \(w\). Resulta que se pueden introducir definiciones del orden de los ceros y los polos que son invariantes por transformaciones topológicas (definiciones que no están ligadas a derivadas o desarrollos en series). El principio del argumento adquiere entonces un carácter topológico: será válido para todas las funciones topológicamente equivalentes a funciones meromorfas (es decir, provenientes de funciones meromorfas mediante transformaciones topológicas de las variables). El lector interesado en estas cuestiones podrá encontrar una exposición detallada en la obra de S. Stoilow.
+
+Citamos un ejemplo de aplicación del principio del argumento.
+
+\textbf{Teorema 3} (Rouché *). \textit{Sean \( f \) y \( g \) dos funciones holomorfas en un dominio cerrado \( G \) de frontera \( \partial G \) continua, y sea}
+
+\[|f(z)| > |g(z)| \quad \text{para todo } z \in \partial G. \tag{11}\]
+
+\textit{Entonces las funciones \( f \) y \( f + g \) poseen el mismo número de ceros en \( D \).}
+
+Se observa en (11) que \( f \) y \( f + g \) no se anulan sobre \( \partial G^{**} \), por lo que se les puede aplicar el principio del argumento. Puesto que \( f \neq 0 \) sobre \( \partial G \), se tiene \( f + g = f\left(1 + \frac{g}{f}\right) \) y, con una elección adecuada de los valores de los argumentos, obtenemos
+
+\[\Delta_{\partial G} \operatorname{Arg}(f + g) = \Delta_{\partial G} \operatorname{Arg}f + \Delta_{\partial G} \operatorname{Arg}\left(1 + \frac{g}{f}\right). \tag{12}\]
+
+Pero como \( \left|\frac{g}{f}\right| < 1 \) sobre \( \partial G \), el punto \( \omega = \frac{g}{f} \) permanece dentro del disco \( \{|\omega| < 1\} \) cuando \( z \) recorre \( \partial G \). Por tanto, el vector \( w = 1 + \omega \) no realiza ninguna rotación alrededor de \( w = 0 \), y el segundo término de (12) es nulo. En consecuencia, \( \Delta_{\partial G} \operatorname{Arg}(f + g) = \Delta_{\partial G} \operatorname{Arg}f \), y el principio del argumento nos conduce a la afirmación del teorema.
+
+El teorema de Rouché es útil para calcular el número de ceros de funciones holomorfas. Permite, en particular, deducir fácilmente la propiedad fundamental de los polinomios:
+
+\textbf{Teorema 4.} \textit{Todo polinomio \( P_n \) de grado \( n \) posee exactamente \( n \) ceros en \( \mathbb{C} \).}
+
+Dado que \( P_n \) tiene un polo en el infinito, todos sus ceros están situados en un disco \( \{|z| < R\} \). Sea \( P_n = f + g \), donde \( f = a_0 z^n \) (\( a_0 \neq 0 \)) y \( g = a_1 z^{n-1} + \cdots + a_n \); al aumentar \( R \), se puede garantizar que en \( \{|z| = R\} \) se cumple \( |f| > |g| \), ya que \( |f| = |a_0| R^n \) y \( g \) es un polinomio de grado \( \leq n - 1 \). Por el teorema de Rouché, \( P_n \) posee en el disco \( \{|z| < R\} \) tantos ceros como \( f = a_0 z^n \), es decir, exactamente \( n \).
+
+\begin{enumerate}
+    \item Encontrar el número de ceros del polinomio \( z^4 + 10z + 1 \) en la corona \( \{|z| < 2\} \).
+    \item Demostrar que todo polinomio con coeficientes reales se descompone en un producto de polinomios de primer y segundo grado con coeficientes reales.
+\end{enumerate}
+
+\hrulefill
+
+35. \textbf{Principio de conservación del dominio.} Así se denomina el siguiente teorema importante:
+
+*) Eugène Rouché (1832-1910), matemático francés.
+**) En efecto, \( |f| > |g| > 0 \) y \( |f + g| \geq |f| - |g| > 0 \) sobre \( \partial G \).
+
+\hrulefill
+
+\textbf{Teorema 1 *).} \textit{Si una función \( f \) es holomorfa y no idénticamente constante en un dominio \( D \), la imagen \( D^* = f(D) \) es también un dominio.}
+
+Se debe probar que el conjunto \( D^* \) es conexo y abierto. Sean \( w_1 \) y \( w_2 \) dos puntos cualesquiera de \( D^* \), y \( z_1 \) y \( z_2 \) sus respectivas preimágenes en \( D \). Al ser \( D \) conexo (por arcos), existe un camino \( \gamma: [\alpha, \beta] \to D \) que une \( z_1 \) y \( z_2 \). La función \( f \) siendo continua, la imagen \( \gamma^* = f \circ \gamma \) será un camino que conecta \( w_1 \) y \( w_2 \), compuesto enteramente por puntos de \( D^* \). Por tanto, \( D^* \) es conexo.
+
+Sea \( w_0 \) un punto de \( D^* \) y \( z_0 \) una de sus preimágenes en \( D \). Al ser \( D \) abierto, existe un disco \( \{|z - z_0| < r\} \subset D \). Reduciendo \( r \) si es necesario, podemos suponer que el disco cerrado \( \{|z - z_0| \leq r\} \) no contiene ningún \( w_0 \)-punto excepto \( z_0 \) (ya que \( f \neq \text{const} \), el teorema de unicidad del §22 establece que los \( w_0 \)-puntos de \( f \) están aislados en \( D \)). Sea \( \gamma = \{|z - z_0| = r\} \) y definamos
+
+\[\mu = \min_{z \in \gamma} |f(z) - w_0|. \tag{1}\]
+
+Es claro que \( \mu > 0 \), pues la función continua \( |f(z) - w_0| \) alcanza su mínimo absoluto sobre \( \gamma \) (si no, \( f \) tendría un \( w_0 \)-punto en \( \gamma \), contradiciendo la construcción del disco).
+
+Ahora demostremos que \( \{|w - w_0| < \mu\} \subset D^* \). Sea \( w_1 \) un punto de este disco, es decir, \( |w_1 - w_0| < \mu \). Tenemos
+
+\[f(z) - w_1 = f(z) - w_0 + (w_0 - w_1). \tag{2}\]
+
+Además, \( |f(z) - w_0| \geq \mu \) sobre \( \gamma \) por (1). Como \( |w_0 - w_1| < \mu \), el teorema de Rouché implica que \( f(z) - w_1 \) tiene dentro de \( \gamma \) tantos ceros como \( f(z) - w_0 \), es decir, al menos uno (pues \( z_0 \) puede ser un cero múltiple). Así, \( f \) toma el valor \( w_1 \) dentro de \( \gamma \), luego \( w_1 \in D^* \). Como \( w_1 \) es arbitrario en \( \{|w - w_0| < \mu\} \), todo el disco pertenece a \( D^* \), probando que \( D^* \) es abierto.
+
+\hrulefill
+
+\textbf{Observación.} La demostración de la conexidad de \( D^* \) solo requiere la continuidad de \( f \), mientras que la apertura utiliza el teorema de unicidad y el de Rouché, válidos para funciones holomorfas. La imagen \( D^* \) puede no ser abierta para funciones continuas arbitrarias. Por ejemplo, sea \( f = x^2 + iy \) y \( D = \{|z| < 1\} \); entonces \( D^* = f(D) \) no es abierto, pues las imágenes de los puntos del diámetro vertical de \( D \) son puntos frontera de \( D^* \).
+
+*) Este teorema se debe a B. Riemann (1851).
+
+\end{document}

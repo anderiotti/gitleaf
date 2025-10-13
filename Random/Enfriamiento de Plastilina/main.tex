@@ -1,0 +1,126 @@
+\documentclass[article,12pt]{elsarticle}
+\usepackage[spanish]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{amssymb}
+\usepackage{flushend}
+\usepackage{float}
+\usepackage{anysize}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{dcolumn}
+\usepackage{amsthm}
+\usepackage{caption}
+\usepackage{float}
+\usepackage{subfigure}
+\usepackage{graphicx}
+\usepackage{lmodern}
+\usepackage{booktabs}
+\usepackage{color}
+\usepackage{longtable}
+\usepackage{rotating}
+\usepackage{etoolbox}
+\usepackage{comment}
+\usepackage{pdflscape}
+\usepackage{booktabs}
+
+
+\begin{document}
+
+\begin{frontmatter}
+    \title{Laboratorio de Fenómenos Colectivos \\ Enfriamiento de Plastilina} \\
+    \author{Andrés López González$^1$} %Aquí va el nombre de los integrantes que participaron en el informe.
+    \address{$^1$ Facultad de Ciencias, Universidad Nacional Autónoma de México, M\'exico CDMX.}
+\end{frontmatter}
+
+\section*{Abstract}
+
+Este trabajo presenta un análisis detallado del coeficiente de enfriamiento de un material compacto, específicamente plastilina. La temperatura inicial del objeto fue incrementada mediante energía mecánica, y se registró su disminución en intervalos regulares de tiempo. A partir de múltiples pruebas experimentales, se modeló el comportamiento de la pérdida de calor en función del tiempo, obteniendo ecuaciones de enfriamiento específicas para cada conjunto de datos. Los resultados permitieron caracterizar las propiedades térmicas del material en términos de su coeficiente de enfriamiento.
+
+\section*{Datos Observados}
+
+Se llevaron a cabo tres pruebas independientes, cada una registrando la evolución de la temperatura a lo largo del tiempo. Los datos recopilados se presentan a continuación:
+
+\subsection*{Curva de Enfriamiento 1}
+\begin{table}[H]
+\centering
+\begin{tabular}{|c|c|}
+\hline
+\textbf{Tiempo (min)} & \textbf{Temperatura 1 (°C)} \\ \hline
+0                     & 31.4                       \\ \hline
+3                     & 30.9                       \\ \hline
+4.63                  & 30.4                       \\ \hline
+6.25                  & 29.9                       \\ \hline
+7.92                  & 29.4                       \\ \hline
+9.63                  & 28.9                       \\ \hline
+11.37                 & 28.4                       \\ \hline
+13.57                 & 27.9                       \\ \hline
+\end{tabular}
+\caption{Datos observados de la Curva de Enfriamiento 1.}
+\end{table}
+
+\subsection*{Curva de Enfriamiento 2}
+\begin{table}[H]
+\centering
+\begin{tabular}{|c|c|}
+\hline
+\textbf{Tiempo (min)} & \textbf{Temperatura 2 (°C)} \\ \hline
+0                     & 28.2                       \\ \hline
+8.4                   & 27.2                       \\ \hline
+15.9                  & 26.2                       \\ \hline
+24.95                 & 25.2                       \\ \hline
+39.83                 & 24.2                       \\ \hline
+\end{tabular}
+\caption{Datos observados de la Curva de Enfriamiento 2.}
+\end{table}
+
+\subsection*{Curva de Enfriamiento 3}
+\begin{table}[H]
+\centering
+\begin{tabular}{|c|c|}
+\hline
+\textbf{Tiempo (min)} & \textbf{Temperatura 3 (°C)} \\ \hline
+0                     & 26.4                       \\ \hline
+8.73                  & 25.4                       \\ \hline
+13.37                 & 24.9                       \\ \hline
+18.05                 & 24.4                       \\ \hline
+\end{tabular}
+\caption{Datos observados de la Curva de Enfriamiento 3.}
+\end{table}
+
+\section*{Coeficientes de Enfriamiento}
+
+A partir de los datos experimentales, se calcularon los coeficientes de enfriamiento \(\alpha\) correspondientes a cada curva mediante un ajuste exponencial. Los valores obtenidos se resumen en la siguiente tabla:
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|c|c|c|}
+\hline
+\textbf{Conjunto de Datos} & \(\Delta T_0\) (\(^{\circ}\)C) & \(\alpha\) (min\(^{-1}\)) \\ \hline
+1                          & 10.4                          & 0.0463                   \\ \hline
+2                          & 7.2                           & 0.0285                   \\ \hline
+3                          & 5.4                           & 0.0456                   \\ \hline
+\end{tabular}
+\caption{Coeficientes de enfriamiento calculados.}
+\end{table}
+
+\section*{Ecuaciones de Enfriamiento}
+
+Las ecuaciones obtenidas para cada conjunto de datos a partir de los ajustes realizados son las siguientes:
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|c|c|}
+\hline
+\textbf{Conjunto de Datos} & \textbf{Ecuación de Enfriamiento}           \\ \hline
+1                          & \(\Delta T_1 = 10.4 e^{-0.0463t}\)         \\ \hline
+2                          & \(\Delta T_2 = 7.2 e^{-0.0285t}\)          \\ \hline
+3                          & \(\Delta T_3 = 5.4 e^{-0.0456t}\)          \\ \hline
+\end{tabular}
+\caption{Ecuaciones de enfriamiento para cada conjunto de datos.}
+\end{table}
+
+\section*{Conclusiones}
+
+El análisis permitió caracterizar las propiedades térmicas de la plastilina al enfriarse. Los coeficientes obtenidos muestran cómo la disipación de calor disminuye en función del tiempo de acuerdo con un modelo exponencial. Este tipo de estudio es esencial para comprender el comportamiento térmico de materiales compactos no convencionales bajo condiciones controladas.
+
+\end{document}

@@ -1,0 +1,250 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage{pgfplots}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{mdframed}
+\usepackage{amsthm}
+\usepackage{tikz}
+\usepackage{multicol}
+
+\geometry{a4paper, left=2cm, right=2cm, top=1cm, bottom=2cm}
+
+\pgfplotsset{compat=1.18}
+\begin{document}
+
+\begin{minipage}{0.7\textwidth}
+    \small \textbf{FÍSICA CONTEMPORÁNEA, GRUPO 8120}  \\
+    \small {Facultad de Ciencias, Universidad Nacional Autónoma de México} \\
+    \small {Profesor: Dr. Jesús Alberto Del Olmo Márquez (\texttt{jesus.delolmo@icat.unam.mx})} \\
+    \small {Ayudante: M. Ismael Velázquez Gómez (\texttt{ismael.velazquez@icat.unam.mx})} \\
+    \small {Fecha de entrega: 25 de Octubre de 2023} \\
+    \small {Nombre completo: Andrés López González} \\
+    \small {Tarea número 4}
+\end{minipage}
+\hfill
+\begin{minipage}{0.12\textwidth}
+    \includegraphics[width=\linewidth]{logo_universidad}
+\end{minipage}
+
+\section*{Mecánica Clásica II}
+
+\subsection*{Problema I}
+Un bloque de masa \(m = 12\,\text{kg}\) se suelta desde el reposo sobre un plano inclinado sin fricción con un ángulo \(\theta = 30^\circ\). Debajo del bloque hay un resorte que puede comprimirse \(2.0\,\text{cm}\) con una fuerza de \(270\,\text{N}\). El bloque se detiene momentáneamente cuando se comprime el resorte \(5.5\,\text{cm}\).
+   
+   (a) ¿Qué distancia desciende el bloque por el plano inclinado desde su posición de reposo hasta este punto de parada?
+\textit{Definimos la distancia con la siguiente ecuación.}
+\begin{align*}
+    s &= x + x_0 && x_0\textit{ es la distancia comprimida del resorte} \\
+    &= x + 5.5cm && \textit{x es la distancia del bloque al resorte} \\
+    &= x + 0.05m && \textit{Transformación de centímetros a metros}
+\end{align*}
+\textit{Nótese que $x_0 = 0.05m$; ahora, obtenemos la constante del resorte pues nos servirá más adelante.}
+\begin{align*}
+    k &= \frac{F}{\Delta x_r} \\
+    &= \frac{270N}{2cm} \\
+    &= \frac{270N\cdot100}{2m} \\
+    &= 13,500 \frac{N}{m}
+\end{align*}
+\textit{Nótese que desconocemos el valor de x, por lo cual la calcularemos mediante la ecuación de la conservación de la energía mecánica}
+\begin{align*}
+    E_i &= E_f + W_r \\
+    E_i &= E_f + \vec{N}\mu_p && \textit{Establecimos que no existe fricción }\mu_p=0 \\
+    E_i &= E_f && W_r=0 \textit{ implica un sistema conservativo en energía} \\ 
+    U_i + K_i &= U_f + K_f && \textit{Energía cinética y potencial} \\
+    mg\Delta y + \frac{1}{2}mv_i^2 &= mg\Delta y + \frac{1}{2}kx_0^2 + \frac{1}{2}mv_f^2 && \textit{En el estado final se considera }U_p \textit{ del resorte} \\
+    mg\Delta y + \frac{1}{2}m(0)^2 &= mg\Delta y + \frac{1}{2}kx_0^2 + \frac{1}{2}m(0)^2 && \textit{Partimos del reposo y terminamos en el reposo} \\
+    mg\Delta y &= mg\Delta y + \frac{1}{2}kx_0^2 && \textit{Reducimos términos} \\
+    mg[\Delta y] &= mg(0) + \frac{1}{2}kx_0^2 && \textit{Establecemos nuestro sistema en la altura final} \\
+    mg[\sin(30)(x + 5.5cm)] &= \frac{kx_0^2}{2} && \textit{La altura es la componente en y del recorrido}
+    (x + 5.5cm) &= \frac{kx_0^2}{2mg\sin(30)} && \textit{Dividimos términos} \\
+    x &= \frac{kx_0^2}{2mg\sin(30)} - 5.5cm && \textit{Aislamos el término x} \\
+    x &= \frac{kx_0^2}{2mg\sin(30)} - 0.05m && \textit{Transformamos a metros} \\
+    x &= \frac{\left[13,500 \frac{N}{m}\right][0.05m]^2}{2[12kg]\left[9.806\frac{m}{s^2}\right]\sin(30)} - 0.05m && \textit{Sustituimos...}
+\end{align*}
+\newpage
+\textit{Ya que tenemos nuestro valor de x el cual representa la distancia del bloque al resorte, ahora lo sumamos con su compresión de 5.5cm usando la fórmula que planteamos.}
+\begin{align*}
+    s &= x + 0.05m && \textit{Última parte que concluimos} \\
+    &= \left(\frac{\left[13,500 \frac{N}{m}\right][0.05m]^2}{2[12kg]\left[9.806\frac{m}{s^2}\right]\sin(30)} - 0.05m \right) + 0.05m && \textit{Sustituimos nuestro x completo} \\
+    &= \frac{\left[13,500 \frac{kg}{s^2}\right][0.05m]^2}{2[12kg]\left[9.806\frac{m}{s^2}\right]\sin(30)} && \textit{Obsérvese que todavía se podían reducir términos} \\
+    &= \frac{\left[13,500\right][0.05]^2 \cdot \frac{kgm^2}{s^2}}{2[12]\left[9.806\right]\sin(30) \cdot \frac{kgm}{s^2}} && \textit{Realizamos álgebra con las unidades} \\
+    &\approx 0.286814m \cdot \frac{100cm}{1m} && \textit{Aproximación resultante} \\
+    &\approx 28.6814cm && \textit{Aproximación en centímetros para mayor comprensión}
+\end{align*}
+\[ \therefore \textbf{la distancia que desciende hasta el reposo es aproximadamente 28.6814cm}\]
+
+   (b) ¿Cuál es la velocidad del bloque justo cuando toca el resorte?
+\textit{Abordaremos esta pregunta empleando una energía mecánica intermedia llamada $E_I$ tal que}
+\[ E_i = E_I = E_f \]
+\textit{Podemos conocer la energía mecánica inicial y final, particularmente me centraré en el análisis de $E_f$}
+\begin{align*}
+    E_i &= \frac{1}{2}kx_r^2 \\
+    &= \frac{13500\cdot0.05^2}{2}Nm\\
+    &= 16.875 J
+\end{align*}
+\textit{Obtenido esto ahora analizamos nuestra energía mecánica intermedia}
+\begin{align*}
+    16.875 J = E_I &= mg\Delta y + \frac{1}{2}mV_I^2 \\
+    & \\
+    & \\
+    V_I &= \sqrt{2\frac{16.875 - mg\Delta y}{m}} \\
+    &= \sqrt{2\frac{16.875 - 12(9.806)(\sin(30)(0.286814))}{12}} \cdot \frac{100cm}{1m}
+    &= 0.13841 \frac{cm}{s}
+\end{align*}
+\subsection*{Problema II}
+   Un camión de \(2100\,\text{kg}\) que viaja hacia el norte a \(41\,\text{km/h}\) gira hacia el este y acelera a \(51\) \text{km/h}.
+
+   (a) ¿Cuál es el cambio en la energía cinética del camión?
+
+\begin{align*}
+    
+\end{align*}
+
+   (b) ¿Cuáles son la magnitud y la dirección del cambio en su cantidad de movimiento?
+
+\newpage
+\subsection*{Problema III}
+   En notación de vector unitario. ¿Cuál es la torca con respecto al origen en una partícula ubicada en las coordenadas \((0,-4.0,3.0)\,\text{m}\), si esa torca se debe a las fuerzas \(\vec{F}_1 = (-2.0,0,0)\,\text{N}\) y \(\vec{F}_2 = (0,2.0,4.0)\,\text{N}\)?
+\textit{Analizamos nuestros datos convirtiéndolos a su forma de vector unitario:}
+\begin{align*}
+    \vec{r} &= 0\hat{i} - 4\hat{j} + 3\hat{k} \\
+    \vec{F_1} &= -2\hat{i} + 0\hat{j} + 0\hat{k} \\
+    \vec{F_2} &= 0\hat{i} + 2\hat{j} + 4\hat{k} \\
+\end{align*}
+\textit{Es válido calcular la torca utilizando la suma de las torcas producidas por cada fuerza, sin embargo por practicidad en este método he decidido unificar las fuerzas.}\\
+\begin{align*}
+    \sum_{i=1}^{2}\vec{F_i} &= \vec{F_1} + \vec{F_2} \\
+    &= -2\hat{i} + 0\hat{j} + 0\hat{k} + 0\hat{i} + 2\hat{j} + 4\hat{k} \\
+    &= -2\hat{i} + 2\hat{j} + 4\hat{k}
+\end{align*}
+\textit{Nombremos a esta suma de las fuerzas como simplemente $\vec{F}$, ahora debe usarse la definición de torca.}\\
+\begin{align*}
+    \vec{\tau} &= \vec{F} \land \vec{r} \\
+    &= (-2\hat{i} + 2\hat{j} + 4\hat{k}) \land (0\hat{i} - 4\hat{j} + 3\hat{k})
+\end{align*}
+\textit{Acomodamos en una matriz...}
+$\hspace*{4cm} \begin{bmatrix}
+    \hat{i} & \hat{j} & \hat{k} \\
+    -2 & 2 & 4 \\
+    0 & -4 & 3 \\
+    \end{bmatrix}$ \\
+    \textit{Recordamos cómo resolver el producto vectorial...}
+$    \vec{A} \land \vec{B} = \begin{bmatrix}
+        (A_yB_z - A_zB_y) \hat{i} \\
+        (A_zB_x - A_xB_z) \hat{j} \\
+        (A_xB_y - A_yB_x) \hat{k}
+        \end{bmatrix}$\\
+\textit{Nuestro producto vectorial es: $\hat{i}(6+16) - \hat{j}(-6-0) + \hat{k}(8-0) = 22\hat{i} + 6\hat{j} + 8\hat{k}$} \\
+\[ \therefore \textit{Nuestra torca es...} \quad \vec{\tau} = 22\hat{i} + 6\hat{j} + 8\hat{k} \]
+\newpage    
+\subsection*{Problema IV}
+   En un instante, la fuerza \(\vec{F} = 4.0\hat{j}\,\text{N}\) actúa sobre un objeto de \(0.25\,\text{kg}\) que tiene un vector de posición \(\vec{r} = (2.0,0,-2.0)\,\text{m}\) y un vector de velocidad \(\vec{v} = (-5.0,0,5.0)\,\text{m/s}\). Sobre el origen y en notación vectorial unitaria, ¿Cuáles son el momento angular del objeto y la torca que actúa sobre el objeto? \\
+   \textit{Ordenamos nuestros datos utilizando su notación vectorial unitaria.}
+   \begin{align*}
+    \vec{F} &= 0\hat{i} + 4\hat{j} + 0\hat{k} \quad N \\
+    \vec{r} &= 2\hat{i} + 0\hat{j} + -2\hat{k} \quad m \\
+    \vec{v} &= -5\hat{i} + 0\hat{j} + 5\hat{k} \quad \frac{m}{s}\\
+    m &= 0.25kg = \frac{1}{4}kg
+   \end{align*}
+   \textit{La definición de momento angular es la siguiente.}
+   \[ \vec{L} = \vec{r} \land \vec{p} \]
+   \textit{Sabemos el vector posición, no obstante desconocemos el momentum, por lo cual lo calculamos.}
+   \begin{align*}
+    \vec{p} &= m\vec{v} \\
+    &= \frac{1}{4}(-5\hat{i} + 0\hat{j} + 5\hat{k}) \\
+    &= -\frac{5}{4}\hat{i} + 0\hat{j} + \frac{5}{4}\hat{k} \quad \frac{kgm}{s}
+   \end{align*}
+   \textit{Ya habiendo obtenido el momentum, podemos obtener el valor del momento angular.}   
+\begin{align*}
+    \vec{L} &= \vec{r} \land \vec{p} \\
+    &= (2\hat{i} + 0\hat{j} + -2\hat{k})m \land \left( -\frac{5}{4}\hat{i} + 0\hat{j} + \frac{5}{4}\hat{k} \right)\frac{kgm}{s} \\
+\end{align*}
+\textit{Visualicemos esto en una matriz.}
+$$\begin{bmatrix}
+    \hat{i} & \hat{j} & \hat{k} \\
+    2 & 0 & -2 \\
+    -\frac{5}{4} & 0 & \frac{5}{4} \\
+    \end{bmatrix} \\$$
+\textit{Desde este momento podemos ver que el momento angular es cero, pues el primer vector es paralelo al segundo respecto al plano y. No obstante lo formalizaremos:}
+\[ \vec{r} \land \vec{p} = \hat{i}(0-0) - \hat{j}\left(\frac{10}{4}-\frac{10}{4}\right) + \hat{k}(0 + 0) = 0\hat{i} + 0\hat{j} + 0\hat{k} \quad \frac{kgm^2}{s}\]
+\[ \therefore \textit{El momento angular es }\vec{0} \quad \frac{kgm^2}{s} \]
+\textit{Ahora observemos la torca}
+\begin{align*}
+    \vec{\tau} &= \vec{r} \land \vec{F} \\
+    &= (2\hat{i} + 0\hat{j} - 2\hat{k})m \land (0\hat{i} + 4\hat{j} + 0\hat{k})N
+\end{align*}
+\textit{Como de costumbre, acomodamos en una matriz.}
+$$\begin{bmatrix}
+    \hat{i} & \hat{j} & \hat{k} \\
+    2 & 0 & -2 \\
+    0 & 4 & 0 \\
+    \end{bmatrix} \\$$
+    \[ \vec{r} \land \vec{F} = \hat{i}(0+8) + \hat{j}(0+0) + \hat{k}(8-0) = 8\hat{i} + 0\hat{j} + 8\hat{k} \quad Nm \]
+    \[ \therefore \textit{El momento angular es } \vec{0} \quad \frac{kgm^2}{s} \quad y \quad \textit{la torca es } 8\hat{i} + 0\hat{j} + 8\hat{k} \quad Nm \]
+    \newpage
+\subsection*{Problema V}
+5. Una partícula de \(2.0\,\text{kg}\) se mueve en un plano con velocidad \(\vec{v} = (30.0,60.0,0)\,\text{m/s}\) cuando pasa por el punto con coordenadas \((3.0,-4.0,0)\,\text{m}\). En notación de vector unitario, ¿cuál es su momento angular relativo con respecto al origen y en el punto ubicado en \((-2.0,-2.0)\,\text{m}\)?
+\textit{Iniciaremos calculando su momento angular relativo con respecto al origen, analizamos nuestros datos en notación de vector unitario.}
+\begin{align*}
+    m &= 2kg \\
+    \vec{v} &= 30\hat{i} + 60\hat{j} + 0\hat{k} \quad \frac{m}{s} \\
+    \vec{r} &= \vec{r_1} - \vec{r_0} = (3\hat{i} - 4\hat{j} + 0\hat{k}) - \vec{0} \\ 
+    &= 3\hat{i} - 4\hat{j} + 0\hat{k} \quad m\\
+\end{align*}
+\textit{Empleamos la fórmula extendida del momento angular.}
+\begin{align*}
+    \vec{L} &= m(\vec{r} \land \vec{v}) \\
+&= 2kg\left[(3\hat{i} - 4\hat{j} + 0\hat{k}) \land (30\hat{i} + 60\hat{j} + 0\hat{k} ) \quad \frac{m^2}{s} \right]
+\end{align*}
+\textit{Acomodado en una matriz tenemos un análisis de la forma.}
+$$ 2kg \cdot \begin{bmatrix}
+    \hat{i} & \hat{j} & \hat{k} \\
+    3 & -4 & 0 \\
+    30 & 60 & 0 \\
+    \end{bmatrix} \quad \frac{m^2}{s}$$
+\textit{Haciendo el producto vectorial obtenemos...}
+\begin{align*}
+    \vec{L_{origen}} &= m(\vec{r} \land \vec{v}) \\
+&= 2[\hat{i}(0-0) + \hat{j}(0-0) + \hat{k}(180-(-120))] \quad \frac{kgm^2}{s} \\
+&= 0\hat{i} + 0\hat{j} + 600\hat{k} \quad \frac{kgm^2}{s}
+\end{align*}
+
+\noindent \textit{Análogamente obtenemos el momento angular con su punto inicial desplazado del origen, redefinimos $\vec{r}$.}
+\begin{align*}
+    \vec{r} &= \vec{r_1} - \vec{r_0} \\
+    &= (3\hat{i} - 4\hat{j} + 0\hat{k}) - (-2\hat{i} + (-2)\hat{j} + 0\hat{k}) && \textit{No se nos da información sobre la extrada z}\\
+    &= (5\hat{i} - 2\hat{j} + 0\hat{k}) && \textit{Asumimos que z=0 en todo momento}
+\end{align*}
+\textit{Continuamos de la misma forma que anteriormente, nótese que la masa y la velocidad siguen planteándose iguales, por lo que solo sustituimos nuestro vector posición.}
+\begin{align*}
+    \vec{L} &= m(\vec{r} \land \vec{v}) \\
+    &= 2kg\left[(5\hat{i} - 2\hat{j} + 0\hat{k}) \land (30\hat{i} + 60\hat{j} + 0\hat{k} ) \quad \frac{m^2}{s} \right]    
+\end{align*}
+\textit{Visualizado en una matriz nuestro análisis es de la forma.}
+$$ 2kg \cdot \begin{bmatrix}
+    \hat{i} & \hat{j} & \hat{k} \\
+    5 & -2 & 0 \\
+    30 & 60 & 0 \\
+    \end{bmatrix} \quad \frac{m^2}{s}$$
+\textit{Realizando nuestro producto vectorial obtenemos...}
+\begin{align*}
+    \vec{L_{desplazado}} &= m(\vec{r} \land \vec{v}) \\
+&= 2[\hat{i}(0-0) + \hat{j}(0-0) + \hat{k}(300-(-60))] \quad \frac{kgm^2}{s} \\
+&= 0\hat{i} + 0\hat{j} + 720\hat{k} \quad \frac{kgm^2}{s}
+\end{align*}
+\[ \therefore \textit{Nuestros valores para momento angular con respecto al origen y respecto al punto establecido son} \]
+\begin{align*}
+    \vec{L_{origen}} = 0\hat{i} + 0\hat{j} + 600\hat{k} \quad \frac{kgm^2}{s} && \vec{L_{desplazado}} &= 0\hat{i} + 0\hat{j} + 720\hat{k} \quad \frac{kgm^2}{s} \\
+\end{align*}
+\end{document}
+\textit{}
+\hat{i} + \hat{j} + \hat{k}
+$$\begin{bmatrix}
+    \hat{i} & \hat{j} & \hat{k} \\
+    2 & 0 & -2 \\
+    0 & 4 & 0 \\
+    \end{bmatrix} \\$$

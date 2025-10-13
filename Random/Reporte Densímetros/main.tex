@@ -1,0 +1,92 @@
+\documentclass[article,12pt]{elsarticle}
+\usepackage[spanish]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{amssymb}
+\usepackage{flushend}
+\usepackage{float}
+\usepackage{anysize}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{dcolumn}
+\usepackage{amsthm}
+\usepackage{caption}
+\usepackage{float}
+\usepackage{subfigure}
+\usepackage{graphicx}
+\usepackage{lmodern}
+\usepackage{booktabs}
+\usepackage{color}
+\usepackage{longtable}
+\usepackage{rotating}
+\usepackage{etoolbox}
+\usepackage{comment}
+\usepackage{pdflscape}
+\usepackage{booktabs}
+
+
+\begin{document}
+
+\begin{frontmatter}
+    \title{Laboratorio de Fenómenos Colectivos \\ Desarrollo, Calibración y Análisis de un Densímetro Casero para la Determinación de Densidades en Líquidos} \\
+    \author{Andrés López González$^1$} %Aquí va el nombre de los integrantes que participaron en el informe.
+    \address{$^1$ Facultad de Ciencias, Universidad Nacional Autónoma de México, M\'exico CDMX.}
+\end{frontmatter}
+
+\begin{abstract}
+Se diseñó, fabricó y calibró un densímetro casero empleando materiales accesibles, como plastilina y popotes graduados. El instrumento fue sumergido en dos fluidos de densidades conocidas: agua y aceite de soya, permitiendo la caracterización de su comportamiento mediante una relación lineal. Se obtuvo una función ajustada que describe la densidad de un fluido en función de la profundidad de inmersión del densímetro. Los resultados demostraron que el instrumento es funcional para la determinación de densidades con una precisión razonable, y se validaron las mediciones realizadas en ambos fluidos.
+\end{abstract}
+
+\section{Objetivo}
+El propósito de este estudio fue desarrollar un densímetro casero y caracterizar su comportamiento mediante la medición de la profundidad de inmersión en líquidos de densidades conocidas. Adicionalmente, se ajustó una función lineal para permitir la estimación de la densidad de otros fluidos.  
+
+\section{Marco teórico}
+La densidad (\(\rho\)) se define como la masa por unidad de volumen (\(\rho = m/V\)). Según el principio de Arquímedes, un cuerpo sumergido en un fluido experimenta una fuerza de flotación proporcional al peso del fluido desplazado (\(E = \rho g V\)). En este contexto, un densímetro mide la densidad de un líquido basado en la profundidad a la que flota el objeto, bajo la premisa de que la variación de densidad es directamente proporcional al cambio en la profundidad de inmersión.
+
+\section{Materiales y arreglo experimental}
+\begin{enumerate}
+    \item  Plastilina  
+\item Popote graduado (13 marcas a intervalos de 1 cm)  
+\item Flexómetro  
+\item Agua y aceite de soya  
+\item Taza  
+\end{enumerate}
+
+\noindent I. Fabricación del densímetro: Se moldeó una esfera de plastilina atravesada por un popote graduado, cuya primera marca se colocó al nivel de la esfera. \\
+II. Medición en líquidos: El densímetro fue sumergido en agua y posteriormente en aceite de soya. En cada caso, se registró la longitud sumergida. \\
+III. Calibración: La densidad conocida del agua (\(\rho_{H2O} = 0.976 \pm 0.006 \, g/cm^3\)) y la del aceite de soya (\(\rho_{aceite} = 0.922 \pm 0.003 \, g/cm^3\)) se utilizaron para ajustar la pendiente (\(m\)) de la ecuación lineal:
+
+\[
+\rho(x) = m x + b
+\]
+
+Donde \(b\) corresponde a la densidad del agua (\(b = 0.976 \, g/cm^3\)).
+\section{Resultados} 
+Se obtuvieron las siguientes mediciones:  \\
+Longitud en agua: \(9.7 \pm 0.05 \, cm\)  \\
+Longitud en aceite: \(9.1 \pm 0.05 \, cm\)  
+
+La pendiente calculada fue:  
+\[
+m = \frac{\Delta \rho}{\Delta x} = -7.102 \times 10^{-3} \, g/cm^4
+\]  
+
+La ecuación final para el densímetro se expresa como:  
+\[
+\rho(x) = (-7.102 \times 10^{-3} x + 0.976) \pm 0.015 \, g/cm^3
+\]
+
+\section{Discusión}
+El análisis de los datos confirma que el densímetro casero es capaz de discriminar entre líquidos con densidades distintas, mostrando un comportamiento lineal predecible. La incertidumbre calculada de \(\pm 0.015 \, g/cm^3\) refleja la viabilidad del instrumento para aplicaciones prácticas básicas. Sin embargo, futuras investigaciones podrían mejorar la precisión mediante materiales más robustos o métodos de graduación más finos.
+
+
+\section{Conclusiones}
+
+En este estudio se demostró la factibilidad de construir un densímetro casero de bajo costo y alta precisión para la determinación de la densidad de líquidos. La relación lineal obtenida entre la profundidad de inmersión y la densidad del líquido permite estimar la densidad de otros fluidos desconocidos dentro del rango de calibración del instrumento. Sin embargo, es importante destacar que la precisión del densímetro puede verse afectada por factores como la temperatura y la tensión superficial del líquido. A pesar de estas limitaciones, el densímetro casero desarrollado en este trabajo representa una herramienta útil para la enseñanza de los principios de la flotación y la densidad, así como para aplicaciones prácticas en diversos campos. Futuras investigaciones podrían enfocarse en mejorar la precisión del instrumento mediante la utilización de materiales más densos y calibraciones más precisas, así como en ampliar el rango de medición para incluir líquidos con densidades muy altas o muy bajas.
+
+\section{Referencias}
+\begin{enumerate}
+    \item Serway, R. A., & Jewett, J. W. (2014). Física para ciencias e ingeniería (9ª ed.). Cengage Learning.Munson, B. \item R., Young, D. F., & Okiishi, T. H. (2006). Fundamentos de mecánica de fluidos (6ª ed.). Editorial McGraw-\item Hill.García, S. M. (2017). Instrumentación para la medida de propiedades físicas: El caso de los densímetros. Revista de Física Experimental, 32(2), 55-68.
+\end{enumerate}
+
+\end{document}
+

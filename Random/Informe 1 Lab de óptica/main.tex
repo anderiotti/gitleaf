@@ -1,0 +1,141 @@
+\documentclass[article,12pt]{elsarticle}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{subcaption}
+\usepackage{amssymb}
+\usepackage{flushend}
+\usepackage{float}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{dcolumn}
+\usepackage{amsthm}
+\usepackage{caption}
+\usepackage{lmodern}
+\usepackage{booktabs}
+\usepackage{color}
+\usepackage{longtable}
+\usepackage{rotating}
+\usepackage{etoolbox}
+\usepackage{hyperref}
+\usepackage{comment}
+\usepackage{pdflscape}
+\usepackage{comment}
+\usepackage[table,xcdraw]{xcolor}
+\usepackage[framemethod=TikZ]{mdframed}
+\usepackage[a4paper, left=1.5cm, right=1.5cm, top=2cm, bottom=2cm]{geometry}
+
+\begin{document}
+
+\mdfsetup{innertopmargin=10pt,linecolor=blue!20,%
+linewidth=2pt,topline=true,
+frametitleaboveskip=\dimexpr-\ht\strutbox\relax,}
+
+\begin{frontmatter}
+    \title{Laboratorio de Óptica \\  Práctica  I: Radiometría}
+    \author{López González Andrés$^1$, Reyes Saldivar Ailton Uriel$^2$ y Gante Morales Pedro José$^3$} %Aquí va el nombre de los integrantes que participaron en el informe.
+    \address{$^1$ Facultad de Ciencias, Universidad Nacional Autónoma de México, M\'exico CDMX.}
+
+\input{Abstract}
+    
+\end{frontmatter}
+
+\vspace{0.5cm} 
+
+\section{Introducción}
+\input{Introduction}
+
+
+\section{Desarrollo Experimental}
+Para esté expereimento utilizamos dos tipos de fuentes: Un LED (fuente puntual) y un Láser(haz colimado) las cuales con ayuda de un porte y un porta poste se mantubieron fijas en la base de un riel. También utilizamos un radiometro para medir la irradiancia cuya mecición esta dada en [mW/m$^2$] o [W/m$^2$] que depende de la irrandiancia que este detectando ademas la incertidumbre asociada a este instrumento es otorgada por este mismo y puede variar dependiendo de la escala de la medición.
+
+Para medir la distancia entre la fuente y el detector del radiometro utilizamos un riel con carro movil con graducacion en [mm] por tanto le asignamos una incertidumbre de apreciación de 0.5mm ademas notamos que la fuente de luz y el detector no se encontraban completamente centradas en el carro del riel por lo que decidimos agregar una incertidumbre de definicon de 2mm.
+
+\subsection{Caso LED}
+Con ayuda de un poste y un porta poste se dejo fijo al LED en el origen del riel mientras que el detector se coloco sobre un carro movil, además nos aseguramos de que el LED y el detector estuvieran a la misma altura. Para comenzar a medir nuestras irradiancias colocamos el detecor a una distancia de 40mm del LED porteriromente encendimos el LED para medir la irradiancia a esa distancia, una vez medida esa irradiancia pagamos el LED y medimos la irradiancia de fondo. Repetimos este procedimiento a diferentes distancias como se muestra en la Tabla 1.
+Durante estas mediciones notamos que apartir de 250mm la medición de la irradiancia mostrada por el radiomentro fluctuaba mucho, por lo que decidimos tomar la medida promedio entre la mas grande y la mas pequeña. 
+
+\subsection{Caso Láser}
+Para este caso nuevamente utilizamos el mismo arreglo que en el caso anterior pero esta se tuvo que alinear el Láser de tal fotma que apunte en el centro del detector. A demás realizamos las mediciones a esas mismas distancias, solo que en este caso cada vez que recorriamos el detector, el Láser se desalineaba por lo que fue necesario alinearlo en cada una de las mediciones haciendo uso de los tornillos que tiene en la parte trasera del Láser sin embargo a pesar de esto era muy complicado alinearlo en su totalidad y por tanto decidimos registrar el valor máximo de la irradiancia que detectamos para cada una de las distancias.  
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\linewidth]{DE P1 OPT.jpg}
+    \caption{Arreglo experimental (caso láser)}
+    \label{fig:enter-label}
+\end{figure}
+
+
+\input{Experimental Dev}
+
+\section{Resultados y discusión}
+\input{R&D}
+
+
+\section{Conclusiones}
+\input{Conclusions}
+
+
+\begin{thebibliography}{20}
+
+\bibitem[1]{}
+E. Barrios, A. Hernández, R. Ramírez, *Propagación de la luz y Radiometría*, 2024.  \url{https://tsikbal.github.io/Paginas/Areas/Fisica/Optica/Optica_Geometrica/Radiometria.html}
+
+\end{thebibliography}
+
+
+\section*{Anexo}
+
+\begin{mdframed}
+ \begin{equation}
+    \text{lin}(r) = \frac{\Delta r}{r}
+\end{equation}
+\end{mdframed}
+
+Donde $r$ es la incertidumbre absoluta de la distancia, y $r$ la medición de la distancia.
+\begin{mdframed}
+\begin{equation}
+    \text{lin}(I) = \frac{\Delta I}{I}
+\end{equation}
+\end{mdframed}
+
+Donde $I$ es la incertidumbre absoluta de la Irradiancia, y $I$ la medición de la distancia.
+
+
+Dado que lo que se requiere es la incertidumbre de $m$, primero de la ecuación (10) la despejamos, obteniendo:
+
+\begin{mdframed}
+\begin{equation}
+    m = \frac{\ln(K) - \ln(I)}{\ln(r)}
+\end{equation}
+\end{mdframed}
+
+Posteriormente, se propaga la incertidumbre respecto de las variables $I$ y $r$ (que son las mediciones del experimento) y tomando $K$ como constante. Así:
+
+\begin{mdframed}
+\begin{equation}
+    \text{nom}(m) = \sqrt{\left(\frac{\Delta I}{I \ln(r)}\right)^2 + \left(\frac{\Delta r( \ln(K)-\ln(I))}{r (\ln(r))^2}\right)^2}
+\end{equation}
+\end{mdframed}
+
+Dado que la fórmula de normalización para cada conjunto de datos es:
+
+\begin{mdframed}
+\begin{equation}
+    I_{\text{norm}} = \frac{I - \text{Fondo}}{I_{\text{max}}}
+\end{equation}
+\end{mdframed}
+
+Donde $I$ es la medición directa de Irradiancia, $\text{Fondo}$ es la irradiancia de fondo e $I_{\text{max}}$ es la irradiancia máxima registrada. La incertidumbre correspondiente, asumiendo que la irradiancia de Fondo no cuenta con incertidumbre, es:
+
+\begin{mdframed}
+\begin{equation}
+    I_{\text{norm}} = \frac{\Delta I}{I_{\text{max}}}
+\end{equation}
+\end{mdframed}
+
+Donde $I$ es la incertidumbre absoluta de la irradiancia medida.
+
+
+
+\end{document}

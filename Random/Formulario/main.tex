@@ -1,0 +1,83 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{geometry}
+\usepackage{pgfplots}
+\usepackage{graphicx}
+\usepackage{verbatim}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{tcolorbox} %needed
+\usepackage{physics}
+\usepackage{multicol}
+\tcbuselibrary{listingsutf8}
+
+
+\geometry{a4paper, left=2cm, right=2cm, top=1cm, bottom=2cm}
+\pgfplotsset{compat=1.18}
+
+\begin{document}
+
+\begin{multicols}{2}
+Vectores del Triedro de Frenet-Serret:
+   $$ l(t) = \int_a^t \| f'(t) \| dt$$
+   $$ \Hat{f}(s) = f \circ l^{-1}(s) $$
+   $$T(t) = \frac{f'(t)}{\|f'(t)\|} = \frac{f'(t)}{l'(t)}$$
+   $$ \sqcap_T = (P - f(t_0)) \cdot T(t_0) = 0 $$
+   $$N(t) = \frac{T'(t)}{\|T'(t)\|} = B(t) \times T(t) = \frac{(f'(t) \times f''(t)) \times f'(t)}{\| (f'(t) \times f''(t)) \times f'(t) \|}$$
+   $$ \sqcap_N = (P - f(t_0)) \cdot N(t_0) = 0 $$
+   $$B(t) = T(t) \times N(t) = \frac{f'(t) \times f''(t)}{\| f'(t) \times f''(t) \|}$$
+   $$ \sqcap_B = (P - f(t_0)) \cdot B(t_0) = 0 $$
+   \\
+Curvatura y Torsión:
+   $$\kappa(t) = \frac{\|T'(t)\|}{l'(t)} = \frac{\|T'(t)\|}{\|f'(t)\|} = \frac{\| f'(t) \times f''(t) \|}{\| f'(t) \|^3}$$
+   $$ \frac{B'(t)}{l'(t)} = -\tau N(t) $$
+   $$\tau(t) = \frac{[f(t),f'(t),f''(t)]}{\| f'(t) \times f''(t) \|^2}$$
+   $$\rho(t) = \frac{1}{\kappa(t)}$$
+   $$ c_0 = f(t) + \rho(t) N (t)$$
+   $$\tau(t) = \frac{d\theta}{ds}$$
+\end{multicols} 
+\textit{}\\\\
+\textit{}
+\begin{multicols}{2}
+Vectores del Triedro de Frenet-Serret:
+   $$ l(t) = \int_a^t \| f'(t) \| dt$$
+   $$ \Hat{f}(s) = f \circ l^{-1}(s) $$
+   $$T(t) = \frac{f'(t)}{\|f'(t)\|} = \frac{f'(t)}{l'(t)}$$
+   $$ \sqcap_T = (P - f(t_0)) \cdot T(t_0) = 0 $$
+   $$N(t) = \frac{T'(t)}{\|T'(t)\|} = B(t) \times T(t) = \frac{(f'(t) \times f''(t)) \times f'(t)}{\| (f'(t) \times f''(t)) \times f'(t) \|}$$
+   $$ \sqcap_N = (P - f(t_0)) \cdot N(t_0) = 0 $$
+   $$B(t) = T(t) \times N(t) = \frac{f'(t) \times f''(t)}{\| f'(t) \times f''(t) \|}$$
+   $$ \sqcap_B = (P - f(t_0)) \cdot B(t_0) = 0 $$
+   \\
+Curvatura y Torsión:
+   $$\kappa(t) = \frac{\|T'(t)\|}{l'(t)} = \frac{\|T'(t)\|}{\|f'(t)\|} = \frac{\| f'(t) \times f''(t) \|}{\| f'(t) \|^3}$$
+   $$ \frac{B'(t)}{l'(t)} = -\tau N(t) $$
+   $$\tau(t) = \frac{[f(t),f'(t),f''(t)]}{\| f'(t) \times f''(t) \|^2}$$
+   $$\rho(t) = \frac{1}{\kappa(t)}$$
+   $$ c_0 = f(t) + \rho(t) N (t)$$
+   $$\tau(t) = \frac{d\theta}{ds}$$
+\end{multicols}
+\textit{}\\\\
+\textit{}
+\begin{multicols}{2}
+Vectores del Triedro de Frenet-Serret:
+   $$ l(t) = \int_a^t \| f'(t) \| dt$$
+   $$ \Hat{f}(s) = f \circ l^{-1}(s) $$
+   $$T(t) = \frac{f'(t)}{\|f'(t)\|} = \frac{f'(t)}{l'(t)}$$
+   $$ \sqcap_T = (P - f(t_0)) \cdot T(t_0) = 0 $$
+   $$N(t) = \frac{T'(t)}{\|T'(t)\|} = B(t) \times T(t) = \frac{(f'(t) \times f''(t)) \times f'(t)}{\| (f'(t) \times f''(t)) \times f'(t) \|}$$
+   $$ \sqcap_N = (P - f(t_0)) \cdot N(t_0) = 0 $$
+   $$B(t) = T(t) \times N(t) = \frac{f'(t) \times f''(t)}{\| f'(t) \times f''(t) \|}$$
+   $$ \sqcap_B = (P - f(t_0)) \cdot B(t_0) = 0 $$
+   \\
+Curvatura y Torsión:
+   $$\kappa(t) = \frac{\|T'(t)\|}{l'(t)} = \frac{\|T'(t)\|}{\|f'(t)\|} = \frac{\| f'(t) \times f''(t) \|}{\| f'(t) \|^3}$$
+   $$ \frac{B'(t)}{l'(t)} = -\tau N(t) $$
+   $$\tau(t) = \frac{[f(t),f'(t),f''(t)]}{\| f'(t) \times f''(t) \|^2}$$
+   $$\rho(t) = \frac{1}{\kappa(t)}$$
+   $$ c_0 = f(t) + \rho(t) N (t)$$
+   $$\tau(t) = \frac{d\theta}{ds}$$
+\end{multicols}
+
+
+\end{document}

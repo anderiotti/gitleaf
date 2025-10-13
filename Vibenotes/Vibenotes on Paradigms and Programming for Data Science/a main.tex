@@ -1,0 +1,107 @@
+\documentclass[12pt, openany]{book}
+
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{geometry}
+\geometry{a4paper, margin=1in}
+\usepackage{setspace}
+\usepackage{amsmath, amssymb, amsfonts, amsthm}
+\usepackage{graphicx}
+\usepackage{comment}
+\usepackage{mdframed}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{booktabs}
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=RoyalBlue,
+    citecolor=ForestGreen,
+    urlcolor=NavyBlue,
+    pdftitle={Vibenotes on Paradigms and Programming for Data Science},
+    pdfauthor={Andres Lopez},
+    pdfpagemode=FullScreen,
+}
+
+\usepackage{minted}
+\setminted[python]{
+    frame=lines,
+    framesep=2mm,
+    baselinestrstretch=1.2,
+    fontsize=\small,
+    linenos
+}
+\setmintedinline{bgcolor=gray!10}
+
+\setminted[r]{
+    frame=lines,
+    framesep=2mm,
+    baselinestretch=1.2,
+    fontsize=\small,
+    linenos
+}
+
+\newcommand{\rcode}[1]{\mintinline{r}{#1}}
+
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[section]
+\theoremstyle{plain}
+\newtheorem{theorem}[definition]{Theorem}
+\newtheorem{proposition}[definition]{Proposition}
+\newtheorem{lemma}[definition]{Lemma}
+\newtheorem{corollary}[definition]{Corollary}
+\theoremstyle{remark}
+\newtheorem{remark}[definition]{Remark}
+\newtheorem{example}[definition]{Example}
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\code}[1]{\mintinline{python}{#1}}
+
+\begin{document}
+
+\begin{titlepage}
+    \centering
+    \vspace*{2cm}
+    
+    {\Huge\bfseries Vibenotes on Paradigms and Programming for Data Science\par}
+    
+    
+    
+    {\Large\itshape somehow by\par}
+    \vspace{0.5cm}
+    {\Large Andres Lopez\par}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.6\linewidth]{iimas.png}
+    \label{fig:iimas-logo}
+\end{figure}
+    
+    \vspace{2.5cm}
+    
+    \vfill
+    
+    {\large Institute of Investigations on Applied Mathematics and Systems (IIMAS)\par}
+    
+    \vspace{1.5cm}
+    
+    {\large \today\par}
+    
+    \vspace*{2cm}
+\end{titlepage}
+
+This page was unintentionally left blank, this class sometimes is kinda funny.\\
+
+
+\tableofcontents
+
+%\input{Chapter 1}
+%\input{Chapter 2}
+%\input{Chapter Julia}
+%\input{Chapter 3}
+%\input{Chapter 4}
+\input{Chapter 5}
+\input{Chapter 6}
+%\input{Chapter 7}
+
+\end{document}

@@ -1,0 +1,248 @@
+\documentclass{article}
+\usepackage{graphicx} % Required for inserting images
+\usepackage{amsmath}
+\usepackage{amsfonts}
+
+
+\begin{document}
+
+\section{1.1 Prueba que \(\overline{\beta} = \{\pi(v_{r+1}), \ldots, \pi(v_n)\}\) es base de \(V/W\).}
+
+Veamos que es generador:  
+Sea \(\pi(v) \in V/W\) con \(v \in V\). Como \(\beta\) es base de \(V\), escribimos \(v = \sum_{i=1}^n c_i v_i\). Aplicando \(\pi\):  
+\[
+\pi(v) = \sum_{i=1}^n c_i \pi(v_i) = \sum_{i=r+1}^n c_i \pi(v_i),
+\]  
+pues \(\pi(v_i) = 0\) para \(i \leq r\) (ya que \(v_i \in W\)). Por tanto, \(\overline{\beta}\) genera \(V/W\).
+
+Ahora observemos la linealmente independencia:  
+Supongamos \(\sum_{i=r+1}^n d_i \pi(v_i) = 0\). Esto implica \(\sum_{i=r+1}^n d_i v_i \in W\). Como \(\{v_1, \ldots, v_r\}\) es base de \(W\), existen escalares \(a_j\) tales que:  
+\[
+\sum_{i=r+1}^n d_i v_i = \sum_{j=1}^r a_j v_j.
+\]  
+Por la independencia de \(\beta\), todos los coeficientes \(d_i\) y \(a_j\) son triviales. Así, \(\overline{\beta}\) es linealmente independiente.  
+\(\therefore \overline{\beta}\) es base de \(V/W\).
+
+\section{1.2. Concluye que \(\dim_k(V/W) = \dim_k(V) - \dim_k(W)\).}  
+Por el apartado 1.1, \(\overline{\beta}\) tiene \(n - r\) elementos. Como la dimensión es el cardinal de una base:  
+\[
+\dim_k(V/W) = n - r = \dim_k(V) - \dim_k(W).
+\]
+
+\section{1.3. Expresión de \(T(v_i)\) para \(1 \leq i \leq r\).}  
+Como \(W\) es \(T\)-invariante y \(v_i \in W\), entonces \(T(v_i) \in W\). Al expresar \(T(v_i)\) en la base \(\beta = \{v_1, \ldots, v_n\}\), los coeficientes de \(v_{r+1}, \ldots, v_n\) deben ser cero (pues \(T(v_i) \in W\) y \(W\) está generado por \(\{v_1, \ldots, v_r\}\)). Por tanto:  
+\[
+T(v_i) = \sum_{j=1}^r a_{ji} v_j + 0 \cdot v_{r+1} + \ldots + 0 \cdot v_n.
+\]
+
+\section{1.4. Forma de la matriz \([T]_{\beta}\).}
+Consideremos la base \(\beta = \{v_1, \ldots, v_r, v_{r+1}, \ldots, v_n\}\). Para cada \(v_i\):  \\
+- Si \(i \leq r\), \(T(v_i)\) tiene componentes solo en \(\{v_1, \ldots, v_r\}\) (por 1.3).  \\
+- Si \(i > r\), \(T(v_i)\) puede escribirse como:  
+\[
+T(v_i) = \sum_{j=1}^r c_{ji} v_j + \sum_{j=r+1}^n b_{ji} v_j.
+\]  
+Organizando estos coeficientes en una matriz por columnas, la submatriz superior izquierda \(A\) (de \(r \times r\)) corresponde a la acción sobre \(W\), la submatriz superior derecha \(C\) (de \(r \times (n-r)\)) contiene los coeficientes de \(T(v_{r+1}), \ldots, T(v_n)\) en \(W\), y la submatriz inferior derecha \(B\) (de \((n-r) \times (n-r)\)) corresponde a la acción en el complemento. La submatriz inferior izquierda es cero porque \(T(v_i)\) para \(i \leq r\) no tiene componentes fuera de \(W\). Así:  
+\[
+[T]_{\beta} = \begin{pmatrix} A & C \\ 0 & B \end{pmatrix}.
+\]
+
+\section{1.5. \(T\) induce \(\overline{T}: V/W \to V/W\).}
+Definimos \(\overline{T}(\pi(v)) = \pi(T(v))\).  
+- Bien definida: Si \(\pi(v) = \pi(v')\), entonces \(v - v' \in W\). Como \(W\) es \(T\)-invariante:  
+\[
+T(v - v') \in W \implies \pi(T(v - v')) = 0 \implies \overline{T}(\pi(v)) = \overline{T}(\pi(v')).
+\]  
+- Linealidad: Para \(\pi(v), \pi(w) \in V/W\) y \(a \in k\):  
+\[
+\overline{T}(a\pi(v) + \pi(w)) = \pi(a T(v) + T(w)) = a\overline{T}(\pi(v)) + \overline{T}(\pi(w)).
+\]  
+\( \therefore \overline{T}\) es lineal.
+
+\section{1.6. Restricción \(T|_W\) es operador en \(W\).}
+Como \(W\) es \(T\)-invariante, \(T|_W: W \to W\) está bien definida. La linealidad se hereda de \(T\), por lo que \(T|_W\) es un operador lineal sobre \(W\).
+
+\section{1.7. \(T\) es invertible si y solo si \(T|_W\) y \(\overline{T}\) lo son.}  
+($\Rightarrow$) Si \(T\) es invertible, existe \(T^{-1}\). Como \(W\) es invariante, \(T^{-1}(W) \subseteq W\), luego \(T|_W\) es invertible. Además, \(\overline{T}^{-1}(\pi(v)) = \pi(T^{-1}(v))\) existe, por lo que \(\overline{T}\) es invertible.  
+
+($\Leftarrow) Si \(T|_W\) y \(\overline{T}\) son invertibles, construimos \(T^{-1}\): \\ 
+- En \(W\), \(T|_W^{-1}\) existe.  \\
+- En \(V/W\), \(\overline{T}^{-1}\) existe.  \\
+Para \(v \in V\), descomponemos \(v = w + u\) con \(w \in W\) y \(u \in \text{Span}\{v_{r+1}, \ldots, v_n\}\). Definimos:  
+\[
+T^{-1}(v) = T|_W^{-1}(w) + \overline{T}^{-1}(\pi(u)) + \text{ajuste por la proyección}.
+\]  
+Esto garantiza que \(T \circ T^{-1} = \text{Id}\), probando la invertibilidad.
+
+\section{1.8. Matriz de \(\overline{T}\) respecto a \(\overline{\beta}\) es \(B\).  }
+Para \(i > r\), \(\overline{T}(\pi(v_i)) = \pi(T(v_i))\). Por la expresión de \(T(v_i)\) en \(\beta\):  
+\[
+\pi(T(v_i)) = \pi\left(\sum_{j=1}^r c_{ji}v_j + \sum_{j=r+1}^n b_{ji}v_j\right) = \sum_{j=r+1}^n b_{ji} \pi(v_j),
+\]  
+pues \(\pi(v_j) = 0\) para \(j \leq r\). Así, la matriz de \(\overline{T}\) en \(\overline{\beta}\) es \(B\).  
+
+Q.E.D.
+
+\section{2.1. Prueba que \(W\) es un subespacio \(D\)-invariante.}
+Demostración:  
+\(W = \text{Span}\{1, t, t^2, e^t, te^t\}\). Verificamos que \(D(W) \subseteq W\): \\ 
+- \(D(1) = 0 \in W\).  \\
+- \(D(t) = 1 \in W\).  \\
+- \(D(t^2) = 2t \in W\). \\ 
+- \(D(e^t) = e^t \in W\).  \\
+- \(D(te^t) = e^t + te^t \in W\).  \\
+
+Como la derivada de todo elemento de \(W\) permanece en \(W\), \(W\) es \(D\)-invariante.  
+
+\section{2.2. Encuentra una base para \(V/W\).  }
+Demostración:  
+\(V = \text{Span}\{1, t, t^2, e^t, te^t, t^2e^t\}\). Como \(W = \text{Span}\{1, t, t^2, e^t, te^t\}\), el elemento \(t^2e^t\) no está en \(W\). Por tanto:  
+\[
+V/W = \text{Span}\{\pi(t^2e^t)\},
+\]  
+donde \(\pi: V \to V/W\) es la proyección canónica. Así, \(\{\pi(t^2e^t)\}\) es una base de \(V/W\).  
+
+\section{2.3. Describe explícitamente \(\overline{D}: V/W \to V/W\).  }
+Demostración:  
+Para \(v \in V\), \(\overline{D}(\pi(v)) = \pi(D(v))\). Aplicando a la base de \(V/W\):  
+\[
+\overline{D}(\pi(t^2e^t)) = \pi(D(t^2e^t)) = \pi(2te^t + t^2e^t).
+\]  
+Como \(te^t \in W\), \(\pi(te^t) = 0\). Luego:  
+\[
+\overline{D}(\pi(t^2e^t)) = \pi(t^2e^t).
+\]  
+Por tanto, \(\overline{D}\) actúa como la identidad en \(V/W\), es decir:  
+\[
+\overline{D} = \text{Id}_{V/W}.
+\]
+
+\section{3. Prueba que \(2(\dim_k(\text{im}(T))) \leq \dim_k(V)\).}
+Demostración:  
+Como \(T^2 = 0\), se cumple \(\text{im}(T) \subseteq \ker(T)\). Por el teorema de la dimensión:  
+\[
+\dim(V) = \dim(\ker(T)) + \dim(\text{im}(T)).
+\]  
+Al ser \(\text{im}(T) \subseteq \ker(T)\), se tiene \(\dim(\text{im}(T)) \leq \dim(\ker(T))\). Sustituyendo:  
+\[
+\dim(V) \geq \dim(\text{im}(T)) + \dim(\text{im}(T)) = 2\dim(\text{im}(T)).
+\]  
+\(\therefore 2\dim_k(\text{im}(T)) \leq \dim_k(V)\).
+
+\section{4.1. \(f\) es suprayectiva.}  
+Demostración:  
+Dado \(f \circ g = 1_W\), para todo \(w \in W\):  
+\[
+w = f(g(w)).
+\]  
+Así, \(w\) está en la imagen de \(f\), luego \(f\) es suprayectiva.  
+
+\section{4.2. \(g\) es inyectiva.}  
+Demostración:  
+Supongamos \(g(w_1) = g(w_2)\). Aplicando \(f\):  
+\[
+f(g(w_1)) = f(g(w_2)) \implies w_1 = w_2.
+\]  
+Por tanto, \(g\) es inyectiva.  
+
+\section{4.3. \(V = \ker(f) \oplus \text{im}(g)\).  }
+Demostración:  \\
+- Descomposición: Para \(v \in V\), definimos:  
+  \[
+  v = \underbrace{v - g(f(v))}_{\in \ker(f)} + \underbrace{g(f(v))}_{\in \text{im}(g)}.
+  \]  
+  - \(f(v - g(f(v))) = f(v) - f(g(f(v))) = f(v) - f(v) = 0 \implies v - g(f(v)) \in \ker(f)\).  
+  - \(g(f(v)) \in \text{im}(g)\).  
+
+- Intersección trivial: Si \(v \in \ker(f) \cap \text{im}(g)\), entonces \(v = g(w)\) y \(f(v) = 0\). \\Luego:
+  \[
+  f(g(w)) = w = 0 \implies v = g(0) = 0.
+  \]  
+  \( \therefore V = \ker(f) \oplus \text{im}(g)\).
+
+\section{5. Ejemplo de operador idempotente no trivial.} 
+Sea \(V = \mathbb{R}^2\) y \(T: \mathbb{R}^2 \to \mathbb{R}^2\) definido por:  
+\[
+T(x, y) = (x, 0).
+\]  
+- Idempotencia:  
+  \[
+  T^2(x, y) = T(T(x, y)) = T(x, 0) = (x, 0) = T(x, y).
+  \]  
+- No trivial: \(T \neq 0\) y \(T \neq 1_V\).  
+
+Q.E.D.
+
+6.1. Prueba que \(\gamma \circ g \circ f = g' \circ f' \circ \alpha\).  
+
+Demostración:  
+Por la conmutatividad del segundo cuadrado:  
+\[
+\gamma \circ g = g' \circ \beta.
+\]  
+Aplicando esta igualdad a \(f\):  
+\[
+\gamma \circ g \circ f = g' \circ \beta \circ f.
+\]  
+Por la conmutatividad del primer cuadrado:  
+\[
+\beta \circ f = f' \circ \alpha.
+\]  
+Sustituyendo en la expresión anterior:  
+\[
+\gamma \circ g \circ f = g' \circ f' \circ \alpha.
+\]  
+Esto demuestra la igualdad requerida.  
+
+\section*{6.2. Si \(\alpha\) y \(\gamma\) son isomorfismos, entonces \(\beta\) es un isomorfismo.}  
+
+Demostración:  
+Para probar que \(\beta: W \to W'\) es un isomorfismo, demostraremos que es inyectiva y suprayectiva.  
+
+Inyectividad de \(\beta\):  
+Supongamos que \(\beta(w) = 0\) para algún \(w \in W\). Queremos demostrar que \(w = 0\).  \\
+- Por la conmutatividad del segundo cuadrado:  
+  \[
+  \gamma(g(w)) = g'(\beta(w)) = g'(0) = 0.
+  \]  
+- Como \(\gamma\) es isomorfismo (inyectiva), se tiene \(g(w) = 0\).  \\
+- Por la condición \(\ker(g) = \text{im}(f)\), \(w \in \text{im}(f)\). Luego, existe \(v \in V\) tal que \(f(v) = w\).  \\
+- Usando la conmutatividad del primer cuadrado:  
+  \[
+  \beta(f(v)) = f'(\alpha(v)) \implies \beta(w) = f'(\alpha(v)).
+  \]  
+- Dado que \(\beta(w) = 0\), se tiene \(f'(\alpha(v)) = 0\).  \\
+- Como \(f'\) es inyectiva, \(\alpha(v) = 0\).  \\
+- Al ser \(\alpha\) un isomorfismo (inyectiva), \(v = 0\).  \\
+- Por tanto, \(w = f(v) = f(0) = 0\).  
+
+Suprayectividad de \(\beta\):  
+Sea \(w' \in W'\). Queremos encontrar \(w \in W\) tal que \(\beta(w) = w'\).  \\
+- Como \(g'\) es suprayectiva, existe \(z' \in Z'\) tal que \(g'(w') = z'\).  \\
+- Por ser \(\gamma\) un isomorfismo (suprayectiva), existe \(z \in Z\) con \(\gamma(z) = z'\).  \\
+- Dado que \(g\) es suprayectiva, existe \(w_1 \in W\) tal que \(g(w_1) = z\).  \\
+- Por la conmutatividad del segundo cuadrado:  
+  \[
+  \gamma(g(w_1)) = g'(\beta(w_1)) \implies \gamma(z) = g'(\beta(w_1)) \implies z' = g'(\beta(w_1)).
+  \]  
+- Comparando con \(g'(w') = z'\), se tiene \(g'(\beta(w_1)) = g'(w')\).  \\
+- Esto implica que \(\beta(w_1) - w' \in \ker(g')\).  \\
+- Por la condición \(\ker(g') = \text{im}(f')\), existe \(v' \in V'\) tal que \(f'(v') = \beta(w_1) - w'\).  \\
+- Como \(\alpha\) es suprayectiva (isomorfismo), existe \(v \in V\) con \(\alpha(v) = v'\).  \\
+- Usando la conmutatividad del primer cuadrado:  
+  \[
+  \beta(f(v)) = f'(\alpha(v)) = f'(v') = \beta(w_1) - w'.
+  \]  
+- Definimos \(w = w_1 - f(v)\). Aplicando \(\beta\):  
+  \[
+  \beta(w) = \beta(w_1) - \beta(f(v)) = \beta(w_1) - (\beta(w_1) - w') = w'.
+  \]  
+- Por tanto, \(w\) satisface \(\beta(w) = w'\), lo que demuestra la suprayectividad de \(\beta\).  \\
+
+Conclusión:  
+\(\beta\) es inyectiva y suprayectiva, por lo que es un isomorfismo.  
+
+Q.E.D.
+
+\end{document}
+

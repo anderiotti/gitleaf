@@ -1,0 +1,217 @@
+\documentclass[11pt,letterpaper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[left=2cm,right=2cm,top=2cm,bottom=2cm]{geometry}
+\usepackage{multirow}
+\usepackage{multicol}
+\usepackage{enumerate}
+\usepackage{float}
+\usepackage{graphicx}
+\usepackage[spanish,es-tabla]{babel}
+\usepackage{soul}
+\usepackage{ragged2e}
+\usepackage{authblk}
+\usepackage{wrapfig}
+\usepackage[colorlinks=true,plainpages=true,citecolor=blue,linkcolor=blue]{hyperref}
+\usepackage{caption}
+\usepackage{url}
+\usepackage[spanish]{babelbib}
+\usepackage{array}
+\usepackage{comment}
+\usepackage{lipsum}
+\usepackage{cite}
+\usepackage{physics}
+
+\usepackage[utf8]{inputenc}
+\usepackage[spanish,es-tabla]{babel} 
+\usepackage[table,xcdraw,dvipsnames]{xcolor}
+\usepackage{amssymb}
+%\usepackage{mathabx}
+\usepackage{amsmath} 
+\spanishdecimal{.}
+\usepackage{dsfont}
+%¿\usepackage{amsfonts} 
+\usepackage{amssymb}
+\let\checkmark\undefined %solves dingbat checkmark problem in Zoco´s
+\usepackage{makeidx}
+\usepackage{tikz}
+\usepackage{subfigure} 
+\usepackage{wrapfig}
+\usepackage{graphicx}
+\usepackage{flushend}
+\usepackage{multirow} 
+\usepackage[normalem]{ulem}
+\useunder{\uline}{\ul}{}
+%\usepackage{url}
+\usepackage{lmodern}
+%\usepackage{xcolor}
+%\usepackage{hyperref}
+%\usepackage{url}
+%\usepackage{float}	
+\usepackage{marvosym}
+\pagestyle{plain} 
+\pagenumbering{arabic}
+\usepackage{fancyhdr}
+%\def\proof{\paragraph{Demostración:\\}} \def\endproof{\hfill$\textcolor{red}{\heartsuit}$}
+\setlength{\parskip}{11px}
+\setlength{\parindent}{0cm}
+
+%%%%%%%%%%Paquetes CAL$%%%%%%%%%%
+%\usepackage{cmbright} %Fonts
+%usepackage[T1]{fontenc}
+\usepackage{amsthm}
+\usepackage{mathrsfs}
+\usepackage{bbold}
+\usepackage{graphicx}
+\usepackage{tasks}
+\usepackage{mathrsfs}
+\usetikzlibrary{cd}
+\usepackage{etoolbox,expl3,environ}
+%\usepackage{multicol} %Para poder poner columnas
+\setlength\columnsep{25 pt} %Modula la separación entre columnas
+\usepackage{polynom} %Para hacer divisiones de polinomios
+\newcommand{\ve}{\varepsilon}
+\newcommand{\ka}{\kappa}
+\newcommand{\om}{\omega}
+\newcommand{\lam}{\lambda}
+\newcommand{\be}{\beta}
+\newcommand{\al}{\alpha}
+\newcommand{\gam}{\gamma}
+%Atajos para \mathbb{}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\cer}{\mathbb{0}}
+\newcommand{\Li}{\mathcal{L}}
+\newcommand{\ca}{\mathbf{A}}
+\newcommand{\ma}{\mathbf{a}}
+\newcommand{\tq}{\ |\ } %TalQue
+%negritas mathmode
+\newcommand{\n}[1]{\boldsymbol{#1}}
+%ambiente Ejercicio.
+\theoremstyle{definition}
+\newtheorem{ej}{{\textcolor[RGB]{151, 15, 120}{Ejercicio}}}
+%%%%%%%%%FIN CAL%%%%%%%%%%%%%%%%%%
+
+%%%%%%%Paquetes C. Ximena Salazar.V.%%%%%%%%%%%%%%
+%\usepackage{reporte}
+%\usepackage{graphicx}
+%\usepackage{hyperref}
+%setlength {\marginparwidth }{2cm}%For todonotes no crashing
+%\usepackage[colorinlistoftodos]{todonotes}
+%%%%%%% FIN Paquetes C. Ximena Sandoval.V.%%%%%%%%
+
+%%%%%%%%%PAQUETES ZOCO%%%%%%%%%%
+\usepackage{phaistos}
+\usepackage{dingbat}
+\usepackage{wasysym}
+\let\Cross\relax %Otherwise, these two symbols get overwrite
+\let\Square\relax
+\usepackage{bbding}
+\usepackage{hieroglf}
+%\usepackage{fdsymbol}
+\usepackage{newtxtext,newtxmath}
+\usepackage{gensymb} 
+\usepackage{marvosym}
+\usepackage{tikzlings}
+\usepackage{tikzducks}
+\usepackage{graphicx}
+\usetikzlibrary{svg.path}
+\graphicspath{ {images/} }
+\newcommand{\sii}{\Longleftrightarrow}
+%ambiente Demostración.
+\newenvironment{dem}{\paragraph{\textcolor{magenta}{Demostración:}\\}}{\hfill\textcolor{magenta}{$\varheartsuit$\\}}
+%ambiente Solución
+\newenvironment{sol}{\paragraph{\textcolor{magenta}{Solución:}\\}}{\hfill \footnotesize{\textcolor{magenta}{$\bigstar$\\}}}
+%%
+\newcommand{\gatito}{\hfill \includegraphics[scale=0.07]{gatito.jpg}\\}
+\newcommand{\catito}{\\\hfill \Huge{\textcolor[RGB]{236, 101, 8}{\PHcat}}\\}
+%%%  COLORRRZ  %%%%%%%
+\definecolor{pinkz}{RGB}{200, 33, 172}
+%%%%%%%%%%FIN PAQUETES ZOCO%%%%%%%%%%
+
+
+\spanishdecimal{.}
+%\setlength{\columnsep}{1cm}
+
+begin{document}
+\begin{comment}
+%Imagenes y títulos	
+	\begin{center}
+		\begin{figure}[!ht]
+			\subfigure{\includegraphics[width=1in]{unam}}
+			\hspace*{12cm}
+			\subfigure{\includegraphics[width=1in]{fciencias}}
+		\end{figure}
+	\end{center}
+	\vspace*{-4cm}
+	\begin{center}
+		\begin{tabular}{c}
+			\Large \bfseries Título \\ \ \\
+			A. H. Itsári - itsari\_alhe@ciencias.unam.mx\\
+			\emph{Laboratorio de ???, Facultad de Ciencias, 202?-?} \\
+			\emph{Universidad Nacional Autónoma de México}
+		\end{tabular}
+	\end{center}
+\begin{minipage}{0.15\textwidth}
+    \includegraphics[width=\linewidth]{unam.jpg}
+\end{minipage}
+\begin{minipage}{0.6\textwidth}
+    \centering
+    \textbf{\LARGE{Título.}}\\ \ \\
+    Álvarez Hernández Itsári - \emph{itsari\_alhe@ciencias.unam.mx} \\ \
+    %Autor - email\\
+    %Autor - email
+    \\
+    Universidad Nacional Autónoma de México (UNAM)\\
+    Facultad de ciencias\\
+    Laboratorio de ?????? \\
+    \verb|DD/MM/AAAA|
+\end{minipage}
+\begin{minipage}{0.15\textwidth}
+    \RaggedRight
+    \includegraphics[width=\linewidth]{fciencias.jpg}
+\end{minipage}
+\end{comment}
+\begin{minipage}[ht]{0.14\linewidth}
+  \includegraphics[width=\linewidth]{Escudo_UNAM.png}
+\end{minipage}
+\begin{minipage}[ht]{0.7\linewidth}
+    \centering
+    \bf{
+    \Huge Universidad Nacional Autónoma de México. \\ 
+    \Huge Facultad de Ciencias. \\ 
+     Laboratorio de Fenómenos Colectivos.\\
+    Práctica : Propiedades térmicas. \\
+    %inserten sus nombres xD%
+    L. S. Erick A.$^1$\\
+    }
+\end{minipage}
+\begin{minipage}[ht]{0.14\linewidth}
+  \includegraphics[width=1.01\linewidth]{Escudo_FCiencias.png}
+\end{minipage}
+
+
+\section{Resumen.}
+\input{Resumen}
+
+\section{Introducción.}
+\input{Introducción}
+ 
+\section{Desarrollo Experimental.}
+\input{Desarrollo Experimental} 
+
+\section{Análisis experimental.}
+\input{análisis y resultados}
+
+\section{Conclusión.}
+\input{Conclusión}
+
+\section{Bibliografía.}
+\nocite{*}
+\bibliographystyle{acm}
+\bibliography{Bibliografía}
+
+\end{document}

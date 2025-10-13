@@ -1,0 +1,210 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage{pgfplots}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage[thmmarks, amsmath, thref]{ntheorem}
+\usepackage{mdframed}
+\usepackage{amsthm}
+\usepackage{physics}
+\usepackage{proof}
+\usepackage{derivative}
+\usepackage{hyperref}
+\usepackage{wrapfig}
+\usepackage{amsthm}
+\renewcommand{\theenumi}{\roman{enumi}}
+
+\theoremstyle{nonumberplain}
+\theoremheaderfont{\itshape}
+\theorembodyfont{\upshape}
+\theoremseparator{.}
+\theoremsymbol{\ensuremath{\square}}
+\theoremsymbol{\ensuremath{\blacksquare}}
+\newtheorem{solution}{Solution}
+\theoremseparator{. ---}
+\theoremsymbol{\mbox{\texttt{;o)}}}
+
+\geometry{a4paper, left=2cm, right=2cm, top=1cm, bottom=2cm}
+
+\pgfplotsset{compat=1.18}
+\begin{document}
+
+Ejercicio I: Demuestra que \(\mathbb{C}\) es isomorfo al cociente \(\mathbb{R}[x]/(x^2 + 1)\) \\
+
+\begin{proof}
+
+El espacio \(\mathbb{R}[x]/(x^2 + 1)\) está formado por clases de equivalencia de polinomios en \(\mathbb{R}[x]\) bajo la relación \[ p(x) \sim q(x) \iff p(x) - q(x) \in (x^2 + 1), \]  
+donde \((x^2 + 1)\) es el generado por \(x^2 + 1\). Esto significa que cualquier clase de equivalencia en \(\mathbb{R}[x]/(x^2 + 1)\) puede representarse por un único polinomio de grado a lo sumo 1, ya que al dividir cualquier \(p(x) \in \mathbb{R}[x]\) entre \(x^2 + 1\), el residuo tiene grado menor que 2. Por lo tanto, los elementos de \(\mathbb{R}[x]/(x^2 + 1)\) tienen la forma \([a + bx]\), con \(a, b \in \mathbb{R}\).  
+
+Definimos la aplicación \(\varphi: \mathbb{R}[x]/(x^2 + 1) \to \mathbb{C}\) por  
+\[
+\varphi([a + bx]) = a + bi, \quad \text{con } a, b \in \mathbb{R}.
+\]
+
+1. Verificamos que \(\varphi\) es un homomorfismo de campos: \\
+   Para \([a + bx], [c + dx] \in \mathbb{R}[x]/(x^2 + 1)\),  
+     \[
+     \varphi([a + bx] + [c + dx]) = \varphi([a + c + (b + d)x]) = (a + c) + (b + d)i.
+     \]  
+     Por otro lado,  
+     \[
+     \varphi([a + bx]) + \varphi([c + dx]) = (a + bi) + (c + di) = (a + c) + (b + d)i.
+     \]  
+     Por lo tanto, \(\varphi\) preserva la suma;para \([a + bx], [c + dx] \in \mathbb{R}[x]/(x^2 + 1)\),  
+     \[
+     \varphi([a + bx][c + dx]) = \varphi([ac + (ad + bc)x + bdx^2]).
+     \]  
+     Como \(x^2 \equiv -1 \mod (x^2 + 1)\), se tiene \(x^2 = -1\), y el producto queda como  
+     \[
+     [ac + (ad + bc)x + bd(-1)] = [ac - bd + (ad + bc)x].
+     \]  
+     Aplicando \(\varphi\),  
+     \[
+     \varphi([ac - bd + (ad + bc)x]) = (ac - bd) + (ad + bc)i.
+     \]  
+     Por otro lado,  
+     \[
+     \varphi([a + bx]) \cdot \varphi([c + dx]) = (a + bi)(c + di) = (ac - bd) + (ad + bc)i.
+     \]  
+     Por lo tanto, \(\varphi\) preserva el producto. \\
+
+2. \(\varphi\) es un monomorfismo: 
+   Supongamos que \(\varphi([a + bx]) = 0\). Entonces,  
+   \[
+   a + bi = 0 \implies a = 0, \, b = 0.
+   \]  
+   Por lo tanto, \([a + bx] = [0]\), y \(\varphi\) es inyectiva. \\
+
+3. \(\varphi\) es un epimorfismo:
+   Dado cualquier \(z \in \mathbb{C}\), podemos escribir \(z = a + bi\) con \(a, b \in \mathbb{R}\). Entonces,  
+   \[
+   \varphi([a + bx]) = a + bi = z.
+   \]  
+   Por lo tanto, \(\varphi\) es suprayectiva. \\
+
+Como \(\varphi\) es un homomorfismo de campos biyectivo (monomorfo y epimorfo), es un isomorfismo. Así, \(\mathbb{R}[x]/(x^2 + 1) \cong \mathbb{C}\).  
+
+\qed\end{proof}
+
+Ejercicio II: Sea \(T : \mathbb{C} \to \mathbb{C}\) definida por \(T(z) = \lambda z + \mu \overline{z}\). Escribe cómo es la matriz que representa \(T\) al identificar \(\mathbb{C}\) con \(\mathbb{R}^2\), y encuentra \(\lambda, \mu \in \mathbb{C}\) tal que \(T(z)\) pueda escribirse de esa forma.
+
+\begin{proof}
+Sea \(z = x + iy \in \mathbb{C}\), donde \(x, y \in \mathbb{R}\). Su conjugado es \(\overline{z} = x - iy\). Al identificar \(\mathbb{C}\) con \(\mathbb{R}^2\) mediante \(z \mapsto (x, y)\), tenemos que \(T(z) = \lambda z + \mu \overline{z}\) se puede expresar como:  
+\[
+T(z) = \lambda (x + iy) + \mu (x - iy).
+\]  
+Separando en partes reales e imaginarias,  
+\[
+T(z) = (\text{Re}(\lambda) x - \text{Im}(\lambda) y) + i (\text{Im}(\lambda) x + \text{Re}(\lambda) y) + (\text{Re}(\mu) x + \text{Im}(\mu) y) + i (\text{Re}(\mu) y - \text{Im}(\mu) x).
+\]  
+Agrupando términos reales e imaginarios,  
+\[
+T(z) = \big[(\text{Re}(\lambda) + \text{Re}(\mu))x + (-\text{Im}(\lambda) + \text{Im}(\mu))y\big] + i\big[(\text{Im}(\lambda) - \text{Im}(\mu))x + (\text{Re}(\lambda) + \text{Re}(\mu))y\big].
+\]
+
+Identificando \(T : \mathbb{R}^2 \to \mathbb{R}^2\) como una transformación lineal, escribimos  
+\[
+T\begin{pmatrix} x \\ y \end{pmatrix} = 
+\begin{pmatrix} a_{11} & a_{12} \\ a_{21} & a_{22} \end{pmatrix}
+\begin{pmatrix} x \\ y \end{pmatrix}.
+\]  
+Donde los coeficientes de la matriz son:  
+\[
+a_{11} = \text{Re}(\lambda) + \text{Re}(\mu), \quad a_{12} = -\text{Im}(\lambda) + \text{Im}(\mu),
+\]  
+\[
+a_{21} = \text{Im}(\lambda) - \text{Im}(\mu), \quad a_{22} = \text{Re}(\lambda) + \text{Re}(\mu).
+\]
+
+Por lo tanto, la matriz que representa \(T\) es:  
+\[
+\begin{pmatrix} 
+\text{Re}(\lambda) + \text{Re}(\mu) & -\text{Im}(\lambda) + \text{Im}(\mu) \\ 
+\text{Im}(\lambda) - \text{Im}(\mu) & \text{Re}(\lambda) + \text{Re}(\mu)
+\end{pmatrix}.
+\]
+
+Recíprocamente, dada una transformación lineal \(T : \mathbb{R}^2 \to \mathbb{R}^2\) de la forma  
+\[
+T\begin{pmatrix} x \\ y \end{pmatrix} = 
+\begin{pmatrix} a_{11} & a_{12} \\ a_{21} & a_{22} \end{pmatrix}
+\begin{pmatrix} x \\ y \end{pmatrix},
+\]  
+podemos expresar los coeficientes como combinaciones de \(\lambda = a + bi\) y \(\mu = c + di\), donde  
+\[
+\lambda = \frac{1}{2}\big((a_{11} - a_{22}) + i(a_{21} + a_{12})\big), \quad 
+\mu = \frac{1}{2}\big((a_{11} + a_{22}) + i(a_{21} - a_{12})\big).
+\]
+
+Así, \(T(z) = \lambda z + \mu \overline{z}\).  
+
+\qed\end{proof}
+
+Ejercicio III. Denotaremos por $H(D)$ al conjunto de funciones holomorfas en un dominio $D \subset \mathbb{C}$. Verifica que cumple las siguientes propiedades: \\
+
+a) $(H(D), +)$, las funciones holomorfas en $D$ con la suma de funciones, $(f+g)(z)=f(z)+g(z)$, para toda $z \in D$, forman un espacio vectorial sobre el campo de los complejos $\mathbb{C}$. \\
+
+b) El producto de funciones $(fg)(z) = f(z) g(z)$, para toda $z \in D$, define una operación cerrada en $H(D)$: \\
+
+$\qquad \cdot : H(D) \times H(D) \to H(D)$, \\
+
+es decir, si $f, g \in H(D)$ entonces $fg$ también es holomorfa en $D$. \\
+
+c) Si $f,g,h \in H(D)$ y $\lambda, \mu \in \mathbb{C}$ entonces \\
+
+$$\qquad \bullet \, \lambda(f+g) = \lambda f + \lambda g$$
+
+$$\qquad \bullet \, (\lambda + \mu)f = \lambda f + \mu f$$ 
+
+$$\qquad \bullet \, \lambda(fg) = (\lambda f)g = f(\lambda g)$$.
+
+Estas últimas tres operaciones nos dicen que el producto escalar se "comporta bien" con respecto a la suma y el producto en $H(D)$. \\
+Que se cumplan las propiedades de los incisos (a), (b) y (c), significa que $H(D)$ es una $\mathbb{C}$-álgebra, es decir una álgebra sobre el campo de los complejos. \\
+\textbf{Propiedad a}: \( (\mathcal{H}(D), +) \) es un espacio vectorial sobre \(\mathbb{C}\).\\
+1. Cerradura bajo la suma:
+   Si \(f, g \in \mathcal{H}(D)\), entonces \(f\) y \(g\) son funciones holomorfas en \(D\). \\
+   - Por definición de suma, \((f+g)(z) = f(z) + g(z)\) para todo \(z \in D\).  \\
+   - La suma de funciones holomorfas es holomorfa (se verifica aplicando la definición de derivada compleja al conjunto suma). \\
+   Por lo tanto, \(f+g \in \mathcal{H}(D)\). \\
+2. Axiomas de espacio vectorial: \\
+   - Existe una función nula \(0(z) = 0\), tal que \(f+0 = f\). \\
+   - Dado \(\lambda \in \mathbb{C}\) y \(f \in \mathcal{H}(D)\), el producto escalar \((\lambda f)(z) = \lambda f(z)\) también es holomorfo, porque la multiplicación por un escalar no afecta la derivabilidad.  \\
+
+   Esto demuestra que \( \mathcal{H}(D) \) con \(+\) y el producto por escalares cumple las propiedades de un espacio vectorial. \\
+
+\textbf{Propiedad b}: El producto de funciones es una operación cerrada en \( \mathcal{H}(D) \). \\
+
+Dado \(f, g \in \mathcal{H}(D)\), el producto de funciones \( (f \cdot g)(z) = f(z)g(z) \) se define punto a punto.  \\
+- Dado que \(f\) y \(g\) son holomorfas, sus derivadas complejas existen en \(D\).  \\
+- Aplicando la regla del producto, la derivada del producto \(f \cdot g\) es  
+  \[
+  (f \cdot g)'(z) = f'(z)g(z) + f(z)g'(z),
+  \]  
+  que también es una función derivable en \(D\).  \\
+
+Por lo tanto, \(f \cdot g \in \mathcal{H}(D)\), lo que muestra que el producto es una operación cerrada.
+
+\textbf{Propiedad c}: Compatibilidad con el producto escalar y distributividad. \\
+
+Dado \(\lambda, \mu \in \mathbb{C}\) y \(f, g \in \mathcal{H}(D)\), verificamos las propiedades:  
+1. \(\lambda(f + g) = \lambda f + \lambda g\):  \\
+   Esto sigue de las propiedades distributivas en \(\mathbb{C}\).  \\
+
+2. \((f + g)\lambda = f\lambda + g\lambda\):  \\
+   Similar al caso anterior, usando distributividad en \(\mathbb{C}\).  \\
+
+3. \(\lambda(f \cdot g) = (\lambda f) \cdot g = f \cdot (\lambda g)\):  \\
+   Esto se cumple porque la multiplicación por escalares en \(\mathbb{C}\) es asociativa y distributiva. \\
+
+Dado que se han verificado todas las propiedades necesarias. Esto implica que \( (\mathcal{H}(D), +, \cdot) \) forma una \(\mathbb{C}\)-álgebra, ya que: \\
+- Es un espacio vectorial sobre \(\mathbb{C}\) (propiedad a). \\
+- Es cerrada bajo el producto de funciones (propiedad b). \\
+- Las operaciones son compatibles con el producto escalar y distributivas (propiedad c). \\\\
+
+$\text{From (1)} 3b = 30 => b=10, \text{sub in (2) so} 10 + 2h=20 => h=5, \text{now sub in (3)} 5+2d=9 => d = 2. \text{Sub in (4) so we have} \int_{10-10}^{\infty} \frac{10}{2} \frac{\sin(x)dx}{x} = 5 \int_{0}^{\infty} \frac{\sin(x)dx}{x} \text{this is trivially due to Poiseux Series Expansion equal to}$
+$ 5(\lim_{\varphi \rightarrow \infty} \sum_{i=0}^{\infty} \frac{(-1)^n}{(2n+1)(2n+1)!}{\varphi}^{2n+1} - \sum_{i=0}^{\infty} \frac{(-1)^n}{(2n+1)(2n+1)!}{0}^{2n+1}) = \frac{5\pi}{2}$
+
+\end{document}

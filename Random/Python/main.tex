@@ -1,0 +1,3693 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage{pgfplots}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage[thmmarks, amsmath, thref]{ntheorem}
+\usepackage{mdframed}
+\usepackage{amsthm}
+\usepackage{multirow}
+\usepackage{physics}
+\usepackage{proof}
+\usepackage{booktabs}
+\usepackage[table]{xcolor}
+\usepackage{derivative}
+\usepackage{hyperref}
+\usepackage{wrapfig}
+\usepackage{amsthm}
+\usepackage{xcolor}
+\usepackage{longtable}
+\renewcommand{\theenumi}{\roman{enumi}}
+
+\theoremstyle{nonumberplain}
+\theoremheaderfont{\itshape}
+\theorembodyfont{\upshape}
+\theoremseparator{.}
+\theoremsymbol{\ensuremath{\square}}
+\theoremsymbol{\ensuremath{\blacksquare}}
+\newtheorem{solution}{Solution}
+\theoremseparator{.}
+\theoremsymbol{\mbox{\texttt{;o)}}}
+
+\pgfplotsset{compat=1.18}
+\begin{document}
+
+\section*{Day I}
+\subsection*{Descarga e instalación de Anaconda}
+
+\textit{Anaconda} es una distribución de Python diseñada especialmente para el desarrollo científico, análisis de datos y computación numérica. A diferencia de una instalación estándar de Python, Anaconda incluye una serie de herramientas y bibliotecas preinstaladas que facilitan considerablemente el trabajo en entornos científicos y de análisis.
+
+Entre sus principales ventajas se encuentra \textbf{Conda}, un potente gestor de paquetes y entornos virtuales que permite instalar, actualizar y administrar bibliotecas de forma eficiente. También se incluye \textbf{Jupyter Notebook}, una aplicación interactiva que funciona como entorno de desarrollo (IDE, por sus siglas en inglés: \textit{Integrated Development Environment}), y que resulta especialmente útil para escribir y ejecutar código en bloques, visualizar resultados de manera inmediata y documentar los pasos del análisis en el mismo lugar.
+
+\paragraph{Instalación de Anaconda}
+La descarga e instalación de Anaconda es un proceso bastante intuitivo. Durante la instalación, es recomendable seleccionar todas las opciones disponibles, incluso aquellas que aparecen como "no recomendadas". Más adelante, cuando tengas mayor experiencia, podrás decidir con mejor criterio qué opciones activar o desactivar según las necesidades específicas de tus proyectos.
+
+Una vez finalizada la instalación, se abrirá automáticamente \textit{Anaconda Navigator}, una interfaz gráfica que permite acceder fácilmente a diversas herramientas. Visualmente recuerda a una tienda de aplicaciones como la Chrome Web Store. Desde ahí, puedes iniciar \textit{Jupyter Notebook}. A pesar de que se abre en el navegador web (habitualmente Google Chrome), su funcionamiento es completamente local: no requiere conexión a Internet.
+
+A primera vista, Jupyter puede parecer un entorno confuso —se muestra como un conjunto de carpetas, archivos y rutas—, pero con el tiempo desarrollarás un profundo aprecio por su flexibilidad y simplicidad.
+
+\subsection*{Primeros pasos con Jupyter Notebook}
+
+Una vez dentro de Jupyter, verás una lista de archivos del directorio actual. Para comenzar, haz clic en \textbf{New → Python 3} para crear tu primer cuaderno de trabajo (notebook). El nombre del archivo es editable haciendo clic sobre el título en la parte superior del cuaderno.
+
+Tu primer código puede ser tan sencillo como:
+
+\[
+\texttt{print("Hola, mundo")}
+\]
+
+Es importante notar que presionar \texttt{Enter} dentro de una celda no ejecuta el código, solo agrega una nueva línea. Para ejecutar una celda, debes presionar \texttt{Shift + Enter}. Al ejecutar una celda, aparecerá una salida marcada como \texttt{Out}, que muestra el resultado correspondiente. Esta salida está pensada principalmente para ti, no para un usuario final.
+
+El número entre corchetes que aparece junto a \texttt{In} indica el orden en que fue ejecutado el código. Este orden no es necesariamente secuencial, ya que puedes ejecutar celdas en cualquier orden. Si en algún momento el cuaderno entra en un estado confuso o desorganizado, puedes reiniciar el núcleo de ejecución y ejecutar todo de nuevo en orden con la opción \texttt{Kernel → Restart \& Run All}.
+
+Para guardar tu trabajo, puedes usar el atajo \texttt{Ctrl + S}, o bien acceder a \texttt{File → Save and Checkpoint}. Si deseas compartir tu código o exportarlo, puedes guardarlo en formato \texttt{.ipynb} (notebook) o en formato \texttt{.py} (archivo Python). La elección dependerá del uso que vayas a darle.
+
+\paragraph{Markdown en Jupyter}
+
+Jupyter también permite alternar entre celdas de código y celdas de texto formateado (markdown). Esto es especialmente útil para documentar tu trabajo. Para ello, selecciona una celda, cambia su tipo a \textit{Markdown} y escribe tu comentario. Puedes crear títulos usando el símbolo de numeral (\#), subtítulos con doble numeral (\#\#), y así sucesivamente.
+
+\begin{itemize}
+    \item Ejemplo de título: \texttt{\# Título principal}
+    \item Ejemplo de subtítulo: \texttt{\#\# Subtítulo}
+\end{itemize}
+
+Aprender a documentar tu código adecuadamente es una habilidad tan valiosa como programar. En el camino de convertirte en un científico computacional eficaz, aprenderás que la claridad en la escritura es tan esencial como la claridad en el pensamiento.
+
+\subsection*{Introducción a la programación orientada a objetos}
+
+En Python, \textbf{todo es un objeto}. Esta afirmación, aparentemente simple, tiene profundas implicancias. Considera la instrucción:
+
+\[
+1 + 1 \Rightarrow 2
+\]
+
+A simple vista, parece una operación aritmética trivial. Pero en realidad, lo que está ocurriendo es una interacción entre dos objetos (el número 1, dos veces) que invocan un método definido para producir un nuevo objeto como resultado (el número 2). Esto refleja el paradigma bajo el cual opera Python: la \textit{programación orientada a objetos} (OOP, por sus siglas en inglés).
+
+En esencia, cuando escribimos código en Python, estamos creando, manipulando, relacionando y, eventualmente, descartando objetos. Este modelo nos permite construir estructuras complejas a partir de piezas modulares, reutilizables y organizadas.
+
+Aunque profundizaremos en los detalles técnicos más adelante, introducir estos conceptos desde el inicio te permitirá desarrollar una comprensión más robusta y aprovechar mejor las herramientas que Python pone a tu disposición. Pensar en términos de objetos no es solo una técnica de programación: es una forma de modelar el mundo real con precisión y elegancia.
+
+\subsection*{¿Qué es Data Science?}
+
+Imagina que tienes a la mano un pequeño registro de ventas: tres datos correspondientes a tres meses consecutivos. Podrías observar que las ventas han ido creciendo, y concluir que existe una tendencia al alza. Nada mal. Cualquiera podría hacerlo.
+
+Pero tú decides ir un paso más allá. Quieres \textit{ver} los datos, darles forma, expresión, contexto. Tomas esos tres registros y los representas en un gráfico de líneas. En ese instante, has transformado datos en conocimiento. Has dado el primer paso hacia la ciencia de datos.
+
+\paragraph{La lógica esencial del Data Science}
+
+Tal vez suene exagerado, pero esta pequeña acción—la de visualizar datos para entender mejor su comportamiento—es una manifestación simple pero poderosa de lo que hace un científico de datos. Visualizar te permite:
+
+\begin{itemize}
+    \item Percibir patrones y tendencias que no son evidentes a simple vista.
+    \item Comprender proporciones y relaciones entre los datos.
+    \item Formular nuevas preguntas que antes no se te habrían ocurrido.
+    \item Tomar decisiones mejor fundamentadas.
+\end{itemize}
+
+Y esto es apenas el principio.
+
+\paragraph{El verdadero alcance de la ciencia de datos}
+
+Ahora imagina ese mismo ejercicio, pero no con tres datos, sino con millones. Piensa en bases de datos provenientes de redes sociales, sistemas bancarios, registros clínicos o sensores climáticos. En esos entornos, la ciencia de datos despliega todo su poder.
+
+Ya no se trata solo de visualizar información. Se trata de:
+
+\begin{itemize}
+    \item Descubrir patrones ocultos en un océano de datos.
+    \item Predecir eventos futuros mediante modelos estadísticos y aprendizaje automático.
+    \item Extraer \textit{insights} que pueden transformar negocios, influir en políticas públicas o incluso salvar vidas.
+\end{itemize}
+
+Data Science es mucho más que una disciplina técnica: es una nueva forma de pensar. Nos invita a replantear preguntas, a observar el mundo con lentes más afinados, y a construir respuestas significativas en medio del ruido.
+
+\paragraph{El rol del científico de datos}
+
+Si antes imaginabas al científico de datos como una figura seria y distante, encerrada entre fórmulas y gráficos, es hora de replantear esa imagen. Piensa en él —o en ti mismo, pronto— como un explorador. Un explorador que se adentra en lo desconocido, entre montañas de datos, buscando conexiones, verdades ocultas, patrones invisibles. Un buscador de tesoros en un universo digital.
+
+En la siguiente sección dejaremos la teoría de lado y nos ensuciaremos las manos con Python. Porque en ciencia de datos, como en cualquier campo real de exploración, el verdadero conocimiento se construye \textit{haciendo}.
+
+\section*{Día II}
+\subsection*{Variables numéricas en Python}
+
+Declarar variables numéricas en Python es sencillo. Basta con elegir un nombre válido (por convención: \textit{snake\_case}, \textit{camelCase} o incluso \textit{kebab-case} fuera de Python) y asignar un valor con el símbolo igual:
+
+\[
+mi\_numero = 2
+\]
+
+Una vez definido, al escribir el nombre de la variable en una celda, el sistema devuelve su valor almacenado. Así:
+
+\[
+\texttt{In: mi\_numero \quad → \quad Out: 2}
+\]
+
+Las variables pueden actualizarse en cualquier momento: si redefinimos \texttt{mi\_numero = 5}, el valor anterior se pierde y se reemplaza con el nuevo.
+
+Es fundamental comprender que el orden en el que el código aparece en el cuaderno no garantiza el orden en que se ejecuta. Python sigue el orden cronológico en que tú ejecutas las celdas, lo cual puede ocasionar resultados inesperados si no se tiene cuidado.
+
+Un punto interesante es que, si declaras múltiples variables con el mismo valor:
+
+\[
+a = b = c = 3
+\]
+
+Python no crea tres objetos distintos en memoria, sino que los tres nombres apuntan al mismo objeto. Esto es una optimización del lenguaje para mejorar eficiencia y reducir uso de memoria innecesario.
+
+\subsection*{Variables de texto (Strings)}
+
+En Python, una cadena de texto se denomina \texttt{string}. Se llama así porque internamente no se trata de un bloque continuo, sino de una “cadena” de caracteres individuales.
+
+Puedes declarar strings usando comillas simples o dobles indistintamente:
+
+\[
+\texttt{"El libro 'El Principito' es emocionante"} \\
+\texttt{'El libro "El Principito" es emocionante'}
+\]
+
+Ambas formas son equivalentes; lo importante es que el texto esté correctamente entrecomillado. No olvides: si declaras una variable de texto, debe llevar comillas. Las variables numéricas, en cambio, no las necesitan.
+
+También es útil saber que el operador de comparación \texttt{==} ignora si las comillas son simples o dobles:
+
+\[
+\texttt{"Hola Mundo" == 'Hola Mundo'} \quad \Rightarrow \quad \texttt{True}
+\]
+
+\subsection*{La función \texttt{type()}}
+
+Como su nombre indica, \texttt{type()} nos permite conocer el tipo de dato de una variable. Aunque dos variables puedan parecer iguales en apariencia, como:
+
+\[
+a = 1 \quad \text{y} \quad b = "1"
+\]
+
+el primero es un número entero (\texttt{int}) y el segundo es una cadena de texto (\texttt{str}). Esto puede comprobarse con:
+
+\[
+\texttt{type(a)} \quad → \quad \texttt{<class 'int'>}
+\]
+\[
+\texttt{type(b)} \quad → \quad \texttt{<class 'str'>}
+\]
+
+Los tipos más comunes que veremos en Python incluyen:
+
+\begin{itemize}
+    \item \texttt{int}: números enteros ($\in \mathbb{Z}$)
+    \item \texttt{float}: números con decimales ($\in \mathbb{R}$)
+    \item \texttt{complex}: números complejos ($a + bj$)
+    \item \texttt{str}: cadenas de texto
+\end{itemize}
+
+Saber el tipo de dato es crucial, ya que cada clase de objeto tiene métodos y comportamientos específicos. Muchos errores comunes provienen de intentar aplicar métodos de un tipo a otro tipo incompatible.
+
+\subsection*{Números en Python}
+
+Como vimos, Python reconoce distintos tipos numéricos. Aquí algunos ejemplos:
+
+\begin{itemize}
+    \item \texttt{int} — Números enteros como $1$, $-3$, $42$.
+    \item \texttt{float} — Números reales como $3.14$, $-0.5$, $2.0$.
+    \item \texttt{complex} — Números complejos, como $2 + 3j$ (en Python se usa \texttt{j} para la unidad imaginaria).
+\end{itemize}
+
+Jupyter Notebook ofrece ayuda contextual si presionas \texttt{Shift + Tab} sobre una función: una pequeña guía sobre su uso aparecerá, ayudándote a entender mejor qué hace y cómo se utiliza.
+
+\subsection*{Operaciones matemáticas básicas}
+
+Python utiliza símbolos intuitivos para la mayoría de las operaciones:
+
+\begin{itemize}
+    \item \texttt{+} suma
+    \item \texttt{-} resta
+    \item \texttt{*} multiplicación
+    \item \texttt{/} división estándar (retorna \texttt{float})
+    \item \texttt{//} división entera (trunca los decimales)
+    \item \texttt{\%} módulo (resto de la división entera)
+\end{itemize}
+
+Un caso interesante: si divides dos enteros con el operador \texttt{/}, el resultado será un \texttt{float}, no un \texttt{int}. Esto demuestra que los tipos de datos en Python son dinámicos y pueden cambiar según la operación realizada:
+
+\[
+\texttt{4 / 2} \quad \Rightarrow \quad \texttt{2.0 (float)}
+\]
+
+El operador \texttt{\%} es útil, por ejemplo, para determinar si un número es par:
+
+\[
+\texttt{n \% 2 == 0} \quad \Rightarrow \quad \text{es par}
+\]
+
+Si se desea convertir una variable string en numérica, podemos usar int(). Asímismo también existe la función potencia que indirectamente también es la raíz x-ésima por leyes de los exponentes, se denota como .
+
+\subsection*{Strings: manipulación y métodos fundamentales}
+
+En Python, los \textbf{strings} (cadenas de texto) son objetos que representan secuencias de caracteres. Al ser objetos, poseen métodos asociados que permiten transformarlos o consultarlos de distintas maneras. 
+
+Por ejemplo, si definimos una variable:
+
+\[
+\texttt{palabra = 'hola'}
+\]
+
+Podemos acceder a uno de sus métodos mediante la notación con punto:
+
+\[
+\texttt{palabra.upper()}
+\]
+
+Este método retorna una copia del string con todos sus caracteres en mayúsculas. Es importante notar que los strings en Python son \textbf{inmutables}: los métodos no modifican el objeto original, sino que devuelven una nueva versión modificada. Por lo tanto, si deseas conservar la transformación, debes asignarla a una nueva variable:
+
+\[
+\texttt{palabra\_mayus $=$ palabra.upper()}
+\]
+
+\paragraph{Exploración y documentación}
+
+Python proporciona tres herramientas clave para interactuar con cualquier objeto, y particularmente útiles al comenzar con strings:
+
+\begin{itemize}
+    \item \texttt{type(obj)} — Devuelve el tipo de objeto.
+    \item \texttt{dir(obj)} — Lista todos los atributos y métodos asociados al objeto.
+    \item \texttt{help(obj.method)} — Muestra la documentación del método especificado (sin los paréntesis de llamada).
+\end{itemize}
+
+Estas tres funciones —\texttt{type}, \texttt{dir}, y \texttt{help}— son esenciales para navegar con confianza el ecosistema Python.
+
+\paragraph{Algunos métodos comunes de strings:}
+
+\begin{itemize}
+    \item \texttt{capitalize()} — Devuelve el string con la primera letra en mayúscula. \\
+    \item \texttt{upper()} — Convierte todos los caracteres a mayúsculas. \\
+    \item \texttt{lower()} — Convierte todos los caracteres a minúsculas. \\
+    \item \texttt{replace(old, new[, count])} — Sustituye la subcadena \texttt{old} por \texttt{new}. Opcionalmente, se puede limitar cuántas veces se realiza la sustitución mediante el argumento \texttt{count}. \\
+\end{itemize}
+
+Ejemplo:
+
+\[
+\texttt{'manzana'.replace('a', 'o', 2)} \quad \Rightarrow \quad \texttt{'monzono'}
+\]
+
+
+
+\subsection*{Indexación y segmentación de strings}
+
+Dado que los strings son secuencias ordenadas, es posible acceder a sus caracteres individuales mediante \textit{indexación}, usando corchetes \texttt{[]}.
+
+\paragraph{Índices positivos y negativos}
+
+Supón que:
+
+\[
+\texttt{palabra = 'ciruela'}
+\]
+
+Puedes obtener la primera letra con:
+
+\[
+\texttt{palabra[0]} \quad \Rightarrow \quad \texttt{'c'}
+\]
+
+Y la última letra con:
+
+\[
+\texttt{palabra[-1]} \quad \Rightarrow \quad \texttt{'a'}
+\]
+
+Los índices negativos cuentan desde el final hacia el principio.
+
+\paragraph{Rebanado (Slicing)}
+
+Para obtener una porción del string, usamos la notación:
+
+\[
+\texttt{palabra[inicio:fin]}
+\]
+
+Este comando devuelve una subcadena desde la posición \texttt{inicio} (inclusive) hasta la posición \texttt{fin} (exclusiva). Es decir, el carácter en la posición \texttt{fin} no se incluye. Por ejemplo:
+
+\[
+\texttt{palabra[2:5]} \quad \Rightarrow \quad \texttt{'rue'}
+\]
+
+Si omites el \texttt{inicio}, Python asume que es 0. Si omites el \texttt{fin}, se asume que es el final de la cadena:
+
+\[
+\texttt{palabra[:4]} \quad \Rightarrow \quad \texttt{'ciru'} \quad (\text{caracteres 0 a 3}) \\
+\texttt{palabra[4:]} \quad \Rightarrow \quad \texttt{'ela'} \quad (\text{desde el índice 4 hasta el final})
+\]
+
+\paragraph{Tercer parámetro: salto}
+
+La notación de slicing permite un tercer parámetro opcional: el \textbf{paso} (\texttt{step}). La forma general es:
+
+\[
+\texttt{palabra[inicio:fin:paso]}
+\]
+
+Por ejemplo:
+
+\[
+\texttt{palabra[0:6:2]} \quad \Rightarrow \quad \texttt{'crl'}
+\]
+
+El paso indica cuántos caracteres se saltan entre cada selección.
+
+\paragraph{Combinación con métodos}
+
+Puedes encadenar un slicing con un método. Por ejemplo:
+
+\[
+\texttt{palabra[0:4].upper()} \quad \Rightarrow \quad \texttt{'CIRU'}
+\]
+
+\paragraph{Precisión sobre los índices}
+
+Es importante aclarar una confusión común: en Python, los índices comienzan en cero. Esto significa que:
+
+\[
+\texttt{palabra = 'ciruela'}
+\]
+
+tiene sus letras posicionadas como:
+
+\[
+\texttt{c(0) i(1) r(2) u(3) e(4) l(5) a(6)}
+\]
+
+Si deseas tomar 4 letras seguidas desde la posición 3, simplemente haz:
+
+\[
+\texttt{palabra[3:7]} \quad \Rightarrow \quad \texttt{'uela'}
+\]
+
+\textbf{No necesitas conocer la posición final exacta}, solo asegúrate de que la diferencia entre los índices sea igual al número de caracteres deseado. Esta es una propiedad muy conveniente para manipular subcadenas sin esfuerzo adicional.
+
+
+\subsection*{Filtrar \texttt{strings}}
+
+Supongamos que deseamos contar cuántas veces aparece una letra o una subcadena dentro de un texto. Tomemos como ejemplo la palabra:
+
+\[
+\texttt{palabra = 'banana'}
+\]
+
+Como ya es costumbre, podemos usar las herramientas fundamentales del lenguaje para explorar sus propiedades:
+
+\begin{itemize}
+    \item \texttt{type(palabra)} nos confirma que se trata de un objeto del tipo \texttt{str}.
+    \item \texttt{dir(palabra)} lista todos los métodos disponibles para este tipo de objeto.
+\end{itemize}
+
+Uno de los métodos más útiles en este contexto es \texttt{count()}, el cual permite contar cuántas veces aparece un subtexto dentro de un string. Podemos consultarlo con:
+
+\[
+\texttt{help(palabra.count)}
+\]
+
+La documentación nos indica que su sintaxis es: \texttt{str.count(sub[, start[, end]])}. En su forma más básica, por ejemplo:
+
+\[
+\texttt{palabra.count("a")} \Rightarrow 3
+\]
+
+El método no está limitado a letras: cualquier subcadena, incluyendo espacios, es válida. Por ejemplo, con:
+
+\[
+\texttt{frase = "estudiar python es una gran decisión"}
+\]
+
+podemos contar cuántos espacios contiene usando:
+
+\[
+\texttt{frase.count(" ")} \Rightarrow 6
+\]
+
+De forma creativa, esto permite estimar el número de palabras en la frase, simplemente sumando 1 al número de espacios:
+
+\[
+\texttt{print(frase.count(" ") + 1)}
+\]
+
+En caso de que existan espacios al inicio o final que podrían alterar el resultado, podemos usar el método \texttt{strip()} para eliminarlos:
+
+\[
+\texttt{frase2 = " estudiar python es una gran decisión "} \\
+\texttt{print(frase2.strip().count(" ") + 1)} \Rightarrow 6
+\]
+
+Otro método útil es \texttt{split()}, el cual divide un string en partes usando un separador dado (por defecto, un espacio):
+
+\[
+\texttt{frase2.split(" ")}
+\]
+
+Este método devuelve una lista de subcadenas. Para evitar elementos vacíos indeseados causados por espacios al inicio o al final, conviene encadenarlo con \texttt{strip()}:
+
+\[
+\texttt{frase2.strip().split(" ")}
+\]
+
+Así obtenemos una lista perfectamente limpia de palabras.
+
+
+
+\subsection*{Entrada de usuario: \texttt{input()}}
+
+Hasta ahora, hemos trabajado con datos definidos por el programador. Es hora de permitir que el usuario interactúe con el código a través de la función:
+
+\[
+\texttt{input()}
+\]
+
+Esta función solicita un valor por teclado. Podemos usarla sola, o combinarla con un mensaje explicativo:
+
+\[
+\texttt{input("Introduce tu texto aquí: ")}
+\]
+
+Por ejemplo:
+
+\[
+\texttt{nombre = input("Por favor, dime tu nombre: ")} \\
+\texttt{edad = input("Por favor, dime tu edad: ")}
+\]
+
+Es importante entender que todo lo que se ingresa a través de \texttt{input()} es interpretado como un \texttt{str}. Si deseamos operar con números, debemos convertir explícitamente el resultado:
+
+\[
+\texttt{edad = int(input("Por favor, dime tu edad: "))}
+\]
+
+Una advertencia común: no se puede concatenar directamente un número con una cadena. Por ejemplo:
+
+\begin{verbatim}
+pesokg = int(input("Introduce tu peso en kilos: ")) * 2.205
+print("Tu peso en libras es " + pesokg)  # Error
+\end{verbatim}
+
+La solución consiste en transformar el número a \texttt{str}, por ejemplo:
+
+\begin{verbatim}
+print("Tu peso en libras es " + str(pesokg))
+\end{verbatim}
+
+O bien, aplicar la conversión en el momento de asignación:
+
+\begin{verbatim}
+pesokg = str(int(input("Introduce tu peso en kilos: ")) * 2.205)
+print("Tu peso en libras es " + pesokg)
+\end{verbatim}
+
+Incluso podemos condensar múltiples líneas de interacción en una sola:
+
+\[
+\texttt{print(input("Escribe tu nombre: "))}
+\]
+
+Una instrucción breve, elegante y efectiva.
+
+
+
+\subsection*{Formateo de strings}
+
+Hasta ahora, hemos concatenado strings utilizando el operador \texttt{+}, lo cual puede volverse incómodo, especialmente cuando queremos incluir variables numéricas o construir frases complejas.
+
+Una forma más clara y moderna de componer textos es usando el método \texttt{format()}:
+
+\[
+\texttt{nombre = 'Ana'} \\
+\texttt{edad = 30} \\
+\texttt{frase = "Hola {}, tienes {} años".format(nombre, edad)}
+\]
+
+Desde Python 3.6, disponemos de una sintaxis aún más elegante: las \textbf{f-cadenas} o \texttt{f-strings}, las cuales permiten interpolar variables directamente en la cadena:
+
+\[
+\texttt{frase = f"Hola {nombre}, tienes {edad} años"}
+\]
+
+Una forma más legible y expresiva de construir mensajes personalizados.
+
+
+
+\section*{Día III}
+\subsection*{Listas en Python}
+
+Las listas son uno de los tipos de datos más versátiles en Python. Representan colecciones ordenadas y modificables, equivalentes a los conjuntos indexados de la matemática discreta.
+
+\[
+\texttt{frutas = []}
+\]
+
+Esto define una lista vacía. Podemos llenarla con elementos:
+
+\[
+\texttt{frutas = ["bananas", "manzana", "pera"]}
+\]
+
+Las listas pueden contener distintos tipos de datos (strings, números, booleanos), aunque mezclar tipos se considera una mala práctica.
+
+También pueden contener otras listas, formando estructuras anidadas:
+
+\[
+\texttt{misListas = [lista\_0, lista\_1, ..., lista\_n]}
+\]
+
+Este concepto recuerda a las familias de conjuntos, donde cada elemento también puede ser una colección.
+
+El acceso a los elementos de una lista es similar al de los strings:
+
+\[
+\texttt{frutas[0]} \Rightarrow \texttt{'bananas'}
+\]
+
+Y si tenemos una lista dentro de otra:
+
+\[
+\texttt{misListas[i][j]} \Rightarrow \texttt{elemento en la posición } j \text{ de la sublista } i
+\]
+
+
+
+\subsubsection*{Algunos métodos útiles de listas:}
+
+\begin{itemize}
+    \item \texttt{append(obj)} — Agrega un elemento al final de la lista.
+    \item \texttt{sort()} — Ordena los elementos alfabéticamente o numéricamente.
+    \item \texttt{sort(reverse=True)} — Orden descendente.
+    \item \texttt{remove(obj)} — Elimina la primera aparición del objeto.
+    \item \texttt{reverse()} — Invierte el orden de los elementos.
+    \item \texttt{len(lista)} — Devuelve el número de elementos.
+\end{itemize}
+
+Una diferencia clave con los strings es que las listas \textbf{son mutables}: sus elementos pueden modificarse directamente.
+
+
+
+\subsubsection*{Operaciones adicionales con listas:}
+
+\begin{itemize}
+    \item \textbf{Concatenación:} \texttt{lista1 + lista2} produce una nueva lista con los elementos de ambas.
+    \item \textbf{Repetición:} \texttt{lista * n} repite la lista \texttt{n} veces.
+    \item \textbf{Slicing:} funciona igual que con los strings: \texttt{lista[n:m]} devuelve una sublista desde el índice \texttt{n} hasta \texttt{m - 1}.
+\end{itemize}
+
+Estas propiedades reflejan una profunda analogía entre los strings y las listas: ambos son secuencias indexadas. A medida que profundicemos, veremos que muchas operaciones se comportan de manera análoga.
+
+
+¡Por supuesto! A continuación, te presento la versión revisada de tu texto, manteniendo el tono formal, claro y reflexivo que caracteriza al estilo Feynman. Se busca no solo explicar, sino también provocar intuición, y mostrar cómo lo que a simple vista parece arbitrario responde a una lógica interna poderosa.
+
+
+
+```latex
+\subsection*{Tuplas}
+
+Las \textbf{tuplas} son estructuras de datos similares a las listas, con una diferencia esencial: son \textit{inmutables}. Una vez creadas, no es posible modificar ni su tamaño ni los valores que contienen. Esta restricción, lejos de ser una desventaja, permite que las tuplas se utilicen como contenedores seguros de datos fijos, como veremos más adelante.
+
+Una tupla puede definirse de forma sencilla, por ejemplo:
+
+\[
+\texttt{t = 1, 2}
+\]
+
+O, si se desea explicitar la notación, usando paréntesis:
+
+\[
+\texttt{t = (1, 2)}
+\]
+
+A diferencia de las listas, en las tuplas está bien visto —e incluso resulta conveniente— combinar distintos tipos de datos. Esto se debe a que su propósito no es la manipulación iterativa de elementos, sino el almacenamiento compacto y protegido de múltiples atributos de una misma entidad. Por ejemplo:
+
+\[
+\texttt{info = ('Andrés', 'López', 20)}
+\]
+
+Podemos indexar y rebanar tuplas de forma idéntica a los strings o listas:
+
+\[
+\texttt{sub\_tupla = mi\_tupla[n:m:k]}
+\]
+
+No obstante, cualquier intento de reasignar un valor, como:
+
+\[
+\texttt{mi\_tupla[0] = 5}
+\]
+
+producirá un error, ya que las tuplas no permiten modificaciones directas.
+
+\paragraph{Métodos útiles}
+
+Las tuplas comparten ciertos métodos con listas y strings. Entre ellos:
+
+\begin{itemize}
+    \item \texttt{count(x)} — Devuelve cuántas veces aparece el valor \texttt{x}.
+    \item \texttt{index(x)} — Devuelve el índice de la primera aparición de \texttt{x}.
+\end{itemize}
+
+\paragraph{Desempaquetamiento}
+
+Una propiedad elegante de las tuplas es el \textbf{desempaquetamiento}: podemos asignar sus elementos directamente a variables, estableciendo una biyección entre los componentes y las variables:
+
+\[
+\texttt{tupla = (1, 2, 3)} \quad \Rightarrow \quad \texttt{a, b, c = tupla}
+\]
+
+Esto también es posible con listas:
+
+\[
+\texttt{miLista = [1, 2, 3]} \quad \Rightarrow \quad \texttt{a, b, c = miLista}
+\]
+
+\paragraph{¿Por qué usar tuplas?}
+
+A primera vista, las tuplas pueden parecer una versión limitada de las listas. Sin embargo, esta limitación es precisamente su virtud: al ser inmutables, son ideales para representar datos que no deben cambiar. Un ejemplo común es la fecha de nacimiento de un usuario, que debería permanecer fija durante toda su vida digital:
+
+\[
+\texttt{fecha\_nacimiento = (2001, 12, 15)}
+\]
+
+Las tuplas también pueden anidarse entre sí:
+
+\[
+\texttt{cliente = (('Andrés', 'López'), (2005, 6, 21))}
+\]
+
+Y pueden utilizarse para representar objetos con múltiples atributos:
+
+\[
+\texttt{auto = ('Ford', 'Fiesta', 'Rojo', 2021, 5, 1.6)}
+\]
+
+Desempaquetando esta tupla:
+
+\[
+\texttt{Marca, Tipo, Color, Modelo, Puertas, Motor = auto}
+\]
+
+Luego, podemos acceder fácilmente a cualquier atributo:
+
+\[
+\texttt{print(Tipo, Puertas)} \quad \Rightarrow \quad \texttt{Fiesta 5}
+\]
+
+
+
+\subsection*{Diccionarios}
+
+Los \textbf{diccionarios} constituyen otra estructura fundamental en Python. Se diferencian de listas y tuplas en que almacenan datos no por posición, sino por \textit{claves}.
+
+\paragraph{Sintaxis básica}
+
+Un diccionario se define utilizando llaves:
+
+\[
+\texttt{edades = \{'Andrés': 20, 'Julieta': 22\}}
+\]
+
+Cada elemento del diccionario es un par \texttt{clave: valor}. Las claves deben ser únicas y actúan como identificadores, mientras que los valores pueden repetirse libremente.
+
+No es posible acceder a los elementos por índice, como haríamos en una lista. En cambio, usamos la clave:
+
+\[
+\texttt{edades['Andrés']} \Rightarrow 20
+\]
+
+Podemos actualizar un valor de forma directa:
+
+\[
+\texttt{edades['Andrés'] = 21}
+\]
+
+También podemos agregar nuevos elementos:
+
+\[
+\texttt{edades['Laura'] = 22}
+\]
+
+\paragraph{Métodos útiles}
+
+\begin{itemize}
+    \item \texttt{dict.keys()} — Devuelve una lista con todas las claves.
+    \item \texttt{dict.values()} — Devuelve una lista con todos los valores.
+    \item \texttt{dict.items()} — Devuelve una lista de tuplas clave-valor.
+    \item \texttt{dict.get('clave')} — Similar a \texttt{dict['clave']}, pero sin error si la clave no existe.
+    \item \texttt{dict.update(\{'clave': valor\})} — Agrega o modifica elementos.
+\end{itemize}
+
+Un diccionario puede considerarse como una tabla de búsqueda rápida, ideal para representar bases de datos pequeñas, catálogos, o asociaciones clave-valor como la relación entre nombres y edades.
+
+
+
+\subsection*{Booleanos}
+
+Los \textbf{booleanos} son el tipo de dato más elemental en la lógica computacional. Solo pueden adoptar dos valores:
+
+\[
+\texttt{True} \quad \text{y} \quad \texttt{False}
+\]
+
+Ya los hemos encontrado al realizar comparaciones:
+
+\[
+\begin{aligned}
+x &= 2 \\
+y &= 4 \\
+x == y &\Rightarrow \texttt{False}
+\end{aligned}
+\]
+
+Este resultado puede asignarse a una variable:
+
+\[
+\texttt{comparar = (x == y)}
+\]
+
+
+
+\paragraph{Operadores lógicos}
+
+Python incluye varios operadores lógicos:
+
+\begin{itemize}
+    \item \texttt{and} — verdadero si ambas condiciones lo son.
+    \item \texttt{or} — verdadero si al menos una lo es.
+    \item \texttt{not} — invierte el valor lógico.
+\end{itemize}
+
+Ejemplo:
+
+\[
+z = 8 \quad \texttt{comparar = (x < y) and (y < z)} \quad \Rightarrow \texttt{True}
+\]
+
+También podemos usar el operador de desigualdad:
+
+\[
+\texttt{comparar = x != y} \quad \Rightarrow \texttt{True}
+\]
+
+Estos operadores corresponden directamente a los de la lógica proposicional formal. Su correcta comprensión es fundamental para el desarrollo de estructuras de control como condicionales y bucles, que exploraremos más adelante.
+
+\subsection*{Primera estructura de control: \texttt{if}}
+
+En lógica computacional, la estructura \texttt{if} representa una bifurcación condicional: el flujo del programa toma un camino u otro dependiendo del cumplimiento de una condición lógica. En los diagramas de flujo, esta bifurcación suele representarse mediante un rombo.
+
+Supongamos:
+
+\[
+\texttt{temperatura = 22}
+\]
+
+Si deseamos construir un programa que indique si hace calor, podemos escribir:
+
+\begin{verbatim}
+if temperatura > 20:
+    print("Hace calor")
+\end{verbatim}
+
+Naturalmente, esta condición puede evaluarse a partir de valores introducidos por el usuario:
+
+\begin{verbatim}
+temperatura = int(input("Dime la temperatura: "))
+if temperatura > 20:
+    print("Hace calor")
+\end{verbatim}
+
+\paragraph{Condiciones compuestas}
+
+Es posible encadenar condiciones lógicas usando conectores como \texttt{and}, \texttt{or} o \texttt{not}. Por ejemplo:
+
+\begin{verbatim}
+if temperatura > 16 and temperatura < 22:
+    print("El clima es agradable")
+\end{verbatim}
+
+Si la temperatura no se encuentra en ese rango, no se imprimirá nada. Este silencio lógico es parte del diseño del flujo: si la condición no se cumple, el programa sigue adelante sin ejecutar la instrucción anidada.
+
+También es posible trabajar con listas. Supongamos:
+
+\[
+\texttt{amigos = ['Juan', 'Ana', 'Laura']}
+\]
+
+\begin{verbatim}
+nombre = input("Dime un nombre: ")
+if nombre in amigos:
+    print(f"{nombre} está en mi grupo de amigos")
+\end{verbatim}
+
+Este fragmento verificará si el nombre ingresado corresponde a alguno en la lista, y actuará en consecuencia.
+
+\paragraph{Una curiosidad lógica}
+
+Un aspecto que suele confundir al principio es que las condiciones no tienen que ser comparaciones explícitas. Por ejemplo:
+
+\begin{verbatim}
+temperatura = True
+if temperatura:
+    print("Hace calor")
+\end{verbatim}
+
+Cualquier valor que no sea lógicamente falso (como \texttt{False}, \texttt{0}, \texttt{''}, o \texttt{None}) será evaluado como verdadero.
+
+\paragraph{Importancia de la indentación}
+
+La estructura del \texttt{if} en Python depende crucialmente de la indentación. El bloque de código dentro del \texttt{if} debe estar indentado (usualmente con 4 espacios o un tabulador). Esta indentación funciona como un delimitador estructural, análogo a las llaves \texttt{\{\}} en otros lenguajes.
+
+
+
+\subsection*{Estructuras de control: \texttt{if}, \texttt{elif}, \texttt{else}}
+
+Además de la condición principal mediante \texttt{if}, Python ofrece dos formas adicionales de controlar el flujo lógico: \texttt{elif} (else if) y \texttt{else}.
+
+Sea:
+
+\begin{verbatim}
+edad = int(input("Dime tu edad: "))
+if edad >= 18:
+    print("Adulto")
+else:
+    print("Menor")
+\end{verbatim}
+
+Aquí, el bloque \texttt{else} se ejecuta sólo si la condición del \texttt{if} resulta falsa.
+
+Podemos encadenar múltiples condiciones utilizando \texttt{elif}:
+
+\begin{verbatim}
+if edad >= 18:
+    print("Adulto")
+elif edad >= 13:
+    print("Adolescente")
+else:
+    print("Menor")
+\end{verbatim}
+
+Cada estructura condicional debe terminar con dos puntos \texttt{:}, lo que indica a Python que la línea siguiente pertenece a un nuevo bloque lógico.
+
+\paragraph{Ejemplo}
+
+Solicitemos tres números al usuario:
+
+\begin{verbatim}
+x1 = int(input("Ingresa x1: "))
+x2 = int(input("Ingresa x2: "))
+x3 = int(input("Ingresa x3: "))
+\end{verbatim}
+
+A partir de aquí, pueden construirse múltiples evaluaciones condicionales, comparaciones, o cálculos, dependiendo de los valores introducidos.
+
+
+
+\section*{Day IV}
+
+\subsection*{Loops}
+
+Los \textbf{bucles} o \textit{loops} son estructuras fundamentales en programación. Permiten ejecutar repetidamente un bloque de código mientras se cumpla cierta condición, o a lo largo de una secuencia de elementos.
+
+El primero que estudiaremos es el bucle \texttt{for}, cuya sintaxis general es:
+
+\begin{verbatim}
+for item in secuencia:
+    código a ejecutar
+\end{verbatim}
+
+Por ejemplo:
+
+\begin{verbatim}
+for numero in [0, 1, 2, 3, 4, 5]:
+    print(numero)
+\end{verbatim}
+
+Esto imprimirá los números del 0 al 5. Aquí, \texttt{numero} es una variable iteradora, y la lista es la colección sobre la que se itera.
+
+Otro ejemplo:
+
+\begin{verbatim}
+for letra in "python":
+    print(letra)
+\end{verbatim}
+
+Este código imprimirá las letras de la palabra “python” en vertical.
+
+\paragraph{Aplicación con listas}
+
+\begin{verbatim}
+paises = ['Argentina', 'Colombia', 'Perú', 'México']
+for p in paises:
+    largo = len(p)
+    print(f"{p} tiene {largo} letras")
+\end{verbatim}
+
+Este fragmento recorre la lista \texttt{paises} e imprime cuántas letras tiene cada uno.
+
+\paragraph{Condicionales dentro de bucles}
+
+Podemos anidar estructuras de control dentro del bucle:
+
+\begin{verbatim}
+for p in paises:
+    largo = len(p)
+    if largo > 6:
+        print(f"{p} tiene nombre largo ({largo} letras)")
+    else:
+        print(f"{p} tiene nombre corto ({largo} letras)")
+\end{verbatim}
+
+Esto permite ejecutar diferentes instrucciones dependiendo de la longitud de cada país.
+
+\paragraph{Bucles anidados}
+
+Incluso podemos tener bucles dentro de otros bucles. Esto se conoce como \textbf{anidamiento}:
+
+\begin{verbatim}
+colores = ['rojo', 'azul', 'verde']
+prendas = ['sombrero', 'pantalón', 'zapato']
+
+for color in colores:
+    for prenda in prendas:
+        print(prenda, color)
+\end{verbatim}
+
+Aquí, cada prenda se combina con cada color, generando un total de $3 \times 3 = 9$ combinaciones.
+
+
+
+\subsection*{La función \texttt{range()}}
+
+En muchos casos, deseamos iterar sobre una secuencia de números consecutivos. En lugar de escribir la lista manualmente, podemos usar la función \texttt{range()}:
+
+\begin{verbatim}
+for i in range(7):
+    print(i)
+\end{verbatim}
+
+Esto imprimirá los números del 0 al 6. Al igual que en la segmentación de listas, el límite superior es exclusivo.
+
+\paragraph{Otras formas de usar \texttt{range()}}
+
+\begin{itemize}
+    \item \texttt{range(inicio, fin)} — Desde \texttt{inicio} hasta \texttt{fin - 1}.
+    \item \texttt{range(inicio, fin, paso)} — Con incrementos o saltos de tamaño \texttt{paso}.
+\end{itemize}
+
+Ejemplos:
+
+\begin{verbatim}
+range(3, 10)         # 3, 4, 5, ..., 9
+range(2, 10, 2)      # 2, 4, 6, 8
+range(10, 0, -1)     # 10, 9, ..., 1
+\end{verbatim}
+
+La función \texttt{range()} nos evita definir manualmente secuencias numéricas y se convierte en una herramienta poderosa cuando combinamos bucles con lógica de control.
+
+\subsection*{While}
+
+A diferencia de los bucles \texttt{for}, que iteran sobre una secuencia previamente definida (como una lista o un rango), el bucle \texttt{while} ejecuta un bloque de código de forma indefinida hasta que una condición deje de cumplirse. Por tanto, el control de la repetición depende completamente de una condición lógica.
+
+Veamos un ejemplo básico:
+
+\begin{verbatim}
+contador = 0
+while contador < 5:
+    print(contador)
+    contador += 1
+\end{verbatim}
+
+Este bucle imprimirá los números del 0 al 4. Cuando la condición \texttt{contador < 5} ya no se cumpla, el bucle se detendrá automáticamente.
+
+\paragraph{Precaución}
+
+Es importante asegurarse de que la condición del \texttt{while} eventualmente se vuelva falsa. De lo contrario, se generará un \textbf{bucle infinito}, lo cual puede causar un uso excesivo de recursos y colgar el sistema.
+
+\paragraph{Control del flujo: \texttt{break} y \texttt{continue}}
+
+Python ofrece herramientas para modificar el comportamiento interno de los bucles. Las más comunes son:
+
+\begin{itemize}
+    \item \texttt{continue} — Interrumpe la iteración actual y salta a la siguiente.
+    \item \texttt{break} — Finaliza por completo el bucle, independientemente de si la condición se sigue cumpliendo.
+\end{itemize}
+
+Consideremos el siguiente código:
+
+\begin{verbatim}
+contador = 0
+while contador < 10:
+    contador += 1
+    if contador == 5:
+        continue
+    if contador == 8:
+        break
+    print(contador)
+\end{verbatim}
+
+Este programa imprimirá: \texttt{1, 2, 3, 4, 6, 7}. Nótese que el valor 5 es omitido (por \texttt{continue}) y el 8 detiene el ciclo por completo (por \texttt{break}).
+
+\paragraph{Importancia de la indentación}
+
+Como en todas las estructuras de control en Python, los bloques deben estar correctamente indentados. Es esta sangría la que define los límites del cuerpo del bucle.
+
+\subsection*{Funciones}
+
+Hemos venido utilizando funciones desde el inicio del curso, aunque no lo hayamos explicitado: \texttt{range()}, \texttt{type()}, \texttt{len()}, entre muchas otras. También los métodos que aplicamos sobre objetos, como \texttt{.upper()}, \texttt{.sort()} o \texttt{.count()}, son en esencia funciones asociadas a un tipo específico de dato.
+
+Una función es, en términos sencillos, un bloque de código reutilizable que realiza una tarea específica. En programación estructurada, las funciones nos permiten descomponer un problema complejo en subproblemas más simples y manejables.
+
+\paragraph{Definición de una función}
+
+Podemos definir una función en Python usando la palabra clave \texttt{def}. Por ejemplo:
+
+\begin{verbatim}
+def saludo():
+    print("Hola mundo")
+\end{verbatim}
+
+Al ejecutar este código no se imprimirá nada hasta que llamemos explícitamente a la función:
+
+\begin{verbatim}
+saludo()
+\end{verbatim}
+
+También podemos pasarle parámetros:
+
+\begin{verbatim}
+def tu_saludo(nombre):
+    print(f"Hola {nombre}")
+\end{verbatim}
+
+Llamar a \texttt{tu\_saludo()} sin argumento generará un error, ya que la función espera un parámetro.
+
+\paragraph{Funciones que devuelven un valor}
+
+Además de ejecutar instrucciones, una función puede devolver un resultado mediante la instrucción \texttt{return}:
+
+\begin{verbatim}
+def sumar(a, b):
+    resultado = a + b
+    return resultado
+\end{verbatim}
+
+Al invocar \texttt{sumar(2, 3)} obtendremos el valor \texttt{5}, pero si no lo asignamos a una variable, ese valor se perderá.
+
+\paragraph{Ejemplo más complejo}
+
+Supongamos que deseamos imprimir todos los números pares desde 0 hasta un número dado:
+
+\begin{verbatim}
+def imprimir_pares_hasta(n):
+    for numero in range(n):
+        if numero % 2 == 0:
+            print(numero)
+\end{verbatim}
+
+Esta función ilustra cómo podemos construir una operación más elaborada dentro del cuerpo de una función definida por el usuario.
+
+\subsection*{Funciones que llaman a funciones}
+
+Las funciones también pueden llamar a otras funciones, permitiéndonos construir programas complejos de forma modular y organizada. Esto fortalece la legibilidad y el mantenimiento del código.
+
+Consideremos:
+
+\begin{verbatim}
+def pedir_nombre():
+    nombre = input("Dime tu nombre: ")
+    return nombre
+
+def pedir_apellido():
+    apellido = input("Dime tu apellido: ")
+    return apellido
+
+def saludar():
+    saludo = f"Hola {pedir_nombre()} {pedir_apellido()}"
+    print(saludo)
+
+saludar()
+\end{verbatim}
+
+Aquí la función \texttt{saludar()} se apoya en otras dos funciones para recolectar información, y luego genera un saludo. Esta estrategia de "dividir para conquistar" es una de las más efectivas en programación.
+
+\paragraph{Aplicación en estructuras de datos}
+
+Ahora veamos cómo usar funciones con listas:
+
+\begin{verbatim}
+mi_lista = [1, 2, 3, 4, 5]
+
+def cuadrado(n):
+    return n * n
+
+def calcular_lista(numeros):
+    for numero in numeros:
+        resultado = cuadrado(numero)
+        print(f"El cuadrado de {numero} es {resultado}")
+
+calcular_lista(mi_lista)
+\end{verbatim}
+
+Este programa calcula e imprime el cuadrado de cada número de la lista. Hemos creado una función (\texttt{calcular\_lista}) que itera sobre una lista y utiliza otra función auxiliar (\texttt{cuadrado}) para realizar el cálculo.
+
+Este tipo de construcción modular nos permite extender fácilmente la funcionalidad del programa, aislar errores, y mejorar la reutilización del código.
+
+\section*{Day VI: Pandas}
+
+\subsection*{Tipos de datos en \texttt{pandas}}
+
+La biblioteca \texttt{pandas} es una de las herramientas más poderosas en el ecosistema Python para el análisis y manipulación de datos. Su uso está ampliamente difundido en el mundo de la ciencia de datos, y se le suele describir como el “Excel de Python” —aunque su capacidad va mucho más allá.
+
+En \texttt{pandas} trabajamos con dos estructuras de datos principales:
+
+\begin{itemize}
+    \item \textbf{Series} — estructuras unidimensionales con índice explícito, similares a un arreglo o una columna.
+    \item \textbf{DataFrames} — estructuras bidimensionales con filas e índices, equivalentes a una tabla.
+\end{itemize}
+
+Podemos pensar en una \texttt{Series} como una columna de una tabla, o incluso como un diccionario ordenado, y en un \texttt{DataFrame} como una colección ordenada de \texttt{Series}.
+
+\paragraph{Ejemplo:}
+
+\begin{verbatim}
+import pandas as pd
+
+datos = {
+    'nombre': ['Pedro', 'Juan', 'Lorena'],
+    'edad': [25, 39, 33]
+}
+
+df = pd.DataFrame(datos)
+df
+\end{verbatim}
+
+Este código crea un \texttt{DataFrame} a partir de un diccionario de listas. La función \texttt{pd.DataFrame()} toma los pares clave-valor del diccionario y los transforma en columnas (con las claves como nombres de columna).
+
+La salida será una tabla con dos columnas: \texttt{nombre} y \texttt{edad}, y tres filas correspondientes a cada persona. Si consultamos:
+
+\[
+\texttt{type(df)} \Rightarrow \texttt{pandas.core.frame.DataFrame}
+\]
+
+También podemos acceder a una columna específica utilizando su nombre como clave:
+
+\[
+\texttt{df['nombre']} \quad \text{o} \quad \texttt{df.nombre}
+\]
+
+Esto devuelve una \texttt{Series}, es decir, una estructura unidimensional con índice (por defecto 0, 1, 2...). Al consultar:
+
+\[
+\texttt{type(df['nombre'])} \Rightarrow \texttt{pandas.core.series.Series}
+\]
+
+Nótese que, a diferencia del \texttt{DataFrame}, la \texttt{Series} no tiene columnas, solo índice y valores.
+
+\paragraph{Resumen comparativo:}
+
+\begin{itemize}
+    \item \textbf{Series}: unidimensional; tiene \texttt{index} y \texttt{values}.
+    \item \textbf{DataFrame}: bidimensional; tiene \texttt{index}, \texttt{columns} y \texttt{values}.
+\end{itemize}
+
+Ambas estructuras tienen atributos, métodos, y pueden interactuar entre sí. En muchos sentidos, la \texttt{Series} es la unidad atómica del \texttt{DataFrame}.
+
+\subsection*{Trabajando con \texttt{DataFrames}}
+
+Además de crear \texttt{DataFrames} desde diccionarios o listas, también podemos importarlos directamente desde archivos externos, como hojas de cálculo o archivos \texttt{.csv}.
+
+\paragraph{Lectura de archivos \texttt{.csv}}
+
+\begin{verbatim}
+import pandas as pd
+
+df = pd.read_csv("C:/Users/adria/Downloads/Python Anderiotti/Precipitaciones.csv")
+\end{verbatim}
+
+El método \texttt{read\_csv()} lee un archivo delimitado por comas y lo convierte automáticamente en un \texttt{DataFrame}. Una vez cargado el archivo, podemos examinar el contenido del \texttt{DataFrame} con métodos específicos:
+
+\begin{itemize}
+    \item \texttt{df.head()} — muestra las primeras 5 filas por defecto. Podemos especificar cuántas queremos ver: \texttt{df.head(n)}.
+    \item \texttt{df.tail()} — muestra las últimas filas, útil para observar registros finales.
+    \item \texttt{df.shape} — devuelve una tupla con el número de filas y columnas: \texttt{(filas, columnas)}.
+    \item \texttt{df.columns} — lista las etiquetas de las columnas presentes en el \texttt{DataFrame}.
+    \item \texttt{df.info()} — ofrece un resumen del \texttt{DataFrame}, incluyendo el número de entradas, columnas, tipos de datos, y si hay datos faltantes.
+    \item \texttt{df.describe()} — genera estadísticas descriptivas para columnas numéricas: cuenta total, media, desviación estándar, mínimo, percentiles (25\%, 50\%, 75\%), y máximo.
+\end{itemize}
+
+Estos métodos son fundamentales en la etapa inicial de un análisis exploratorio de datos. Nos permiten tener una vista rápida del contenido, la estructura y la calidad de los datos que estamos manipulando.
+
+\paragraph{Ejemplo de uso:}
+
+\begin{verbatim}
+df.head(3)
+df.tail()
+df.shape
+df.columns
+df.info()
+df.describe()
+\end{verbatim}
+
+Con estas herramientas ya tenemos los fundamentos para comenzar a inspeccionar bases de datos reales y prepararlas para su posterior análisis.
+
+\subsection*{Series}
+
+En \texttt{pandas}, las \textbf{Series} son estructuras unidimensionales que representan listas indexadas de datos. Cada elemento de una \texttt{Series} está asociado a un índice que permite su identificación.
+
+Supongamos que cargamos un archivo \texttt{.csv} y accedemos a una columna específica:
+
+\begin{verbatim}
+import pandas as pd
+
+df1 = pd.read_csv(r'C:\Users\adria\Downloads\Python Anderiotti\Precipitaciones.csv')
+serie = df1.region
+serie.head()
+\end{verbatim}
+
+La llamada a \texttt{.head()} mostrará los primeros cinco elementos de la \texttt{Series}. Como ya sabemos, las \texttt{Series} no tienen columnas, ya que son estructuras lineales de datos, con un índice y un valor asociado por fila.
+
+\paragraph{Creación desde listas}
+
+También podemos construir \texttt{Series} manualmente a partir de listas:
+
+\begin{verbatim}
+datos = [10, 20, 30, 40, 50]
+serie2 = pd.Series(datos)
+serie2
+\end{verbatim}
+
+Esto generará una \texttt{Series} con índices por defecto (0, 1, 2, ...). Podemos asignar índices personalizados especificando una lista de etiquetas:
+
+\begin{verbatim}
+indices = ['a', 'b', 'c', 'd', 'e']
+serie2 = pd.Series(datos, index=indices)
+serie2
+\end{verbatim}
+
+Cada valor queda asociado a una clave alfabética, y podemos acceder directamente a cualquier elemento mediante su índice:
+
+\begin{verbatim}
+serie2['a']
+\end{verbatim}
+
+\texttt{type(serie2)} devuelve una \texttt{Series}, mientras que \texttt{type(serie2['a'])} devuelve el tipo del valor individual, en este caso un entero.
+
+\paragraph{Creación desde diccionarios}
+
+También podemos construir \texttt{Series} a partir de diccionarios:
+
+\begin{verbatim}
+capitales = {
+    'España': 'Madrid',
+    'Perú': 'Lima',
+    'Argentina': 'Buenos Aires'
+}
+
+serie3 = pd.Series(capitales)
+serie3
+\end{verbatim}
+
+En este caso, las claves del diccionario se convierten en los índices, y los valores en el contenido de la \texttt{Series}. Así, por ejemplo:
+
+\begin{verbatim}
+serie3['Perú']  # devuelve 'Lima'
+\end{verbatim}
+
+Esta flexibilidad convierte a las \texttt{Series} en estructuras altamente útiles para representar pares clave-valor, columnas individuales, o vectores etiquetados.
+
+\subsection*{Operaciones básicas con \texttt{Series}}
+
+Una de las grandes ventajas de las \texttt{Series} es que permiten realizar operaciones vectorizadas. Por ejemplo, podemos modificar un único valor:
+
+\begin{verbatim}
+serie[0] = serie[0] + 10
+\end{verbatim}
+
+Pero también podemos aplicar una operación a toda la \texttt{Series} con un solo comando:
+
+\begin{verbatim}
+serie = serie + 10
+serie = serie * 2
+\end{verbatim}
+
+Estas operaciones se aplican elemento por elemento, al igual que en un arreglo de \texttt{NumPy}, lo cual hace que el procesamiento de datos sea eficiente y elegante.
+
+\subsection*{Limpieza de datos}
+
+Antes de realizar análisis sobre un conjunto de datos, es fundamental realizar una etapa de \textbf{limpieza}. Si ignoramos esta etapa, corremos el riesgo de obtener conclusiones incorrectas o distorsionadas. La limpieza busca identificar y tratar:
+
+\begin{itemize}
+    \item Valores faltantes (nulos)
+    \item Datos duplicados
+    \item Valores atípicos o inválidos
+\end{itemize}
+
+Supongamos el siguiente conjunto de datos:
+
+\begin{verbatim}
+import pandas as pd
+
+data = {
+    "Id_producto": [1001, 1002, 1003, 1003],
+    "Cantidad_vendida": [30, None, 25, 25],
+    "Precio": [20.5, 15.0, None, 22.5]
+}
+
+df = pd.DataFrame(data)
+df
+\end{verbatim}
+
+\paragraph{Inspección inicial}
+
+Para comenzar, podemos usar:
+
+\begin{verbatim}
+df.info()
+\end{verbatim}
+
+Esto nos revela el número total de entradas y cuántas contienen valores no nulos. Las columnas que tengan menos de cuatro valores no nulos presentan datos faltantes.
+
+Para identificar los valores nulos usamos:
+
+\begin{verbatim}
+df.isnull()
+\end{verbatim}
+
+Esto devuelve un \texttt{DataFrame} del mismo tamaño, con valores booleanos: \texttt{True} donde hay un dato nulo. Más eficientemente, podemos obtener un resumen por columna:
+
+\begin{verbatim}
+df.isnull().sum()
+\end{verbatim}
+
+\paragraph{Eliminación y relleno de datos faltantes}
+
+Podemos eliminar todas las filas que contengan al menos un valor nulo con:
+
+\begin{verbatim}
+df_eliminados = df.dropna()
+\end{verbatim}
+
+Esto es útil cuando la pérdida de información no compromete el análisis, pero no siempre es lo más adecuado.
+
+Otra opción es rellenar los valores faltantes con un valor específico. Por ejemplo:
+
+\begin{verbatim}
+valores_nuevos = {
+    'Cantidad_vendida': 0,
+    'Precio': df['Precio'].mean()
+}
+
+df_rellenados = df.fillna(valores_nuevos)
+\end{verbatim}
+
+Aquí usamos el método \texttt{mean()} para obtener el valor promedio de la columna \texttt{Precio}, y lo asignamos a los valores faltantes de dicha columna.
+
+\paragraph{Conversión de tipos}
+
+Es común que al rellenar valores, se mezclen tipos de datos. Podemos forzar una columna a ser de tipo entero con:
+
+\begin{verbatim}
+df_rellenados['Cantidad_vendida'] = df_rellenados['Cantidad_vendida'].astype(int)
+\end{verbatim}
+
+\paragraph{Eliminación de duplicados}
+
+También es importante detectar y eliminar filas duplicadas. En nuestro ejemplo, el producto con ID 1003 aparece dos veces. Podemos conservar solo una de esas filas con:
+
+\begin{verbatim}
+df_unicos = df_rellenados.drop_duplicates(subset='Id_producto')
+\end{verbatim}
+
+Este comando mantiene únicamente la primera aparición de cada valor único en la columna \texttt{Id\_producto}.
+
+La limpieza de datos no es una tarea menor. Es el cimiento de cualquier análisis robusto: si los datos están mal, el análisis estará mal. Como dijo alguna vez un pionero de la computación: “\textit{Garbage in, garbage out}”. La elegancia del resultado está siempre subordinada a la calidad del dato.
+
+\subsection*{Filtrado de \texttt{Series}}
+
+El filtrado en \texttt{Series} es una operación fundamental en el análisis de datos: nos permite seleccionar únicamente aquellos elementos que cumplen una condición lógica, como si hiciéramos “preguntas” a la estructura.
+
+\paragraph{Ejemplo numérico:}
+
+\begin{verbatim}
+import pandas as pd
+
+serie = pd.Series([5, 10, 15, 20, 25])
+filtro = serie > 15
+serie_filtrada = serie[filtro]
+\end{verbatim}
+
+La variable \texttt{filtro} es una \texttt{Series} booleana, donde cada elemento indica si la condición se cumple o no. Al indexar \texttt{serie[filtro]}, obtenemos una nueva \texttt{Series} con solo aquellos elementos que satisfacen la condición.
+
+\paragraph{Ejemplo con texto:}
+
+\texttt{pandas} permite aplicar métodos de \texttt{strings} a columnas o series de tipo texto mediante el accesor \texttt{.str}. Supongamos:
+
+\begin{verbatim}
+serie2 = pd.Series(["banana", "pera", "melón", "manzana"])
+filtro2 = serie2.str.contains('m')
+serie2_filtrada = serie2[filtro2]
+\end{verbatim}
+
+El método \texttt{.contains()} devuelve \texttt{True} si la subcadena está presente. Así obtenemos, de manera elegante, todos los strings que contienen la letra \texttt{m}.
+
+\subsection*{Agregaciones en \texttt{Series}}
+
+Las funciones de agregación permiten sintetizar grandes volúmenes de información en un solo valor representativo: una media, una suma total, un valor extremo, entre otros. 
+
+\paragraph{Ejemplo:}
+
+\begin{verbatim}
+numeros = pd.Series([10, 20, 30, 40, 50])
+promedio = numeros.mean()
+total = numeros.sum()
+maximo = numeros.max()
+minimo = numeros.min()
+mediana = numeros.median()
+desviacion = numeros.std()
+cuantil = numeros.quantile(0.25)
+\end{verbatim}
+
+Estas funciones están optimizadas para operar directamente sobre estructuras numéricas. Notemos que \texttt{quantile()} requiere un parámetro entre 0 y 1 que representa el percentil deseado.
+
+\paragraph{Índices máximos:}
+
+Para conocer qué índice tiene el valor máximo de la \texttt{Series}, utilizamos:
+
+\begin{verbatim}
+indice_max = numeros.idxmax()
+\end{verbatim}
+
+Esto nos devuelve la posición (etiqueta del índice) donde se encuentra el valor máximo.
+
+\section*{Day VII: Pandas II}
+
+A medida que los conjuntos de datos crecen en complejidad, es fundamental desarrollar destrezas para filtrarlos, ordenarlos y agruparlos.
+
+\paragraph{Filtrar con condiciones:}
+
+Supongamos que ya tenemos una columna llamada \texttt{Salario} en nuestro \texttt{DataFrame}:
+
+\begin{verbatim}
+df['Salario'] = [30000, 45000, 38000, 32000]
+df['Salario'] = df['Salario'] + 2000
+\end{verbatim}
+
+Esto aplica la suma de forma vectorizada. Si deseamos obtener solo los registros con \texttt{Edad > 25}:
+
+\begin{verbatim}
+mayores_25 = df[df['Edad'] > 25]
+\end{verbatim}
+
+También podríamos trabajar con la \texttt{Serie} individualmente:
+
+\begin{verbatim}
+edades = df['Edad']
+mayores_25 = df[edades > 25]
+\end{verbatim}
+
+Ambas estrategias son equivalentes; el uso de una u otra depende de la claridad deseada.
+
+\subsection*{Ordenar y agrupar \texttt{DataFrames}}
+
+Estas son operaciones clave para estructurar y extraer significado de los datos.
+
+\paragraph{Ordenar con \texttt{sort\_values()}:}
+
+\begin{verbatim}
+df_ordenado = df.sort_values(by='Rating', ascending=False)
+df_ordenado.head(10)
+\end{verbatim}
+
+Ordenamos el \texttt{DataFrame} según la columna \texttt{Rating}, de forma descendente. Si deseamos ordenar por múltiples columnas (por ejemplo, \texttt{Rating} y \texttt{Recaudación\_M}):
+
+\begin{verbatim}
+df_ordenado = df.sort_values(by=['Rating', 'Recaudación_M'], ascending=False)
+\end{verbatim}
+
+Esto organiza primero por rating y, en caso de empate, por recaudación.
+
+\paragraph{Agrupar con \texttt{groupby()}:}
+
+El método \texttt{groupby()} permite segmentar los datos por categorías, y luego aplicar funciones de agregación sobre cada grupo.
+
+\begin{verbatim}
+df_agrupado = df.groupby('Género')['Rating'].mean()
+\end{verbatim}
+
+Esto calcula el promedio de \texttt{Rating} para cada género de película. De igual manera, podemos obtener la suma de la recaudación por año:
+
+\begin{verbatim}
+df_agrupado = df.groupby('Año')['Recaudación_M'].sum()
+df_agrupado = df_agrupado.sort_values(ascending=False).head(10)
+\end{verbatim}
+
+Aquí mostramos los 10 años con mayor recaudación.
+
+\subsection*{Fusionar \texttt{DataFrames} con \texttt{merge()}}
+
+La función \texttt{merge()} nos permite unir dos \texttt{DataFrames} basándonos en columnas comunes. Esto es esencial cuando se trabaja con información dispersa en varias fuentes.
+
+\paragraph{Ejemplo básico:}
+
+\begin{verbatim}
+df1 = pd.DataFrame({'ID': [1, 2, 3],
+                    'Nombre': ['Ana', 'Luis', 'Carlos']})
+
+df2 = pd.DataFrame({'ID': [1, 2, 4],
+                    'Edad': [25, 30, 22]})
+
+df_combinado = pd.merge(df1, df2, on='ID')
+\end{verbatim}
+
+Por defecto, \texttt{merge()} realiza una intersección de las filas: sólo conserva los registros con \texttt{ID} presentes en ambos \texttt{DataFrames} (\texttt{how='inner'}).
+
+\paragraph{Control de la estrategia de fusión:}
+
+\begin{itemize}
+  \item \texttt{how='outer'} — une todos los registros de ambos \texttt{DataFrames}, completando con \texttt{NaN} los datos ausentes.
+  \item \texttt{how='left'} — conserva todos los registros del \texttt{DataFrame} izquierdo.
+  \item \texttt{how='right'} — conserva todos los registros del \texttt{DataFrame} derecho.
+\end{itemize}
+
+\paragraph{Fusión por índice:}
+
+También es posible fusionar por índice:
+
+\begin{verbatim}
+df_indexado = pd.merge(df1, df2, left_index=True, right_index=True)
+\end{verbatim}
+
+Esto alinea ambos \texttt{DataFrames} por sus índices respectivos, columna a columna.
+
+\subsection*{Combinar \texttt{DataFrames}}
+
+En el trabajo con datos tabulares, es frecuente la necesidad de combinar información proveniente de distintas fuentes. Aquí es fundamental distinguir entre \textbf{fusionar} y \textbf{combinar} \texttt{DataFrames}.
+
+La combinación con el método \texttt{.join()} se realiza usando los \textbf{índices} como referencia, y no columnas comunes. En este enfoque, se asume que los índices de ambos \texttt{DataFrames} están alineados de forma coherente, o al menos que uno de los índices se puede usar como clave de enlace.
+
+\paragraph{Ejemplo:}
+
+\begin{verbatim}
+import pandas as pd
+
+df1 = pd.DataFrame({'Salario': [30000, 45000, 38000],
+                    'Antigüedad': [9, 13, 12]},
+                   index=[1, 2, 3])
+
+df2 = pd.DataFrame({'Ciudad': ['Madrid', 'Barcelona', 'Valencia'],
+                    'Jerarquía': ['Baja', 'Alta', 'Media']},
+                   index=[1, 2, 4])
+
+df_unido = df1.join(df2)
+df_unido
+\end{verbatim}
+
+Este procedimiento "pega" las columnas de \texttt{df2} a la derecha de \texttt{df1} basándose en la coincidencia de índices. Obsérvese que el índice 4, presente en \texttt{df2} pero no en \texttt{df1}, genera una fila con valores nulos en la parte correspondiente a \texttt{df1}.
+
+Este comportamiento es equivalente a usar \texttt{pd.merge()} con los parámetros \texttt{left\_index=True} y \texttt{right\_index=True}, lo cual sugiere que \texttt{join()} es esencialmente una interfaz simplificada para este tipo de fusión por índice. Adicionalmente, se pueden utilizar argumentos como \texttt{how='left'}, \texttt{'right'}, \texttt{'outer'} o \texttt{'inner'} para controlar la estrategia de combinación.
+
+\subsection*{Concatenar \texttt{DataFrames}}
+
+La concatenación consiste en apilar varios \texttt{DataFrames}, ya sea vertical u horizontalmente. Es particularmente útil cuando se desea añadir nuevos registros a un conjunto de datos existente, como por ejemplo ventas mensuales.
+
+\paragraph{Ejemplo:}
+
+\begin{verbatim}
+import pandas as pd
+
+df1 = pd.DataFrame({'Nombre': ["Juan", "Gabriela", "Elena"],
+                    'Edad': [23, 31, 21]})
+
+df2 = pd.DataFrame({'Nombre': ["Mario", "Lucía"],
+                    'Edad': [29, 24]})
+
+df_concatenado = pd.concat([df1, df2])
+df_concatenado
+\end{verbatim}
+
+Por defecto, \texttt{pd.concat()} opera a lo largo del eje 0 (\texttt{axis=0}), es decir, apila las filas. Si deseamos concatenar por columnas, podemos especificar \texttt{axis=1}. Aunque es menos común, conviene conocer ambas posibilidades.
+
+\paragraph{Índices y agrupación}
+
+Uno de los aspectos que puede resultar confuso es que los índices originales se mantienen, lo cual puede generar duplicaciones. Para resetear los índices, basta con:
+
+\begin{verbatim}
+df_concatenado = pd.concat([df1, df2], ignore_index=True)
+\end{verbatim}
+
+También podemos agrupar visualmente los datos según su origen utilizando el parámetro \texttt{keys}:
+
+\begin{verbatim}
+df_mensual = pd.concat([df1, df2], keys=['enero', 'febrero'])
+\end{verbatim}
+
+Esto nos indica de forma explícita a qué grupo pertenece cada fila, lo cual es muy útil cuando se combinan bloques de información temporal o categórica.
+
+\subsection*{Datos temporales en \texttt{pandas}}
+
+El análisis de datos temporales es una de las fortalezas de \texttt{pandas}. Esta biblioteca proporciona herramientas potentes para crear, interpretar y operar con fechas y tiempos.
+
+\paragraph{Generación de rangos de fechas}
+
+\begin{verbatim}
+fechas = pd.Series(pd.date_range('2024-01-01', periods=6))
+fechas
+\end{verbatim}
+
+El método \texttt{pd.date\_range()} es análogo a \texttt{range()}, pero trabaja con fechas. El parámetro \texttt{periods=6} genera seis fechas consecutivas a partir del punto inicial.
+
+Para especificar otra frecuencia temporal (por ejemplo, días, meses o semanas), usamos el parámetro \texttt{freq}, que acepta valores como \texttt{'D'}, \texttt{'M'}, \texttt{'Y'}, \texttt{'H'}, \texttt{'MIN'}, \texttt{'S'} (día, mes, año, hora, minuto, segundo). Podemos incluso especificar saltos, por ejemplo:
+
+\begin{verbatim}
+pd.date_range('2024-01-01', periods=4, freq='5D')
+\end{verbatim}
+
+\paragraph{Conversión desde texto}
+
+Muchas veces las fechas vienen en formatos poco estandarizados. Podemos convertir cadenas de texto a objetos \texttt{datetime} usando:
+
+\begin{verbatim}
+df['Fecha'] = pd.to_datetime(df['Fecha'], format='%d/%m/%Y')
+\end{verbatim}
+
+Esto transforma automáticamente la columna en un tipo \texttt{datetime64}, con soporte completo para operaciones temporales.
+
+\paragraph{Operaciones temporales}
+
+Una vez que las fechas están en formato adecuado, podemos operar sobre ellas con objetos como \texttt{Timedelta}:
+
+\begin{verbatim}
+df['Fecha'] + pd.Timedelta(days=5)
+\end{verbatim}
+
+Esto suma cinco días a cada elemento de la columna \texttt{Fecha}. Asimismo, podemos acceder a componentes individuales:
+
+\begin{verbatim}
+df['Fecha'].dt.year
+df['Fecha'].dt.month
+df['Fecha'].dt.weekday
+\end{verbatim}
+
+\subsection*{Leer y escribir archivos con \texttt{pandas}}
+
+Hasta ahora hemos trabajado con archivos \texttt{.csv}, pero \texttt{pandas} admite múltiples formatos de lectura y escritura: Excel, XML, JSON, HTML, entre otros.
+
+\paragraph{Lectura de archivos}
+
+\begin{verbatim}
+ruta_excel = 'C:/.../Compras_desde_ads.xlsx'
+ruta_xml = 'C:/.../Valores_de_acciones.xml'
+
+df1 = pd.read_excel(ruta_excel)
+df2 = pd.read_xml(ruta_xml)
+\end{verbatim}
+
+Estas funciones importan los datos directamente a \texttt{DataFrames} y permiten manipularlos como cualquier otro conjunto tabular.
+
+\paragraph{Escritura de archivos}
+
+Podemos guardar cualquier \texttt{DataFrame} como archivo externo. Supongamos:
+
+\begin{verbatim}
+numeros = {
+    'romanos': ['I', 'II', 'III', 'IV'],
+    'arábigos': [1, 2, 3, 4],
+    'texto': ['uno', 'dos', 'tres', 'cuatro']
+}
+
+df = pd.DataFrame(numeros)
+df['Fechas'] = pd.date_range('2024-01-01', periods=4)
+df.to_excel('C:/ruta/salida.xlsx', index=False)
+\end{verbatim}
+
+El argumento \texttt{index=False} evita que se exporte la columna de índices al archivo.
+
+También podemos guardar en formato \texttt{.csv}:
+
+\begin{verbatim}
+df.to_csv('C:/ruta/salida.csv', index=False)
+\end{verbatim}
+
+Esto permite exportar nuestros resultados o generar archivos nuevos directamente desde el entorno de Python.
+
+\subsection*{Acceso a elementos con \texttt{loc} e \texttt{iloc}}
+
+Para acceder a elementos específicos dentro de un \texttt{DataFrame}, \texttt{pandas} nos ofrece dos métodos fundamentales: \texttt{loc} e \texttt{iloc}.
+
+\paragraph{Método \texttt{loc}: por etiquetas}
+
+Permite acceder a filas y columnas mediante sus nombres:
+
+\begin{verbatim}
+df = pd.DataFrame({
+    'Col1': [100, 200, 300],
+    'Col2': [400, 500, 600],
+    'Col3': [700, 800, 900]
+}, index=['fila1', 'fila2', 'fila3'])
+
+df.loc['fila1']
+df.loc[['fila1', 'fila3']]
+df.loc['fila1':'fila3']
+df.loc[df['Col1'] > 150]
+df.loc[:, ['Col1', 'Col2']]
+\end{verbatim}
+
+Una particularidad importante: en las segmentaciones con \texttt{loc}, el rango incluye ambos extremos.
+
+\paragraph{Método \texttt{iloc}: por posición}
+
+Opera de forma análoga a \texttt{loc}, pero accede a través de posiciones enteras:
+
+\begin{verbatim}
+df.iloc[0]            # primera fila
+df.iloc[:, [0, 1]]    # primeras dos columnas
+df.iloc[1:3]          # de fila 1 a 2 (excluye la 3)
+\end{verbatim}
+
+La segmentación por posición funciona de forma estándar: el índice final no se incluye, como es habitual en Python.
+
+Ambos métodos son esenciales para tareas de filtrado, selección y modificación de subconjuntos en \texttt{DataFrames}. Elegir entre ellos depende del tipo de acceso que se desea: por etiquetas (\texttt{loc}) o por índices numéricos (\texttt{iloc}).
+
+\section*{Numpy}
+\subsection*{Introducción a NumPy}
+
+\texttt{NumPy} —abreviatura de \textit{Numerical Python}— es una de las bibliotecas fundamentales en la computación científica con Python. Su papel es tan central en el ecosistema de ciencia de datos que se lo considera la base sobre la cual se construyen bibliotecas más avanzadas, como \texttt{pandas}, \texttt{scikit-learn} y \texttt{TensorFlow}.
+
+Para comenzar a utilizarla, importamos la biblioteca utilizando la convención:
+
+\begin{verbatim}
+import numpy as np
+\end{verbatim}
+
+Esto nos permite acceder a sus métodos de manera concisa mediante el alias \texttt{np}. Una vez importado, basta con escribir \texttt{np.} y presionar \texttt{Tab} para explorar los cientos de métodos disponibles.
+
+Además, importaremos \texttt{pandas} para interactuar con datos tabulares, como ya lo hemos hecho en lecciones anteriores:
+
+\begin{verbatim}
+import pandas as pd
+\end{verbatim}
+
+\paragraph{Aplicación sobre un DataFrame}
+
+Supongamos que tenemos un archivo \texttt{CSV} con información demográfica y turística de varias ciudades. Lo cargamos como:
+
+\begin{verbatim}
+df = pd.read_csv('ruta/al/archivo.csv')
+\end{verbatim}
+
+Ahora imaginemos que queremos calcular el promedio de población entre todas las ciudades del conjunto de datos. En \texttt{pandas} lo hacemos con:
+
+\begin{verbatim}
+promedio = df['Población'].mean()
+\end{verbatim}
+
+Si este valor resulta tener decimales, podemos redondearlo usando NumPy:
+
+\begin{verbatim}
+promedio_redondeado = np.round(promedio)
+\end{verbatim}
+
+Del mismo modo, podemos usar las funciones \texttt{np.min()} y \texttt{np.max()} para encontrar valores extremos en otras columnas, por ejemplo:
+
+\begin{verbatim}
+min_visitantes = np.min(df['Visitantes'])
+max_visitantes = np.max(df['Visitantes'])
+\end{verbatim}
+
+Aunque estas operaciones también pueden realizarse desde \texttt{pandas}, hacerlo desde NumPy es un primer paso para familiarizarnos con su sintaxis y ventajas.
+
+\paragraph{Exploración de funciones}
+
+\texttt{NumPy} contiene una enorme cantidad de funciones. Para descubrirlas, podemos simplemente ejecutar:
+
+\begin{verbatim}
+dir(np)
+\end{verbatim}
+
+La amplitud de herramientas incluye operaciones estadísticas, transformaciones matriciales, álgebra lineal, generación de números aleatorios, manipulación de datos multidimensionales, entre muchas otras. El verdadero poder de NumPy se encuentra en su tipo de dato central: el \textbf{array}.
+
+\subsection*{Arrays}
+
+El objeto fundamental de NumPy es el \texttt{ndarray} (n-dimensional array), una estructura de datos homogénea diseñada para realizar operaciones numéricas de forma eficiente y vectorizada.
+
+\paragraph{Creación de un array:}
+
+\begin{verbatim}
+mi_array = np.array(range(1, 6))
+\end{verbatim}
+
+Esto crea un array con los enteros del 1 al 5. A primera vista puede parecer una lista común de Python, pero internamente es muy diferente. Si consultamos su tipo:
+
+\begin{verbatim}
+type(mi_array)  # <class 'numpy.ndarray'>
+\end{verbatim}
+
+\paragraph{Comparación de rendimiento:}
+
+NumPy es notablemente más eficiente que las listas de Python para grandes volúmenes de datos. Veámoslo con un ejemplo:
+
+\begin{verbatim}
+import time
+
+lista_grande = list(range(1000000))
+array_grande = np.array(lista_grande)
+
+# Tiempo con lista
+inicio_lista = time.time()
+for i in lista_grande:
+    i  2
+fin_lista = time.time()
+print("Tiempo lista:", fin_lista - inicio_lista)
+
+# Tiempo con array
+inicio_array = time.time()
+array_grande  2  # Operación vectorizada
+fin_array = time.time()
+print("Tiempo array:", fin_array - inicio_array)
+\end{verbatim}
+
+Aquí estamos aplicando la operación de elevar al cuadrado a un millón de elementos. Mientras que con la lista se requiere iterar elemento por elemento, con el array basta con una única operación vectorizada. Esto demuestra con claridad la superioridad de rendimiento de \texttt{NumPy}.
+
+\paragraph{Ventajas técnicas de los arrays de NumPy:}
+
+\begin{enumerate}
+  \item \textbf{Uso eficiente de memoria:} Los arrays son homogéneos, es decir, todos sus elementos son del mismo tipo. Esto permite optimizar el uso de memoria, al contrario de las listas de Python que son heterogéneas y almacenan referencias a objetos.
+  
+  \item \textbf{Acceso contiguo en memoria:} Los arrays son almacenados en bloques de memoria contiguos, lo cual permite un acceso más rápido por parte de la CPU, mejorando la eficiencia computacional.
+  
+  \item \textbf{Operaciones vectorizadas:} NumPy permite operar sobre todo el array sin necesidad de bucles explícitos. Esto no solo mejora la legibilidad del código, sino que también aprovecha la arquitectura del hardware para acelerar cálculos.
+  
+  \item \textbf{Funciones matemáticas optimizadas:} Internamente, NumPy utiliza código compilado en C y Fortran. Esto le otorga una velocidad muy superior frente a las operaciones análogas realizadas en Python puro.
+\end{enumerate}
+
+Estas características convierten a los arrays de NumPy en herramientas esenciales para cualquier tarea que implique tratamiento numérico a gran escala.
+
+\subsection*{Tipos de \texttt{Arrays}}
+
+Los \texttt{arrays} en \texttt{NumPy} son estructuras de datos indexadas, similares en comportamiento a listas y series, pero con una implementación optimizada para cálculos numéricos. Pueden ser unidimensionales, bidimensionales o tener múltiples dimensiones (n-dimensionales).
+
+\paragraph{Ejemplo básico:}
+
+\begin{verbatim}
+import numpy as np
+
+array = np.array([1, 2, 3])
+len(array)         # 3
+array.shape        # (3,)
+\end{verbatim}
+
+El atributo \texttt{shape} nos devuelve una tupla que describe la estructura del array. En este caso, se trata de un array unidimensional de longitud 3.
+
+\paragraph{Arrays bidimensionales:}
+
+\begin{verbatim}
+array_2d = np.array([[1, 2, 3],
+                     [4, 5, 6]])
+array_2d
+\end{verbatim}
+
+Visualmente, esto representa una tabla de 2 filas y 3 columnas. Al consultar su longitud:
+
+\begin{verbatim}
+len(array_2d)         # 2
+array_2d.shape        # (2, 3)
+\end{verbatim}
+
+\texttt{len()} retorna la cantidad de filas (dimensión 0), mientras que \texttt{shape} devuelve ambas dimensiones, donde la primera indica el número de filas y la segunda el número de columnas. Así, \texttt{shape = (2, 3)} representa 2 listas internas con 3 elementos cada una.
+
+\subsection*{Manipulación de \texttt{Arrays} en \texttt{NumPy}}
+
+\texttt{NumPy} permite realizar manipulaciones estructurales sobre arrays, como concatenación, redimensionamiento, operaciones matemáticas, entre otras.
+
+\paragraph{Concatenación:}
+
+\begin{verbatim}
+x = [1, 2, 3]
+y = [1, 2, 3]
+z = [1, 2, 3]
+
+np.concatenate([x, y, z])
+\end{verbatim}
+
+Esto concatena las listas de forma secuencial, devolviendo un único array unidimensional. También es posible trabajar con arrays bidimensionales:
+
+\begin{verbatim}
+a = [[1, 2],
+     [3, 4]]
+
+b = [[5, 6],
+     [7, 8]]
+
+np.concatenate([a, b], axis=0)  # Concatenación vertical
+np.concatenate([a, b], axis=1)  # Concatenación horizontal
+\end{verbatim}
+
+\paragraph{Redimensionamiento:}
+
+\texttt{reshape()} permite cambiar la estructura de un array sin modificar su contenido:
+
+\begin{verbatim}
+array = np.array([1, 2, 3, 4])
+array_reshaped = array.reshape((2, 2))
+\end{verbatim}
+
+El contenido se reorganiza en la nueva forma especificada (en este caso, una matriz de 2x2).
+
+\paragraph{Operaciones vectorizadas:}
+
+Los arrays permiten realizar operaciones elemento a elemento de manera directa y eficiente:
+
+\begin{verbatim}
+array_sumado = array + array
+array_multiplicado = array * array
+raices = np.sqrt(array)
+\end{verbatim}
+
+Estas operaciones se aplican simultáneamente a todos los elementos, sin necesidad de bucles.
+
+\subsection*{Indexación y Segmentación en \texttt{Arrays}}
+
+\texttt{NumPy} proporciona mecanismos poderosos para acceder a datos dentro de un array. Esto incluye indexación directa, segmentación (slicing) y selección mediante máscaras booleanas.
+
+\paragraph{Indexación simple:}
+
+\begin{verbatim}
+array1d = np.array([1, 2, 3, 4, 5])
+array1d[0]     # 1
+\end{verbatim}
+
+\begin{verbatim}
+array2d = np.array([[1, 2, 3],
+                    [4, 5, 6],
+                    [7, 8, 9]])
+array2d[-1]        # [7, 8, 9]
+array2d[1][-1]     # 6
+array2d[1, -1]     # 6 (equivalente)
+\end{verbatim}
+
+\paragraph{Segmentación (slicing):}
+
+\texttt{Slicing} permite extraer subconjuntos de un array:
+
+\begin{verbatim}
+array1d[1:4]           # [2, 3, 4]
+
+array2d[1, :]          # Fila completa: [4, 5, 6]
+array2d[1, 1:3]        # [5, 6]
+array2d[:2, :2]        # Subarray 2x2 de las primeras filas y columnas
+\end{verbatim}
+
+\paragraph{Indexación booleana:}
+
+Permite seleccionar elementos que cumplan condiciones lógicas:
+
+\begin{verbatim}
+array1d > 3
+# Devuelve: [False, False, False, True, True]
+
+array1d[array1d > 3]
+# Devuelve: [4, 5]
+
+array2d % 2 == 0
+# Devuelve una matriz booleana indicando la paridad de cada elemento
+\end{verbatim}
+
+La indexación booleana es fundamental en tareas de filtrado masivo y selección condicional dentro de grandes volúmenes de datos. Es el análogo directo del filtrado por condiciones en \texttt{pandas}.
+
+\subsection*{Forma y Estructura de los \texttt{Arrays} de \texttt{NumPy}}
+
+En esta sección abordaremos cómo modificar la forma y el tamaño de los \texttt{arrays} en \texttt{NumPy} utilizando métodos especializados. Recordemos que el atributo \texttt{.shape} nos informa sobre la estructura de un array: por ejemplo, \texttt{(n,)} para un array unidimensional y \texttt{(n, m)} para uno bidimensional.
+
+\paragraph{Reshape:}
+
+Podemos cambiar la forma de un array con \texttt{reshape()}, siempre que la cantidad total de elementos se conserve:
+
+\begin{verbatim}
+import numpy as np
+
+array = np.array([1, 2, 3, 4, 5, 6, 7, 8, 9])
+array_mod = array.reshape(3, 3)
+\end{verbatim}
+
+Aquí el array original de 9 elementos se reorganiza en una matriz de 3x3. \texttt{NumPy} también permite usar el argumento \texttt{-1} para que se calcule automáticamente la dimensión faltante:
+
+\begin{verbatim}
+array_mod = array.reshape(-1, 3)
+\end{verbatim}
+
+Esto indica que deseamos 3 columnas y dejamos que \texttt{NumPy} determine cuántas filas se requieren.
+
+\paragraph{Transposición:}
+
+Para obtener la matriz transpuesta (intercambio de filas por columnas), utilizamos:
+
+\begin{verbatim}
+array_volteado = array_mod.transpose()
+\end{verbatim}
+
+\paragraph{Achatamiento de arrays:}
+
+Existen dos métodos principales para convertir arrays multidimensionales en unidimensionales:
+
+\begin{verbatim}
+array_chato = array_mod.flatten()
+array_ravel = array_mod.ravel()
+\end{verbatim}
+
+Ambos devuelven una versión "plana" del array. Sin embargo, \texttt{flatten()} genera una \textbf{copia} independiente, mientras que \texttt{ravel()} devuelve una \textbf{vista} del array original. Esto implica diferencias en consumo de memoria y comportamiento ante modificaciones posteriores.
+
+\subsection*{Operaciones Avanzadas y Funciones Universales}
+
+\subsubsection*{Broadcasting}
+
+\texttt{Broadcasting} es una característica poderosa de \texttt{NumPy} que permite realizar operaciones entre arrays de diferentes formas de manera eficiente, siempre que las dimensiones sean compatibles según reglas específicas de expansión.
+
+\begin{verbatim}
+array1 = np.array([1, 2, 3])
+array2 = np.array([[0], [10], [20], [30]])
+
+broadcast_suma = array2 + array1
+\end{verbatim}
+
+El resultado es:
+
+\begin{verbatim}
+array([[ 1,  2,  3],
+       [11, 12, 13],
+       [21, 22, 23],
+       [31, 32, 33]])
+\end{verbatim}
+
+Aquí, \texttt{NumPy} ha replicado internamente \texttt{array1} en cada fila de \texttt{array2}, permitiendo realizar la suma vectorial sin necesidad de bucles explícitos.
+
+\paragraph{Multiplicación por broadcasting:}
+
+\begin{verbatim}
+broadcast_multi = array2 * array1
+\end{verbatim}
+
+Resultado:
+
+\begin{verbatim}
+array([[ 0,  0,  0],
+       [10, 20, 30],
+       [20, 40, 60],
+       [30, 60, 90]])
+\end{verbatim}
+
+\subsubsection*{Funciones Universales (ufunc)}
+
+Las \textit{universal functions} o \texttt{ufuncs} son funciones vectorizadas que se aplican elemento por elemento a arrays de manera eficiente. Se dividen en varias categorías: aritméticas, estadísticas, trigonométricas, exponenciales, lógicas, entre otras.
+
+\paragraph{Operaciones aritméticas básicas:}
+
+\begin{verbatim}
+a = np.array([1, 2, 3])
+b = np.array([4, 5, 6])
+
+np.add(a, b)         # array([5, 7, 9])
+np.subtract(a, b)    # array([-3, -3, -3])
+np.multiply(a, b)    # array([4, 10, 18])
+np.divide(a, b)      # array([0.25, 0.4, 0.5])
+\end{verbatim}
+
+También existen funciones como \texttt{negative()}, \texttt{power()} y \texttt{mod()}.
+
+\paragraph{Funciones matemáticas elementales:}
+
+\begin{verbatim}
+np.exp(a)       # e^x para cada elemento
+np.log(a)       # logaritmo natural
+np.log10(a)     # logaritmo base 10
+np.sqrt(a)      # raíz cuadrada
+\end{verbatim}
+
+\paragraph{Funciones universales más frecuentes:}
+
+\begin{center}
+\renewcommand{\arraystretch}{1.25}
+\begin{longtable}{|p{4cm}|p{3.5cm}|p{7cm}|}
+\hline
+\textbf{Categoría} & \textbf{Función} & \textbf{Descripción} \\
+\hline
+\multirow{7}{*}{Aritméticas} & \texttt{add} & Suma elemento a elemento. \\
+& \texttt{subtract} & Resta elemento a elemento. \\
+& \texttt{multiply} & Multiplicación elemento a elemento. \\
+& \texttt{divide} & División elemento a elemento. \\
+& \texttt{negative} & Cambio de signo. \\
+& \texttt{power} & Potenciación elemento a elemento. \\
+& \texttt{mod} & Módulo entre elementos. \\
+\hline
+\multirow{6}{*}{Trigonométricas} & \texttt{sin} & Seno. \\
+& \texttt{cos} & Coseno. \\
+& \texttt{tan} & Tangente. \\
+& \texttt{arcsin} & Arcoseno. \\
+& \texttt{arccos} & Arcocoseno. \\
+& \texttt{arctan} & Arcotangente. \\
+\hline
+\multirow{6}{*}{Hiperbólicas} & \texttt{sinh} & Seno hiperbólico. \\
+& \texttt{cosh} & Coseno hiperbólico. \\
+& \texttt{tanh} & Tangente hiperbólica. \\
+& \texttt{arcsinh} & Arcoseno hiperbólico. \\
+& \texttt{arccosh} & Arcocoseno hiperbólico. \\
+& \texttt{arctanh} & Arcotangente hiperbólica. \\
+\hline
+\multirow{6}{*}{Exponencial y logaritmo} & \texttt{exp} & Exponencial. \\
+& \texttt{log} & Logaritmo natural. \\
+& \texttt{log2} & Logaritmo base 2. \\
+& \texttt{log10} & Logaritmo base 10. \\
+& \texttt{expm1} & $e^x - 1$ para estabilidad numérica. \\
+& \texttt{log1p} & $\log(1 + x)$ para estabilidad numérica. \\
+\hline
+\multirow{7}{*}{Estadísticas} & \texttt{sum} & Suma total. \\
+& \texttt{prod} & Producto total. \\
+& \texttt{mean} & Media aritmética. \\
+& \texttt{std} & Desviación estándar. \\
+& \texttt{var} & Varianza. \\
+& \texttt{min} & Valor mínimo. \\
+& \texttt{max} & Valor máximo. \\
+\hline
+\multirow{6}{*}{Comparación} & \texttt{greater} & Mayor que. \\
+& \texttt{less} & Menor que. \\
+& \texttt{equal} & Igualdad. \\
+& \texttt{not\_equal} & Desigualdad. \\
+& \texttt{greater\_equal} & Mayor o igual. \\
+& \texttt{less\_equal} & Menor o igual. \\
+\hline
+\end{longtable}
+\end{center}
+
+\subsection*{Tratamiento de Datos Faltantes con \texttt{NumPy}}
+
+Ya hemos abordado la limpieza de datos faltantes en \texttt{pandas}; sin embargo, \texttt{NumPy} también proporciona herramientas específicas para el tratamiento de valores ausentes. En este contexto, los datos faltantes se representan mediante el valor especial \texttt{np.nan} (\textit{Not a Number}), equivalente al comportamiento observado en \texttt{pandas}.
+
+\paragraph{Identificación de valores faltantes:}
+
+\begin{verbatim}
+import numpy as np
+
+array = np.array([1, 2, np.nan, 4, 5])
+np.isnan(array)
+\end{verbatim}
+
+El método \texttt{np.isnan()} devuelve un array booleano que indica qué posiciones contienen un \texttt{NaN}.
+
+\paragraph{Problemas con funciones estándar:}
+
+\begin{verbatim}
+np.mean(array)  # Devuelve nan
+\end{verbatim}
+
+Dado que al menos un elemento es no numérico, la función \texttt{mean()} propaga el \texttt{NaN}. Para solucionar esto, \texttt{NumPy} proporciona versiones que ignoran explícitamente los \texttt{NaN}:
+
+\begin{verbatim}
+np.nanmean(array)
+\end{verbatim}
+
+\paragraph{Resumen de funciones tolerantes a \texttt{NaN}:}
+
+\begin{center}
+\renewcommand{\arraystretch}{1.25}
+\begin{longtable}{|p{4cm}|p{11cm}|}
+\hline
+\textbf{Función} & \textbf{Descripción} \\
+\hline
+\texttt{np.nanmean} & Media ignorando los \texttt{NaN}. \\
+\texttt{np.nanmedian} & Mediana ignorando los \texttt{NaN}. \\
+\texttt{np.nansum} & Suma total sin contar los \texttt{NaN}. \\
+\texttt{np.nanmax} & Máximo valor excluyendo los \texttt{NaN}. \\
+\texttt{np.nanmin} & Mínimo valor excluyendo los \texttt{NaN}. \\
+\texttt{np.nanstd} & Desviación estándar ignorando los \texttt{NaN}. \\
+\texttt{np.nanvar} & Varianza ignorando los \texttt{NaN}. \\
+\texttt{np.nanargmax} & Índice del valor máximo, ignorando los \texttt{NaN}. \\
+\texttt{np.nanargmin} & Índice del valor mínimo, ignorando los \texttt{NaN}. \\
+\texttt{np.nancumsum} & Suma acumulativa ignorando los \texttt{NaN}. \\
+\texttt{np.nancumprod} & Producto acumulativo ignorando los \texttt{NaN}. \\
+\hline
+\end{longtable}
+\end{center}
+
+\paragraph{Sustitución de valores faltantes:}
+
+Podemos reemplazar valores \texttt{NaN} mediante la función \texttt{np.where()}, que permite aplicar una lógica condicional vectorizada.
+
+\begin{verbatim}
+array_con_0 = np.where(np.isnan(array), 0, array)
+\end{verbatim}
+
+Aquí, cada \texttt{NaN} es reemplazado por cero. Si en su lugar queremos imputar el valor promedio de los datos válidos:
+
+\begin{verbatim}
+promedio = np.nanmean(array)
+array_con_promedio = np.where(np.isnan(array), promedio, array)
+\end{verbatim}
+
+\paragraph{Filtrado de valores faltantes:}
+
+También es posible eliminar directamente los elementos faltantes utilizando indexación booleana:
+
+\begin{verbatim}
+array_filtrado = array[~np.isnan(array)]
+\end{verbatim}
+
+La negación \texttt{\textasciitilde{}} permite seleccionar los valores que no son \texttt{NaN}, funcionalmente equivalente a una hipotética función \texttt{np.isnotnan()}.
+
+\textbf{Nota:} Por convención, las funciones de \texttt{NumPy} que toleran valores faltantes comienzan con el prefijo \texttt{np.nan*}. Esta es una regla práctica útil para su descubrimiento.
+
+\subsection*{Importación y Exportación de Datos con \texttt{NumPy}}
+
+\texttt{NumPy} también dispone de utilidades para importar y exportar datos, aunque su soporte no es tan extenso como el de \texttt{pandas}. Para importar datos tabulados desde archivos de texto, utilizamos:
+
+\paragraph{Lectura de archivos CSV:}
+
+\begin{verbatim}
+import numpy as np
+
+ruta = "C:/ruta/del/archivo/medallas.csv"
+array = np.genfromtxt(ruta, delimiter=',')
+\end{verbatim}
+
+Este método es análogo a \texttt{read\_csv()} de \texttt{pandas}, pero los datos se cargan directamente en un \texttt{ndarray}. Si el archivo contiene encabezados, texto u otros elementos no numéricos, es probable que se introduzcan valores \texttt{NaN} de manera indeseada.
+
+\paragraph{Configuración de parámetros:}
+
+\begin{verbatim}
+array = np.genfromtxt(ruta,
+                      delimiter=',',
+                      filling_values=0,
+                      skip_header=1,
+                      dtype=int)
+\end{verbatim}
+
+\begin{itemize}
+  \item \texttt{delimiter=','}: define el carácter separador.
+  \item \texttt{filling\_values=0}: sustituye los valores faltantes por cero.
+  \item \texttt{skip\_header=1}: omite la primera fila (usualmente encabezado).
+  \item \texttt{dtype=int}: fuerza a que los datos se interpreten como enteros.
+\end{itemize}
+
+\paragraph{Exportación de datos:}
+
+También podemos exportar arrays a archivos CSV utilizando el método \texttt{savetxt()}:
+
+\begin{verbatim}
+array_ejemplo = np.array([[1, 2, 3],
+                          [4, 5, 6]])
+
+ruta_export = "C:/ruta/de/salida/mi_array.csv"
+
+np.savetxt(ruta_export,
+           array_ejemplo,
+           delimiter=',',
+           fmt='%d')
+\end{verbatim}
+
+\texttt{fmt='\%d'} especifica que los datos deben escribirse como enteros. En ausencia de este parámetro, los números podrían ser exportados como flotantes en notación científica (\textit{e.g.}, 1.000000e+00).
+
+\subsection*{Integración de \texttt{NumPy} con \texttt{Pandas}}
+
+El objetivo de esta lección es comprender cómo interactúan \texttt{NumPy} y \texttt{Pandas} en el análisis de datos. Ambas bibliotecas están estrechamente integradas: de hecho, \texttt{Pandas} utiliza internamente muchas de las funcionalidades de \texttt{NumPy}. Conocer esta relación nos permitirá movernos con fluidez entre estructuras y aplicar lo mejor de cada biblioteca.
+
+Comencemos explorando cómo convertir un \texttt{DataFrame} de \texttt{Pandas} en un \texttt{array} de \texttt{NumPy}. Para ello, asegurémonos de importar ambas bibliotecas:
+
+\begin{verbatim}
+import pandas as pd
+import numpy as np
+\end{verbatim}
+
+Creamos un \texttt{DataFrame} de ejemplo:
+
+\begin{verbatim}
+df = pd.DataFrame({
+    'Impares': [1, 3, 5],
+    'Pares': [2, 4, 6]
+})
+df
+\end{verbatim}
+
+Existen dos formas equivalentes para convertir este \texttt{DataFrame} en un \texttt{array} de \texttt{NumPy}:
+
+\begin{verbatim}
+np1 = df.values
+np2 = df.to_numpy()
+\end{verbatim}
+
+Ambas nos devolverán una matriz bidimensional de enteros. Internamente, \texttt{df.values} es un alias de acceso directo al atributo subyacente, mientras que \texttt{to\_numpy()} es el método recomendado por claridad y compatibilidad futura.
+
+Ahora probemos aplicar funciones de \texttt{NumPy} directamente sobre un \texttt{DataFrame}. Como \texttt{Pandas} se basa en \texttt{NumPy}, estas operaciones se realizan sin problema:
+
+\begin{verbatim}
+np.sqrt(df)
+\end{verbatim}
+
+Esto devuelve un \texttt{DataFrame} del mismo tamaño, con la raíz cuadrada aplicada elemento a elemento.
+
+\begin{verbatim}
+np.max(df)
+\end{verbatim}
+
+Aquí obtenemos el máximo por columna. La integración es tan profunda que podríamos aplicar una gran cantidad de funciones \texttt{ufunc} de \texttt{NumPy} sin necesidad de convertir a array.
+
+Veamos ahora el proceso inverso: convertir un \texttt{array} de \texttt{NumPy} en un \texttt{DataFrame}. Esto es sumamente útil cuando trabajamos con estructuras numéricas puras (como matrices) y queremos luego realizar análisis tabular o agregar etiquetas.
+
+\begin{verbatim}
+df_desde_np = pd.DataFrame(np1)
+df_desde_np
+\end{verbatim}
+
+Por defecto, \texttt{Pandas} asigna índices numéricos tanto para filas como para columnas. Si deseamos colocar nombres a las columnas, lo hacemos con el parámetro \texttt{columns}:
+
+\begin{verbatim}
+df_desde_np = pd.DataFrame(np1, columns=['Col 1', 'Col 2'])
+\end{verbatim}
+
+Esto nos devuelve un \texttt{DataFrame} completamente funcional, al que podemos aplicar todo el arsenal de herramientas de \texttt{Pandas}: \texttt{groupby()}, \texttt{merge()}, \texttt{filter()}, etc.
+
+La moraleja es clara: podemos usar las funciones avanzadas de \texttt{NumPy} directamente en estructuras de \texttt{Pandas}, y también transformar \texttt{arrays} en \texttt{DataFrames} o viceversa según lo requiera nuestro análisis. Esta flexibilidad es uno de los grandes activos del ecosistema científico de Python.
+
+\section*{Day IX: \texttt{Matplotlib}}
+
+\subsection*{Estructura Principal de \texttt{Matplotlib}}
+
+Antes de comenzar con la creación y personalización de gráficos en \texttt{Matplotlib}, conviene detenernos brevemente a comprender su estructura interna. Esta arquitectura jerárquica es fundamental para manipular con precisión todos los elementos de una visualización.
+
+Consideremos el siguiente ejemplo simple:
+
+\begin{verbatim}
+import matplotlib.pyplot as plt
+%matplotlib inline
+
+numeros = [4, 2, 7, 6, 3]
+plt.plot(numeros);
+\end{verbatim}
+
+Este gráfico, aunque básico, ya contiene todos los elementos estructurales esenciales de \texttt{Matplotlib}.
+
+\paragraph{Figure – El lienzo general}
+
+El componente más externo es el llamado \textbf{Figure}. Podemos pensar en él como el "lienzo" o la "pared" donde colgaremos uno o más gráficos. Es el contenedor general de todos los elementos visuales.
+
+Podemos acceder y configurar esta figura mediante la función:
+
+\begin{verbatim}
+plt.figure(facecolor="orange")
+plt.plot(numeros);
+\end{verbatim}
+
+Aquí, hemos establecido un color de fondo para la figura. Es importante notar que el color naranja afecta al \texttt{Figure}, no al área específica del gráfico.
+
+\paragraph{Axes – El área del gráfico}
+
+El siguiente componente jerárquico es el \textbf{Axes}. Este representa el "cuadro" específico que se dibuja sobre el lienzo. Es decir, es la región donde efectivamente se traza el gráfico.
+
+Un \texttt{Figure} puede contener uno o varios objetos \texttt{Axes}, lo que permite crear múltiples gráficos en un mismo lienzo. Para ejemplificar esto, generemos una cuadrícula de gráficos:
+
+\begin{verbatim}
+plt.subplots(ncols=2, nrows=2)
+\end{verbatim}
+
+Este comando genera:
+
+\begin{itemize}
+  \item Un objeto \texttt{Figure}.
+  \item Un arreglo bidimensional de objetos \texttt{Axes}.
+\end{itemize}
+
+En efecto, el resultado textual de la celda indicará:
+
+\begin{verbatim}
+(<Figure size ... with 4 Axes>,
+ array([[<Axes: >, <Axes: >],
+        [<Axes: >, <Axes: >]], dtype=object))
+\end{verbatim}
+
+Es decir, hemos creado una figura que contiene 4 áreas de dibujo, dispuestas en 2 filas y 2 columnas.
+
+\paragraph{Asignación a variables:}
+
+Podemos capturar estos objetos en variables para manipularlos posteriormente:
+
+\begin{verbatim}
+fig, axs = plt.subplots(ncols=2, nrows=2)
+\end{verbatim}
+
+Ahora podemos inspeccionar sus tipos:
+
+\begin{verbatim}
+type(fig)   # matplotlib.figure.Figure
+type(axs)   # numpy.ndarray
+\end{verbatim}
+
+\texttt{axs} es un array de \texttt{Axes}, por lo tanto puede indexarse:
+
+\begin{verbatim}
+axs[0]        # Primera fila de gráficos
+axs[0][0]     # Primer gráfico de la primera fila
+type(axs[0][0])  # matplotlib.axes._axes.Axes
+\end{verbatim}
+
+\paragraph{Acceso y configuración:}
+
+Cada \texttt{Axes} tiene métodos propios que permiten modificar elementos específicos del gráfico. Por ejemplo, podemos capturar uno de ellos:
+
+\begin{verbatim}
+axes1 = axs[0][0]
+\end{verbatim}
+
+Y acceder a propiedades internas:
+
+\begin{verbatim}
+axes1.yaxis
+# <matplotlib.axis.YAxis at ...>
+\end{verbatim}
+
+Lo que significa que podemos personalizar los ejes, los títulos, las etiquetas, los límites del gráfico, o cualquier otro componente visual. Este modelo de diseño orientado a objetos es central en \texttt{Matplotlib}.
+
+\vspace{0.5em}
+
+\noindent
+Por ahora, el objetivo de esta lección es simplemente comprender bien la noción de \texttt{Figure} y \texttt{Axes}. Estas son las dos piezas fundamentales de la estructura de cualquier gráfico. Una vez interiorizado esto, estaremos preparados para adentrarnos en la creación y personalización de visualizaciones más sofisticadas.
+
+\subsection*{Gráficos de Línea (\textit{Line Plots}) en \texttt{Matplotlib}}
+
+Los gráficos de línea son una de las formas más básicas y útiles de visualización. Nos permiten observar con claridad cómo evoluciona una variable a lo largo de otra, comúnmente en función del tiempo o de una categoría ordenada.
+
+Comenzamos recordando que, en \texttt{Matplotlib}, la forma correcta de crear un gráfico incluye definir una \texttt{figure} y al menos un \texttt{axes}. Existen múltiples formas de hacerlo. Algunas de las más comunes son:
+
+\begin{verbatim}
+fig, axs = plt.subplots()
+# o alternativamente
+fig = plt.figure()
+ax = plt.axes()
+\end{verbatim}
+
+Recordemos que \texttt{figure} representa el contenedor exterior (el "lienzo"), mientras que \texttt{axes} es el área donde se dibuja el gráfico en sí (el "cuadro").
+
+También podemos agregar una cuadrícula a nuestro gráfico utilizando:
+
+\begin{verbatim}
+plt.grid()
+\end{verbatim}
+
+Esta cuadrícula puede personalizarse en grosor, color, y visibilidad de líneas horizontales o verticales, aunque por ahora nos limitaremos a su activación básica.
+
+Sea el siguiente conjunto de datos:
+
+\begin{verbatim}
+x = range(1, 8)
+y = [1, 6, 3, 4, 5, 6, 7]
+\end{verbatim}
+
+Podemos graficarlos directamente con:
+
+\begin{verbatim}
+plt.plot(x, y)
+plt.grid()
+\end{verbatim}
+
+Es posible personalizar el estilo de las líneas, los marcadores, y los colores usando un tercer argumento en \texttt{plot}. Por ejemplo:
+
+\begin{verbatim}
+plt.plot(x, y, 'ro-')  # puntos rojos con línea sólida
+plt.grid()
+\end{verbatim}
+
+O bien:
+
+\begin{verbatim}
+plt.plot(x, y, 'b*:')
+\end{verbatim}
+
+Aquí, 'b' denota color azul, '*' indica estrella como marcador, y ':' especifica línea punteada. En la tabla superior se enlistan otras opciones de parametros.
+\begin{table}[h]
+\centering
+\caption{Nomenclatura básica para formatos en \texttt{plt.plot()}}
+\label{tab:plot_format}
+\begin{tabular}{@{}lll@{}}
+\toprule
+\textbf{Tipo} & \textbf{Código} & \textbf{Descripción} \\
+\midrule
+\rowcolor{blue!10}
+\textbf{Colores} & \texttt{'b'} & Azul (blue) \\
+\rowcolor{blue!10} & \texttt{'g'} & Verde (green) \\
+\rowcolor{blue!10} & \texttt{'r'} & Rojo (red) \\
+\rowcolor{blue!10} & \texttt{'c'} & Cian (cyan) \\
+\rowcolor{blue!10} & \texttt{'m'} & Magenta \\
+\rowcolor{blue!10} & \texttt{'y'} & Amarillo (yellow) \\
+\rowcolor{blue!10} & \texttt{'k'} & Negro (black) \\
+\rowcolor{blue!10} & \texttt{'w'} & Blanco (white) \\
+\midrule
+\rowcolor{green!10}
+\textbf{Marcadores} & \texttt{'o'} & Círculo \\
+\rowcolor{green!10} & \texttt{'$\wedge$'} & Triángulo arriba \\  % Corregido símbolo ^
+\rowcolor{green!10} & \texttt{'s'} & Cuadrado \\
+\rowcolor{green!10} & \texttt{'*'} & Estrella \\
+\rowcolor{green!10} & \texttt{'+'} & Cruz \\
+\rowcolor{green!10} & \texttt{'x'} & Equis \\
+\rowcolor{green!10} & \texttt{'D'} & Diamante \\
+\midrule
+\rowcolor{red!10}
+\textbf{Estilos línea} & \texttt{'-'} & Línea sólida \\
+\rowcolor{red!10} & \texttt{'--'} & Línea discontinua \\
+\rowcolor{red!10} & \texttt{'-.'} & Línea-punto \\
+\rowcolor{red!10} & \texttt{':'} & Línea punteada \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+
+También podemos ajustar manualmente los límites de los ejes con el método:
+
+\begin{verbatim}
+plt.axis([xmin, xmax, ymin, ymax])
+\end{verbatim}
+
+Por ejemplo:
+
+\begin{verbatim}
+plt.plot(x, y, 'b*:')
+plt.axis([0, 8, 0, 8])
+plt.grid()
+\end{verbatim}
+
+\paragraph{Aplicación sobre un \texttt{DataFrame}}
+
+Importamos un conjunto de datos:
+
+\begin{verbatim}
+ruta = "C:/.../Lluvias_region_A.csv"
+df = pd.read_csv(ruta)
+plt.plot(df['region'], df['enero'])
+\end{verbatim}
+
+Esto nos grafica los valores de la columna 'enero' en función de las etiquetas de la columna 'region'. Si los nombres se amontonan en el eje x, podemos rotarlos con:
+
+\begin{verbatim}
+plt.xticks(rotation=45)
+\end{verbatim}
+
+Esto mejora considerablemente la legibilidad.
+
+\subsection*{Histogramas en \texttt{Matplotlib}}
+
+Los histogramas son herramientas gráficas para representar la frecuencia de valores dentro de un conjunto de datos. El eje horizontal representa los valores (o sus categorías) y el eje vertical, la frecuencia con la que aparecen.
+
+Comenzamos con:
+
+\begin{verbatim}
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+
+df = pd.read_csv("C:/.../Ventas.csv")
+plt.hist(df['Producto'])
+\end{verbatim}
+
+Este histograma nos indica cuántas veces aparece cada producto. Si queremos un histograma con datos numéricos continuos, podemos generar una distribución aleatoria normal:
+
+\begin{verbatim}
+numeros = np.random.randn(1000)
+plt.hist(numeros)
+\end{verbatim}
+
+Aquí, \texttt{np.random.randn} genera una distribución normal estándar (\(\mu = 0, \sigma = 1\)). 
+
+\paragraph{Parámetros de personalización:}
+
+\begin{itemize}
+  \item \texttt{bins=40}: determina cuántos intervalos (o barras) habrá.
+  \item \texttt{alpha=0.5}: establece la transparencia (entre 0 y 1).
+  \item \texttt{color='red'}: cambia el color de las barras.
+  \item \texttt{edgecolor='green'}: color del borde de cada barra.
+  \item \texttt{histtype='step'}: genera solo los contornos de las barras (sin relleno).
+\end{itemize}
+
+Ejemplo completo:
+
+\begin{verbatim}
+plt.hist(numeros, bins=40, alpha=0.5, color='red', edgecolor='green', histtype='step')
+\end{verbatim}
+
+\paragraph{Superposición de histogramas}
+
+Es posible superponer varios histogramas en un mismo gráfico. Por ejemplo:
+
+\begin{verbatim}
+x1 = np.random.randn(1000)
+x2 = np.random.randn(500)
+x3 = np.random.randn(100)
+
+plt.hist(x1, histtype='stepfilled', alpha=0.3, bins=40)
+plt.hist(x2, histtype='stepfilled', alpha=0.3, bins=40)
+plt.hist(x3, histtype='stepfilled', alpha=0.3, bins=40)
+\end{verbatim}
+
+Como no se crean nuevos \texttt{axes}, \texttt{Matplotlib} los representa todos sobre el mismo gráfico. Además, asigna colores automáticamente si no se especifica uno, facilitando la comparación visual entre conjuntos distintos.
+
+\subsection*{Gráficos \textit{Scatter} en \texttt{Matplotlib}}
+
+La palabra \textit{scatter} significa algo así como “desparramar”. De ahí que los \textit{scatter plots} —o diagramas de dispersión— lleven ese nombre: representan visualmente un conjunto de registros individuales distribuidos como puntos dentro de un plano cartesiano.
+
+En \texttt{Matplotlib} podemos generar este tipo de gráficos de dos formas: mediante \texttt{plt.plot()} y mediante \texttt{plt.scatter()}, siendo este último el método específicamente diseñado para tales visualizaciones.
+
+\paragraph{Ejemplo básico:}
+\begin{verbatim}
+import matplotlib.pyplot as plt
+import numpy as np
+%matplotlib inline
+
+x = np.linspace(0, 10, 30)
+y = np.sin(x)
+
+# Gráfico de línea
+plt.plot(x, y);
+
+# Gráfico scatter usando plot (sin líneas)
+plt.plot(x, y, 'o');
+\end{verbatim}
+
+Aquí usamos el marcador 'o' para indicar círculos, y como no especificamos línea, no se conecta punto a punto: obtenemos así un gráfico \textit{scatter}.
+
+\paragraph{Representando diferentes marcadores}
+
+Creamos una lista con los distintos símbolos de marcador, y luego graficamos puntos aleatorios con cada uno:
+
+\begin{verbatim}
+aleatorio = np.random.RandomState(0)
+marcadores = ['o', 'x', '+', 'v', 's', 'd']
+
+for marcador in marcadores:
+    plt.plot(aleatorio.rand(5), aleatorio.rand(5), marcador)
+\end{verbatim}
+
+Esto genera múltiples puntos en un mismo \texttt{axes}, cada uno con un tipo de marcador distinto.
+
+\paragraph{Combinaciones avanzadas de formato}
+
+Ya conocemos que en \texttt{plt.plot()} podemos especificar estilo de línea, marcador y color, todo en una sola cadena:
+
+\begin{verbatim}
+plt.plot(x, y, ':ob')  # línea punteada azul con círculos
+plt.plot(x, y, '-p')   # línea sólida con pentágonos
+\end{verbatim}
+
+Podemos también pasar argumentos explícitos:
+
+\begin{verbatim}
+plt.plot(x, y,
+         '-p',
+         color='red',
+         markersize=15,
+         linewidth=4,
+         markerfacecolor='white');
+\end{verbatim}
+
+\paragraph{Método \texttt{plt.scatter()}}
+
+Si bien \texttt{plt.plot()} puede ser usado para scatter plots, \texttt{plt.scatter()} está diseñado específicamente para ello y permite un control más fino de propiedades gráficas:
+
+\begin{verbatim}
+plt.scatter(x, y);
+\end{verbatim}
+
+\paragraph{Un gráfico \textit{scatter} más completo}
+
+Vamos a generar un scatter con parámetros avanzados: color, tamaño, transparencia y mapa de color.
+
+\begin{verbatim}
+aleatorio = np.random.RandomState(0)
+
+x = aleatorio.randn(100)
+y = aleatorio.randn(100)
+colores = aleatorio.rand(100)
+tamaños = aleatorio.rand(100) * 1000
+
+plt.scatter(x, y,
+            c=colores,
+            s=tamaños,
+            alpha=0.3,
+            cmap='viridis')
+
+plt.colorbar();  # Barra de referencia para los colores
+\end{verbatim}
+
+\texttt{cmap} define el mapa de color, y \texttt{plt.colorbar()} añade la escala visual correspondiente. La transparencia (\texttt{alpha}) y el tamaño de los puntos (\texttt{s}) permiten un control visual fino, y el resultado es un gráfico de dispersión estéticamente informativo.
+
+\vspace{1em}
+
+\subsection*{Gráficos de Torta (\textit{Pie Charts}) en \texttt{Matplotlib}}
+
+Pocos gráficos son tan populares y accesibles como los gráficos circulares, también llamados gráficos pastel, gráficos de torta, o \textit{pie charts}. En \texttt{Matplotlib} estos se generan con la función \texttt{plt.pie()}.
+
+\paragraph{Ejemplo inicial}
+
+\begin{verbatim}
+import pandas as pd
+
+df = pd.DataFrame({
+    "etiquetas": ['Manzanas', 'Bananas', 'Naranjas', 'Uvas'],
+    "cantidad": [30, 60, 80, 20]
+})
+
+plt.pie(df['cantidad']);
+\end{verbatim}
+
+Esto genera un gráfico circular con las proporciones representadas por colores. Sin embargo, por defecto no hay etiquetas ni información numérica.
+
+\paragraph{Agregando etiquetas y porcentajes}
+
+Podemos hacer nuestro gráfico mucho más informativo al utilizar parámetros como \texttt{labels} y \texttt{autopct}:
+
+\begin{verbatim}
+plt.pie(df['cantidad'],
+        labels=df['etiquetas'],
+        autopct='%1.1f%%');
+\end{verbatim}
+
+Aquí \texttt{'\%1.1f\%\%'} indica que queremos mostrar un número con un decimal seguido del símbolo '\%'.
+
+\paragraph{Colores personalizados}
+
+Podemos controlar los colores de cada segmento mediante el argumento \texttt{colors}, pasándole una lista de códigos hexadecimales o nombres:
+
+\begin{verbatim}
+plt.pie(df['cantidad'],
+        labels=df['etiquetas'],
+        autopct='%1.1f%%',
+        colors=['#87CEEB', '#6495ED', '#000080', '#40E0D0']);
+\end{verbatim}
+
+\paragraph{Agregando sombra y separación de sectores}
+
+Podemos añadir una sombra con \texttt{shadow=True}, y podemos separar sectores individuales con \texttt{explode}:
+
+\begin{verbatim}
+plt.pie(df['cantidad'],
+        labels=df['etiquetas'],
+        autopct='%1.1f%%',
+        colors=['#87CEEB', '#6495ED', '#000080', '#40E0D0'],
+        shadow=True,
+        explode=(0, 0, 0, 0.5));
+\end{verbatim}
+
+Esto destaca el cuarto elemento (uvas) separándolo del resto.
+
+\paragraph{Agregando título}
+
+Al igual que con cualquier otro tipo de gráfico, podemos agregar un título con:
+
+\begin{verbatim}
+plt.title("Mis frutas");
+\end{verbatim}
+
+\paragraph{Resumen de parámetros comunes de \texttt{plt.pie()}:}
+\begin{itemize}
+  \item \texttt{labels}: etiquetas para cada segmento.
+  \item \texttt{autopct}: formato del porcentaje mostrado.
+  \item \texttt{colors}: colores personalizados.
+  \item \texttt{explode}: separación radial de sectores.
+  \item \texttt{shadow}: activa o desactiva la sombra.
+\end{itemize}
+
+\subsection*{Creación de Múltiples Gráficos con \texttt{Matplotlib}}
+
+En esta lección aprenderemos a construir múltiples gráficos —también conocidos como \textit{subplots}— dentro de una misma figura. Esta técnica resulta fundamental cuando queremos comparar visualmente diferentes variables, observar distintos aspectos de un conjunto de datos o presentar una narrativa gráfica más rica y compacta.
+
+Recordemos: una \texttt{figure} es como una pared, y sobre ella colgamos nuestros \texttt{axes}, que son los marcos donde se dibujan los gráficos propiamente dichos.
+
+\paragraph{Creando una figura con varios ejes}
+
+Comencemos importando lo necesario:
+
+\begin{verbatim}
+import matplotlib.pyplot as plt
+%matplotlib inline
+\end{verbatim}
+
+Creamos una figura con dos gráficos alineados horizontalmente (una fila, dos columnas):
+
+\begin{verbatim}
+fig, axs = plt.subplots(ncols=2, nrows=1);
+\end{verbatim}
+
+Aquí hemos generado una única \texttt{figure} almacenada en \texttt{fig} y dos \texttt{axes} almacenados como elementos de un array llamado \texttt{axs}. Esto nos permite tratarlos como una lista indexada.
+
+\paragraph{Asignando cada gráfico a una variable}
+
+Accedamos a cada uno de los \texttt{axes} para poder trabajar con ellos de forma individual:
+
+\begin{verbatim}
+ax1 = axs[0]
+ax2 = axs[1];
+\end{verbatim}
+
+\paragraph{Graficando contenido distinto en cada subplot}
+
+Ya con nuestras variables \texttt{ax1} y \texttt{ax2} definidas, desplegamos diferentes tipos de gráficos en cada uno:
+
+\begin{verbatim}
+ax1.plot([1, 2, 3, 4], [1, 4, 9, 16])
+ax2.scatter([1, 2, 3, 4], [1, 4, 9, 16]);
+\end{verbatim}
+
+Como resultado, obtenemos una figura con dos gráficos: uno de líneas y otro de tipo scatter, ambos mostrando la misma información numérica pero de manera distinta.
+
+\paragraph{Agregando títulos y personalizaciones a cada gráfico}
+
+Podemos configurar individualmente cada gráfico usando los métodos del objeto \texttt{Axes}:
+
+\begin{verbatim}
+ax1.set_title("Gráfico de Línea")
+ax2.set_title("Gráfico Scatter");
+\end{verbatim}
+
+\textbf{Resultado:} una figura compuesta, con múltiples visualizaciones etiquetadas, listas para analizar o presentar. Este enfoque modular permite una gran flexibilidad en la comparación y presentación de datos.
+
+\vspace{1em}
+
+\subsection*{Estilo para tus Gráficos con \texttt{Matplotlib}}
+
+En esta lección veremos cómo podemos modificar fácilmente el aspecto visual de todos nuestros gráficos utilizando estilos predefinidos. Para ello, \texttt{Matplotlib} nos brinda el método \texttt{plt.style.use()}.
+
+\paragraph{¿Qué hace \texttt{plt.style.use()?}}
+
+Es, esencialmente, una forma de aplicar una “vestimenta gráfica” a todos los plots que se generen después de declararlo. Puedes pensar en ello como cambiar el tema de tus gráficos de forma global y automática.
+
+\begin{verbatim}
+import matplotlib.pyplot as plt
+import pandas as pd
+%matplotlib inline
+\end{verbatim}
+
+Creamos un \texttt{DataFrame} de ejemplo:
+
+\begin{verbatim}
+df = pd.DataFrame({
+    "etiquetas": ['Manzanas', 'Bananas', 'Naranjas', 'Uvas'],
+    "cantidad": [30, 35, 26, 33]
+})
+\end{verbatim}
+
+Y graficamos dos representaciones simples: una de líneas y una de tipo pastel.
+
+\begin{verbatim}
+fig, axs = plt.subplots(ncols=2, nrows=1)
+ax1 = axs[0]
+ax2 = axs[1]
+
+ax1.plot(df['etiquetas'], df['cantidad'])
+ax2.pie(df['cantidad']);
+\end{verbatim}
+
+Hasta aquí, estamos usando el estilo predeterminado de \texttt{Matplotlib}.
+
+\paragraph{Aplicando un estilo:}
+
+Ahora usamos \texttt{style.use()} para aplicar un nuevo estilo global. Por ejemplo, \texttt{'ggplot'}:
+
+\begin{verbatim}
+plt.style.use('ggplot')
+
+fig, axs = plt.subplots(ncols=2, nrows=1)
+ax1 = axs[0]
+ax2 = axs[1]
+
+ax1.plot(df['etiquetas'], df['cantidad'])
+ax2.pie(df['cantidad']);
+\end{verbatim}
+
+\paragraph{Lista completa de estilos disponibles}
+
+Podemos consultar qué estilos existen con:
+
+\begin{verbatim}
+print(plt.style.available)
+\end{verbatim}
+
+Esto devuelve una lista como:
+
+\begin{verbatim}
+['bmh', 'classic', 'dark_background', 'fivethirtyeight', 'ggplot',
+ 'seaborn-v0_8', 'seaborn-v0_8-pastel', 'seaborn-v0_8-darkgrid', ...]
+\end{verbatim}
+
+\paragraph{Probando otros estilos:}
+
+Cambiemos el estilo y generemos la misma figura con diferentes apariencias.
+
+\begin{verbatim}
+plt.style.use('seaborn-v0_8-pastel')
+plt.style.use('fivethirtyeight')
+plt.style.use('dark_background')
+\end{verbatim}
+
+Cada uno dará como resultado una visualización con características estéticas distintas: colores, fondos, grosores y grillas ya predeterminadas.
+
+\paragraph{Consejos finales sobre estilos:}
+\begin{itemize}
+    \item \textbf{Experimenta}: Prueba varios estilos y quédate con el más adecuado para tu caso.
+    \item \textbf{Personaliza}: Aún con un estilo aplicado, puedes seguir modificando parámetros individuales.
+    \item \textbf{Consulta documentación}: Usa \texttt{help()} o consulta la documentación oficial de \texttt{Matplotlib} para conocer más opciones.
+\end{itemize}
+
+Gracias a \texttt{plt.style.use()} puedes lograr gráficos consistentes, legibles y estéticamente agradables con apenas una línea de código.
+
+\subsection*{Crea Cualquier Tipo de Gráfico desde \texttt{Matplotlib}}
+
+En esta lección vamos a aprender cómo explorar y utilizar cualquier tipo de gráfico que \texttt{Matplotlib} ofrezca, incluso aquellos que no se han abordado hasta ahora o que puedan agregarse en versiones futuras.
+
+Más allá de memorizar comandos, la clave es saber cómo encontrar, interpretar y aplicar lo que uno necesita. Para ello, conviene dominar funciones como \texttt{type()}, \texttt{dir()} y \texttt{help()}, y también aprender a navegar en la documentación oficial.
+
+\paragraph{Una situación hipotética:} Supongamos que se te entrega un conjunto de datos que representa la intensidad lumínica en distintas ubicaciones de una ciudad ficticia llamada \textbf{VillaLuz}. Las coordenadas están dadas por latitud y longitud, y se desea identificar visualmente qué zonas están más iluminadas —y por contraste, cuáles necesitan más farolas.
+
+La solicitud: generar un mapa que permita visualizar, en una cuadrícula o "mosaico", el nivel de iluminación por zona.
+
+\paragraph{¿Cómo abordamos esto?} Buscando un gráfico adecuado. Explorando la galería de ejemplos de \texttt{Matplotlib} (\url{https://matplotlib.org/stable/gallery/index.html}) encontramos uno interesante: \texttt{hexbin()}, un gráfico que utiliza hexágonos para agrupar puntos y colorearlos según densidad o intensidad.
+
+Podemos comenzar investigando su documentación con:
+
+\begin{verbatim}
+help(plt.hexbin)
+\end{verbatim}
+
+La documentación nos informa que \texttt{hexbin()} requiere valores \texttt{x} e \texttt{y} (coordenadas), y de forma opcional \texttt{C}, que será el valor acumulado por celda (en nuestro caso, la luminosidad).
+
+\paragraph{Implementación del gráfico:}
+
+Primero importamos y cargamos los datos desde un archivo CSV:
+
+\begin{verbatim}
+import pandas as pd
+import matplotlib.pyplot as plt
+%matplotlib inline
+
+df = pd.read_csv("ruta/a/villaluz.csv")
+\end{verbatim}
+
+Construimos el gráfico:
+
+\begin{verbatim}
+x = df["Latitud"]
+y = df["Longitud"]
+c = df["Luminosidad"]
+
+hv = plt.hexbin(x, y, C=c, gridsize=50, cmap='Greens');
+\end{verbatim}
+
+Hasta aquí ya vemos una representación útil. Los colores indican la intensidad lumínica acumulada en cada celda hexagonal. Pero podemos seguir mejorándolo.
+
+\paragraph{Personalizando el gráfico:}
+
+Agregamos un fondo negro para simular la visión nocturna de una ciudad vista desde el aire:
+
+\begin{verbatim}
+plt.gca().set_facecolor("#000000")
+\end{verbatim}
+
+Añadimos una barra de color para interpretar la escala de luminosidad:
+
+\begin{verbatim}
+plt.colorbar(hv, label="Nivel de sombras")
+\end{verbatim}
+
+Y etiquetamos los ejes y el gráfico:
+
+\begin{verbatim}
+plt.xlabel("Latitud")
+plt.ylabel("Longitud")
+plt.title("Luminosidad en VillaLuz");
+\end{verbatim}
+
+El resultado es un gráfico autoexplicativo, estéticamente claro y funcional, que podríamos presentar al intendente de VillaLuz sin reparos.
+
+\vspace{1em}
+
+\section*{Day X: Seaborn}
+
+\subsection*{Introducción a \texttt{Seaborn}}
+
+\texttt{Seaborn} es una biblioteca para visualización estadística en Python. Está construida sobre \texttt{Matplotlib}, pero ofrece una interfaz de más alto nivel y más amigable, especialmente diseñada para trabajar con estructuras como \texttt{DataFrame}. Su objetivo es facilitar la creación de gráficos informativos con el menor esfuerzo posible.
+
+La galería oficial se encuentra en: \url{https://seaborn.pydata.org/examples/index.html}
+
+Comencemos con un ejemplo simple:
+
+\begin{verbatim}
+import seaborn as sns
+import matplotlib.pyplot as plt
+%matplotlib inline
+
+# Aplicar tema por defecto
+sns.set_theme()
+
+# Cargar dataset de práctica
+propinas = sns.load_dataset("tips")
+
+# Crear una visualización
+sns.relplot(
+    data=propinas,
+    x="total_bill",
+    y="tip",
+    col="time",
+    hue="smoker",
+    style="smoker",
+    size="size",
+);
+\end{verbatim}
+
+\paragraph{Qué ocurre en este código:}
+\begin{itemize}
+    \item Importamos \texttt{seaborn}, habitualmente bajo el alias \texttt{sns}.
+    \item Aplicamos el tema por defecto con \texttt{sns.set\_theme()}.
+    \item Cargamos un conjunto de datos de ejemplo con \texttt{sns.load\_dataset("tips")}.
+    \item Creamos un gráfico relacional con \texttt{sns.relplot()}, declarando qué variables deben representarse.
+\end{itemize}
+
+Este enfoque se llama \textbf{declarativo}: no detallamos cómo debe dibujarse el gráfico, sino qué información queremos visualizar. El resto lo gestiona \texttt{Seaborn} con buenas decisiones predeterminadas.
+
+\paragraph{Ventajas de Seaborn:}
+\begin{itemize}
+    \item Produce gráficos estadísticos sofisticados con poco código.
+    \item Usa colores y estilos predeterminados más agradables visualmente.
+    \item Permite integrar variables categóricas (como \texttt{hue} o \texttt{style}) sin trabajo adicional.
+    \item Es ideal para análisis exploratorio de datos.
+\end{itemize}
+
+\paragraph{Diferencias con Matplotlib:}
+
+Mientras que en \texttt{Matplotlib} uno debe controlar todos los detalles (colores, grosores, estilos, etc.), en \texttt{Seaborn} basta con declarar la intención: qué mostrar, con qué variables. La biblioteca se encarga del resto.
+
+Por eso, cuando uno quiere tener control absoluto del diseño gráfico, \texttt{Matplotlib} es más útil. Pero cuando lo importante es explorar datos rápidamente o comunicar patrones de forma clara, \texttt{Seaborn} es una herramienta más eficiente y elegante.
+
+\subsection*{Relación Estadística en \texttt{Seaborn}}
+
+Cuando trabajamos con datos, una de las preguntas más comunes que nos hacemos es: ¿existe alguna relación entre las variables? En otras palabras, ¿los cambios en una variable están asociados con cambios en otra? Esta idea es central en el concepto de relación estadística.
+
+\texttt{Seaborn} proporciona tres funciones generales que nos permiten explorar diferentes aspectos de nuestros datos:
+
+\begin{itemize}
+    \item \texttt{relplot} (relational): para estudiar relaciones estadísticas entre dos o más variables.
+    \item \texttt{displot} (distribution): para entender cómo se distribuyen los datos en una o varias variables.
+    \item \texttt{catplot} (categorical): para examinar datos categóricos y sus relaciones con variables numéricas.
+\end{itemize}
+
+En esta sección nos enfocaremos en la primera de ellas, \texttt{relplot}, y cómo se utiliza para representar relaciones estadísticas, es decir, tendencias, correlaciones o patrones entre variables.
+
+Comenzamos cargando un dataset clásico de \texttt{Seaborn}:
+
+\begin{verbatim}
+import seaborn as sns
+propinas = sns.load_dataset('tips')
+propinas.head()
+\end{verbatim}
+
+Este conjunto de datos contiene información sobre facturas, propinas, días de la semana, género, fumadores y más. Con él, podemos explorar distintas relaciones como, por ejemplo, si las personas dejan más propinas cuando el total de la factura es mayor.
+
+\begin{verbatim}
+sns.relplot(
+    data=propinas,
+    x='total_bill',
+    y='tip',
+    hue='sex',
+    col='time',
+    style='smoker'
+);
+\end{verbatim}
+
+Este gráfico nos permite ver cómo se relacionan las variables \texttt{total\_bill} y \texttt{tip}, diferenciando además por género, momento del día y si el cliente era fumador o no. Con unas pocas líneas, \texttt{Seaborn} nos brinda un análisis visual rico y organizado.
+
+\vspace{1em}
+\subsection*{Representación Distributiva}
+
+Además de entender cómo se relacionan las variables entre sí, es fundamental conocer cómo se distribuye cada variable de forma individual. La distribución describe cómo se dispersan los datos: frecuencias, densidades, acumulaciones, etc.
+
+\texttt{Seaborn} facilita esta tarea con su función \texttt{displot}, que agrupa diferentes tipos de gráficos distributivos: \texttt{histplot}, \texttt{kdeplot}, \texttt{ecdfplot} y \texttt{rugplot}.
+
+Veamos un ejemplo:
+
+\begin{verbatim}
+pinguinos = sns.load_dataset('penguins')
+sns.displot(data=pinguinos, x='body_mass_g');
+\end{verbatim}
+
+Esto genera un histograma que muestra la frecuencia de cada masa corporal. Podemos mejorar esta visualización añadiendo una estimación de densidad con:
+
+\begin{verbatim}
+sns.displot(data=pinguinos, x='body_mass_g', kde=True);
+\end{verbatim}
+
+También es posible dividir el gráfico en columnas por grupos, por ejemplo, por isla:
+
+\begin{verbatim}
+sns.displot(data=pinguinos, x='body_mass_g', col='island', kde=True);
+\end{verbatim}
+
+\paragraph{Otros tipos de \texttt{displot}:}
+
+\begin{itemize}
+    \item \textbf{KDE (Kernel Density Estimation)}:
+    \begin{verbatim}
+    sns.displot(data=pinguinos, x='flipper_length_mm', kind='kde', rug=True);
+    \end{verbatim}
+    Este gráfico muestra una función de densidad continua, y \texttt{rug=True} agrega pequeñas líneas en el eje que representan observaciones individuales (rugplot).
+
+    \item \textbf{ECDF (Empirical Cumulative Distribution Function)}:
+    \begin{verbatim}
+    sns.displot(data=pinguinos, x='flipper_length_mm', kind='ecdf');
+    \end{verbatim}
+    Este gráfico muestra la función de distribución acumulativa empírica, útil para ver cómo se distribuyen los datos de manera acumulada.
+\end{itemize}
+
+\vspace{1em}
+\subsection*{Visualización de Variables Categóricas en \texttt{Seaborn}}
+
+Cuando una de las variables es categórica, \texttt{Seaborn} nos ofrece una serie de gráficos específicos para analizar cómo se comporta una variable numérica dentro de diferentes grupos.
+
+Esto lo hacemos con \texttt{catplot}, que admite múltiples tipos de representaciones, como:
+
+\begin{itemize}
+    \item \texttt{stripplot}
+    \item \texttt{swarmplot}
+    \item \texttt{boxplot}
+    \item \texttt{violinplot}
+    \item \texttt{pointplot}
+    \item \texttt{barplot}
+\end{itemize}
+
+\paragraph{Ejemplos prácticos:}
+
+\textbf{1. Stripplot:}
+\begin{verbatim}
+sns.catplot(data=propinas, kind='strip', x='day', y='total_bill', hue='smoker');
+\end{verbatim}
+
+Este gráfico se parece a un scatterplot, pero en el eje X se colocan categorías. Puede resultar confuso si hay muchos puntos superpuestos.
+
+\textbf{2. Swarmplot:}
+\begin{verbatim}
+sns.catplot(data=propinas, kind='swarm', x='day', y='total_bill', hue='smoker');
+\end{verbatim}
+
+Distribuye los puntos horizontalmente para evitar solapamientos, facilitando la visualización de densidad.
+
+\textbf{3. Boxplot:}
+\begin{verbatim}
+sns.catplot(data=propinas, kind='box', x='day', y='total_bill', hue='smoker');
+\end{verbatim}
+
+El clásico "diagrama de cajas y bigotes". Muestra mediana, cuartiles y valores atípicos. Muy útil para comparar grupos.
+
+\textbf{4. Violinplot:}
+\begin{verbatim}
+sns.catplot(data=propinas, kind='violin', x='day', y='total_bill', hue='smoker');
+\end{verbatim}
+
+Combina la información del boxplot con una representación de la distribución de datos (como una KDE reflejada verticalmente).
+
+\textbf{5. Pointplot:}
+\begin{verbatim}
+sns.catplot(data=propinas, kind='point', x='day', y='total_bill', hue='smoker');
+\end{verbatim}
+
+Representa los promedios por categoría, conectando los puntos con líneas. Incluye barras de error que representan intervalos de confianza.
+
+\textbf{6. Barplot:}
+\begin{verbatim}
+sns.catplot(data=propinas, kind='bar', x='day', y='total_bill', hue='smoker');
+\end{verbatim}
+
+Similar al anterior, pero usa barras en vez de puntos. También incluye intervalos de confianza.
+
+\vspace{1em}
+\paragraph{Resumen:}
+
+Con estas tres funciones generales —\texttt{relplot}, \texttt{displot} y \texttt{catplot}— \texttt{Seaborn} nos permite representar casi cualquier situación estadística: relaciones entre variables, distribuciones, y comparaciones categóricas.
+
+Este enfoque modular y flexible permite cambiar el tipo de visualización sin modificar la lógica base del análisis, lo que convierte a \texttt{Seaborn} en una herramienta poderosa y elegante para el análisis exploratorio de datos.
+
+
+\subsection*{Vista Múltiple para Datasets Complejos en Seaborn}
+
+En conjuntos de datos complejos es común querer visualizar varias relaciones simultáneamente. Para estos casos, \texttt{Seaborn} ofrece herramientas que combinan múltiples tipos de gráficos en una sola figura, facilitando un análisis exploratorio visual más rico e informativo.
+
+Dos funciones clave para lograr esto son \texttt{jointplot} y \texttt{pairplot}.
+
+\paragraph{Jointplot}
+
+La función \texttt{jointplot()} permite visualizar la relación entre dos variables, añadiendo además las distribuciones marginales a lo largo de los ejes X e Y.
+
+\begin{verbatim}
+import seaborn as sns
+pinguinos = sns.load_dataset('penguins')
+sns.jointplot(data=pinguinos,
+              x='flipper_length_mm',
+              y='bill_length_mm',
+              hue='species');
+\end{verbatim}
+
+Este gráfico representa una distribución conjunta: cada punto es un pingüino, cuyas coordenadas están dadas por la longitud de su aleta y la longitud de su pico. El color indica la especie, y las distribuciones marginales permiten visualizar la dispersión unidimensional de cada variable.
+
+\paragraph{Pairplot}
+
+Para extender el análisis a todas las variables numéricas disponibles en el conjunto de datos, utilizamos \texttt{pairplot()}:
+
+\begin{verbatim}
+sns.pairplot(data=pinguinos, hue='species');
+\end{verbatim}
+
+Este gráfico genera una cuadrícula de subgráficos, mostrando todas las combinaciones posibles entre pares de variables numéricas. Es útil para detectar correlaciones, agrupamientos y valores atípicos entre múltiples dimensiones del dataset.
+
+\subsection*{Funciones de Nivel Inferior en Seaborn}
+
+Seaborn también ofrece herramientas de nivel inferior, es decir, funciones que requieren mayor configuración manual, pero a cambio proporcionan un control mucho más fino sobre la estructura y estética de los gráficos. Un ejemplo destacado es \texttt{PairGrid}.
+
+\paragraph{Creación y configuración básica}
+
+\begin{verbatim}
+g = sns.PairGrid(pinguinos, hue='species');
+\end{verbatim}
+
+Esto crea una cuadrícula que, por defecto, incluye todas las variables numéricas tanto en filas como en columnas. Si se desea evitar duplicaciones visuales (espejados), podemos restringir el gráfico a la mitad inferior:
+
+\begin{verbatim}
+g = sns.PairGrid(pinguinos, hue='species', corner=True);
+\end{verbatim}
+
+\paragraph{Mapeo de gráficos por sección}
+
+Cada parte de la cuadrícula puede personalizarse con métodos como \texttt{map\_lower()}, \texttt{map\_diag()} y \texttt{map\_upper()}.
+
+\begin{verbatim}
+g.map_lower(sns.kdeplot, hue=None, levels=5, color=".2");
+g.map_lower(sns.scatterplot, marker='+');
+g.map_diag(sns.histplot, element='step', linewidth=0, kde=True);
+\end{verbatim}
+
+Aquí se han combinado gráficos de densidad y de dispersión en la zona inferior, e histogramas con curvas KDE en la diagonal.
+
+\paragraph{Leyenda y personalización adicional}
+
+\begin{verbatim}
+g.add_legend(frameon=True)
+g.legend.set_bbox_to_anchor((.61, .6))
+\end{verbatim}
+
+Estas instrucciones permiten agregar una leyenda y posicionarla manualmente. En conjunto, \texttt{PairGrid} es una herramienta poderosa para generar visualizaciones multivariadas con control total del contenido gráfico.
+
+
+
+\subsection*{Valores Preconfigurados y Personalizados}
+
+\texttt{Seaborn} proporciona una serie de estilos visuales y paletas de colores preconfiguradas que permiten cambiar rápidamente la apariencia de un gráfico. Esto puede lograrse sin modificar manualmente cada uno de sus elementos.
+
+\paragraph{Color Mapping Automático}
+
+Cuando una variable numérica se usa como argumento para \texttt{hue}, \texttt{Seaborn} emplea un gradiente continuo de color.
+
+\begin{verbatim}
+sns.relplot(data=pinguinos,
+            x="bill_length_mm",
+            y="bill_depth_mm",
+            hue="body_mass_g");
+\end{verbatim}
+
+El color varía gradualmente en función del valor de \texttt{body\_mass\_g}.
+
+\paragraph{Aplicar estilos y paletas}
+
+Podemos especificar un tema visual general con \texttt{set\_theme}:
+
+\begin{verbatim}
+sns.set_theme(style="dark")
+\end{verbatim}
+
+Y luego configurar detalles del gráfico:
+
+\begin{verbatim}
+sns.relplot(data=pinguinos,
+            x="bill_length_mm",
+            y="bill_depth_mm",
+            hue="body_mass_g",
+            palette="crest",
+            marker="x",
+            s=100);
+\end{verbatim}
+
+Aquí:
+\begin{itemize}
+    \item \texttt{palette="crest"} aplica una paleta de colores.
+    \item \texttt{marker="x"} define la forma del punto.
+    \item \texttt{s=100} especifica el tamaño del marcador.
+\end{itemize}
+
+\paragraph{Modificaciones posteriores}
+
+El objeto gráfico puede almacenarse en una variable para una personalización más detallada:
+
+\begin{verbatim}
+g = sns.relplot(data=pinguinos,
+                x="bill_length_mm",
+                y="bill_depth_mm",
+                hue="body_mass_g",
+                palette="crest",
+                marker="x",
+                s=100)
+
+g.set_axis_labels("Largo del Pico (mm)", "Grosor del Pico (mm)", labelpad=10);
+g.legend.set_title("Masa\nCorporal (g)");
+g.figure.set_size_inches(6.5, 4.5);
+g.ax.margins(.15);
+\end{verbatim}
+
+Estas instrucciones permiten modificar:
+\begin{itemize}
+    \item Las etiquetas de los ejes.
+    \item El título de la leyenda.
+    \item El tamaño físico del gráfico.
+    \item Los márgenes alrededor de los datos.
+\end{itemize}
+
+Este nivel de personalización —a medio camino entre funciones de alto y bajo nivel— permite crear visualizaciones informativas, estéticas y adaptadas a cualquier necesidad analítica.
+
+\subsection*{Nivel de Figuras vs. Nivel de Axes en Seaborn}
+
+Al trabajar con Seaborn, es fundamental distinguir entre funciones que operan a nivel de figura completa y aquellas que trabajan directamente sobre los axes.
+
+\textbf{Funciones de nivel figura} como \texttt{displot}, \texttt{relplot} o \texttt{catplot}, gestionan por completo la creación y organización de la figura, incluyendo múltiples subgráficos cuando es necesario. Estas funciones generan automáticamente objetos del tipo \texttt{FacetGrid}, lo cual permite subdividir el gráfico según valores de una variable categórica.
+
+\textbf{Funciones de nivel axes}, por otro lado, como \texttt{histplot}, \texttt{scatterplot}, o \texttt{boxplot}, trabajan directamente sobre un \texttt{Axes} existente o implícito y requieren una figura previa si se desea combinar gráficos.
+
+\paragraph{Ejemplo: Histograma con funciones de distinto nivel}
+
+Creamos un histograma del largo de las aletas en el dataset \texttt{penguins} diferenciando por especie.
+
+\begin{verbatim}
+import seaborn as sns
+pinguinos = sns.load_dataset("penguins")
+
+# Nivel de figura
+sns.displot(data=pinguinos,
+            x="flipper_length_mm",
+            hue="species",
+            multiple="stack");
+\end{verbatim}
+
+El parámetro \texttt{multiple="stack"} apila las barras del histograma para cada grupo. Ahora veamos lo mismo desde el nivel de axes:
+
+\begin{verbatim}
+sns.histplot(data=pinguinos,
+             x="flipper_length_mm",
+             hue="species",
+             multiple="stack");
+\end{verbatim}
+
+Ambos gráficos son visualmente similares, pero su comportamiento interno difiere. Por ejemplo, al incluir un parámetro como \texttt{col="species"} en \texttt{displot}, Seaborn automáticamente divide la figura en subgráficos:
+
+\begin{verbatim}
+sns.displot(data=pinguinos,
+            x="flipper_length_mm",
+            col="species");
+\end{verbatim}
+
+Esta capacidad no está disponible directamente en \texttt{histplot}, a menos que se construya la figura y los subgráficos manualmente.
+
+\paragraph{Control avanzado con FacetGrid}
+
+Las funciones de nivel figura devuelven una instancia de tipo \texttt{FacetGrid}, lo que permite manipular el gráfico de forma estructurada. Por ejemplo:
+
+\begin{verbatim}
+graf = sns.relplot(data=pinguinos,
+                   x="flipper_length_mm",
+                   y="bill_length_mm",
+                   col="sex")
+
+graf.set_axis_labels("Largo Aletas (mm)", "Largo Pico (mm)");
+\end{verbatim}
+
+Esto permite configurar títulos, etiquetas, tamaño de figura, disposición de subplots, etc., de forma programática. El uso de \texttt{FacetGrid} es especialmente recomendable cuando se requiere construir múltiples gráficos ordenados de forma sistemática.
+
+\section*{Day XI: Machine Learning}
+\subsection*{Regresión Lineal en Machine Learning}
+
+En el aprendizaje supervisado de Machine Learning, uno de los algoritmos fundamentales es la regresión lineal. Este método se emplea cuando el objetivo es predecir una variable numérica continua a partir de una o más variables de entrada.
+
+Recordemos brevemente las tres ramas principales del aprendizaje automático:
+
+\begin{itemize}
+    \item Aprendizaje Supervisado
+    \item Aprendizaje No Supervisado
+    \item Aprendizaje por Reforzamiento
+\end{itemize}
+
+Dentro del aprendizaje supervisado, se destacan cuatro algoritmos ampliamente utilizados:
+
+\begin{enumerate}
+    \item Regresión Lineal
+    \item Regresión Logística
+    \item Árboles de Decisión
+    \item Bosques Aleatorios
+\end{enumerate}
+
+La regresión lineal busca ajustar una función lineal a los datos existentes para predecir nuevos valores. Se trata de una técnica estadística clásica, útil para estimar relaciones entre variables.
+
+\paragraph{Ejemplo práctico}
+
+\begin{verbatim}
+import pandas as pd
+import matplotlib.pyplot as plt
+from sklearn import linear_model
+\end{verbatim}
+
+Creamos un \texttt{DataFrame} con datos ficticios de propiedades:
+
+\begin{verbatim}
+df = pd.DataFrame()
+df["Area"] = [2600, 3000, 3200, 3600, 4000]
+df["Precio"] = [550000, 565000, 610000, 680000, 725000]
+\end{verbatim}
+
+Visualizamos los datos con un gráfico de dispersión:
+
+\begin{verbatim}
+plt.scatter(df["Area"], df["Precio"]);
+\end{verbatim}
+
+A simple vista se observa una relación creciente entre el área de las propiedades y su precio. Sin embargo, no se trata de una relación perfectamente lineal, por lo que un modelo puede ayudarnos a aproximar la tendencia subyacente.
+
+\paragraph{Entrenamiento del modelo}
+
+\begin{verbatim}
+X = df[["Area"]]  # Variable independiente (input)
+y = df["Precio"]  # Variable dependiente (output)
+
+modelo = linear_model.LinearRegression()
+modelo.fit(X, y)
+\end{verbatim}
+
+El modelo ahora está entrenado. Podemos usarlo para hacer predicciones:
+
+\begin{verbatim}
+modelo.predict([[3300]])
+# Resultado: array([628715.75342466])
+\end{verbatim}
+
+El modelo predice que una propiedad de 3300 pies cuadrados tiene un precio estimado cercano a los \$628,715.
+
+\paragraph{Visualización del modelo}
+
+Trazamos la recta de regresión:
+
+\begin{verbatim}
+plt.plot(df["Area"], modelo.predict(X));
+\end{verbatim}
+
+Si deseamos mostrar el gráfico completo con los puntos originales:
+
+\begin{verbatim}
+plt.scatter(df["Area"], df["Precio"])
+plt.plot(df["Area"], modelo.predict(X));
+\end{verbatim}
+
+Este es un ejemplo completo de regresión lineal en Scikit-Learn.
+
+
+
+\subsection*{Regresión Logística}
+
+La regresión logística es el segundo algoritmo fundamental dentro del aprendizaje supervisado. A diferencia de la regresión lineal, que predice valores continuos, la regresión logística se utiliza para predecir valores categóricos binarios (por ejemplo, \texttt{sí/no}, \texttt{compra/no compra}, \texttt{apto/no apto}).
+
+Este modelo estima la probabilidad de que una observación pertenezca a una clase determinada.
+
+\paragraph{Ejemplo práctico}
+
+\begin{verbatim}
+import pandas as pd
+import matplotlib.pyplot as plt
+from sklearn.linear_model import LogisticRegression
+from sklearn.model_selection import train_test_split
+\end{verbatim}
+
+Importamos un conjunto de datos con edades de clientes y si han comprado o no un seguro:
+
+\begin{verbatim}
+df = pd.read_csv(".../datos_seguro.csv")
+\end{verbatim}
+
+\texttt{df.head()} devuelve:
+
+\begin{verbatim}
+   edad  compra
+0    22       0
+1    25       0
+2    47       1
+3    52       0
+4    46       1
+\end{verbatim}
+
+\paragraph{Visualización inicial}
+
+\begin{verbatim}
+plt.scatter(df["edad"], df["compra"]);
+\end{verbatim}
+
+Observamos que las personas mayores tienen una mayor probabilidad de adquirir un seguro. Ahora formalizamos este patrón con regresión logística.
+
+\paragraph{División del conjunto de datos}
+
+Separamos los datos en entrenamiento y prueba:
+
+\begin{verbatim}
+X_entrena, X_prueba, y_entrena, y_prueba = train_test_split(
+    df[["edad"]],
+    df["compra"],
+    train_size=0.9
+)
+\end{verbatim}
+
+Esto asegura que el 90\% de los datos se usen para entrenar, y el 10\% restante para probar el modelo.
+
+\paragraph{Entrenamiento del modelo}
+
+\begin{verbatim}
+modelo = LogisticRegression()
+modelo.fit(X_entrena, y_entrena)
+\end{verbatim}
+
+\paragraph{Evaluación del modelo}
+
+\begin{verbatim}
+modelo.score(X_entrena, y_entrena)
+# Resultado: 0.875
+\end{verbatim}
+
+El modelo tiene una precisión del 87.5\% en el conjunto de entrenamiento. Este valor representa la proporción de predicciones correctas.
+
+\paragraph{Predicción con nuevos datos}
+
+Creamos un nuevo conjunto de edades:
+
+\begin{verbatim}
+datos_nuevos = pd.DataFrame({"edad": [25, 35, 45, 55]})
+\end{verbatim}
+
+Calculamos la probabilidad de compra:
+
+\begin{verbatim}
+probabilidades = modelo.predict_proba(datos_nuevos)
+prob_compra = probabilidades[:, 1]
+\end{verbatim}
+
+\texttt{predict\_proba()} devuelve para cada observación dos valores: probabilidad de \texttt{clase 0} y de \texttt{clase 1}. Nos interesa la segunda.
+
+\paragraph{Visualización final}
+
+\begin{verbatim}
+plt.scatter(df["edad"], df["compra"])
+plt.scatter(datos_nuevos["edad"], prob_compra, color="red");
+\end{verbatim}
+
+El gráfico resultante combina los datos históricos con la predicción del modelo para nuevos casos.
+
+\subsection*{Árboles de Decisión – Parte I}
+
+Continuamos explorando algoritmos de aprendizaje supervisado. Hasta aquí, hemos trabajado con:
+
+\begin{itemize}
+    \item Regresión Lineal
+    \item Regresión Logística
+\end{itemize}
+
+Ambos algoritmos anteriores tienen un enfoque de regresión: buscan predecir un valor numérico (en el caso de la regresión lineal) o una probabilidad (en el caso de la regresión logística). Sin embargo, existen problemas en los que queremos predecir categorías o clases. Para estos casos, uno de los modelos más efectivos y conceptualmente intuitivos es el \textbf{Árbol de Decisión}.
+
+Un árbol de decisión es una estructura jerárquica de decisiones, donde cada nodo representa una condición que separa los datos según ciertos criterios, y cada rama conduce a una predicción final (hoja del árbol).
+
+\paragraph{Ejemplo: Clasificación de flores Iris}
+
+Utilizamos el famoso dataset \texttt{iris} de Seaborn:
+
+\begin{verbatim}
+df = sns.load_dataset("iris")
+df["species"].unique()
+\end{verbatim}
+
+\paragraph{Preparación de los datos}
+
+Seleccionamos como variables independientes a todas las columnas numéricas y eliminamos la variable objetivo (\texttt{species}):
+
+\begin{verbatim}
+X = df.drop("species", axis=1)
+\end{verbatim}
+
+Convertimos la variable categórica \texttt{species} en variables numéricas utilizando codificación:
+
+\begin{verbatim}
+from sklearn.preprocessing import LabelEncoder
+
+le = LabelEncoder()
+y = le.fit_transform(df["species"])
+\end{verbatim}
+
+\paragraph{División de entrenamiento y prueba}
+
+\begin{verbatim}
+from sklearn.model_selection import train_test_split
+
+X_entrena, X_prueba, y_entrena, y_prueba = train_test_split(
+    X, y,
+    train_size=0.8,
+    random_state=42
+)
+\end{verbatim}
+
+El parámetro \texttt{random\_state} fija una semilla para garantizar que el split sea reproducible. Esto es útil para depuración o comparación de modelos.
+
+\paragraph{Entrenamiento del modelo}
+
+Importamos el clasificador y lo entrenamos:
+
+\begin{verbatim}
+from sklearn.tree import DecisionTreeClassifier
+
+arbol = DecisionTreeClassifier()
+arbol.fit(X_entrena, y_entrena)
+\end{verbatim}
+
+\paragraph{Visualización del árbol}
+
+Podemos graficar el árbol utilizando \texttt{plot\_tree}:
+
+\begin{verbatim}
+from sklearn.tree import plot_tree
+
+plot_tree(decision_tree=arbol);
+\end{verbatim}
+
+Esta visualización aún es básica. En la siguiente parte mejoraremos su apariencia, etiquetas y comprensión. Exploraremos además cómo interpretar las decisiones del árbol y evaluar su desempeño.
+
+\subsection{*}
+
+
+
+\end{document}

@@ -1,0 +1,176 @@
+\documentclass{beamer}
+\usetheme{Madrid}
+\usecolortheme{default}
+\usepackage{listings}
+\usepackage{xcolor}
+
+\title{Proyecto 1 - OLTP - Colecciones}
+\subtitle{Bases de Datos a Gran Escala}
+\author{Equipo 13: \\ Andres Lopez Gonzalez \\ Carlos Fabian Esteva Gallegos}
+\date{}
+
+\lstset{
+  language=SQL,
+  basicstyle=\tiny\ttfamily,
+  keywordstyle=\color{blue}\bfseries,
+  commentstyle=\color{green!40!black},
+  stringstyle=\color{red},
+  breaklines=true,
+  showstringspaces=false,
+  frame=single,
+  numbers=left,
+  numberstyle=\tiny,
+  stepnumber=1
+}
+
+\begin{document}
+
+%---------------------------
+\begin{frame}
+  \titlepage
+\end{frame}
+
+%---------------------------
+\begin{frame}{Descripción del Proyecto}
+  \begin{itemize}
+    \item Encuentro mundial de coleccionistas de tarjetas deportivas.
+    \item Se diseña un sistema OLTP para gestionar deportes, equipos, jugadores y tarjetas.
+    \item Información clave:
+    \begin{itemize}
+      \item Deporte: nombre, descripción.
+      \item Equipo: nombre, ciudad, fechas de partidos.
+      \item Jugador: nombre, género, puesto, fechas, lugar de nacimiento.
+      \item Tarjeta: número, estado, fecha venta, medio adquisición.
+    \end{itemize}
+  \end{itemize}
+\end{frame}
+
+%---------------------------
+\begin{frame}{Modelo y Reglas}
+  \begin{itemize}
+    \item Se aplicaron \textbf{constraints} para integridad:
+    \begin{itemize}
+      \item Validación de nombres, géneros y estados.
+      \item Reglas de consistencia en fechas.
+      \item Restricciones de adquisición y estado de tarjetas.
+    \end{itemize}
+    \item Procedimientos almacenados:
+    \begin{itemize}
+      \item \texttt{sp\_inserta}: inserción de deportes.
+      \item \texttt{sp\_borra}: eliminación segura de deportes.
+    \end{itemize}
+  \end{itemize}
+\end{frame}
+
+%---------------------------
+\begin{frame}{Consultas y Resultados}
+  \begin{itemize}
+    \item \texttt{sp\_consultas} implementa 5 consultas parametrizadas:
+    \begin{enumerate}
+      \item Estado de tarjetas por equipo.
+      \item Medio de adquisición por jugador.
+      \item Relación deporte-equipo-tarjeta.
+      \item Equipos según estado de colección.
+      \item Jugadores y puesto dentro de un equipo.
+    \end{enumerate}
+    \item Resultados exportados a archivos \texttt{.txt} para análisis.
+  \end{itemize}
+\end{frame}
+
+%---------------------------
+\begin{frame}[fragile]{Constraints principales}
+\begin{lstlisting}
+-- Ejemplo de constraints
+ALTER TABLE deporte 
+ADD CONSTRAINT chk_nombre_deporte 
+CHECK (nombre_deporte ~ '^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+$');
+
+ALTER TABLE jugador 
+ADD CONSTRAINT chk_genero 
+CHECK (genero IN ('Masculino','Femenino','Otro'));
+
+ALTER TABLE tarjeta 
+ADD CONSTRAINT chk_estado_coleccion 
+CHECK (estado_coleccion IN ('Nuevo','Casi Nuevo','Usado',
+                            'Daños Visibles','Daño Total'));
+\end{lstlisting}
+\end{frame}
+
+%---------------------------
+\begin{frame}[fragile]{Stored Procedures: Inserción y Borrado}
+\begin{lstlisting}
+-- Inserción en tabla Deporte
+CREATE OR REPLACE FUNCTION sp_inserta_deporte(
+    p_nombre_deporte VARCHAR(50),
+    p_descripcion TEXT)
+RETURNS void AS $$
+BEGIN
+  INSERT INTO deporte (nombre_deporte, descripcion)
+  VALUES (p_nombre_deporte, p_descripcion);
+END;
+$$ LANGUAGE plpgsql;
+
+-- Borrado seguro en tabla Deporte
+CREATE OR REPLACE FUNCTION sp_borra_deporte(p_id_deporte INT)
+RETURNS void AS $$
+BEGIN
+  IF EXISTS (SELECT 1 FROM equipo WHERE id_deporte = p_id_deporte) THEN
+    RAISE EXCEPTION 'No se puede eliminar, deporte en uso.';
+  END IF;
+  DELETE FROM deporte WHERE id_deporte = p_id_deporte;
+END;
+$$ LANGUAGE plpgsql;
+\end{lstlisting}
+\end{frame}
+
+
+%---------------------------
+\begin{frame}[fragile]{Stored Procedure: Consultas}
+\begin{lstlisting}
+-- Procedimiento que ejecuta 5 consultas
+CREATE OR REPLACE FUNCTION sp_consultas(
+    opcion INT,
+    p_nombre_equipo VARCHAR DEFAULT NULL,
+    p_nombre_jugador VARCHAR DEFAULT NULL,
+    p_nombre_deporte VARCHAR DEFAULT NULL,
+    p_estado_coleccion VARCHAR DEFAULT NULL,
+    p_nombre_puesto VARCHAR DEFAULT NULL
+)
+RETURNS SETOF RECORD AS $$
+BEGIN
+  IF opcion = 1 THEN
+    RETURN QUERY SELECT estado_coleccion
+    FROM tarjeta t JOIN equipo e ON t.id_equipo=e.id_equipo
+    WHERE e.nombre_equipo = p_nombre_equipo;
+
+  ELSIF opcion = 2 THEN
+    RETURN QUERY SELECT medio_adquisicion
+    FROM tarjeta t JOIN jugador j ON t.id_jugador=j.id_jugador
+    WHERE j.nombre_jugador = p_nombre_jugador;
+
+  ELSIF opcion = 3 THEN
+    RETURN QUERY SELECT d.nombre_deporte,e.nombre_equipo,t.fecha_salida_venta
+    FROM deporte d JOIN equipo e ON d.id_deporte=e.id_deporte
+    JOIN tarjeta t ON e.id_equipo=t.id_equipo
+    WHERE d.nombre_deporte = p_nombre_deporte;
+
+  ELSIF opcion = 4 THEN
+    RETURN QUERY SELECT nombre_equipo
+    FROM equipo WHERE id_equipo IN (
+      SELECT id_equipo FROM tarjeta
+      WHERE estado_coleccion = p_estado_coleccion);
+
+  ELSIF opcion = 5 THEN
+    RETURN QUERY SELECT j.nombre_jugador,p.nombre_puesto
+    FROM jugador j JOIN equipo e ON j.id_equipo=e.id_equipo
+    JOIN puesto p ON j.id_puesto=p.id_puesto
+    WHERE e.nombre_equipo=p_nombre_equipo
+      AND p.nombre_puesto=p_nombre_puesto;
+  END IF;
+END;
+$$ LANGUAGE plpgsql;
+\end{lstlisting}
+\end{frame}
+
+
+\end{document}

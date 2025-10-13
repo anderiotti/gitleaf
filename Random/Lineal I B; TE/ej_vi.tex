@@ -1,0 +1,128 @@
+6. Encuentre el complemento ortogonal del espacio de soluciones del siguiente sistema homogéneo de ecuaciones lineales (considera el producto interno canónico).
+\[\begin{array}{l}2x1-x_2+5x_3+7x_4=0\\ 6x_1-3x_2+8x_3=0\\ 4x_1-2x_2+6x_3-2x_4=0\end{array}\]
+
+\begin{solution}
+Para encontrar el complemento ortogonal del espacio de soluciones del sistema homogéneo dado, primero, escribimos el sistema de ecuaciones lineales en forma matricial $\textbf{Ax}=0$ (por la propiedad de ser homogéneo el elemento \textbf{b} que hemos trabajado es cero así que se omite), donde \textbf{A} es la matriz de coeficientes y \textbf{x} es el vector de variables.
+\[
+A = 
+\begin{pmatrix}
+2 & -1 & 5 & 7 \\
+6 & -3 & 8 & 0 \\
+4 & -2 & 6 & -2 \\
+\end{pmatrix}, \quad
+\mathbf{x} = 
+\begin{pmatrix}
+x_1 \\
+x_2 \\
+x_3 \\
+x_4 \\
+\end{pmatrix}
+\]
+El espacio de soluciones \( S \) es el conjunto de todos los vectores \( \mathbf{x} \) que satisfacen \( A\mathbf{x} = \mathbf{0} \). Para encontrar \( S \), podemos reducir la matriz \( A \) a su forma escalonada reducida por filas (Forma Escalonada Reducida de Gauss-Jordan). Aplicando operaciones elementales de fila... \\
+
+Dividimos la primera fila entre 2:
+
+\[
+\begin{pmatrix}
+1 & -0.5 & 2.5 & 3.5 \\
+6 & -3 & 8 & 0 \\
+4 & -2 & 6 & -2 \\
+\end{pmatrix}
+\]
+
+Restamos 6 veces la primera fila de la segunda fila y 4 veces la primera fila de la tercera fila:
+
+\[
+\begin{pmatrix}
+1 & -0.5 & 2.5 & 3.5 \\
+0 & 0 & -7 & -21 \\
+0 & 0 & -4 & -16 \\
+\end{pmatrix}
+\]
+
+Simplificamos la segunda fila dividiéndola entre -7:
+
+\[
+\begin{pmatrix}
+1 & -0.5 & 2.5 & 3.5 \\
+0 & 0 & 1 & 3 \\
+0 & 0 & -4 & -16 \\
+\end{pmatrix}
+\]
+
+Sumamos 4 veces la segunda fila a la tercera fila:
+
+\[
+\begin{pmatrix}
+1 & -0.5 & 2.5 & 3.5 \\
+0 & 0 & 1 & 3 \\
+0 & 0 & 0 & -4 \\
+\end{pmatrix}
+\]
+
+Dividimos la tercera fila entre -4:
+
+\[
+\begin{pmatrix}
+1 & -0.5 & 2.5 & 3.5 \\
+0 & 0 & 1 & 3 \\
+0 & 0 & 0 & 1 \\
+\end{pmatrix}
+\]
+
+Eliminamos los términos por encima de los pivotes:
+
+\[
+\begin{pmatrix}
+1 & -0.5 & 0 & -4 \\
+0 & 0 & 1 & 3 \\
+0 & 0 & 0 & 1 \\
+\end{pmatrix}
+\]
+
+Finalmente, eliminamos el 1 en la segunda fila:
+
+\[
+\begin{pmatrix}
+1 & -0.5 & 0 & -4 \\
+0 & 0 & 1 & 3 \\
+0 & 0 & 0 & 1 \\
+\end{pmatrix}
+\]
+Observamos que \( x_2 \) es una variable libre, ya que no hay pivote en su columna. Expresamos las variables en términos de $x_2$:
+\[
+\begin{cases}
+x_4 = 0 \\
+x_3 + 3x_4 = x_3 = 0 \\
+x_1 - 0.5x_2 - 4x_4 = x_1 - 0.5x_2 = 0 \\
+\end{cases}
+\]
+De aquí, obtenemos:
+\[
+x_1 = 0.5x_2, \quad x_3 = 0, \quad x_4 = 0
+\]
+Por lo tanto, el espacio de soluciones S está dado por:
+\[
+S = \left\{ \mathbf{x} \in \mathbb{R}^4 \ \bigg| \ \mathbf{x} = x_2 \begin{pmatrix} 0.5 \\ 1 \\ 0 \\ 0 \end{pmatrix} \right\}
+\]
+En el espacio euclidiano con el producto interno canónico, el complemento ortogonal de \( S \), denotado \( S^\perp \), está formado por todos los vectores que son ortogonales a cada vector en \( S \).
+Dado que \( S \) está generado por el vector \( \begin{pmatrix} 0.5 \\ 1 \\ 0 \\ 0 \end{pmatrix} \), un vector \( \mathbf{v} = \begin{pmatrix} v_1 \\ v_2 \\ v_3 \\ v_4 \end{pmatrix} \) pertenece a \( S^\perp \) si y solo s
+\[
+\mathbf{v} \cdot \begin{pmatrix} 0.5 \\ 1 \\ 0 \\ 0 \end{pmatrix} = 0
+\]
+Calculando el producto interno:
+\[
+0.5v_1 + v_2 = 0 \quad \Rightarrow \quad v_2 = -0.5v_1
+\]
+Por lo tanto, cualquier vector en \( S^\perp \) debe satisfacer \( v_2 = -0.5v_1 \). Las componentes \( v_3 \) y \( v_4 \) son libres porque en el producto punto sea cual sea su valor terminan multiplicados por cero.
+Así, el complemento ortogonal \( S^\perp \) está dado por:
+\[
+S^\perp = \left\{ \mathbf{v} \in \mathbb{R}^4 \ \bigg| \ v_2 = -0.5v_1 \right\}
+\]
+O bien, podemos expresar una base para \( S^\perp \)
+\[
+S^\perp = \text{Span} \left\{ \begin{pmatrix} 1 \\ -0.5 \\ 0 \\ 0 \end{pmatrix}, \begin{pmatrix} 0 \\ 0 \\ 1 \\ 0 \end{pmatrix}, \begin{pmatrix} 0 \\ 0 \\ 0 \\ 1 \end{pmatrix} \right\}
+\]
+Esto significa que cualquier vector en \( S^\perp \) puede ser expresado como combinación lineal de estos tres vectores.
+
+\end{solution}

@@ -1,0 +1,85 @@
+\documentclass[article,12pt]{elsarticle}
+\usepackage[spanish]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{amssymb}
+\usepackage{flushend}
+\usepackage{float}
+\usepackage{anysize}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{dcolumn}
+\usepackage{amsthm}
+\usepackage{caption}
+\usepackage{float}
+\usepackage{subfigure}
+\usepackage{graphicx}
+\usepackage{lmodern}
+\usepackage{booktabs}
+\usepackage{color}
+\usepackage{longtable}
+\usepackage{rotating}
+\usepackage{etoolbox}
+\usepackage{comment}
+\usepackage{pdflscape}
+\usepackage{booktabs}
+
+
+\begin{document}
+
+\begin{frontmatter}
+    \title{Laboratorio de Fenómenos Colectivos \\ Calor Latente de Fusión del Hielo} \\
+    \author{Andrés López González$^1$} %Aquí va el nombre de los integrantes que participaron en el informe.
+    \address{$^1$ Facultad de Ciencias, Universidad Nacional Autónoma de México, M\'exico CDMX.}
+\end{frontmatter}
+
+\section{Materiales}
+\begin{itemize}
+\item Hielo
+\item Báscula digital
+\item Termómetro de mercurio
+\item Calorímetro de aluminio
+\item Agua de laboratorio
+\end{itemize}
+
+\section{Ajuste experimental}
+
+Se colocó agua de laboratorio en el interior del calorímetro, registramos con el termómetro de mercurio la temperatura de este así como su masa $m_a$. Después, se colocó un hielo de masa $m_h$ en el agua, inmediatamente se cerró el calorímetro con el termómetro sellando el último hueco de intercambio de calor, lo dejamos disolverse completamente y obtuvimos una temperatura de equilibrio $T_f$, registramos la masa total del agua y la restamos con la masa inicial; para obtener el calor latente investigamos el calor específico del agua de laboratorio y el calorímetro de aluminio, así como pesamos el vasito de calorímetro que estuvo interactuando en el cambio de calor. Nuestra expresión se determinó como,
+\begin{align*}
+    Q_{perdido\;agua} &= Q_{ganado\;hielo} \\
+    -(m_ac_a(T_f-T_a)-m_cc_c(T_f-T_a)) &= m_hc_h(T_f-T_h)+m_hL_h \\
+    -(m_ac_a+m_cc_c)(T_f-T_a) &= m_hc_h|T_h| + m_hL_f \\
+    \frac{(m_ac_a+m_cc_c)(T_a-T_f)-m_hc_h|T_h|}{m_h} &= L_f
+\end{align*}
+
+\newpage
+\section{Resultados y análisis}
+
+Mis datos fueron los siguientes \\
+
+\begin{table}[h]
+\begin{tabular}{lr}
+m.a          & 225.68 \\
+T.a            & 22     \\
+T.h            & 13     \\
+T.f             & 14     \\
+m.c        & 45.85  \\
+m.h         & 245.64 \\
+derretido & 19.96  \\
+c.c         & 0.217  \\
+c.h         & 0.5    \\
+c.a          & 1     
+\end{tabular}
+\end{table}
+
+De aquí se tiene que el calor latente es el siguiente en calorías y joules \\
+
+\begin{table}[h]
+\begin{tabular}{|l|r|}
+\hline
+Calor latente cal & 87.94066132 \\ \hline
+Joules            & 367.943727  \\ \hline
+\end{tabular}
+\end{table}
+
+\end{document}
+

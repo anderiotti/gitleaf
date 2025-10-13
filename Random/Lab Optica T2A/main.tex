@@ -1,0 +1,69 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage{pgfplots}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage[thmmarks, amsmath, thref]{ntheorem}
+\usepackage{mdframed}
+\usepackage{amsthm}
+\usepackage{physics}
+\usepackage{derivative}
+\usepackage{hyperref}
+\usepackage{wrapfig}
+\usepackage{amsthm}
+\renewcommand{\theenumi}{\roman{enumi}}
+
+\theoremstyle{nonumberplain}
+\theoremheaderfont{\itshape}
+\theorembodyfont{\upshape}
+\theoremseparator{.}
+\theoremsymbol{\ensuremath{\square}}
+\theoremsymbol{\ensuremath{\blacksquare}}
+\newtheorem{solution}{Solution}
+\theoremseparator{. ---}
+\theoremsymbol{\mbox{\texttt{;o)}}}
+
+\geometry{a4paper, left=2cm, right=2cm, top=1cm, bottom=2cm}
+
+\pgfplotsset{compat=1.18}
+\begin{document}
+
+La ecuación (7) establece que la razón entre los senos de los ángulos de transmisión e incidencia es constante y está dada por la razón de sus velocidades de propagación en cada medio:
+
+\[
+\frac{\sin{\theta_T}}{\sin{\theta_I}} = \frac{v_T}{v_I} = \text{constante}
+\]
+
+Si se busca determinar la velocidad de la luz en uno de los medios, suponiendo que la del otro medio es conocida con exactitud, podemos reescribir la ecuación como:
+
+\[
+v_T = v_I \frac{\sin{\theta_T}}{\sin{\theta_I}}, \quad \quad
+v_I = v_T \frac{\sin{\theta_I}}{\sin{\theta_T}}
+\]
+
+Dependiendo de qué velocidad es conocida, se despeja la ecuación correspondiente; si se linealiza la ecuación (7) en una representación gráfica de \(\sin{\theta_T}\) vs. \(\sin{\theta_I}\), la pendiente \(m\) de la recta ajustada es:
+
+\[
+m = \frac{v_T}{v_I}
+\]
+
+Dado que en un experimento típico se obtiene \(m\) a partir del ajuste lineal de datos experimentales, podemos despejar la velocidad desconocida en términos de la otra:
+
+\[
+v_T = m v_I, \quad \quad
+v_I = \frac{v_T}{m}
+\]
+
+según el caso de estudio. Dado que la pendiente \(m\) se obtiene con cierta incertidumbre \(\Delta m\), la propagación de errores se determina mediante:
+
+\[
+\Delta v_T = v_I \Delta m,  \quad \quad \Delta v_I = \frac{v_T \Delta m}{m^2}
+\]
+
+donde \(\Delta v_T\) y \(\Delta v_I\) representan las incertidumbres en las velocidades de transmisión e incidencia respectivamente. \\
+
+
+\end{document}

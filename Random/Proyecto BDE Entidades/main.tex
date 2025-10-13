@@ -1,0 +1,427 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{array}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{booktabs}
+\usepackage{geometry}
+\geometry{a4paper, margin=1in}
+
+\begin{document}
+
+\section*{Tablas del Modelo Relacional}
+
+% --- Tabla Deporte ---
+\subsection*{Tabla: Deporte}
+\textit{Almacena los deportes representados en las tarjetas.}
+\begin{center}
+\begin{tabular}{|l|l|p{6cm}|}
+\hline
+\textbf{Nombre del Campo} & \textbf{Tipo de Dato (Sugerido)} & \textbf{Descripción / Restricción} \\
+\hline
+\texttt{id\_deporte} & \texttt{INTEGER} & Llave Primaria (PK), Autoincremental \\
+\texttt{nombre\_deporte} & \texttt{VARCHAR(50)} & Nombre único del deporte \\
+\texttt{descripcion} & \texttt{TEXT} & Descripción del deporte \\
+\hline
+\end{tabular}
+\end{center}
+
+% --- Tabla Equipo ---
+\subsection*{Tabla: Equipo}
+\textit{Contiene la información de cada equipo.}
+\begin{center}
+\begin{tabular}{|l|l|p{6cm}|}
+\hline
+\textbf{Nombre del Campo} & \textbf{Tipo de Dato (Sugerido)} & \textbf{Descripción / Restricción} \\
+\hline
+\texttt{id\_equipo} & \texttt{INTEGER} & Llave Primaria (PK), Autoincremental \\
+
+\texttt{nombre\_equipo} & \texttt{VARCHAR(100)} & Nombre único del equipo \\
+\texttt{ciudad\_origen} & \texttt{VARCHAR(100)} & Ciudad de origen del equipo \\
+\texttt{fecha\_primer\_partido} & \texttt{DATE} & Fecha del primer partido jugado \\
+\texttt{fecha\_ultimo\_partido} & \texttt{DATE} & Fecha del último partido jugado \\
+\texttt{id\_deporte} & \texttt{INTEGER} & Llave Foránea (FK) hacia Deporte \\
+\hline
+\end{tabular}
+\end{center}
+
+% --- Tabla Puesto ---
+\subsection*{Tabla: Puesto}
+\textit{Define las posiciones de los jugadores y sus detalles asociados.}
+\begin{center}
+\begin{tabular}{|l|l|p{6cm}|}
+\hline
+\textbf{Nombre del Campo} & \textbf{Tipo de Dato (Sugerido)} & \textbf{Descripción / Restricción} \\
+\hline
+\texttt{id\_puesto} & \texttt{INTEGER} & Llave Primaria (PK), Autoincremental \\
+\texttt{nombre\_puesto} & \texttt{VARCHAR(100)} & Nombre de la posición \\
+\texttt{direccion\_entrenamiento} & \texttt{VARCHAR(150)} & Dirección del lugar de entrenamiento \\
+\texttt{telefono\_particular} & \texttt{VARCHAR(20)} & Teléfono particular de contacto \\
+\texttt{telefono\_celular} & \texttt{VARCHAR(20)} & Teléfono celular de contacto \\
+\texttt{ciudad\_entrenamiento} & \texttt{VARCHAR(100)} & Ciudad del entrenamiento \\
+\texttt{estado\_entrenamiento} & \texttt{VARCHAR(100)} & Estado o región del entrenamiento \\
+\hline
+\end{tabular}
+\end{center}
+
+% --- Tabla Jugador ---
+\subsection*{Tabla: Jugador}
+\textit{Almacena los datos personales y profesionales de cada jugador.}
+\begin{center}
+\begin{tabular}{|l|l|p{6cm}|}
+\hline
+\textbf{Nombre del Campo} & \textbf{Tipo de Dato (Sugerido)} & \textbf{Descripción / Restricción} \\
+\hline
+\texttt{id\_jugador} & \texttt{INTEGER} & Llave Primaria (PK), Autoincremental \\
+\texttt{nombre\_jugador} & \texttt{VARCHAR(100)} & Nombre completo del jugador \\
+\texttt{genero} & \texttt{VARCHAR(10)} & Género del jugador \\
+\texttt{fecha\_nacimiento} & \texttt{DATE} & Fecha de nacimiento \\
+\texttt{lugar\_nacimiento} & \texttt{VARCHAR(150)} & Lugar de nacimiento \\
+\texttt{fecha\_pertenencia\_equipo} & \texttt{DATE} & Fecha de ingreso al equipo actual \\
+\texttt{id\_equipo} & \texttt{INTEGER} & Llave Foránea (FK) hacia Equipo \\
+\texttt{id\_puesto} & \texttt{INTEGER} & Llave Foránea (FK) hacia Puesto \\
+\hline
+\end{tabular}
+\end{center}
+
+% --- Tabla Tarjeta ---
+\subsection*{Tabla: Tarjeta}
+\textit{Contiene toda la información específica de cada tarjeta coleccionable.}
+\begin{center}
+\begin{tabular}{|l|l|p{6cm}|}
+\hline
+\textbf{Nombre del Campo} & \textbf{Tipo de Dato (Sugerido)} & \textbf{Descripción / Restricción} \\
+\hline
+\texttt{id\_tarjeta} & \texttt{INTEGER} & Llave Primaria (PK), Autoincremental \\
+\texttt{numero\_tarjeta} & \texttt{VARCHAR(50)} & Número o código de la tarjeta \\
+\texttt{lugar\_entrenamiento} & \texttt{VARCHAR(150)} & Lugar específico mostrado en la tarjeta \\
+\texttt{fecha\_salida\_venta} & \texttt{DATE} & Fecha de lanzamiento al mercado \\
+\texttt{fecha\_venta} & \texttt{DATE} & Fecha en que fue vendida/adquirida \\
+\texttt{medio\_adquisicion} & \texttt{VARCHAR(100)} & Cómo fue adquirida (tienda, cambio) \\
+\texttt{descripcion} & \texttt{TEXT} & Descripción o datos en la tarjeta \\
+\texttt{estado\_coleccion} & \texttt{VARCHAR(100)} & Condición de la tarjeta (nuevo, usado) \\
+\texttt{id\_jugador} & \texttt{INTEGER} & Llave Foránea (FK) hacia Jugador \\
+\texttt{id\_equipo} & \texttt{INTEGER} & Llave Foránea (FK) hacia Equipo \\
+\hline
+\end{tabular}
+\end{center}
+
+
+\vspace{5mm}
+
+\section{Modelo Relacional}
+
+\section{Descripción de las Relaciones}
+
+\begin{enumerate}
+    \item \textbf{Deporte - Equipo} (1:N)
+    \begin{itemize}
+        \item Un deporte puede tener múltiples equipos
+        \item Un equipo pertenece a un solo deporte
+    \end{itemize}
+    
+    \item \textbf{Equipo - Jugador} (1:N)
+    \begin{itemize}
+        \item Un equipo tiene múltiples jugadores
+        \item Un jugador pertenece a un solo equipo
+    \end{itemize}
+    
+    \item \textbf{Puesto - Jugador} (1:N)
+    \begin{itemize}
+        \item Un puesto puede ser ocupado por múltiples jugadores
+        \item Un jugador tiene un solo puesto principal
+    \end{itemize}
+    
+    \item \textbf{Jugador - Tarjeta} (1:N)
+    \begin{itemize}
+        \item Un jugador puede tener múltiples tarjetas
+        \item Una tarjeta representa a un solo jugador
+    \end{itemize}
+    
+    \item \textbf{Equipo - Tarjeta} (1:N)
+    \begin{itemize}
+        \item Un equipo puede estar representado en múltiples tarjetas
+        \item Una tarjeta representa a un solo equipo
+    \end{itemize}
+\end{enumerate}
+
+\section{Atributos Clave}
+
+\begin{itemize}
+    \item \textbf{Deporte}: id\_deporte (PK)
+    \item \textbf{Equipo}: id\_equipo (PK), id\_deporte (FK)
+    \item \textbf{Puesto}: id\_puesto (PK)
+    \item \textbf{Jugador}: id\_jugador (PK), id\_equipo (FK), id\_puesto (FK)
+    \item \textbf{Tarjeta}: id\_tarjeta (PK), id\_jugador (FK), id\_equipo (FK)
+\end{itemize}
+
+\section{Restricciones Identificadas}
+
+\begin{enumerate}
+    \item Unicidad en nombre\_deporte
+    \item Unicidad en nombre\_equipo por deporte
+    \item Fechas válidas (fecha\_ultimo\_partido $\geq$ fecha\_primer\_partido)
+    \item Formato de teléfonos
+    \item Valores específicos para género y estado\_coleccion
+    \item Integridad referencial entre todas las tablas relacionadas
+\end{enumerate}
+
+
+
+
+
+\vspace{5mm}
+
+\section{Modelo Relacional Normalizado}
+\section*{Modelo Relacional Normalizado}
+
+% --- Tabla Deporte ---
+\subsection*{Tabla: Deporte}
+\begin{center}
+\begin{tabular}{|l|l|p{6cm}|}
+\hline
+\textbf{Campo} & \textbf{Tipo de Dato} & \textbf{Restricción} \\
+\hline
+\texttt{id\_deporte} & INTEGER & PK, Autoincremental \\
+\texttt{nombre\_deporte} & VARCHAR(50) & NOT NULL, Único \\
+\texttt{descripcion} & TEXT &  \\
+\hline
+\end{tabular}
+\end{center}
+
+% --- Tabla Equipo ---
+\subsection*{Tabla: Equipo}
+\begin{center}
+\begin{tabular}{|l|l|p{6cm}|}
+\hline
+\textbf{Campo} & \textbf{Tipo de Dato} & \textbf{Restricción} \\
+\hline
+\texttt{id\_equipo} & INTEGER & PK, Autoincremental \\
+\texttt{nombre\_equipo} & VARCHAR(100) & NOT NULL, Único \\
+\texttt{ciudad\_origen} & VARCHAR(100) &  \\
+\texttt{fecha\_primer\_partido} & DATE &  \\
+\texttt{fecha\_ultimo\_partido} & DATE &  \\
+\texttt{id\_deporte} & INTEGER & FK $\rightarrow$ Deporte(id\_deporte) \\
+\hline
+\end{tabular}
+\end{center}
+
+% --- Tabla Puesto ---
+\subsection*{Tabla: Puesto}
+\begin{center}
+\begin{tabular}{|l|l|p{6cm}|}
+\hline
+\textbf{Campo} & \textbf{Tipo de Dato} & \textbf{Restricción} \\
+\hline
+\texttt{id\_puesto} & INTEGER & PK, Autoincremental \\
+\texttt{nombre\_puesto} & VARCHAR(100) & NOT NULL \\
+\texttt{direccion\_entrenamiento} & VARCHAR(150) &  \\
+\texttt{telefono\_particular} & number(1) &  \\
+\texttt{telefono\_celular} & VARCHAR(20) &  \\
+\texttt{ciudad\_entrenamiento} & VARCHAR(100) &  \\
+\texttt{estado\_entrenamiento} & VARCHAR(100) &  \\
+\hline
+\end{tabular}
+\end{center}
+
+% --- Tabla Jugador ---
+\subsection*{Tabla: Jugador}
+\begin{center}
+\begin{tabular}{|l|l|p{6cm}|}
+\hline
+\textbf{Campo} & \textbf{Tipo de Dato} & \textbf{Restricción} \\
+\hline
+\texttt{id\_jugador} & INTEGER & PK, Autoincremental \\
+\texttt{nombre\_jugador} & VARCHAR(100) & NOT NULL \\
+\texttt{genero} & VARCHAR(10) &  \\
+\texttt{fecha\_nacimiento} & DATE &  \\
+\texttt{lugar\_nacimiento} & VARCHAR(150) &  \\
+\texttt{fecha\_pertenencia\_equipo} & DATE &  \\
+\texttt{id\_equipo} & INTEGER & FK $\rightarrow$ Equipo(id\_equipo) \\
+\texttt{id\_puesto} & INTEGER & FK $\rightarrow$ Puesto(id\_puesto) \\
+\hline
+\end{tabular}
+\end{center}
+
+% --- Tabla Tarjeta ---
+\subsection*{Tabla: Tarjeta}
+\begin{center}
+\begin{tabular}{|l|l|p{6cm}|}
+\hline
+\textbf{Campo} & \textbf{Tipo de Dato} & \textbf{Restricción} \\
+\hline
+\texttt{id\_tarjeta} & INTEGER & PK, Autoincremental \\
+\texttt{numero\_tarjeta} & VARCHAR(50) & NOT NULL, Único \\
+\texttt{lugar\_entrenamiento} & VARCHAR(150) &  \\
+\texttt{fecha\_salida\_venta} & DATE &  \\
+\texttt{fecha\_venta} & DATE &  \\
+\texttt{medio\_adquisicion} & VARCHAR(100) &  \\
+\texttt{descripcion} & TEXT &  \\
+\texttt{estado\_coleccion} & VARCHAR(100) &  \\
+\texttt{id\_jugador} & INTEGER & FK $\rightarrow$ Jugador(id\_jugador) \\
+\texttt{id\_equipo} & INTEGER & FK $\rightarrow$ Equipo(id\_equipo) \\
+\hline
+\end{tabular}
+\end{center}
+
+
+
+
+
+
+\lstset{
+    language=SQL,
+    basicstyle=\ttfamily\small,
+    keywordstyle=\color{blue}\bfseries,
+    commentstyle=\color{gray}\itshape,
+    stringstyle=\color{red},
+    showstringspaces=false,
+    breaklines=true,
+    frame=single,
+    tabsize=2
+}
+
+\section*{Listados de Programas en SQL}
+
+\begin{itemize}
+    \item Creación de base de datos con el nombre que se indica en el encabezado.
+    \item Creación de tablas.
+    \item Creación de llaves foráneas y primarias según corresponda con el modelo lógico.
+    \item Creación de reglas, constraints o defaults que permitan integridad de dominio y/o reglas de negocio.
+    \item Alta de cuando menos 10 registros a las tablas catálogo de la BD y los registros correspondientes en las tablas relación para denotar las asociaciones 1:1; 1:N; M:N. Donde M y N son cuando menos 3.
+    \item Creación de índices en campos líderes de consulta común.
+    \item Procedimiento almacenado \texttt{sp\_inserta} que, a través de parámetros permita inserción de registros de alguna tabla catálogo.
+    \item Creación de consultas, que satisfagan la hoja de requerimientos.
+    \item Procedimiento almacenado \texttt{sp\_consultas} que acepte parámetros y ejecute 5 consultas, si los requerimientos contienen menos crear dos nuevas. La salida del Procedimiento (es decir, el resultado de las consultas) debe guardarlo en un archivo.
+    \item Procedimiento almacenado \texttt{sp\_borra} que permita eliminación de registros de alguna tabla catálogo.
+    \item Comandos necesarios para el control de la integridad de la información.
+\end{itemize}
+
+\subsection*{Código SQL}
+
+\begin{lstlisting}[language=SQL]
+-- Creación de la base de datos
+CREATE DATABASE Colecciones;
+GO
+
+USE Colecciones;
+GO
+
+-- Tabla Deporte
+CREATE TABLE Deporte (
+    id_deporte INT PRIMARY KEY IDENTITY(1,1),
+    nombre_deporte VARCHAR(50) UNIQUE NOT NULL,
+    descripcion TEXT
+);
+
+-- Tabla Equipo
+CREATE TABLE Equipo (
+    id_equipo INT PRIMARY KEY IDENTITY(1,1),
+    nombre_equipo VARCHAR(100) UNIQUE NOT NULL,
+    ciudad_origen VARCHAR(100),
+    fecha_primer_partido DATE,
+    fecha_ultimo_partido DATE,
+    id_deporte INT NOT NULL,
+    FOREIGN KEY (id_deporte) REFERENCES Deporte(id_deporte)
+);
+
+-- Tabla Puesto
+CREATE TABLE Puesto (
+    id_puesto INT PRIMARY KEY IDENTITY(1,1),
+    nombre_puesto VARCHAR(100) NOT NULL,
+    direccion_entrenamiento VARCHAR(255),
+    telefono_particular VARCHAR(20),
+    telefono_celular VARCHAR(20),
+    ciudad_entrenamiento VARCHAR(100),
+    estado_entrenamiento VARCHAR(100)
+);
+
+-- Tabla Jugador
+CREATE TABLE Jugador (
+    id_jugador INT PRIMARY KEY IDENTITY(1,1),
+    nombre_jugador VARCHAR(100) NOT NULL,
+    genero VARCHAR(10),
+    fecha_nacimiento DATE,
+    lugar_nacimiento VARCHAR(150),
+    fecha_pertenencia_equipo DATE,
+    id_equipo INT NOT NULL,
+    id_puesto INT NOT NULL,
+    FOREIGN KEY (id_equipo) REFERENCES Equipo(id_equipo),
+    FOREIGN KEY (id_puesto) REFERENCES Puesto(id_puesto)
+);
+
+-- Tabla Tarjeta
+CREATE TABLE Tarjeta (
+    id_tarjeta INT PRIMARY KEY IDENTITY(1,1),
+    numero_tarjeta VARCHAR(50) UNIQUE NOT NULL,
+    lugar_entrenamiento VARCHAR(255),
+    fecha_salida_venta DATE,
+    fecha_venta DATE,
+    medio_adquisicion VARCHAR(100),
+    descripcion TEXT,
+    estado_coleccion VARCHAR(100),
+    id_jugador INT NOT NULL,
+    id_equipo INT NOT NULL,
+    FOREIGN KEY (id_jugador) REFERENCES Jugador(id_jugador),
+    FOREIGN KEY (id_equipo) REFERENCES Equipo(id_equipo)
+);
+
+-- Ejemplo de inserciones (mínimo 10 registros en catálogos)
+INSERT INTO Deporte (nombre_deporte, descripcion) VALUES
+('Futbol', 'Deporte en el que se enfrentan dos equipos de 11 jugadores'),
+('Baseball', 'Deporte con bate y pelota'),
+('Basketball', 'Deporte con balón y canasta');
+
+-- Ejemplo de índice
+CREATE INDEX idx_nombre_equipo ON Equipo(nombre_equipo);
+
+-- Procedimiento almacenado para inserción
+CREATE PROCEDURE sp_inserta_equipo
+    @nombre_equipo VARCHAR(100),
+    @ciudad_origen VARCHAR(100),
+    @id_deporte INT
+AS
+BEGIN
+    INSERT INTO Equipo (nombre_equipo, ciudad_origen, id_deporte)
+    VALUES (@nombre_equipo, @ciudad_origen, @id_deporte);
+END;
+GO
+
+-- Procedimiento almacenado para consultas
+CREATE PROCEDURE sp_consultas
+    @opcion INT
+AS
+BEGIN
+    IF @opcion = 1
+        SELECT * FROM Deporte;
+    ELSE IF @opcion = 2
+        SELECT * FROM Equipo;
+    ELSE IF @opcion = 3
+        SELECT * FROM Jugador;
+    ELSE IF @opcion = 4
+        SELECT * FROM Tarjeta;
+    ELSE IF @opcion = 5
+        SELECT d.nombre_deporte, COUNT(e.id_equipo) AS total_equipos
+        FROM Deporte d
+        JOIN Equipo e ON d.id_deporte = e.id_deporte
+        GROUP BY d.nombre_deporte;
+END;
+GO
+
+-- Procedimiento almacenado para borrado
+CREATE PROCEDURE sp_borra_deporte
+    @id_deporte INT
+AS
+BEGIN
+    DELETE FROM Deporte WHERE id_deporte = @id_deporte;
+END;
+GO
+\end{lstlisting}
+
+
+
+
+
+
+
+\end{document}

@@ -1,0 +1,109 @@
+1. ( \( \mathbf{1} \mathbf{~ p t}) \) Determine si el siguiente sistema de ecuaciones en \( \mathbb{R} \) tiene solución, si es así obtenga el espacio solución y si no, justifique la razón.
+\[
+\begin{aligned}
+x_{1}-10 x_{2} & =-9 \\
+x_{2}-10 x_{3} & =-9 \\
+x_{3}-10 x_{4} & =-9 \\
+x_{4}-10 x_{5} & =-9 \\
+x_{5}-10 x_{6} & =-9 \\
+x_{6} & =1
+\end{aligned}
+\]
+\begin{solution}
+Podemos escribir este sistema en forma matricial como:
+\[
+A \mathbf{x} = \mathbf{b}
+\]
+donde...
+\[
+A = \begin{bmatrix}
+1 & -10 & 0 & 0 & 0 & 0 \\
+0 & 1 & -10 & 0 & 0 & 0 \\
+0 & 0 & 1 & -10 & 0 & 0 \\
+0 & 0 & 0 & 1 & -10 & 0 \\
+0 & 0 & 0 & 0 & 1 & -10 \\
+0 & 0 & 0 & 0 & 0 & 1
+\end{bmatrix}, \quad
+\mathbf{x} = \begin{bmatrix}
+x_{1} \\
+x_{2} \\
+x_{3} \\
+x_{4} \\
+x_{5} \\
+x_{6}
+\end{bmatrix}, \quad
+\mathbf{b} = \begin{bmatrix}
+-9 \\
+-9 \\
+-9 \\
+-9 \\
+-9 \\
+1
+\end{bmatrix}
+\]
+Notemos que todas las columnas son linealmente independientes por lo que la nulidad de A es cero, entonces la dimensión del dominio (6) es igual a su rango por Teorema de la Dimensión, esto nos es útil después para conocer cuántas soluciones hay. Para resolver \( A \mathbf{x} = \mathbf{b} \), aplicamos el método de eliminación gaussiana. Transformamos la matriz \( A \) en una matriz triangular superior mediante operaciones fila elementales. \\
+\textit{Matriz aumentada inicial:}
+
+\[
+[A | \mathbf{b}] = \begin{bmatrix}
+1 & -10 & 0 & 0 & 0 & 0 & \mid & -9 \\
+0 & 1 & -10 & 0 & 0 & 0 & \mid & -9 \\
+0 & 0 & 1 & -10 & 0 & 0 & \mid & -9 \\
+0 & 0 & 0 & 1 & -10 & 0 & \mid & -9 \\
+0 & 0 & 0 & 0 & 1 & -10 & \mid & -9 \\
+0 & 0 & 0 & 0 & 0 & 1 & \mid & 1
+\end{bmatrix}
+\]
+
+La matriz \( A \) es estrictamente triangular superior. Esta estructura indica que el sistema puede resolverse directamente hacia atrás sin necesidad de pivoteo así que realizamos esta sustitución. De la última ecuación, $x_6=1$. \\
+
+Sustituimos hacia atrás:
+
+\begin{enumerate}
+    \item Ecuación 5: $x_5-10 \cdot 1=−9 \Rightarrow x_5=1$.
+    \item Ecuación 4: $x_4-10 \cdot 1=−9 \Rightarrow x_4=1$.
+    \item Ecuación 3: $x_3-10 \cdot 1=−9 \Rightarrow x_3=1$.
+    \item Ecuación 2: $x_2-10 \cdot 1=−9 \Rightarrow x_2=1$.
+    \item Ecuación 1: $x_1-10 \cdot 1=−9 \Rightarrow x_1=1$.
+\end{enumerate}
+
+Obtenemos la siguiente matriz aumentada resuelta.
+\[
+\begin{bmatrix}
+1 & 0 & 0 & 0 & 0 & 0 & \mid & 1 \\
+0 & 1 & 0 & 0 & 0 & 0 & \mid & 1 \\
+0 & 0 & 1 & 0 & 0 & 0 & \mid & 1 \\
+0 & 0 & 0 & 1 & 0 & 0 & \mid & 1 \\
+0 & 0 & 0 & 0 & 1 & 0 & \mid & 1 \\
+0 & 0 & 0 & 0 & 0 & 1 & \mid & 1
+\end{bmatrix}
+\]
+De donde es directo ver que al estar compuesta por entradas canónicas su dominio e imagen son iguales, por Teorema de Rouché-Capelli se sabe que un sistema de ecuaciones lineales es consistente si y solo si el rango de la matriz de coeficientes es igual al rango de la matriz aumentada. Aquí ambas matrices tienen rango 6, asegurando la consistencia del sistema.\\
+Para un sistema no homogéneo \(A \mathbf{x} = \mathbf{b}\), el espacio solución es un conjunto afín, que es una traslación del espacio solución del sistema homogéneo \(A \mathbf{x} = \mathbf{0}\) por la solución particular \(\mathbf{x}_p\).
+
+
+\[ \therefore \textit{El espacio solución es  }
+\mathbf{x} = \begin{bmatrix}
+1 \\
+1 \\
+1 \\
+1 \\
+1 \\
+1
+\end{bmatrix} = span \begin{bmatrix}
+0 \\
+0 \\
+0 \\
+0 \\
+0 \\
+0
+\end{bmatrix} + \begin{bmatrix}
+1 \\
+1 \\
+1 \\
+1 \\
+1 \\
+1
+\end{bmatrix} 
+\]
+\end{solution}

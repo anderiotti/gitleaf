@@ -1,0 +1,85 @@
+\documentclass[article,12pt]{elsarticle}
+\usepackage[spanish]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{amssymb}
+\usepackage{flushend}
+\usepackage{float}
+\usepackage{anysize}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{dcolumn}
+\usepackage{amsthm}
+\usepackage{caption}
+\usepackage{float}
+\usepackage{subfigure}
+\usepackage{graphicx}
+\usepackage{lmodern}
+\usepackage{booktabs}
+\usepackage{color}
+\usepackage{longtable}
+\usepackage{rotating}
+\usepackage{etoolbox}
+\usepackage{comment}
+\usepackage{pdflscape}
+\usepackage{booktabs}
+
+
+\begin{document}
+
+\begin{frontmatter}
+    \title{Laboratorio de Fenómenos Colectivos \\ Temperatura del Fuego} \\
+    \author{Andrés López González$^1$} %Aquí va el nombre de los integrantes que participaron en el informe.
+    \address{$^1$ Facultad de Ciencias, Universidad Nacional Autónoma de México, M\'exico CDMX.}
+\end{frontmatter}
+
+Dado que esta actividad solo pide resultados iré directo a estos y sus interpretaciones; primero nos interesa obtener el calor específico del balín, para ello obtenemos la siguiente tabla.
+
+\begin{table}[h]
+\centering
+\begin{tabular}{|l|l|}
+\hline
+Temperatura agua al tiempo & $(19 \pm 0.5)^{\circ}$ \\ \hline
+Temperatura balín frío     & $(-6 \pm 0.5)^{\circ}$ \\ \hline
+Temperatura de equilibrio  & $(18 \pm 0.5)^{\circ}$ \\ \hline
+Masa del agua              & $(24.17 \pm 0.005)g$   \\ \hline
+Masa del balín             & $(8.39 \pm 0.005)g$    \\ \hline
+\end{tabular}
+\caption{Primera fase}
+\end{table}
+
+De aquí tenemos lo siguiente usando la ecuación de calor cedido-obtenido.
+
+\begin{align*}
+    m_bc_b(T_{eq}-T_f) &= m_ac_a(T_{amb}-T_{eq}) \\
+    c_b &= \frac{m_ac_a(T_{amb}-T_eq)}{c_b(T_{eq}-T_f)} \\
+    &= \frac{(24.17)(4.18)(19 - 18)}{(8.39)(18 - (-6))} \\
+    &= 0.501 \, \text{J/g°C}
+\end{align*}
+
+Para la segunda fase obtuvimos esta siguiente tabla, en donde dejamos al balín en fuego directo durante más de 15 minutos
+
+\begin{table}[h]
+\centering
+\begin{tabular}{|l|l|}
+\hline
+Temperatura agua al tiempo & $(19 \pm 0.5)^{\circ}$ \\ \hline
+Temperatura del fuego     & $(? \pm 0.5)^{\circ}$ \\ \hline
+Temperatura de equilibrio  & $(29 \pm 0.5)^{\circ}$ \\ \hline
+Masa del agua              & $(45.18 \pm 0.005)g$   \\ \hline
+Masa del balín             & $(8.39 \pm 0.005)g$    \\ \hline
+\end{tabular}
+\caption{Segunda fase}
+\end{table}
+
+Usamos la misma ecuación del ejercicio anterior, aquí nuestra f en vez de frío es de fuego.
+
+\begin{align*}
+    m_bc_b(T_{eq}-T_f) &= m_ac_a(T_{amb}-T_{eq}) \\
+    T_f &= T_{eq}-\frac{m_ac_a(T_{amb}-T_{eq})}{m_bc_b} \\
+    &= 29 - \frac{(45.18)(4.18)(19 - 29)}{(8.39)(0.501)} \\
+    &= 478.4 \, \text{°C}.
+\end{align*}
+
+
+\end{document}
+

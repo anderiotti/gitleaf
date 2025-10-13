@@ -1,0 +1,545 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage{pgfplots}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage[thmmarks, amsmath, thref]{ntheorem}
+\usepackage{mdframed}
+\usepackage{amsthm}
+\usepackage{physics}
+\usepackage{proof}
+\usepackage{derivative}
+\usepackage{hyperref}
+\usepackage{wrapfig}
+\usepackage{amsthm}
+\usepackage{xcolor}
+\renewcommand{\theenumi}{\roman{enumi}}
+
+\theoremstyle{nonumberplain}
+\theoremheaderfont{\itshape}
+\theorembodyfont{\upshape}
+\theoremseparator{.}
+\theoremsymbol{\ensuremath{\square}}
+\theoremsymbol{\ensuremath{\blacksquare}}
+\newtheorem{solution}{Solution}
+\theoremseparator{. ---}
+\theoremsymbol{\mbox{\texttt{;o)}}}
+
+\pgfplotsset{compat=1.18}
+\begin{document}
+\hspace{12cm}$\mathfrak{Andres \,\, Lopez \,\, Gonzalez}$\\\\
+
+\subsubsection*{1. Considere la ecuación de existencia para la catenaria}
+\[
+\frac{B \cosh \beta}{A}=\cosh \left(\frac{a \cosh \beta}{A}+\beta\right)
+\]
+
+Con \( x(0)=A \) y \( x(a)=B \) \\
+(a) Pruebe que si \( a \geq A+B \), no hay solución y dé una interpretación Vamos a analizar la ecuación de existencia para la catenaria:
+
+\[
+\frac{B \cosh \beta}{A} = \cosh \left(\frac{a \cosh \beta}{A} + \beta \right)
+\]
+
+donde las condiciones son \( x(0) = A \), \( x(a) = B \). \\
+
+
+Definamos \( C = \cosh \beta \), que es siempre mayor o igual que 1.
+
+La ecuación se reescribe como:
+\[
+\frac{B C}{A} = \cosh \left( \frac{a C}{A} + \beta \right)
+\]
+
+Ahora, la función \( \cosh(y) \) es creciente para \( y \geq 0 \), y siempre \( \cosh(y) \geq 1 \). Como \( \cosh(y) \) crece muy rápido, para que la ecuación tenga solución, el lado izquierdo debe alcanzar el lado derecho para algún valor de \( \beta \). Pero si \( a \) es muy grande, el argumento de la función coseno hiperbólico en el lado derecho se hace grande, y por tanto la ecuación deja de tener solución. \\
+
+Veamos esto más explícitamente. El argumento del coseno hiperbólico es:
+\[
+\frac{a C}{A} + \beta \geq \frac{a C}{A}
+\]
+
+Dado que \( C \geq 1 \), entonces \( \frac{a C}{A} + \beta \) crece al menos linealmente con \( a \). \\
+
+Para que exista una solución necesitamos que el lado izquierdo alcance al derecho, pero como \( a \) aumenta, la función \( \cosh \) en el lado derecho crece mucho más rápido que el término \( \frac{B C}{A} \). Para ver el límite de existencia, consideremos lo que ocurre para \( \beta \to 0 \): \\
+
+- \( \cosh \beta \to 1 \) \\
+- El argumento del cosh a la derecha: \( \frac{a}{A} + 0 = \frac{a}{A} \) \\
+- Entonces:
+  \[
+  \frac{B}{A} = \cosh\left(\frac{a}{A}\right)
+  \]
+  Esto solo puede cumplirse si \( \frac{B}{A} \geq \cosh\left(\frac{a}{A}\right) \), pero como \( \cosh(x) \geq 1 \) y crece rápidamente, no puede cumplirse para \( a \) grande. \\
+
+En general, para \( a \geq A + B \), puedes mostrar que no se puede cumplir la ecuación; esto implica que el parámetro \( a \) representa la distancia horizontal entre los dos puntos donde la cuerda está fijada. Si \( a \) es mayor o igual que la suma de las alturas \( A + B \), es físicamente imposible que una cuerda flexible (catenaria) conecte esos dos puntos sin romperse, porque la cuerda no puede "estirarse" tanto. El mínimo posible para unir los puntos sería una cuerda completamente tensa (recta), y si la distancia horizontal es mayor que la suma de las alturas, ni siquiera una cuerda recta puede unirlos.
+
+(b) Desarrolle la expresión anterior y escríbala de la forma:
+\[
+\frac{B}{A}=\cosh \left(\frac{a x}{A}\right) \pm \sinh \left(\frac{a x}{A}\right)\left(\frac{x^{2}-1}{x^{2}}\right)^{1 / 2} \equiv f_{ \pm}(x)
+\]
+donde \( x=\cosh \beta \mathrm{y} \pm \) según el signo de \( \beta \). \\
+
+Definimos \( x = \cosh \beta \).
+También, recordemos la identidad:
+\[
+\cosh(u + v) = \cosh u \cosh v + \sinh u \sinh v
+\]
+Ahora, reescribimos el argumento del coseno hiperbólico:
+\[
+\cosh\left(\frac{a x}{A} + \beta\right) = \cosh\left(\frac{a x}{A}\right)\cosh \beta + \sinh\left(\frac{a x}{A}\right)\sinh \beta
+\]
+Sustituimos \( x = \cosh \beta \):
+\[
+\frac{B x}{A} = \cosh\left(\frac{a x}{A}\right)x + \sinh\left(\frac{a x}{A}\right)\sinh \beta
+\]
+Ahora, despejamos \(\sinh \beta\) en términos de x: \\
+Sabemos que:
+\[
+\cosh^2 \beta - \sinh^2 \beta = 1 \implies \sinh \beta = \pm \sqrt{x^2 - 1}
+\]
+Sustituimos:
+\[
+\frac{B x}{A} = \cosh\left(\frac{a x}{A}\right)x \pm \sinh\left(\frac{a x}{A}\right)\sqrt{x^2 - 1}
+\]
+Dividimos ambos lados por x:
+\[
+\frac{B}{A} = \cosh\left(\frac{a x}{A}\right) \pm \sinh\left(\frac{a x}{A}\right)\frac{\sqrt{x^2 - 1}}{x}
+\]
+También, \(\frac{\sqrt{x^2 - 1}}{x} = \sqrt{\frac{x^2 - 1}{x^2}}\):
+\[
+\frac{B}{A} = \cosh\left(\frac{a x}{A}\right) \pm \sinh\left(\frac{a x}{A}\right) \left(\frac{x^2 - 1}{x^2}\right)^{1/2}
+\]
+Finalmente, definimos:
+\[
+f_{\pm}(x) = \cosh\left(\frac{a x}{A}\right) \pm \sinh\left(\frac{a x}{A}\right) \left(\frac{x^2 - 1}{x^2}\right)^{1/2}
+\]
+Así que la ecuación queda:
+\[
+\boxed{
+\frac{B}{A} = f_{\pm}(x)
+}
+\]
+donde \( x = \cosh \beta \) y el signo \(\pm\) depende del signo de \(\beta\). \\
+
+(c) Estudie \( f_{ \pm}(x) \) y muestre que si
+\[
+a \leq A \log \left(\frac{B}{A}+\sqrt{\frac{B^{2}}{A^{2}}-1}\right), \quad B \geq A
+\]
+hay por lo menos dos soluciones. \\
+
+Podemos notar que:
+- Para \( x=1, \sqrt{x^{2}-1}=0 \), así que:
+\[
+f_{ \pm}(1)=\cosh \left(\frac{a}{A}\right)
+\]
+- Cuando \( x \rightarrow \infty \) :
+\[
+\left(\frac{x^{2}-1}{x^{2}}\right)^{1 / 2} \rightarrow 1
+\]
+
+Entonces:
+\[
+\begin{array}{c}
+f_{+}(x) \sim \cosh \left(\frac{a x}{A}\right)+\sinh \left(\frac{a x}{A}\right) \rightarrow e^{a x / A} \\
+f_{-}(x) \sim \cosh \left(\frac{a x}{A}\right)-\sinh \left(\frac{a x}{A}\right) \rightarrow e^{-a x / A} \rightarrow 0
+\end{array}
+\]
+
+Para que haya al menos dos soluciones, la ecuación
+\[
+\frac{B}{A} = f_{\pm}(x)
+\]
+debe cortarse con la función \( f_{\pm}(x) \) en al menos dos puntos para \( x \geq 1 \), para ello, veamos el valor mínimo posible de \( f_{-}(x) \), que ocurre cuando \( x \to 1 \):
+\[
+f_{-}(1) = \cosh\left(\frac{a}{A}\right)
+\]
+Y \( f_{-}(x) \) decrece inicialmente y luego crece, por lo que el mínimo está en \( x = 1 \).
+Por lo tanto, si
+\[
+\frac{B}{A} \leq \cosh\left(\frac{a}{A}\right)
+\]
+entonces hay posibilidad de dos soluciones (ya que la función es creciente y decreciente en diferentes rangos).
+Pero para encontrar el valor crítico de a en función de A y B, igualamos:
+\[
+\frac{B}{A} = \cosh\left(\frac{a}{A}\right)
+\]
+Despejamos a:
+\[
+\cosh\left(\frac{a}{A}\right) = \frac{B}{A}
+\implies
+\frac{a}{A} = \cosh^{-1}\left(\frac{B}{A}\right)
+\]
+Sabemos que \(\cosh^{-1}(y) = \log(y + \sqrt{y^2 - 1})\):
+\[
+\frac{a}{A} = \log\left(\frac{B}{A} + \sqrt{\frac{B^2}{A^2} - 1}\right)
+\implies
+a = A \log\left(\frac{B}{A} + \sqrt{\frac{B^2}{A^2} - 1}\right)
+\]
+Por lo tanto, si
+\[
+a \leq A \log\left(\frac{B}{A} + \sqrt{\frac{B^2}{A^2} - 1}\right), \quad B \geq A
+\]
+hay al menos dos soluciones.\\
+
+(d) Si \( B=A \), hacer el estudio completo y probar que hay 2, 1 ó 0 soluciones según el valor de \( a \). \\
+
+Partimos de la ecuación obtenida:
+\[
+\frac{B}{A}=f_{ \pm}(x)
+\]
+
+Si \( B=A \), entonces:
+\[
+1=f_{ \pm}(x)
+\]
+o sea,
+\[
+1=\cosh \left(\frac{a x}{A}\right) \pm \sinh \left(\frac{a x}{A}\right)\left(\frac{x^{2}-1}{x^{2}}\right)^{1 / 2}
+\]
+
+Recordemos que \( x \geq 1 \). Véase cada caso.\\
+1. Para \( x=1 \) :
+\[
+f_{ \pm}(1)=\cosh \left(\frac{a}{A}\right)
+\]
+
+Entonces, la ecuación:
+\[
+1=\cosh \left(\frac{a}{A}\right) \Longrightarrow \frac{a}{A}=0 \Longrightarrow a=0
+\]
+
+Así, para \( a=0 \), hay una solución en \( x=1 \).\\
+2. Para \( x>1 \) :\\
+
+Analicemos el comportamiento de \( f_{+}(x) \) y \( f_{-}(x) \) para \( x>1 \) :\\
+- Para \( f_{+}(x) \), cuando \( x \rightarrow \infty \),
+\[
+f_{+}(x) \rightarrow \infty
+\]
+- Para \( f_{-}(x) \), cuando \( x \rightarrow \infty \),
+\[
+f_{-}(x) \rightarrow 0
+\]
+
+Así, para valores pequeños de \( a \), la recta \( y=1 \) puede cortar a \( f_{-}(x) \) en dos puntos (uno cerca de \( x=1 \) y otro para valores más grandes de \( x \) ), pero conforme \( a \) crece, el valor mínimo de \( f_{-}(x) \) también crece. \\
+
+El valor mínimo de \( f_{-}(x) \) ocurre en \( x=1 \) :
+\[
+f_{-}(1)=\cosh \left(\frac{a}{A}\right)
+\]
+
+Entonces: \\
+- Si \( a=0, f_{-}(1)=1 \), hay una solución única. \\
+- Si \( a<0 \) (no físico), \( f_{-}(1)<1 \), pero no es relevante físicamente porque \( a \geq 0 \). \\
+- Si \( a>0, f_{-}(1)>1 \), entonces la ecuación \( f_{-}(x)=1 \) puede tener dos soluciones: una cerca de \( x=1 \), otra para un \( x \) mayor. \\
+
+Pero para \( f_{+}(x) \), como es creciente y tiende a infinito, solo puede haber una intersección si \( a=0 \).
+
+\subsubsection*{2. Considere las ecuaciones de Euler para la geodésica sobre una superficie}
+\[
+\begin{array}{l}
+\frac{d}{d t}\left(\frac{E u^{\prime}+F v^{\prime}}{\left\|M^{\prime}\right\|}\right)-\frac{E_{u} u^{\prime 2}+2 F_{u} u^{\prime} v^{\prime}+G_{u} v^{\prime 2}}{2\left\|M^{\prime}\right\|}=0 \\
+\frac{d}{d t}\left(\frac{F u^{\prime}+G v^{\prime}}{\left\|M^{\prime}\right\|}\right)-\frac{E_{v} u^{\prime 2}+2 F_{v} u^{\prime} v^{\prime}+G_{v} v^{\prime 2}}{2\left\|M^{\prime}\right\|}=0
+\end{array}
+\]
+donde \( E=\left\|M_{u}\right\|^{2}, F=\left(M_{u}, M_{v}\right) \) y \( G=\left\|M_{v}\right\|^{2} \).
+(a) Escriba las ecuaciones en coordenadas esféricas y resuélvalas.
+
+
+Considérese
+
+\[
+\begin{cases}
+x = r \sin \theta \cos \phi \\
+y = r \sin \theta \sin \phi \\
+z = r \cos \theta
+\end{cases}
+\]
+
+Para una esfera de radio \( R \), fijamos \( r = R \) y los parámetros de la superficie serán \( (\theta, \phi) \).
+
+Así, la parametrización es:
+\[
+M(\theta, \phi) = (R \sin \theta \cos \phi,\, R \sin \theta \sin \phi,\, R \cos \theta)
+\]
+
+Vease que
+- \( M_\theta = (R \cos \theta \cos \phi,\, R \cos \theta \sin \phi,\, -R \sin \theta) \)
+- \( M_\phi = (-R \sin \theta \sin \phi,\, R \sin \theta \cos \phi,\, 0) \)
+
+Entonces,
+\[
+E = \|M_\theta\|^2 = R^2 (\cos^2\theta \cos^2\phi + \cos^2\theta \sin^2\phi + \sin^2\theta) = R^2 (\cos^2\theta + \sin^2\theta) = R^2
+\]
+\[
+F = (M_\theta, M_\phi) = 0
+\]
+\[
+G = \|M_\phi\|^2 = R^2 \sin^2\theta
+\]
+
+Las ecuaciones se simplifican a:
+\[
+\frac{d}{dt}\left(\frac{E \theta'}{\|M'\|}\right) - \frac{E_\theta (\theta')^2 + G_\theta (\phi')^2}{2\|M'\|} = 0
+\]
+\[
+\frac{d}{dt}\left(\frac{G \phi'}{\|M'\|}\right) - \frac{E_\phi (\theta')^2 + G_\phi (\phi')^2}{2\|M'\|} = 0
+\]
+
+Como \( E = R^2 \), \( E_\theta = 0 \), \( E_\phi = 0 \), y \( G = R^2 \sin^2\theta \), \( G_\theta = 2R^2 \sin\theta \cos\theta \), \( G_\phi = 0 \):
+
+\[
+\|M'\|^2 = R^2 (\theta'^2 + \sin^2\theta \phi'^2)
+\]
+\[
+\|M'\| = R \sqrt{\theta'^2 + \sin^2\theta \phi'^2}
+\]
+
+Así, las ecuaciones quedan:
+\[
+\frac{d}{dt}\left(\frac{R^2 \theta'}{R \sqrt{\theta'^2 + \sin^2\theta \phi'^2}}\right) - \frac{R^2 \sin\theta \cos\theta (\phi')^2}{\sqrt{\theta'^2 + \sin^2\theta \phi'^2}} = 0
+\]
+\[
+\frac{d}{dt}\left(\frac{R^2 \sin^2\theta \phi'}{R \sqrt{\theta'^2 + \sin^2\theta \phi'^2}}\right) = 0
+\]
+
+Simplificamos \( R \):
+\[
+\frac{d}{dt}\left(\frac{ \theta'}{\sqrt{\theta'^2 + \sin^2\theta \phi'^2}}\right) - \frac{ \sin\theta \cos\theta (\phi')^2}{\sqrt{\theta'^2 + \sin^2\theta \phi'^2}} = 0
+\]
+\[
+\frac{d}{dt}\left( \frac{ \sin^2\theta \phi'}{\sqrt{\theta'^2 + \sin^2\theta \phi'^2}} \right) = 0
+\]
+
+- La segunda ecuación implica que
+  \[
+  \frac{ \sin^2\theta \phi'}{\sqrt{\theta'^2 + \sin^2\theta \phi'^2}} = \text{constante} = k
+  \]
+  Esto es la conservación del momento angular, y describe la ley de las geodésicas en la esfera (círculos máximos). \\
+
+- La primera ecuación, usando el resultado anterior, describe la evolución de \(\theta\), y puede integrarse usando separación de variables. \\
+
+Las soluciones generales son círculos máximos de la esfera. \\
+
+(b) Escriba las ecuaciones en coordenadas euclideanas y resuélvalas. \\
+
+En coordenadas euclidianas (cartesianas) para el plano, la parametrización es simplemente:
+\[
+M(u, v) = (u, v)
+\]
+donde \(u\) y \(v\) pueden interpretarse como \(x\) y \(y\). \\
+
+Cálculo de \(E, F, G\):\\
+
+- \( M_u = (1, 0) \) \\
+- \( M_v = (0, 1) \)
+
+Por lo tanto:
+\[
+E = \|M_u\|^2 = 1, \qquad F = (M_u, M_v) = 0, \qquad G = \|M_v\|^2 = 1
+\]
+
+Sus derivadas respecto a \(u\) y \(v\) son cero:
+\[
+E_u = E_v = F_u = F_v = G_u = G_v = 0
+\]
+
+Las ecuaciones se simplifican a:
+\[
+\frac{d}{dt}\left(\frac{u'}{\sqrt{u'^2 + v'^2}}\right) = 0
+\]
+\[
+\frac{d}{dt}\left(\frac{v'}{\sqrt{u'^2 + v'^2}}\right) = 0
+\]
+
+Cada ecuación indica que:
+\[
+\frac{u'}{\sqrt{u'^2 + v'^2}} = \text{constante}_1
+\]
+\[
+\frac{v'}{\sqrt{u'^2 + v'^2}} = \text{constante}_2
+\]
+
+Pero \(\sqrt{u'^2 + v'^2}\) es la velocidad, y los cocientes anteriores son las componentes del vector unitario tangente a la curva. Que sean constantes implica que la dirección del movimiento es constante. \\
+
+Por lo tanto, la solución es una línea recta en el plano cartesiano:
+\[
+u(t) = a t + b,\qquad v(t) = c t + d
+\]
+donde \(a, b, c, d\) son constantes de integración fijas al dar condiciones de frontera. \\
+
+\subsubsection*{3. Pruebe que si \( F \) es \( C^{2} \), entonces un punto crítico \( y_{0} \) del funcional \( J(y)=\int_{a}^{b} F\left(x, y, y^{\prime}, y^{\prime \prime}\right) d x \) es \( C^{3} \) en los puntos donde \( F_{y^{\prime \prime} y^{\prime \prime}} \neq 0 \). Finalmente, muestre que si \( F \) es \( C^{3} \), entonces \( y_{0} \) es \( C^{4} \) donde \( F_{y^{\prime \prime} y^{\prime \prime}} \neq 0 \).}
+
+Utilizamos la ecuación de Euler para funcionales con derivadas de segundo orden para el funcional
+\[
+J(y) = \int_a^b F\left(x, y, y', y''\right)\,dx
+\]
+la ecuación de Euler-Lagrange es:
+\[
+F_y - \frac{d}{dx} F_{y'} + \frac{d^2}{dx^2} F_{y''} = 0
+\]
+donde los subíndices indican derivada parcial; expandimos la derivada de orden 2:
+\[
+\frac{d^2}{dx^2} F_{y''} = \frac{d}{dx}\left(\frac{d}{dx} F_{y''}\right)
+\]
+
+Por la regla de la cadena, \(F_{y''}\) depende de \(x, y, y', y''\), por lo que al derivar respecto de \(x\), necesitamos usar la derivada total:
+\[
+\frac{d}{dx} F_{y''} = F_{y''x} + F_{y''y} y' + F_{y''y'} y'' + F_{y''y''} y'''
+\]
+Y de nuevo para la segunda derivada:
+\[
+\frac{d^2}{dx^2} F_{y''} = \frac{d}{dx}\left(F_{y''x} + F_{y''y} y' + F_{y''y'} y'' + F_{y''y''} y'''\right)
+\]
+
+El término de orden más alto es
+\[
+F_{y''y''} y^{(4)}
+\]
+así que la ecuación diferencial resultante es de cuarto orden:
+\[
+F_{y''y''} y^{(4)} + \text{términos de orden menor} = 0
+\]
+Si \(F_{y''y''} \neq 0\), podemos despejar \(y^{(4)}\):
+\[
+y^{(4)} = \text{función de } x, y, y', y'', y'''
+\]
+
+Regularidad: \\
+- Si \(F\) es \(C^2\) y \(y\) es una solución de la ecuación de Euler, entonces todos los coeficientes y funciones involucradas son, al menos, continuas. \\
+- La ecuación es de cuarto orden, así que si \(y\) es solución, debe ser al menos de clase \(C^3\) (para que existan hasta \(y'''\)), y el término de mayor orden \(y^{(4)}\) existe y es continua. \\
+- Por lo tanto, \(y \in C^3\) donde \(F_{y''y''} \neq 0\). \\
+Si \(F \in C^3\): En este caso, los coeficientes de la ecuación diferencial (y todos los términos derivados) son \(C^1\). Esto permite aplicar el teorema estándar de regularidad de ecuaciones diferenciales ordinarias lineales o cuasilineales: si los coeficientes son \(C^1\), entonces las soluciones son de clase \(C^4\).
+
+\subsubsection*{4. Estudie todas las condiciones naturales para la barra elástica y dé una interpretación física.}
+
+Consideremos el caso clásico de la barra elástica (viga de Euler-Bernoulli) en el contexto de cálculo variacional. El funcional típico para la energía elástica de una barra es:
+
+\[
+J(y) = \int_a^b \left[ \frac{EI}{2} (y'')^2 - f(x)y(x) \right] dx
+\]
+
+donde: \\
+- \(y(x)\): desplazamiento transversal de la barra. \\
+- \(E\): módulo de Young. \\
+- \(I\): momento de inercia. \\
+- \(f(x)\): carga distribuida. \\
+- \(y''\): curvatura. \\
+
+La ecuación de Euler-Lagrange asociada es:
+\[
+\frac{d^2}{dx^2} \left( EI y'' \right) + f(x) = 0
+\]
+
+Al variar \(J(y)\) y aplicar integración por partes dos veces, surgen condiciones en los extremos \(x=a\) y \(x=b\):
+
+\[
+\delta J = \left[ EI y'' \delta y' - (EI y'')' \delta y \right]_a^b + \int_a^b \text{(E-L equation)} \delta y dx
+\]
+
+Por lo tanto, las condiciones naturales (condiciones de contorno) en cada extremo pueden ser: \\
+
+1. Condiciones sobre el desplazamiento: \(y(a)\), \(y(b)\) (posición fija). \\
+2. Condiciones sobre la pendiente: \(y'(a)\), \(y'(b)\) (inclinación fija). \\
+3. Condiciones sobre el momento flector: \(EI y''(a)\), \(EI y''(b)\). \\
+4. Condiciones sobre el esfuerzo cortante: \(- (EI y'')'(a)\), \(- (EI y'')'(b)\). \\
+
+Cuando no se fijan algunas de estas cantidades, las variaciones correspondientes producen las siguientes condiciones naturales en los extremos:
+
+\[
+\begin{cases}
+\text{Si } \delta y(a) \neq 0: & (EI y'')'(a) = 0 \;\; \text{(cortante nulo)} \\
+\text{Si } \delta y'(a) \neq 0: & EI y''(a) = 0 \;\; \text{(momento nulo)}
+\end{cases}
+\]
+y lo mismo en \(x=b\). \\
+
+En tanto la interpretación física se obtiene que: \\
+
+- \(y(a)\) o \(y(b)\) fijas: Extremo empotrado (posición conocida). \\
+- \(y'(a)\) o \(y'(b)\) fijas: Pendiente/inclinación prescrita (por ejemplo, horizontal o con ángulo conocido). \\
+- \(EI y''(a) = 0\) o \(EI y''(b) = 0\): Momento flector nulo (extremo libre de momento, como un extremo libre de una viga). \\
+- \(-(EI y'')'(a) = 0\) o \(-(EI y'')'(b) = 0\): Esfuerzo cortante nulo (no hay fuerza transversal en el extremo). \\
+
+\subsubsection*{5. Considere \( J(y)=\int_{a}^{b} F\left(x, y, y^{\prime}, y^{\prime \prime}\right) d x \).} Si admitimos discontinuidades (finitas, no fijas) en \( y^{\prime \prime} \) y \( y \) es un punto crítico, pruebe que además de \( \left[F_{y^{\prime \prime}}\right]_{x_{i}}=0 \) y \( \left[\left(F_{y^{\prime \prime}}\right)^{\prime}-F_{y^{\prime}}\right]_{x_{i}}=0 \), hay una tercera condición, \( \left[y^{\prime \prime} F_{y^{\prime \prime}}-F\right]_{x_{i}}=0 \), de las siguientes formas: \\
+(a) Con la integral primera. \\
+
+Supongamos además que \(F\) no depende explícitamente de \(x\), esto es, \(F_x=0\). Consideremos la cantidad
+\[
+I(x)\;\equiv\;y'(x)\,F_{y'}\bigl(x,y,y',y''\bigr)
+\;+\;y''(x)\,F_{y''}\bigl(x,y,y',y''\bigr)
+\;-\;F\bigl(x,y,y',y''\bigr)
+\;-\;y'(x)\,\frac{d}{dx}\,F_{y''}\bigl(x,y,y',y''\bigr).
+\]
+Calculamos su derivada usando la regla de la cadena y, a la vez, la ecuación de Euler–Lagrange de orden dos
+\[
+F_y \;-\;\frac{d}{dx}F_{y'}\;+\;\frac{d^2}{dx^2}F_{y''}\;=\;0.
+\]
+Un cálculo directo muestra
+\[
+\frac{dI}{dx}
+=\;0,
+\]
+es decir, \(I(x)\) es constante a trozos.  Por tanto, en un punto de discontinuidad \(x_i\) debe cumplirse
+\[
+\bigl[I(x)\bigr]_{x_i^-}^{\,x_i^+}
+\;=\;0.
+\]
+Pero por hipótesis de Erdmann ya sabemos que
+\[
+\bigl[F_{y''}\bigr]_{x_i}=0,
+\qquad
+\bigl[(F_{y''})'-F_{y'}\bigr]_{x_i}=0.
+\]
+Al imponer esas dos condiciones en el salto de \(I\), todo menos
+\[
+\bigl[y''\,F_{y''}-F\bigr]_{x_i}
+\]
+queda anulado.  Concluimos así
+\[
+\boxed{\;\bigl[y''\,F_{y''}-F\bigr]_{x_i}=0\;},
+\]
+que es justamente la tercera condición de salto.
+
+
+(b) Con el argumento \( \phi(x, a) \). \\
+
+Sea \(x_i\) la posición de la posible discontinuidad de \(y''\). Definimos, para \(\,|a|\) pequeño, la difeomorfismo
+\[
+\phi(x,a)\;=\;
+\begin{cases}
+x, & x<x_i,\\
+x+a, & x>x_i,
+\end{cases}
+\]
+y consideramos la familia de funciones
+\[
+y_a(x)\;=\;y\bigl(\phi(x,a)\bigr).
+\]
+El funcional queda
+\[
+J(a)
+=\int_a^b
+F\bigl(x,y_a,y_a',y_a''\bigr)\,dx.
+\]
+Como \(y\) es punto crítico, debemos tener
+\[
+\left.\frac{dJ}{da}\right|_{a=0}=0.
+\]
+Por regla de Barrow al desplazar el límite interior obtenemos dos contribuciones:  
+ 1. El término en la integral que, gracias al hecho de que \(y\) satisface la ecuación de Euler–Lagrange y las condiciones de Erdmann \(\bigl[F_{y''}\bigr]_{x_i}=0,\;\bigl[(F_{y''})'-F_{y'}\bigr]_{x_i}=0\), no aporta salto neto.  
+ 2. El término de “límite móvil”  
+\[
+-\;F\bigl(x_i^-,y,y',y''\bigr)
+\;+\;F\bigl(x_i^+,y,y',y''\bigr)
+\;+\;\Bigl[y'\,F_{y'}+y''\,F_{y''}-y'\,(F_{y''})'\Bigr]_{x_i}\;=\;0.
+\]
+Reagrupando, y usando de nuevo \(\bigl[(F_{y''})'-F_{y'}\bigr]_{x_i}=0\), se reduce exactamente a
+\[
+\bigl[y''\,F_{y''}-F\bigr]_{x_i}=0.
+\]
+Así obtenemos la misma tercera condición de continuidad del “Hamiltoniano” asociado.
+
+\end{document}

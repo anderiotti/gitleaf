@@ -1,0 +1,37 @@
+3. (2 pts) Sea \( V \) un espacio vectorial sobre el campo \( F \) y considere \( f: V \rightarrow V \) una transformación lineal. Demuestre que son equivalentes: \\
+a) \( \operatorname{Im}(f)=\operatorname{Im}\left(f^{2}\right)\left(\right. \) donde \( \left.f^{2}=f \circ f\right) \). \\
+b) \( V=N u c(f) \oplus \operatorname{Im}(f) \). \\
+
+\begin{solution} \\
+
+$\Rightarrow )$\\
+Supongamos que \( \operatorname{Im}(f) = \operatorname{Im}(f^2) \).
+
+
+Definamos f: Consideremos \( f: V \rightarrow V \) tal que para cualquier \( v \in V \), \( f(v) \in \operatorname{Im}(f) \).
+
+
+Propiedad de $Im(f^2)$: Dado que \( \operatorname{Im}(f) = \operatorname{Im}(f^2) \), para cualquier \( w \in \operatorname{Im}(f) \), existe \( v \in V \) tal que \( f(v) = w \) y \( f^2(v) = f(w) \).
+
+
+Ahora, consideremos cualquier \( v \in V \). Tenemos:
+\[
+   v = (v - f(v)) + f(v)
+   \]
+Aquí, \( f(v) \in \operatorname{Im}(f) \) y \( v - f(v) \in \operatorname{Nuc}(f) \) porque \( f(v - f(v)) = f(v) - f(v) = 0 \), este paso es dificil de ver pero recordemos que $f$ es una transformación lineal así que cumple superposición, además recordemos que la imagen cuadrada de la función es igual a la imagen de la función por ello que lleguemos a que esta diferencia es igual a cero.
+
+
+Para establecer que \( V = \operatorname{Nuc}(f) \oplus \operatorname{Im}(f) \), debemos demostrar que la intersección de \( \operatorname{Nuc}(f) \) y \( \operatorname{Im}(f) \) es solo el vector cero. Si \( x \in \operatorname{Nuc}(f) \cap \operatorname{Im}(f) \), entonces \( f(x) = 0 \) y \( x = f(y) \) para algún \( y \in V \). Pero esto implica que \( f(f(y)) = f(x) = 0 \), lo que significa que \( f(y) \in \operatorname{Nuc}(f) \), y por lo tanto \( x = 0 \).
+
+
+\( \therefore V = \operatorname{Nuc}(f) \oplus \operatorname{Im}(f) \)
+\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad \triangledown \\
+
+$\Leftarrow )$ \\
+Supóngase que \( V = \operatorname{Nuc}(f) \oplus \operatorname{Im}(f) \)
+
+
+Cualquier vector \( v \in V \) puede escribirse de manera única como \( v = u + w \) con \( u \in \operatorname{Nuc}(f) \) y \( w \in \operatorname{Im}(f) \). Dado que \( f(u) = 0 \) y \( f(w) \) se mantiene en \( \operatorname{Im}(f) \), es claro que cualquier imagen bajo \( f \) de un elemento en \( \operatorname{Im}(f) \) también está en \( \operatorname{Im}(f) \). \\
+Dado que \( \operatorname{Im}(f) \subseteq \operatorname{Im}(f^2) \) por definición, y \( \operatorname{Im}(f^2) \subseteq \operatorname{Im}(f) \) por hipótesis de la suma directa, tenemos \( \operatorname{Im}(f) = \operatorname{Im}(f^2) \). \\
+
+Así, demostramos que si \( V = \operatorname{Nuc}(f) \oplus \operatorname{Im}(f) \), entonces \( \operatorname{Im}(f) = \operatorname{Im}(f^2) \). \end{solution}

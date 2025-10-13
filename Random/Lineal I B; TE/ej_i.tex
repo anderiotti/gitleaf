@@ -1,0 +1,108 @@
+\noindent 1. Sea
+\[
+A=\left(\begin{array}{ccccc}
+a_{11} & a_{12} & a_{13} & \cdots & a_{1 n} \\
+0 & a_{22} & a_{23} & \cdots & a_{2 n} \\
+0 & 0 & a_{33} & \cdots & a_{3 n} \\
+\vdots & \vdots & \vdots & \ddots & \vdots \\
+0 & 0 & 0 & \cdots & a_{n n}
+\end{array}\right)
+\]
+una matriz triangular en \( M_{n \times n}(F) \) en algún campo \( F \). Demuestra que
+\[
+\operatorname{det}(A)=a_{11} \cdot a_{22} \cdots a_{n n}
+\]
+es decir, que el determinante de \( A \) es igual al producto de los elementos de \( A \) ubicados en la diagonal.
+Hint: Aplica inducción sobre n, el tamaño de la matriz. \\
+
+\begin{solution}
+Paso base:
+Para \( n = 1 \), la matriz \( A \) es simplemente \( (a_{11}) \). El determinante de esta matriz es por ende \( a_{11} \), lo cual concuerda con el producto de los elementos de la diagonal (en este caso, solo \( a_{11} \)). Como este caso es muy trivial a pesar de ya cumplir el paso base veré que masa para n=2.
+\[
+A = \begin{pmatrix} 
+a_{11} & a_{12} \\
+0 & a_{22} 
+\end{pmatrix}
+\]
+Véase que su determinante es
+\[
+\operatorname{det}(A) = a_{11} \cdot a_{22} - a_{12} \cdot 0 = a_{11} \cdot a_{22}
+\]
+Por lo que nuevamente se cumple que es simplemente el producto de su diagonal.\\
+\textbf{Hipótesis Inductiva:}
+Supongamos que para una matriz triangular superior de tamaño n×n, el determinante es igual al producto de sus elementos diagonales:
+\[
+\operatorname{det}(A) = a_{11} \cdot a_{22} \cdot \ldots \cdot a_{nn} = \prod_{j=1}^{n} a_{jj}
+\]
+\textbf{Tésis Inductiva:}
+Queremos demostrar que esto también es cierto para una matriz triangular superior de tamaño \((n+1) \times (n+1)\).
+Consideremos la matriz \( B \) de tamaño \((n+1) \times (n+1)\):
+\[
+B = \left(\begin{array}{cccccc}
+b_{11} & b_{12} & b_{13} & \cdots & b_{1n} & b_{1(n+1)} \\
+0 & b_{22} & b_{23} & \cdots & b_{2n} & b_{2(n+1)} \\
+0 & 0 & b_{33} & \cdots & b_{3n} & b_{3(n+1)} \\
+\vdots & \vdots & \vdots & \ddots & \vdots & \vdots \\
+0 & 0 & 0 & \cdots & b_{nn} & b_{n(n+1)} \\
+0 & 0 & 0 & \cdots & 0 & b_{(n+1)(n+1)}
+\end{array}\right)
+\]
+\[
+\operatorname{det}(B) = b_{11} \cdot b_{22} \cdot \ldots \cdot b_{(n+1)(n+1)} = \prod_{j=1}^{n+1} b_{jj}
+\]
+\textbf{Dem.} Para calcular el determinante de B, podemos expandir por la primera fila (o cualquier fila, pero la primera es conveniente ya que es triangular superior), pero antes de esto una breve pausa: \\
+\hline
+\textit{ }\\
+\shortparallel\\
+
+El determinante de una matriz cuadrada n×n se puede calcular mediante la expansión por cofactores a lo largo de cualquier fila o columna. Para la primera fila de una matriz B, el determinante se expresa como:
+\[
+   \operatorname{det}(B) = \sum_{j=1}^{n} (-1)^{1+j} b_{1j} \cdot \operatorname{det}(B_{1j})
+   \]
+donde \( B_{1j} \) es la submatriz que resulta al eliminar la primera fila y la columna \( j \).
+
+Consideremos la matriz triangular superior B de tamaño (n+1)x(n+1):
+\[
+B = \left(\begin{array}{cccccc}
+b_{11} & b_{12} & b_{13} & \cdots & b_{1n} & b_{1(n+1)} \\
+0 & b_{22} & b_{23} & \cdots & b_{2n} & b_{2(n+1)} \\
+0 & 0 & b_{33} & \cdots & b_{3n} & b_{3(n+1)} \\
+\vdots & \vdots & \vdots & \ddots & \vdots & \vdots \\
+0 & 0 & 0 & \cdots & b_{nn} & b_{n(n+1)} \\
+0 & 0 & 0 & \cdots & 0 & b_{(n+1)(n+1)}
+\end{array}\right)
+\]
+Saquemos el primer término de la suma.
+\[
+   \operatorname{det}(B) = \sum_{j=1}^{n} (-1)^{1+j} b_{1j} \cdot \operatorname{det}(B_{1j}) =  (-1)^{1+1} \cdot b_{11} \cdot det(B_{11}) +\sum_{j=2}^{n} (-1)^{1+j} b_{1j} \cdot \operatorname{det}(B_{1j}) = b_{11} \cdot det(B_{11}) +\sum_{j=2}^{n} (-1)^{1+j} b_{1j} \cdot \operatorname{det}(B_{1j})
+   \]
+Nótese que estas submatrices $B_{ij}$ son todas triangulares superiores, por lo que la hipótesis inductiva nos sugiere que sus determinanes son simplemente el producto de elementos de la diagonal.
+\[
+   det(B_{1j}) =(-1)^{1+j} b_{1j} \cdot \operatorname{det}(B_{1j}) = tr(B_{1j}) \quad \text{para} \quad j > 1
+   \]
+Introduje el término traza de una matriz ($tr(M)$) que hace referencia justamente a esta diagonal, miremos que el primer elemento de la traza para $j>1$ es cero, pues al haber eliminado la primera fila y una columna arbitraria distinta a la primera entonces el elemento de nuestra submatriz (refiriéndonos al que está en la esquina superior izquierda) $\tilde b_{11}$ es a quien conocíamos como $b_{21}$, y este es cero, por lo que.
+\[
+\sum_{j=2}^{n} (-1)^{1+j} b_{1j} \cdot \operatorname{det}(B_{1j}) = 0
+\]
+Se sigue que...
+\[
+\operatorname{det}(B) = b_{11} \cdot det(B_{11}) + \sum_{j=2}^{n} (-1)^{1+j} b_{1j} \cdot \operatorname{det}(B_{1j}) = b_{11} \cdot det(B_{11})
+\]
+
+\hline
+\textit{ }\\
+
+\[
+\operatorname{det}(B) = b_{11} \cdot \operatorname{det}(B') \rightsquigarrow b_{11} \cdot (b_{22} \cdot b_{33} \cdot \ldots \cdot b_{nn} \cdot b_{(n+1)(n+1)})
+\]
+Aquí, $B′$ es la submatriz de B que resulta al eliminar la primera fila y la primera columna, que es una matriz triangular superior de tamaño n×n.
+Por la hipótesis de inducción, sabemos que:
+\[
+\operatorname{det}(B') = b_{22} \cdot b_{33} \cdot \ldots \cdot b_{nn} \cdot b_{(n+1)(n+1)}
+\]
+Por lo tanto:
+\[
+\operatorname{det}(B) = b_{11} \cdot (b_{22} \cdot b_{33} \cdot \ldots \cdot b_{nn} \cdot b_{(n+1)(n+1)}) = \prod_{j=1}^{n+1} b_{jj}
+\]
+Lo que muestra que el determinante de una matriz triangular superior de tamaño (n+1)×(n+1) es el producto de sus elementos diagonales (i.e. su traza).
+\end{solution}

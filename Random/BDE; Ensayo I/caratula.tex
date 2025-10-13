@@ -1,0 +1,246 @@
+%
+% Carátula oficial de 75.02 Algoritmos y Programación I, cátedra Cardozo.
+%
+% Basado en el template realizado por Diego Essaya, disponible en
+%                                                         http://lug.fi.uba.ar
+% Modificado por Michel Peterson.
+% Modificado por Sebastián Santisi.
+
+%
+% Acá se define el tamaño de letra principal:
+%
+\documentclass[12pt]{article}
+
+%
+% Título y autor(es):
+%
+\title{Trabajo Práctico N\b o X}
+\author{Apellido1\\Apellido2}
+
+%------------------------- Carga de paquetes ---------------------------
+%
+% Si no necesitás algún paquete, comentalo.
+%
+
+%
+% Definición del tamaño de página y los márgenes:
+%
+\usepackage[a4paper,headheight=16pt,scale={0.7,0.8},hoffset=0.5cm]{geometry}
+
+%
+% Vamos a escribir en castellano:
+%
+\usepackage[spanish]{babel}
+\usepackage[utf8]{inputenc}
+
+%
+% Si preferís el tipo de letra Helvetica (Arial), descomentá las siguientes
+% dos lineas (las fórmulas seguirán estando en Times):
+%
+%\usepackage{helvet}
+%\renewcommand\familydefault{\sfdefault}
+
+%
+% El paquete amsmath agrega algunas funcionalidades extra a las fórmulas. 
+% Además defino la numeración de las tablas y figuras al estilo "Figura 2.3", 
+% en lugar de "Figura 7". (Por lo tanto, aunque no uses fórmulas, si querés
+% este tipo de numeración dejá el paquete amsmath descomentado).
+%
+\usepackage{amsmath}
+\numberwithin{equation}{section}
+\numberwithin{figure}{section}
+\numberwithin{table}{section}
+
+%
+% Para tener cabecera y pie de página con un estilo personalizado:
+%
+\usepackage{fancyhdr}
+
+%
+% Para poner el texto "Figura X" en negrita:
+% (Si no tenés el paquete 'caption2', probá con 'caption').
+%
+\usepackage[hang,bf]{caption}
+
+%
+% Para poder usar subfiguras: (al estilo Figura 2.3(b) )
+%
+%\usepackage{subfigure}
+
+%
+% Para poder agregar notas al pie en tablas:
+%
+%\usepackage{threeparttable}
+
+%------------------------------ graphicx ----------------------------------
+%
+% Para incluir imágenes, el siguiente código carga el paquete graphicx 
+% según se esté generando un archivo dvi o un pdf (con pdflatex). 
+
+% Para generar dvi, descomentá la linea siguiente:
+%\usepackage[dvips]{graphicx}
+
+% Para generar pdf, descomentá las dos lineas seguientes:
+\usepackage[pdftex]{graphicx}
+\pdfcompresslevel=9
+
+%
+% Todas las imágenes están en el directorio tp-img:
+%
+\newcommand{\imgdir}{includes}
+\graphicspath{{\imgdir/}}
+%
+%------------------------------ graphicx ----------------------------------
+
+% Necesitas este paquete si haces los diagrámas de flujo en el prográma Dia 
+%\usepackage{tikz}
+
+
+%------------------------- Inicio del documento ---------------------------
+
+\begin{document}
+
+%
+% Hago que en la cabecera de página se muestre a la derecha la sección,
+% y en el pie, en número de página a la derecha:
+%
+\pagestyle{fancy}
+\renewcommand{\sectionmark}[1]{\markboth{}{\thesection\ \ #1}}
+\lhead{}
+\chead{}
+\rhead{\rightmark}
+\lfoot{}
+\cfoot{}
+\rfoot{\thepage}
+
+%
+% Carátula:
+%
+\begin{titlepage}
+
+\thispagestyle{empty}
+
+\begin{center}
+\includegraphics[scale=0.3]{iimas}\\
+\large{\textsc{Universidad Nacional Autónoma de México}}\\
+\large{\textsc{Instituto de Investigaciones en Matemáticas Aplicadas y Sistemas}}\\
+\small{Semestre 2026-1}
+\end{center}
+
+\vfill
+
+\begin{center}
+\Large{\underline{\textsc{Bases de Datos Estructuradas}}}
+\end{center}
+
+\vfill
+
+\begin{tabbing}
+\hspace{2cm}\=\+Ensayo\\
+	TEMA: Evolución de los sistemas de información\\
+	FECHA: 13/08/2025\\% \today\\
+\\
+	Andrés López González\\
+\end{tabbing}
+
+\vfill
+
+\hrule
+\vspace{0.2cm}
+
+\noindent\small{Bases de Datos Estructuradas \hfill Dra. María del Pilar Angeles}
+
+\end{titlepage}
+
+%
+% Hago que las páginas se comiencen a contar a partir de aquí:
+%
+\setcounter{page}{1}
+
+%
+% Pongo el índice en una página aparte:
+%
+\newpage
+
+
+\section{Abstract}
+Aquí presento la evolución histórica y cómo se han aplicado los distintos sistemas de información, contrario a lo que se piensa es un área muy antigua pero con crecimientos agigantados en los últimos 60 años; comprendo desde la segunda mitad del siglo XX hasta las proyecciones para el futuro próximo. Abordo las principales mejoras en hardware y software que han ido naciendo de las necesidades organizacionales y científicas. Asimismo, cierro con las tecnologías actuales que permiten el análisis predictivo en tiempo real y enuncio algunos retos de la actualidad.
+
+
+
+\section{Introducción}
+Los sistemas de información han sido pieza clave para mejorar la sociedad hacia donde la conocemos, estos en su forma más primitiva se encargan de capturar datos de manera segura, coherente y accesible, o al menos es lo que se intentaba y se concebía lo correcto. Actualmente hemos añadido que los sistemas de información deben ser útiles para procesar y transformar datos en conocimiento útil para la toma de decisiones. Su historia no comienza con la inteligencia artificial moderna ni con el Big Data que es tan normalizado en la actualidad, \textit{incluso aspirando al quantum machine learning y big data con estos modelos híbridos que prometen erradicar a las tecnologías actuales}, sino que se remonta a más de seis décadas, cuando las primeras computadoras eran más discretas (aunque sabemos que ni tanto, eran enormes), comenzaron a resolver problemas de cálculo en áreas tan diversas como la astronomía o la ingeniería química.
+A lo largo de su evolución este campo ha cambiado en la forma de almacenar y procesar la información, la forma de las redes y los modelos de programación. Estos cambios no solo responden a avances técnicos, sino que han emergido de las necesidades crecientes de rapidez y volumen de datos. 
+
+
+\section{Marco teórico}
+Antes que nada debe definirse un \textbf{sistema de información} de manera precisa, pues como hemos visto, la evolución de estos ha perturbado su forma esencial, puede definirse como el conjunto de componentes que permiten recolectar, manipular, almacenar e inclusive distribuir datos, que sirvan o no para apoyar procesos de análisis y decisión podría ser objeto de futura discusión. Aquí conviene distinguir como conocimientos previos y de manera resumida:
+
+\begin{itemize}
+\item \textbf{OLTP} (On-Line Transaction Processing): sistemas diseñados para gestionar transacciones en tiempo real, optimizados para inserciones y consultas rápidas. Recordemos el clásico ejemplo de operaciones bancarias, que es parte de los OLTP.
+\item \textbf{OLAP} (On-Line Analytical Processing): sistemas orientados al análisis multidimensional de grandes volúmenes de datos, históricamente estructurados. Por esta parte, es notoria su exclusividad y conveniencia por su alto volumen de información para un data analista
+\end{itemize}
+
+
+
+
+\section{Cuerpo argumentativo}
+\subsection*{De dónde venimos}
+En 1958, el computador IBM 650 reconocido por su amplia difusión llegó a México para resolver problemas en astronomía, física e ingeniería química. Poco después, comenzaron a crearse bases de datos para disciplinas como la antropología.
+Unos años después, en 1961, instituciones como PEMEX y el Instituto Nacional de Investigaciones Forestales se unieron a adoptar estas tecnologías, mientras que en 1965 la IBM 1440 se convirtió en la primera computadora usada para automatizar nóminas y contabilidad mediante procesamiento por lotes y transaccional (obsérvese que tuvimos que llegar hasta la serie 1400 de IBM para poder volver a adquirir un computador revolucionario). La década estuvo marcada por el uso de sistemas de archivos como VSAM o ISAM y la aparición de la minicomputadora DEC PDP-8 y de ARPANET. \\
+
+La década de 1970 fue la encargada de ver nacer al modelo relacional propuesto por Edgar F. Codd y arquitecturas cliente-servidor para OLTP. En 1979 apareció la primera base de datos relacional comercial. En los 90 por otra parte emergieron los sistemas OLAP, enfocados en análisis multidimensional, aunque limitados por procesos ETL lentos, acorde al tamaño de la base de datos. Fue también la era de la primera base de datos columnar, de la WWW pública y del término Inteligencia de Negocios (BI).\\
+Los 2000 trajeron la BI 2.0, de primera vista es complicado de entender a qué hace referencia este concepto, es simplemente una evolución de los sistemas de Inteligencia de Negocios tradicionales. Para entenderlo, conviene compararla con la BI clásica (1.0)
+
+\begin{table}[h!]
+\centering
+\begin{tabular}{|l|l|l|}
+\hline
+\textbf{Característica} & \textbf{BI 1.0} & \textbf{BI 2.0} \\ \hline
+Tipo de datos & Estructurados & Estructurados + no estructurados \\ \hline
+Velocidad de análisis & Lento (ETL batch) & Rápido / casi en tiempo real \\ \hline
+Herramientas & Especialistas & Usuarios de negocio + especialistas \\ \hline
+Objetivo & Descriptivo & Predictivo y estratégico \\ \hline
+\end{tabular}
+\caption{Comparación entre BI 1.0 y BI 2.0}
+\label{tab:bi_comparison}
+\end{table}
+
+
+\subsection*{Dónde estamos y hacia dónde vamos}
+
+Desde 2015, el análisis predictivo y el aprendizaje automático operan en modalidades batch, rápido y tiempo real, ahora es posible sin problema trabajar con datos estructurados, semiestructurados y no estructurados. El reto principal es el tiempo de procesamiento, abordado mediante bases de datos en memoria, tecnologías NoSQL y multi-modelo, y plataformas como Spark y Storm, es el precio a pagar por el beneficio que implica empero. El procesamiento de flujos continuos permite actuar sobre datos entrantes sin esperar a un preprocesamiento completo.
+
+El futuro gustaría jactarse de la memoria persistente, capaz de conservar datos sin energía y reducir drásticamente los tiempos de arranque. Combinar OLTP, OLAP, BI, Big Data y ciencia de datos en un mismo entorno. Los retos incluyen la escalabilidad frente al volumen y diversidad de datos, la transición hacia arquitecturas pos-Von Neumann, el cambio de paradigmas de programación y la incorporación de la tierna computación cuántica (que es como la nueva competencia de quién llega primero a la luna de la era moderna). También se prevé el acceso universal a bases de datos mediante modelos de lenguaje y consultas en lenguaje natural.
+
+
+\section{Conclusiones}
+La historia de los sistemas de información muestra como surgen las demandas crecientes de complejidad y velocidad. El presente combina la madurez de modelos relacionales... y el futuro, aunque incierto, apunta a una convergencia entre inteligencia artificial avanzada y computación cuántica.
+
+\section{Referencias}
+\begin{thebibliography}{99}
+
+\bibitem{ibm650}
+\textit{IBM 650 Magnetic Drum Data Processing Machine}. IBM. Recuperado de \url{https://www.ibm.com/history/650}
+
+\bibitem{ibm1440}
+\textit{IBM 1440 Data Processing System}. IT History Society. Recuperado de \url{https://www.ithistory.org/db/hardware/ibm/ibm-1440-data-processing-system}
+
+\bibitem{evolucionSistemas}
+\textit{Evolución de los sistemas informáticos}. Institut Puig Castellar. Recuperado de \url{https://elpuig.xeill.net/Members/vcarceler/c1/didactica/apuntes/ud1/na6}
+
+\bibitem{historiaInformatica}
+\textit{Historia de la informática}. Pandora FMS. Recuperado de \url{https://pandorafms.com/blog/es/historia-de-la-informatica/}
+
+\bibitem{bi2.0}
+\textit{Business Intelligence 2.0}. Wikipedia. Recuperado de \url{https://en.wikipedia.org/wiki/Business_Intelligence_2.0}
+
+\bibitem{pptx}
+\textit{Evolución de los sistemas de información}. Dra. María del Pilar Ángeles. Presentación en PowerPoint.
+
+\end{thebibliography}
+
+\pagebreak
+
+\end{document}
+

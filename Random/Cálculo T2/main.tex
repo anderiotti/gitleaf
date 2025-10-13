@@ -1,0 +1,154 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage{pgfplots}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage[thmmarks, amsmath, thref]{ntheorem}
+\usepackage{mdframed}
+\usepackage{amsthm}
+\usepackage{physics}
+\usepackage{proof}
+\usepackage{derivative}
+\usepackage{hyperref}
+\usepackage{wrapfig}
+\usepackage{amsthm}
+\usepackage{xcolor}
+\renewcommand{\theenumi}{\roman{enumi}}
+
+\theoremstyle{nonumberplain}
+\theoremheaderfont{\itshape}
+\theorembodyfont{\upshape}
+\theoremseparator{.}
+\theoremsymbol{\ensuremath{\square}}
+\theoremsymbol{\ensuremath{\blacksquare}}
+\newtheorem{solution}{Solution}
+\theoremseparator{. ---}
+\theoremsymbol{\mbox{\texttt{;o)}}}
+
+\pgfplotsset{compat=1.18}
+\begin{document}
+
+(a) Mostrar que la integral de línea de la función escalar \( f(x, y)\left(f: \mathbb{R}^{2} \longrightarrow \mathbb{R}\right) \) a lo largo de una trayectoria \( \Gamma \subset \mathbb{R}^{2} \) dada en coordenadas polares por \( r=r(\theta) \) con \( \theta_{1} \leq \theta \leq \theta_{2} \), es:
+\[
+\int_{\theta_{1}}^{\theta_{2}} f(r \cos \theta, r \operatorname{sen} \theta)\left(r^{2}+\left(\frac{\mathrm{d} r}{\mathrm{~d} \theta}\right)^{2}\right)^{\frac{1}{2}} \mathrm{~d} \theta
+\]
+
+En coordenadas cartesianas, la curva se escribe como,
+\[
+  x(\theta) = r(\theta) \cos \theta, \quad y(\theta) = r(\theta) \sin \theta
+  \]
+
+La integral de línea de \( f \) a lo largo de \( \Gamma \) es:
+\[
+\int_\Gamma f(x, y) \, ds
+\]
+donde \( ds \) es el elemento diferencial de longitud de arco. Notemos que el elemento diferencial de arco es:
+\[
+ds = \sqrt{\left(\frac{dx}{d\theta}\right)^2 + \left(\frac{dy}{d\theta}\right)^2} \, d\theta
+\]
+Calculamos las derivadas:
+\[
+\frac{dx}{d\theta} = \frac{d}{d\theta} \left[ r(\theta) \cos \theta \right] = r'(\theta) \cos \theta - r(\theta) \sin \theta
+\]
+\[
+\frac{dy}{d\theta} = \frac{d}{d\theta} \left[ r(\theta) \sin \theta \right] = r'(\theta) \sin \theta + r(\theta) \cos \theta
+\]
+Sumamos los cuadrados:
+\[
+\left(\frac{dx}{d\theta}\right)^2 + \left(\frac{dy}{d\theta}\right)^2 = \left[ r'(\theta) \cos \theta - r(\theta) \sin \theta \right]^2 + \left[ r'(\theta) \sin \theta + r(\theta) \cos \theta \right]^2
+\]
+Expandimos:
+\[
+= \left(r'(\theta)\right)^2 \cos^2 \theta - 2 r'(\theta) r(\theta) \cos \theta \sin \theta + r^2(\theta) \sin^2 \theta
+\]
+\[
++ \left(r'(\theta)\right)^2 \sin^2 \theta + 2 r'(\theta) r(\theta) \sin \theta \cos \theta + r^2(\theta) \cos^2 \theta
+\]
+Agrupamos términos:\\
+
+\( -2 r'(\theta) r(\theta) \cos \theta \sin \theta \) y \( +2 r'(\theta) r(\theta) \sin \theta \cos \theta \) se cancelan.\\
+\( (r'(\theta))^2 (\cos^2 \theta + \sin^2 \theta) = (r'(\theta))^2 \)\\
+\( r^2(\theta) (\sin^2 \theta + \cos^2 \theta) = r^2(\theta) \)\\
+
+De aquí que...
+\[
+\left(\frac{dx}{d\theta}\right)^2 + \left(\frac{dy}{d\theta}\right)^2 = (r'(\theta))^2 + r^2(\theta)
+\]
+Por lo tanto,
+\[
+ds = \sqrt{r^2(\theta) + \left(r'(\theta)\right)^2} \, d\theta
+\]
+Vemos la expresión de la integral de línea,
+\[
+\int_\Gamma f(x, y) \, ds = \int_{\theta_1}^{\theta_2} f(r(\theta) \cos \theta, r(\theta) \sin \theta) \sqrt{r^2(\theta) + (r'(\theta))^2} \, d\theta
+\]
+Esto es justamente lo que se debía demostrar:
+\[
+\int_{\theta_{1}}^{\theta_{2}} f(r \cos \theta, r \operatorname{sen} \theta)\left(r^{2}+\left(\frac{\mathrm{d} r}{\mathrm{~d} \theta}\right)^{2}\right)^{\frac{1}{2}} \mathrm{~d} \theta
+\]
+
+
+(b) Calcule la longitud de la cardioide \( r(\theta)=1+\cos \theta \operatorname{con} 0 \leq \theta \leq 2 \pi \).
+
+La longitud \( L \) de una curva en polares es,
+\[
+L = \int_{\theta_1}^{\theta_2} \sqrt{r^2(\theta) + (r'(\theta))^2} \, d\theta
+\]
+Para la cardioide:
+
+\( r(\theta) = 1 + \cos \theta \)\\
+\( r'(\theta) = -\sin \theta \)
+
+Así sustituyendo:
+\[
+L = \int_{0}^{2\pi} \sqrt{(1+\cos \theta)^2 + (\sin \theta)^2} \, d\theta
+\]
+Desarrollamos el integrando:
+\[
+(1+\cos \theta)^2 + (\sin \theta)^2 = 1 + 2\cos \theta + \cos^2 \theta + \sin^2 \theta
+\]
+Pero \( \cos^2 \theta + \sin^2 \theta = 1 \), así que:
+\[
+= 1 + 2\cos \theta + 1 = 2 + 2\cos \theta
+\]
+Entonces:
+\[
+L = \int_{0}^{2\pi} \sqrt{2 + 2\cos \theta} \, d\theta
+\]
+Factorizamos:
+\[
+\sqrt{2 + 2\cos \theta} = \sqrt{2} \sqrt{1 + \cos \theta}
+\]
+Y usando la identidad trigonométrica:
+\[
+1 + \cos \theta = 2 \cos^2 \left(\frac{\theta}{2}\right)
+\]
+Así que:
+\[
+\sqrt{1 + \cos \theta} = \sqrt{2} \left|\cos \left(\frac{\theta}{2}\right)\right|
+\]
+Para \( 0 \leq \theta \leq 2\pi \), el valor absoluto se puede manejar dividiendo el intervalo, pero la función es simétrica.
+Por lo tanto:
+\[
+L
+=\int_{0}^{2\pi}2\bigl|\cos\!\tfrac\theta2\bigr|\,d\theta
+=4\int_{0}^{\pi}\bigl|\cos u\bigr|\,du
+\quad(u=\tfrac\theta2,\;d\theta=2\,du)
+\]
+\[
+=4\Bigl[\int_{0}^{\pi/2}\cos u\,du
+-\int_{\pi/2}^{\pi}\cos u\,du\Bigr]
+=4\bigl[1-0+(0-(-1))\bigr]
+=8.
+\]
+
+
+La longitud de la cardioide \( r(\theta) = 1 + \cos \theta \) para \( 0 \leq \theta \leq 2\pi \) es 8.
+
+\end{document}
+
+
+

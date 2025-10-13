@@ -1,0 +1,114 @@
+7. (1.5 pts) Considere \( f \in \operatorname{End}\left(M_{2 \times 2}(\mathbb{R})\right) \) dado por \( f(A)=A+A^{t} \). Encuentre:\\
+- Polinomio característico.\\
+- Valores y vectores propios.\\
+- Espacios propios asociados a cada valor propio.\\
+
+\begin{solution}
+Consideremos la base canónica de \( M_{2 \times 2}(\mathbb{R}) \):
+\[
+   E_{11} = \begin{pmatrix} 1 & 0 \\ 0 & 0 \end{pmatrix}, \quad E_{12} = \begin{pmatrix} 0 & 1 \\ 0 & 0 \end{pmatrix}, \quad E_{21} = \begin{pmatrix} 0 & 0 \\ 1 & 0 \end{pmatrix}, \quad E_{22} = \begin{pmatrix} 0 & 0 \\ 0 & 1 \end{pmatrix}
+   \]
+   Calculemos \( f \) en cada uno:
+   \[
+   f(E_{11}) = \begin{pmatrix} 1 & 0 \\ 0 & 0 \end{pmatrix} + \begin{pmatrix} 1 & 0 \\ 0 & 0 \end{pmatrix} = \begin{pmatrix} 2 & 0 \\ 0 & 0 \end{pmatrix}
+   \]
+\[
+   f(E_{12}) = \begin{pmatrix} 0 & 1 \\ 0 & 0 \end{pmatrix} + \begin{pmatrix} 0 & 0 \\ 1 & 0 \end{pmatrix} = \begin{pmatrix} 0 & 1 \\ 1 & 0 \end{pmatrix}
+   \]
+\[
+   f(E_{21}) = \begin{pmatrix} 0 & 0 \\ 1 & 0 \end{pmatrix} + \begin{pmatrix} 0 & 1 \\ 0 & 0 \end{pmatrix} = \begin{pmatrix} 0 & 1 \\ 1 & 0 \end{pmatrix}
+   \]
+\[
+   f(E_{22}) = \begin{pmatrix} 0 & 0 \\ 0 & 1 \end{pmatrix} + \begin{pmatrix} 0 & 0 \\ 0 & 1 \end{pmatrix} = \begin{pmatrix} 0 & 0 \\ 0 & 2 \end{pmatrix}
+   \]
+   La matriz de f en la base canónica es:
+\[
+   \begin{pmatrix}
+   2 & 0 & 0 & 0 \\
+   0 & 0 & 1 & 0 \\
+   0 & 1 & 0 & 0 \\
+   0 & 0 & 0 & 2
+   \end{pmatrix}
+   \]
+   El polinomio característico es \(\det(f - \lambda I)\):
+\[
+   \begin{vmatrix}
+   2 - \lambda & 0 & 0 & 0 \\
+   0 & -\lambda & 1 & 0 \\
+   0 & 1 & -\lambda & 0 \\
+   0 & 0 & 0 & 2 - \lambda
+   \end{vmatrix}
+   = (2 - \lambda)^2 (\lambda^2 - 1)
+   \]
+Por lo tanto, el polinomio característico es:
+\[
+   (\lambda - 2)^2 (\lambda^2 - 1)
+   \]
+Lo dejo en esta forma pues es directo calcular las raíces y su multiplicidad, algo que nos servirá para el cálculo de valores y vectores propios. \\
+Para los valores propios igualamos a cero nuestro polinomio característico.
+\[
+   (\lambda - 2)^2 (\lambda^2 - 1) = 0
+   \]
+Entonces algún miembro debe ser cero, si $(\lambda - 2)^2=0$ entonces $\lambda_{1,2}=2$. Por otro lado si $(\lambda^2 - 1)=(\lambda-1)(\lambda+1)=0$, usando el mismo principio indica que ya sea el primer o el segundo término, debe de ser cero. Se sigue que $\lambda_{1,2}=0, \lambda_3=1, \lambda_4=-1$. \\
+
+Ahora obténganse los Vectores Propios y Espacios Propios Asociados. \\
+1,2)   Para $\lambda=\lambda_{1,2}$: \\
+Resolvemos \((f - 2I)X = 0\).
+\[
+     \begin{pmatrix}
+     0 & 0 & 0 & 0 \\
+     0 & -2 & 1 & 0 \\
+     0 & 1 & -2 & 0 \\
+     0 & 0 & 0 & 0
+     \end{pmatrix}
+     \begin{pmatrix}
+     x_1 \\
+     x_2 \\
+     x_3 \\
+     x_4
+     \end{pmatrix}
+     = 0
+     \]
+La solución general es \( x_1, x_4 \) libres, \( x_2 = \frac{1}{2}x_3 \), y \( x_3 = 0 \). \\
+Espacio propio: \(\operatorname{span}\left\{\begin{pmatrix} 1 \\ 0 \\ 0 \\ 0 \end{pmatrix}, \begin{pmatrix} 0 \\ 0 \\ 0 \\ 1 \end{pmatrix}\right\}\). \\
+
+3)   Para $\lambda=\lambda_{3}$: \\
+Resolvemos \((f - I)X = 0\).
+\[
+     \begin{pmatrix}
+     1 & 0 & 0 & 0 \\
+     0 & -1 & 1 & 0 \\
+     0 & 1 & -1 & 0 \\
+     0 & 0 & 0 & 1
+     \end{pmatrix}
+     \begin{pmatrix}
+     x_1 \\
+     x_2 \\
+     x_3 \\
+     x_4
+     \end{pmatrix}
+     = 0
+     \]
+La solución es \( x_1 = 0, x_4 = 0, x_2 = x_3 \). \\
+Espacio propio: \(\operatorname{span}\left\{\begin{pmatrix} 0 \\ 1 \\ 1 \\ 0 \end{pmatrix}\right\}\). \\
+
+3)   Para $\lambda=\lambda_{4}$: \\
+Resolvemos \((f + I)X = 0\).
+\[
+     \begin{pmatrix}
+     3 & 0 & 0 & 0 \\
+     0 & 1 & 1 & 0 \\
+     0 & 1 & 1 & 0 \\
+     0 & 0 & 0 & 3
+     \end{pmatrix}
+     \begin{pmatrix}
+     x_1 \\
+     x_2 \\
+     x_3 \\
+     x_4
+     \end{pmatrix}
+     = 0
+     \]
+La solución es \( x_1 = 0, x_4 = 0, x_2 = -x_3 \). \\
+Espacio propio: \(\operatorname{span}\left\{\begin{pmatrix} 0 \\ 1 \\ -1 \\ 0 \end{pmatrix}\right\}\).
+\end{solution}

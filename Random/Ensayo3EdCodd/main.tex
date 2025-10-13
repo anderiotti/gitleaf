@@ -1,0 +1,149 @@
+\documentclass{article}
+\usepackage{graphicx}
+\usepackage{hyperref}
+
+\begin{document}
+
+\section*{Ensayo sobre 'A Relational Model of Data for Large Shared Data Banks'}
+\textit{Escrito por Andrés López González.}
+\section*{Abstract}
+Uno de los principales aportes de Edgar F. Codd al campo de bases de datos fue proponer un marco conceptual uniforme para representar, manipular y garantizar la integridad de los datos. En la segunda parte de su artículo de 1970, Codd aborda dos problemas centrales que aún hoy persisten en la gestión de la información: la redundancia y la consistencia.
+
+Para ello, primero introduce un conjunto de operaciones fundamentales sobre las relaciones, las cuales constituyen el núcleo matemático que permite derivar nueva información a partir de tablas ya existentes. Posteriormente, analiza las formas en que puede aparecer redundancia, ya sea fuerte o débil (relacionadas con la dependencia entre sí), y finalmente discute qué significa mantener la consistencia en un banco de datos.
+
+\section*{Desarrollo}
+
+\section{Operaciones sobre relaciones}
+
+Definamos el modelo relacional, una \textbf{relación} $R$ de grado $n$ se define como un subconjunto de un producto cartesiano:
+\[
+R \subseteq D_1 \times D_2 \times \cdots \times D_n,
+\]
+donde cada $D_i$ es un dominio. Una tupla $t \in R$ es un $n$-upla ordenada $(d_1, d_2, \ldots, d_n)$ con $d_i \in D_i$.  
+
+Las operaciones sobre relaciones se inspiran en la teoría de conjuntos, pero Codd formaliza un conjunto de operadores cerrados: el resultado de cualquier operación sigue siendo una relación.
+
+\subsection{Permutación}
+
+Sea $R(A_1, A_2, \ldots, A_n)$ una relación con atributos $A_i$. La \textbf{permutación} consiste en aplicar una función biyectiva
+\[
+f : \{1,2,\ldots,n\} \to \{1,2,\ldots,n\}
+\]
+para reordenar las columnas:
+\[
+R'(A_{f(1)}, A_{f(2)}, \ldots, A_{f(n)}) = \{ (t_{f(1)}, t_{f(2)}, \ldots, t_{f(n)}) \mid (t_1, \ldots, t_n) \in R \}.
+\]
+Hay que tener especial cuidado porque en este modelo el orden de las columnas \textbf{sí} importa, en contraste con las filas.
+
+
+\subsection{Proyección}
+
+La \textbf{proyección} $\pi_{A_{i_1},\ldots,A_{i_k}}(R)$ selecciona un subconjunto de atributos de $R$, eliminando duplicados en el proceso (why?, recordemos que en este modelo trabajamos ahora de forma conjuntista, por lo que una tupla duplicada desde la perspectiva de conjuntos es el mismo elemento por lo que se toman como uno solo):
+\[
+\pi_{A_{i_1},\ldots,A_{i_k}}(R) = \{ (t_{i_1}, \ldots, t_{i_k}) \mid (t_1,\ldots,t_n) \in R \}.
+\]
+
+Ejemplo: 
+\[
+\pi_{\text{proveedor}, \text{parte}}(\text{supply}) \quad \text{produce un conjunto de pares sin repetición.}
+\]
+
+\subsection{Join}
+
+El \textbf{join natural} de $R(X,Y)$ y $S(Y,Z)$, con $Y$ como atributos comunes, se define como:
+\[
+R \bowtie S = \{ (x,y,z) \mid (x,y) \in R \land (y,z) \in S \}.
+\]
+
+Esta operación extiende la información, emparejando tuplas coincidentes en el dominio compartido. Constituye la base de la mayoría de las consultas modernas en SQL.
+
+\subsection{Composición}
+
+La \textbf{composición} corresponde a una proyección sobre un join.  
+Si $R(X,Y)$ vincula proveedores con partes, y $S(Y,Z)$ vincula partes con proyectos:
+\[
+R \circ S = \pi_{X,Z}(R \bowtie S),
+\]
+que da directamente la relación entre proveedores y proyectos.
+
+\subsection{Restricción}\label{subsec:rest}
+
+La \textbf{restricción} (o \textit{selección}) se denota como:
+\[
+\sigma_{\varphi}(R) = \{ t \in R \mid \varphi(t) = \text{verdadero} \},
+\]
+donde $\varphi$ es una condición booleana.  
+
+Ejemplo: 
+\[
+\sigma_{\text{salario} > 20000}(\text{empleados})
+\]
+produce el subconjunto de empleados con salario mayor a 20,000. Para el lector cronológicamente adelantado a la época del artículo, nótese que la restricción $\sigma$ en SQL funciona como el \textit{where}, mientras que la proyección $\pi(A)$ actúa como \textit{select from A}.
+
+
+\section{Redundancia en las relaciones}
+
+La redundancia se refiere a la presencia de datos que pueden derivarse de otros. Codd distingue dos tipos principales:
+
+\subsection{Redundancia fuerte}
+
+Existe cuando una relación incluye información que puede obtenerse de forma determinista a partir de otras.  
+Ejemplo:
+
+\texttt{employee(serial\#, name, manager\#, managername)}
+
+Aquí, \texttt{managername} es redundante porque puede derivarse del \texttt{manager\#} haciendo referencia a la tabla de empleados.
+
+Este tipo de redundancia suele mantenerse por comodidad del usuario o compatibilidad con sistemas antiguos, aunque implica un costo adicional en almacenamiento y actualización.
+
+\subsection{Redundancia débil}
+
+Ocurre cuando la información no puede derivarse de manera única, pero sí se encuentra parcialmente implícita en otras relaciones mediante \textit{joins}.  
+
+En este caso, existen dependencias lógicas entre relaciones, aunque no necesariamente ecuaciones exactas que permitan derivar una de otra.
+
+La redundancia débil refleja necesidades reales de la comunidad de usuarios y, a diferencia de la fuerte, no puede eliminarse completamente.
+
+\section{Consistencia en las bases de datos}
+
+Un banco de datos se considera consistente si, en un estado dado, todas sus relaciones cumplen con las restricciones y dependencias que lo definen.
+
+Ejemplo:  
+Si un proveedor aparece en la tabla $P(supplier, department)$ indicando que abastece a un departamento, debe existir también una relación válida en las tablas de proyectos que lo justifique.
+
+Cuando una operación rompe esa coherencia (por ejemplo, insertando un registro incompleto), el sistema entra en un estado inconsistente.
+
+Codd plantea que la detección de inconsistencias puede realizarse de dos formas:
+
+\begin{itemize}
+    \item \textbf{Inmediata:} verificando cada operación en el momento en que ocurre (más segura pero más costosa).
+    \item \textbf{Diferida:} revisando periódicamente el estado del banco (más eficiente, pero con riesgo de inconsistencias temporales).
+\end{itemize}
+
+En ambos casos, la responsabilidad última recae en el administrador de datos, quien debe decidir cómo manejar estos conflictos.
+
+\section{Relevancia contemporánea}
+
+Aunque el artículo fue escrito en 1970, los conceptos de operaciones sobre relaciones, redundancia y consistencia siguen siendo el corazón de los sistemas de bases de datos actuales.
+
+Las operaciones de proyección, join y restricción como ya se ha tratado en \autoref{subsec:rest} son equivalentes a las cláusulas \texttt{SELECT}, \texttt{JOIN} y \texttt{WHERE} en SQL.
+
+La normalización y la detección de redundancias fuertes siguen siendo parte esencial del diseño de bases de datos relacionales.
+
+El debate entre consistencia inmediata vs. eventual es central en la era de sistemas distribuidos y bases NoSQL.
+
+De hecho, la famosa tríada \textbf{CAP} (Consistencia, Disponibilidad y Tolerancia a Particiones) en bases distribuidas refleja la vigencia de estas ideas pioneras.
+
+
+
+\section*{Conclusión}
+La sección de Codd sobre redundancia y consistencia no es un apéndice técnico menor, sino un recordatorio de que la representación de datos no se limita a almacenarlos, sino que requiere operaciones formales, control de redundancias y garantía de coherencia lógica.
+
+Para un estudiante en data science, comprender estas nociones es clave para apreciar tanto la elegancia matemática del modelo relacional como su impacto práctico en los sistemas modernos de información. Pienso que conocer estas nociones es la forma más natural de entender las bases de datos estructuradas relacionales como las típicamente manejadas en SQL. 
+
+En definitiva, lo que Codd planteó hace más de medio siglo sigue guiando la manera en que estructuramos, consultamos y validamos datos en un mundo cada vez más interconectado y dependiente de la información.
+
+\section*{Referencias}
+Codd, E. F. (1970). A relational model of data for large shared data banks. Communications of the ACM, 13(6), 377–387.
+
+\end{document}

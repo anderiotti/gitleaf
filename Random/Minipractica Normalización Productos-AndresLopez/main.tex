@@ -1,0 +1,166 @@
+\documentclass[12pt, a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+\usepackage{geometry}
+\usepackage{array}
+\usepackage[normalem]{ulem} % Paquete para subrayados dobles/triples
+
+% Configuración de la página
+\geometry{
+    a4paper,
+    left=2.5cm,
+    right=2.5cm,
+    top=2.5cm,
+    bottom=2.5cm
+}
+
+% --- Comandos para formato de claves ---
+\newcommand{\pk}[1]{\underline{\texttt{#1}}}      % Para Primary Key (1 subrayado)
+\newcommand{\fk}[1]{\uuline{\texttt{#1}}}      % Para Foreign Key (2 subrayados)
+\newcommand{\pkc}[1]{\uuline{\underline{\texttt{#1}}}} % Para Primary Key Compuesta (3 subrayados)
+
+
+\begin{document}
+
+% --- PORTADA ---
+\begin{titlepage}
+    \centering
+    \vspace*{\stretch{1}}
+    {\Huge\bfseries Normalización de Base de Datos}
+    \vspace{1.5cm}
+    \vfill
+    {\Large\bfseries Asignatura:} \\
+    {\large Base de Datos Estructuradas}
+    \vspace{2cm}
+    \vfill
+    {\Large\bfseries Autor:} \\
+    {\large Andres Lopez Gonzalez}
+    \vspace*{\stretch{2}}\\
+    {\large \today}
+\end{titlepage}
+
+\newpage
+
+% --- INICIO DEL DOCUMENTO ---
+
+\section*{Tabla Inicial sin Normalizar}
+
+Se parte de la siguiente tabla que contiene información sobre productos, sus materias primas y los proveedores (es una sola fila, pero por temas de espacio en la hoja se muestrea como dos).
+
+\begin{center}
+\begin{tabular}{|c|c|c|c|}
+\hline
+\texttt{codprod} & \texttt{codprove} & \texttt{codmate} & \texttt{nomprov} \\
+\hline
+ & & & \\
+\hline
+\end{tabular}
+\vspace{0.1cm} % Espacio pequeño entre las tablas
+\begin{tabular}{|c|c|c|c|}
+\hline
+\texttt{dirprov} & \texttt{descprod} & \texttt{descmate} & \texttt{valorprod} \\
+\hline
+ & & & \\
+\hline
+\end{tabular}
+\end{center}
+
+La estructura inicial, en una sola tabla, es la siguiente:
+\begin{center}
+\textbf{PRODUCTO\_GENERAL}(\pk{codprod}, \texttt{descprod}, \texttt{valorprod}, \fk{codprove}, \texttt{nomprov}, \texttt{dirprov}, \fk{codmate}, \texttt{descmate})
+\end{center}
+
+El objetivo es normalizar esta estructura hasta la Tercera Forma Normal (3NF) para eliminar redundancias y anomalías de datos.
+
+\section{Primera Forma Normal (1NF)}
+\textit{\textbf{Definición:} Una tabla está en 1NF si todos sus atributos son atómicos, es decir, cada celda contiene un único valor y no existen grupos de repetición.}
+
+La tabla inicial ya cumple con la Primera Forma Normal, ya que cada columna representa un atributo único y no hay campos que almacenen múltiples valores, dicho de otra forma, la función que establece esa 'casilla' no es multievaluada.
+
+La estructura en 1NF es la misma que la tabla original, identificando la clave primaria:
+\begin{center}
+\textbf{PRODUCTO\_1NF}(\pk{codprod}, \texttt{descprod}, \texttt{valorprod}, \fk{codprove}, \texttt{nomprov}, \texttt{dirprov}, \fk{codmate}, \texttt{descmate})
+\end{center}
+
+\section{Segunda Forma Normal (2NF)}
+\textit{\textbf{Definición:} Una tabla está en 2NF si está en 1NF y todos los atributos no clave dependen completamente de la clave primaria completa.}
+
+Esta regla es relevante principalmente para tablas con claves primarias compuestas (formadas por más de una columna). En nuestro caso, la clave primaria es \pk{codprod}, que es una clave simple.
+
+Dado que la clave primaria no es compuesta, no pueden existir dependencias parciales. Por lo tanto, la tabla en 1NF satisface automáticamente la Segunda Forma Normal.
+
+La estructura en 2NF es idéntica a la de 1NF:
+\begin{center}
+\textbf{PRODUCTO\_2NF}(\pk{codprod}, \texttt{descprod}, \texttt{valorprod}, \fk{codprove}, \texttt{nomprov}, \texttt{dirprov}, \fk{codmate}, \texttt{descmate})
+\end{center}
+
+\section{Tercera Forma Normal (3NF)}
+\textit{\textbf{Definición:} Una tabla está en 3NF si está en 2NF y no contiene dependencias transitivas. Una dependencia transitiva ocurre cuando un atributo no clave depende de otro atributo no clave.}
+
+Al analizar la tabla en 2NF, identificamos las siguientes dependencias transitivas:
+
+\begin{itemize}
+    \item \texttt{nomprov} (Nombre del Proveedor) y \texttt{dirprov} (Dirección del Proveedor) dependen de \texttt{codprove} (Código de Proveedor), que no es la clave primaria.
+    
+    \textbf{Dependencia:} \pk{codprod} $\rightarrow$ \fk{codprove} $\rightarrow$ (\texttt{nomprov}, \texttt{dirprov})
+
+    \item \texttt{descmate} (Descripción de Materia Prima) depende de \texttt{codmate} (Código de Materia Prima), que no es la clave primaria.
+    
+    \textbf{Dependencia:} \pk{codprod} $\rightarrow$ \fk{codmate} $\rightarrow$ \texttt{descmate}
+\end{itemize}
+
+Para eliminar estas dependencias transitivas, dividimos la tabla en tres tablas separadas, una para cada entidad: Productos, Proveedores y Materias Primas; la estructura final en Tercera Forma Normal consta de las siguientes tres tablas:
+
+\vspace{0.5cm}
+\begin{center}
+    \textbf{1. Tabla de Productos}
+    
+    \vspace{0.2cm}
+    \begin{tabular}{|l|l|}
+    \hline
+    \multicolumn{2}{|c|}{\textbf{PRODUCTOS}} \\
+    \hline
+    \pk{codprod} & Clave Primaria \\
+    \texttt{descprod} & \\
+    \texttt{valorprod} & \\
+    \fk{codprove} & Clave Foránea a PROVEEDORES \\
+    \fk{codmate} & Clave Foránea a MATERIAS\_PRIMAS \\
+    \hline
+    \end{tabular}
+\end{center}
+
+\vspace{0.5cm}
+\begin{center}
+    \textbf{2. Tabla de Proveedores}
+
+    \vspace{0.2cm}
+    \begin{tabular}{|l|l|}
+    \hline
+    \multicolumn{2}{|c|}{\textbf{PROVEEDORES}} \\
+    \hline
+    \pk{codprove} & Clave Primaria \\
+    \texttt{nomprov} & \\
+    \texttt{dirprov} & \\
+    \hline
+    \end{tabular}
+\end{center}
+
+\vspace{0.5cm}
+\begin{center}
+    \textbf{3. Tabla de Materias Primas}
+
+    \vspace{0.2cm}
+    \begin{tabular}{|l|l|}
+    \hline
+    \multicolumn{2}{|c|}{\textbf{MATERIAS\_PRIMAS}} \\
+    \hline
+    \pk{codmate} & Clave Primaria \\
+    \texttt{descmate} & \\
+    \hline
+    \end{tabular}
+\end{center}
+\vspace{1cm}
+
+Con esta estructura, se eliminan las redundancias de datos. La información de cada proveedor y de cada materia prima se almacena una sola vez, y las tablas se relacionan mediante claves foráneas. El sistema está ahora en 3NF.
+
+\end{document}

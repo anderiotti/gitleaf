@@ -1,0 +1,492 @@
+% Add this line right before your \chapter* command in your .tex file
+\cleardoublepage
+\addcontentsline{toc}{chapter}{Optional: Introduction to Programming in Julia for Data Science}
+
+\chapter*{Introduction to Programming in Julia for Data Science}
+\label{chap:julia_intro}
+
+In the landscape of programming languages for data science, Python offers unparalleled versatility and R provides an environment deeply rooted in statistical tradition. \textbf{Julia} enters this arena with a singular, ambitious goal: to solve the "two-language problem." Historically, data scientists would prototype models in a high-level, dynamic language like Python or R for ease of use, and then, for performance-critical applications, rewrite the code in a low-level, static language like C or Fortran. Julia was conceived to eliminate this dichotomy. It is a high-level, dynamic language with a friendly, mathematical syntax, yet it is just-in-time (JIT) compiled using the powerful LLVM compiler framework, allowing it to achieve speeds comparable to C.
+
+Julia's design is a deliberate synthesis of the best features of its predecessors. It is interactive like Python, uses a mathematical syntax familiar to MATLAB users, embraces functional paradigms like Lisp, and is built for parallelism and distributed computing from the ground up. Its defining feature, however, is \textbf{multiple dispatch}, a programming paradigm that allows functions to be specialized on the types of all of their arguments. This, combined with a sophisticated, user-extensible type system, enables Julia to generate highly optimized machine code without sacrificing flexibility. This chapter provides a foundational tour of Julia, highlighting the core features and the programming mindset required to leverage its remarkable performance in data science.
+
+\section{Data Types and Basic Operators}
+\label{sec:julia_data_types}
+Julia is a dynamically typed language, but it allows for optional type annotations. Its type system is a cornerstone of its performance. By knowing the types of variables, the Julia compiler can often infer the output of functions and generate specialized, highly efficient code.
+
+\subsection*{Primitive Concrete Types}
+The fundamental numerical and logical types in Julia are both fast and explicit about their memory representation.
+\begin{itemize}
+    \item \textbf{\jcode{Int64}} and \textbf{\jcode{Int32}}: Signed integers of 64 and 32 bits, respectively. The default integer type depends on the system architecture (usually \jcode{Int64}).
+    \item \textbf{\jcode{Float64}} and \textbf{\jcode{Float32}}: 64-bit (double) and 32-bit (single) precision floating-point numbers, following the IEEE 754 standard. \jcode{Float64} is the default for floating-point literals.
+    \item \textbf{\jcode{Bool}}: Logical values, \jcode{true} and \jcode{false}.
+    \item \textbf{\jcode{Char}}: A single character, enclosed in single quotes.
+    \item \textbf{\jcode{String}}: A sequence of characters, enclosed in double quotes.
+\end{itemize}
+
+\begin{example}[Inspecting Types]
+The \jcode{typeof()} function is used to inspect the type of any value.
+\text{ }\begin{minted}{julia}
+# Julia infers the most specific, concrete type by default
+x = 10         # typeof(x) is Int64
+y = 3.14       # typeof(y) is Float64
+z = true       # typeof(z) is Bool
+s = "Julia"    # typeof(s) is String
+
+println("The type of 10 is ", typeof(10))
+println("The type of 3.14 is ", typeof(3.14))
+
+# You can explicitly specify a type
+float_32_num = Float32(10.5)
+println("The type of Float32(10.5) is ", typeof(float_32_num))
+\end{minted}
+\end{example}
+
+\subsection*{Operators and Broadcasting}
+Julia's operators are syntactically familiar, but their behavior with collections is explicit.
+
+\subsubsection*{Arithmetic and Logical Operators}
+Standard operators (\jcode{+}, \jcode{-}, \jcode{*}, \jcode{/}, \jcode{^}) work as expected on scalar values. Logical operators include $\&\&$ (short-circuiting AND), \jcode{||} (short-circuiting OR), and \jcode{!} (NOT).
+
+\begin{remark}[Operators are Functions]
+In Julia, nearly all operators are just functions with a special syntax. For instance, \jcode{1 + 2} is internally equivalent to calling the function \jcode{+(1, 2)}. This design allows developers to extend these basic operations to their own custom types, a key aspect of multiple dispatch.
+\end{remark}
+
+\subsubsection*{Broadcasting: The Dot Syntax for Vectorization}
+Unlike R, where vectorization is the default behavior for most functions, Julia requires an explicit instruction to apply a function element-wise to a collection. This is done by appending a dot \jcode{.} to the function name. This is known as \textbf{broadcasting}. This explicit syntax is one of Julia's most important features, as it avoids ambiguity and gives the programmer fine-grained control over performance.
+
+\begin{example}[Broadcasting Operations]
+\text{ }\begin{minted}{julia}
+# Create a vector (1D Array) of integers
+v = [1, 2, 3, 4]
+
+# Applying a function to a scalar works normally
+sqrt(4) # Result: 2.0
+
+# Applying a function to a vector without a dot will fail
+# sqrt(v) # This would throw a MethodError
+
+# To apply the function element-wise, we broadcast it with a dot
+sqrt.(v) # Result: [1.0, 1.414..., 1.732..., 2.0]
+
+# This applies to all operators as well
+v .+ 10   # Adds 10 to each element. Result: [11, 12, 13, 14]
+v .^ 2    # Squares each element. Result: [1, 4, 9, 16]
+
+# Define a simple function
+function add_one(x)
+    return x + 1
+end
+
+# We can broadcast our own functions too!
+add_one.(v) # Result: [2, 3, 4, 5]
+\end{minted}
+\end{example}
+
+\section{Operations on Character Strings}
+\label{sec:julia_string_ops}
+Julia's \jcode{String} type is a powerful, UTF-8 encoded representation of text. String manipulation is handled through a library of standard functions.
+
+Key string operations include:
+\begin{itemize}
+    \item \textbf{Interpolation}: Embedding values directly into a string, done by prefixing a variable with a dollar sign \$, similar to Python's f-strings.
+    \item \textbf{Concatenation}: Combining strings, typically done with the \jcode{*} operator or the \jcode{string()} function.
+    \item \textbf{Standard Functions}: A rich set of functions like \jcode{split()}, \jcode{join()}, \jcode{replace()}, \jcode{strip()}, \jcode{startswith()}, and \jcode{endswith()}.
+\end{itemize}
+
+\begin{example}[String Manipulation in Julia]
+\text{ }\begin{minted}{julia}
+# --- String Interpolation ---
+model_name = "BERT"
+score = 0.951
+println("The score for the $model_name model is $(round(score*100, digits=1))%.")
+# The second $() is used to embed a more complex expression.
+
+# --- Concatenation ---
+s1 = "data"
+s2 = "science"
+combined = s1 * " " * s2 # Using *
+println(combined)
+
+# --- Splitting and Joining ---
+csv_line = "id,feature1,feature2"
+header = split(csv_line, ',')
+println("Split: ", header)
+
+# Re-join with a different separator
+joined_header = join(header, " | ")
+println("Joined: ", joined_header)
+
+# --- Replacement ---
+message = "The model is overfitting."
+corrected_message = replace(message, "overfitting" => "well-calibrated")
+println(corrected_message)
+\end{minted}
+\end{example}
+
+\section{Control Structures}
+\label{sec:julia_control_structures}
+Julia's control flow syntax is clear and expressive. A key feature is the use of the \jcode{end} keyword to terminate blocks of code (for loops, if-statements, function definitions, etc.), which eliminates ambiguity about where a block finishes.
+
+\subsection*{Conditionals: \jcode{if}, \jcode{elseif}, \jcode{else}}
+The structure is straightforward. Conditions do not require parentheses, though they are often used for clarity.
+
+\text{ }\begin{minted}{julia}
+p_value = 0.03
+alpha = 0.05
+
+if p_value < alpha
+    println("Result is statistically significant (reject H0).")
+elseif p_value < 0.1
+    println("Result is marginally significant.")
+else
+    println("Result is not statistically significant (fail to reject H0).")
+end
+\end{minted}
+Julia also supports a standard ternary operator for concise conditional expressions: \jcode{a ? b : c}.
+
+\begin{minted}{julia}
+p_value = 0.03
+alpha = 0.05
+
+resultado = p_value < alpha ?
+    "Result is statistically significant (reject H0)." :
+    (p_value < 0.1 ?
+        "Result is marginally significant." :
+        "Result is not statistically significant (fail to reject H0).")
+
+println(resultado)
+# Salida: Result is statistically significant (reject H0).
+\end{minted}
+
+\subsection*{Loops: \jcode{for} and \jcode{while}}
+\begin{itemize}
+    \item \textbf{\jcode{for} loop}: Iterates over any iterable object. The syntax \jcode{for i in 1:5} is common for iterating over a range of numbers.
+    \item \textbf{\jcode{while} loop}: Repeats a block as long as a condition is \jcode{true}.
+\end{itemize}
+The keywords \jcode{break} and \jcode{continue} work as expected to control loop flow.
+
+\begin{example}[Looping in Julia]
+\text{ }\begin{minted}{julia}
+# --- For Loop ---
+println("Iterating with a for loop:")
+for i in [1, 2, 3, 5, 8] # Iterate over elements of a vector
+    println("Fibonacci number: $i")
+end
+
+# --- While Loop ---
+println("\nConvergence with a while loop:")
+error = 1.0
+tolerance = 0.1
+iteration = 0
+while error > tolerance
+    global iteration += 1 # 'global' needed to modify variable from outer scope in REPL
+    error /= 2
+    println("Iteration $iteration, Error = $error")
+    if iteration >= 10
+        println("Max iterations reached.")
+        break
+    end
+end
+\end{minted}
+\end{example}
+\begin{remark}[The Role of Loops in Julia]
+While Julia's loops are extremely fast (often as fast as their C equivalents), the broadcasting dot-syntax (\jcode{f.(v)}) is still preferred for element-wise operations on arrays. It is more concise and clearly expresses the programmer's intent to perform a vectorized computation.
+\end{remark}
+
+\section{Vectors, Matrices, and Arrays: The Tensor in Julia}
+\label{sec:julia_arrays}
+The cornerstone of all numerical and scientific computing in Julia is the \textbf{\jcode{Array}} type. This is not merely a container for data; it is the direct and highly optimized implementation of a mathematical \textbf{tensor}. Remember that a tensor is a generalization of vectors and matrices to an arbitrary number of dimensions. The number of dimensions is often referred to as the tensor's \textbf{order} or \textbf{rank}. In this context:
+\begin{itemize}
+    \item A \textbf{\jcode{Vector}} is simply a convenient alias for a 1D \jcode{Array}, representing a 1st-order tensor.
+    \item A \textbf{\jcode{Matrix}} is an alias for a 2D \jcode{Array}, representing a 2nd-order tensor.
+    \item An \jcode{Array{T, N}} is the formal type for a tensor of order \jcode{N}, whose elements are of type \jcode{T}.
+\end{itemize}
+Understanding this formal structure is the first step. The second, and arguably more critical step for performance, is understanding how these tensors are physically laid out in memory.
+
+\subsection*{The Memory Layout: Column-Major Order}
+A key design decision that separates Julia (along with Fortran, MATLAB, and R) from languages like C, C++, and Python (NumPy) is its memory layout. Julia arrays are stored in \textbf{column-major order}. This means that elements within the same column are contiguous in memory.
+
+Consider a 2x2 matrix, $M = \begin{pmatrix} a & c \\ b & d \end{pmatrix}$.
+\begin{itemize}
+    \item In \textbf{row-major order} (NumPy), the memory layout is sequential by rows: \code{[a, c, b, d]}.
+    \item In \textbf{column-major order} (Julia), the memory layout is sequential by columns: \code{[a, b, c, d]}.
+\end{itemize}
+
+
+
+\begin{remark}[Performance Implications of Column-Major Order]
+This is not an arbitrary choice; it has profound performance implications. Modern CPUs do not fetch single bytes from memory; they fetch entire "cache lines" (typically 64 bytes). When you access an element in memory, you get its neighbors for free. In Julia, because columns are contiguous, iterating down a column is exceptionally fast, as you are accessing data that is already in the CPU cache. Iterating across a row forces the CPU to jump across memory and fetch new cache lines for each element, which is significantly slower. For a data scientist, writing loops that respect the column-major layout is a fundamental optimization technique.
+\end{remark}
+
+\subsection*{Array Construction: From Literals to Functions}
+Julia provides a rich set of tools for creating arrays, designed to be both mathematically intuitive and programmatically powerful.
+
+\subsubsection*{1. Literal and Concatenation Syntax}
+This syntax is designed to mirror mathematical notation for vectors and matrices.
+\begin{itemize}
+    \item \textbf{Vectors}: Elements are separated by commas. This creates a column vector.
+    \item \textbf{Matrices}: Spaces separate elements within a row (columns), and semicolons separate the rows themselves.
+    \item \textbf{Concatenation}: You can build larger arrays by concatenating smaller ones. \jcode{hcat(A, B)} concatenates horizontally, while \jcode{vcat(A, B)} concatenates vertically. The literal syntax \jcode{[A B]} and \jcode{[A; B]} are convenient shorthands for this.
+\end{itemize}
+
+\begin{example}[Literal Array Construction]
+\text{ }\begin{minted}{julia}
+# A Vector (column vector)
+v = [10, 20, 30]
+
+# A Matrix, constructed to look like its mathematical representation
+M = [1 2 3; 4 5 6]
+println("A 2x3 Matrix:\n", M)
+
+# Horizontal concatenation of two vectors
+v1 = [1, 2]
+v2 = [3, 4]
+h_concat = [v1 v2] # Equivalent to hcat(v1, v2)
+println("\nHorizontal Concatenation:\n", h_concat)
+
+# Vertical concatenation
+v_concat = [v1; v2] # Equivalent to vcat(v1, v2)
+println("\nVertical Concatenation:\n", v_concat)
+\end{minted}
+\end{example}
+
+\subsubsection*{2. Functional Construction}
+For creating arrays of arbitrary size, Julia provides a suite of highly optimized functions. The general syntax is \jcode{function_name(ElementType, dims...)}, where \jcode{dims} is a tuple or a sequence of integers specifying the size of each dimension.
+\begin{itemize}
+    \item \jcode{zeros(Type, dims...)} and \jcode{ones(Type, dims...)}: Create arrays filled with zeros or ones.
+    \item \jcode{rand(Type, dims...)}: Creates an array with random numbers.
+    \item \jcode{fill(value, dims...)}: Creates an array filled with a specific \jcode{value}.
+    \item \jcode{similar(A, Type, dims...)}: Creates an uninitialized array with the same properties (e.g., dense/sparse) as an existing array \jcode{A}, but with a new type and dimensions. This is useful for writing generic, high-performance algorithms.
+\end{itemize}
+
+\begin{example}[Creating Tensors with Functions]
+This example demonstrates the creation of higher-order tensors, directly addressing the fact that these functions work for any number of dimensions.
+\begin{minted}{julia}
+# A 3rd-order tensor (2x2x2) of 32-bit floating point ones
+tensor_ones = ones(Float32, 2, 2, 2)
+println("A 2x2x2 tensor of ones:\n", tensor_ones)
+
+# A 4x5 matrix filled with the value 42
+mat_filled = fill(42, (4, 5)) # Dimensions can be passed as a tuple
+println("\nA matrix filled with 42:\n", mat_filled)
+\end{minted}
+\end{example}
+
+\subsection*{Array Inspection}
+Once an array exists, you can query its structural properties.
+\begin{itemize}
+    \item \textbf{\jcode{size(A)}}: Returns a tuple containing the dimensions.
+    \item \textbf{\jcode{eltype(A)}}: Returns the data type of the elements.
+    \item \textbf{\jcode{ndims(A)}}: Returns the number of dimensions (the order of the tensor).
+    \item \textbf{\jcode{length(A)}}: Returns the total number of elements.
+\end{itemize}
+
+\subsection*{Indexing and Slicing: Accessing Tensor Elements}
+Accessing data within a Julia array is efficient and syntactically clear.
+
+\subsubsection*{Scalar and Slice Indexing}
+You access elements using square brackets, providing an index for each dimension. A colon \jcode{:} is used to select all elements along an axis, and the keyword \jcode{end} refers to the last index.
+
+\begin{example}[Advanced Indexing]
+\text{ }\begin{minted}{julia}
+M = [10 20 30; 40 50 60; 70 80 90]
+
+# Get the element at row 2, column 3 (value is 60)
+el = M[2, 3]
+
+# Get the sub-matrix excluding the first row and last column
+sub = M[2:end, 1:end-1]
+println("Sub-matrix:\n", sub)
+\end{minted}
+\end{example}
+
+\subsubsection*{Logical Indexing}
+A powerful feature common in scientific computing is the ability to select elements of an array using a boolean mask. This is a highly efficient, vectorized operation.
+
+\begin{example}[Filtering with Logical Indexing]
+\text{ }\begin{minted}{julia}
+# Create a 3x3 matrix of random numbers
+A = rand(3, 3)
+
+# Create a boolean mask for all elements greater than 0.5
+mask = A .> 0.5
+
+println("Original Matrix:\n", A)
+println("\nBoolean Mask (A .> 0.5):\n", mask)
+
+# Select only the elements where the mask is true
+# The result is a flat Vector of the selected elements.
+filtered_values = A[mask]
+println("\nFiltered values: ", filtered_values)
+\end{minted}
+\end{example}
+
+\begin{remark}[Views vs. Copies: A Critical Performance Note]
+Like NumPy, slicing an array in Julia (e.g., \jcode{A[1:2, :]}) creates a \textbf{copy} of the data by default. For very large arrays, this can be inefficient and memory-intensive. To avoid this, Julia provides a mechanism to create a \textbf{view}, which is a lightweight object that refers to the same memory as the original array. Modifying a view modifies the original. The macro \jcode{@view} is the explicit and recommended way to do this.
+
+\begin{minted}{julia}
+A = zeros(3)
+# Create a view into the first two elements
+A_view = @view A[1:2]
+
+# Modify the view
+A_view[1] = 99
+
+# The original array A is also modified!
+println("Original array after modifying view: ", A) # Result: [99.0, 0.0, 0.0]
+\end{minted}
+For a data scientist, knowing when to use views to prevent unnecessary memory allocations is a key performance skill.
+\end{remark}
+
+\section{Tuples, Dictionaries, and Other Collections}
+\label{sec:julia_collections}
+
+\subsection*{Tuples and NamedTuples}
+A \textbf{Tuple} is an immutable, ordered collection of values. They are created with parentheses and are highly efficient. Tuples are the standard way for functions to return multiple values. A \textbf{NamedTuple} is similar but associates a name with each element, making it a lightweight and performant alternative to a dictionary or struct for holding records.
+
+\text{ }\begin{minted}{julia}
+# A regular tuple
+my_tuple = (10, "hello", true)
+a, b, c = my_tuple # Unpacking works just like in Python
+println("Unpacked value b: $b")
+
+# A NamedTuple
+# Note the semicolon is required for a single-element NamedTuple
+point = (x=1.5, y=2.0, z=0.5)
+println("Accessing named element: ", point.x)
+\end{minted}
+
+\subsection*{Dictionaries (\jcode{Dict})}
+Julia's \textbf{\jcode{Dict}} provides a key-value mapping and is analogous to Python's dictionary. It is created with the \jcode{Dict()} constructor. Keys and values can be of any type.
+
+\text{ }\begin{minted}{julia}
+# Create a dictionary mapping model names to their scores
+scores = Dict("RandomForest" => 0.92, "SVM" => 0.89, "NeuralNet" => 0.94)
+
+# Access a value
+println("SVM score: ", scores["SVM"])
+
+# Add a new entry
+scores["LogisticRegression"] = 0.85
+
+# Check if a key exists
+println("Does 'SVM' exist? ", haskey(scores, "SVM"))
+
+# Iterate over key-value pairs
+for (model, score) in scores
+    println("- $model achieved a score of $score")
+end
+\end{minted}
+
+\begin{remark}[Factors and Lists]
+Unlike R, Julia does not have a built-in \textbf{factor} type. The functionality for categorical data is provided by the external package \textbf{\jcode{CategoricalArrays.jl}}, which is the standard in the ecosystem. Similarly, Julia does not have a "list" type that is distinct from an array. A \jcode{Vector{Any}} can hold elements of different types, but for performance, Julia code strongly prefers type-stable, concrete arrays like \jcode{Vector{Int64}}.
+\end{remark}
+
+\section{Tables: The \jcode{DataFrames.jl} Package}
+\label{sec:julia_dataframes}
+The premier package for working with tabular data in Julia is \textbf{\jcode{DataFrames.jl}}. It provides the \jcode{DataFrame} type, which is conceptually similar to a Pandas DataFrame or an R \jcode{data.frame}. It is a two-dimensional data structure where each column is a vector and can have a different type.
+
+\subsection*{Creating and Subsetting DataFrames}
+DataFrames are typically created from collections of named columns.
+
+\begin{example}[Creating a DataFrame]
+\text{ }\begin{minted}{julia}
+# You must first have the package installed and loaded
+# using Pkg; Pkg.add("DataFrames")
+using DataFrames
+
+# Create a DataFrame
+df = DataFrame(
+    ID = ["A", "B", "C", "D"],
+    Feature1 = [1.2, 3.4, 5.6, 7.8],
+    Feature2 = [true, false, true, true]
+)
+println(df)
+\end{minted}
+\end{example}
+
+Subsetting is powerful and has a specific syntax.
+\begin{itemize}
+    \item \textbf{Columns}: Can be selected with dot notation (\jcode{df.Feature1}), or programmatically with square brackets and symbols (\jcode{df[!, :Feature1]}). A symbol (\jcode{:Feature1}) is Julia's efficient representation for a name.
+    \item \textbf{Rows}: Can be selected by their index or by a boolean vector.
+\end{itemize}
+
+\begin{example}[Subsetting a DataFrame]
+\text{ }\begin{minted}{julia}
+using DataFrames
+df = DataFrame(ID = ["A", "B", "C", "D"], F1 = [1.2, 3.4, 5.6, 7.8], F2 = [true, false, true, true])
+
+# --- Select a single column (returns a Vector) ---
+f1_vector = df.F1
+println("Column F1: ", f1_vector)
+
+# --- Select multiple columns (returns a new DataFrame) ---
+# Note the : symbol for column names
+sub_df = df[!, [:ID, :F2]]
+println("\nSubset of columns:\n", sub_df)
+
+# --- Select rows based on a condition ---
+# Get all rows where Feature1 is greater than 3.0
+filtered_df = df[df.F1 .> 3.0, :] # The .> is broadcasted greater-than
+println("\nFiltered rows:\n", filtered_df)
+\end{minted}
+\end{example}
+
+\section{File Input and Output}
+\label{sec:julia_files}
+
+\subsection*{Basic File I/O and the \jcode{do} Block}
+The standard way to work with files is with the \jcode{open()} function. While you can manually \jcode{open()} and \jcode{close()} a file, the idiomatic and safe way is to use the \textbf{\jcode{do}} block syntax. This is Julia's equivalent of Python's \jcode{with} statement, and it guarantees that the file will be closed automatically, even if errors occur.
+
+\begin{example}[Safe File Writing and Reading]
+\text{ }\begin{minted}{julia}
+filepath = "julia_example.txt"
+
+# Write to a file using a do block
+open(filepath, "w") do f
+    write(f, "This is the first line.\n")
+    write(f, "Julia's do block ensures the file is closed.")
+end
+println("File written successfully.")
+
+# Read the entire file content
+content = open(filepath, "r") do f
+    read(f, String)
+end
+println("\nContent read from file:\n", content)
+\end{minted}
+\end{example}
+
+\subsection*{Working with CSVs and Other Formats}
+For structured data, dedicated packages are used.
+\begin{itemize}
+    \item \textbf{CSV Files}: The \textbf{\jcode{CSV.jl}} package is the standard for reading and writing CSVs. It is highly performant and integrates seamlessly with \jcode{DataFrames.jl}.
+    \item \textbf{Serialization}: For saving and loading any arbitrary Julia object, the standard library \textbf{\jcode{Serialization}} is used. Its functions, \jcode{serialize()} and \jcode{deserialize()}, are the equivalent of Python's \jcode{pickle}.
+\end{itemize}
+
+\begin{example}[Reading a CSV and Serializing an Object]
+\text{ }\begin{minted}{julia}
+using CSV, DataFrames, Serialization
+
+# --- Reading a CSV ---
+csv_content = "ID,Value\nA,10\nB,20"
+# CSV.read takes the content and the type to read it into (a DataFrame)
+df_from_csv = CSV.read(IOBuffer(csv_content), DataFrame)
+println("DataFrame read from CSV:\n", df_from_csv)
+
+# --- Serializing an object ---
+# Create a complex object (a dictionary)
+my_model = Dict(
+    "type" => "Neural Network",
+    "layers" => [784, 128, 64, 10],
+    "activation" => "ReLU"
+)
+
+# Serialize the object to a file
+serialize("my_model.bin", my_model)
+
+# Deserialize it back
+loaded_model = deserialize("my_model.bin")
+println("\nLoaded model type: ", loaded_model["type"])
+\end{minted}
+\end{example}

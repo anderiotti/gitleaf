@@ -1,0 +1,149 @@
+\documentclass[12pt, letterpaper, twocolumn]{article}
+
+% --- PAQUETES ---
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage{enumitem} % Para personalizar listas
+
+% --- CONFIGURACIÓN DE GEOMETRÍA ---
+\geometry{
+    a4paper,
+    total={170mm,257mm},
+    left=20mm,
+    top=25mm,
+    right=20mm,
+    bottom=25mm,
+    columnsep=1cm % Espacio entre columnas
+}
+
+% --- DEFINICIÓN DE ESTILOS ---
+\setlist[itemize]{leftmargin=*}
+\setlist[enumerate]{leftmargin=*}
+\newcommand{\textit}[1]{\item[\textbf{--- #1}]} % Estilo para las preguntas
+
+% --- DATOS DEL TÍTULO (FORMA CORRECTA) ---
+\title{\textbf{Modelo de Negocio: Anderiotti's Buffet}}
+\date{\today}
+
+
+\begin{document}
+
+% --- CREACIÓN DEL TÍTULO Y ABSTRACT (SOLUCIÓN AL BUG) ---
+% Maketitle crea el título a lo ancho de la página en el modo twocolumn
+\maketitle
+\thispagestyle{empty}
+
+% Usamos el entorno 'abstract' para el párrafo introductorio.
+% Se mostrará a lo ancho de la página, antes de empezar con las dos columnas.
+\begin{abstract}
+\noindent\textit{Anderiotti's Buffet} es un restaurante basado en un modelo de buffet por niveles que busca rescatar y celebrar la riqueza gastronómica de Veracruz, especialmente de los alrededores de Boca del Río. Nuestro objetivo es ofrecer una experiencia culinaria auténtica, abundante y accesible, transportando a los comensales al corazón del Sotavento y el Totonacapan a través de sabores únicos y un ambiente festivo.
+\end{abstract}
+
+
+% --------------------------------------------------------------------
+% EL RESTO DEL DOCUMENTO FLUIRÁ AUTOMÁTICAMENTE EN DOS COLUMNAS
+% --------------------------------------------------------------------
+
+\section*{1. Segmentos de Clientes}
+
+\begin{itemize}
+    \textit{¿Para quién creas valor?}
+    Creamos valor para personas que aprecian la auténtica comida mexicana y buscan una experiencia culinaria completa y sin restricciones. Nos enfocamos en aquellos que desean explorar la diversidad de una cocina regional en una sola visita.
+
+    \textit{¿Quiénes son tus clientes más importantes?}
+    \begin{itemize}
+        \item \textbf{Familias y Grupos (35\%):} El formato buffet es ideal para celebraciones y reuniones. Son clientes de alto valor por el volumen de consumo por visita.
+        \item \textbf{Aficionados a la Gastronomía (30\%):} Conocidos como \textit{foodies}, buscan autenticidad y sabores difíciles de encontrar. Son clave para generar reputación y presencia en redes sociales.
+        \item \textbf{Comunidad Veracruzana (20\%):} Personas que viven fuera de Veracruz y buscan una conexión nostálgica con los sabores de su tierra.
+        \item \textbf{Trabajadores y Oficinistas (15\%):} Para la comida de entre semana, atraídos por una opción de buffet rápido y de calidad.
+    \end{itemize}
+\end{itemize}
+
+% --------------------------------------------------------------------
+% 2. PROPUESTAS DE VALOR
+% --------------------------------------------------------------------
+\section*{2. Propuestas de Valor}
+\begin{itemize}
+    \textit{¿Qué problema ayudas a solucionar?}
+    Resolvemos dos problemas principales: \textbf{1)} La dificultad de encontrar auténtica y variada comida veracruzana, con el atractivo de hacer un pago único para incursionar en toda su cultura gastronómica principal. \textbf{2)} La indecisión del comensal al tener que elegir un solo platillo de un menú extenso y rico.
+
+    \textit{¿Qué valor ofreces a tus clientes?}
+    \begin{enumerate}
+        \item \textbf{Autenticidad Inmersiva:} Ofrecemos recetas tradicionales y bebidas endémicas como el \textbf{atole morado}, el \textbf{agua de jobo} o \textbf{tepaches exóticos típicos en la región} (litchi, capulín, mango).
+        \item \textbf{Abundancia y Libertad (Buffet por Clases):} Un modelo de precios flexible que permite al cliente controlar su experiencia y presupuesto.
+            \begin{itemize}
+                \item \textbf{Clase "Sotavento" (\$):} Acceso a la barra principal con guisos clásicos, ensaladas y aguas frescas básicas.
+                \item \textbf{Clase "Barlovento" (\$\$):} Incluye lo anterior más especialidades como \textbf{tapales}, mariscos y bebidas como el agua de jobo.
+                \item \textbf{Clase "Totonaca" (\$\$\$):} La experiencia completa. Incluye todo lo anterior más cortes a la parrilla, tepaches especiales y postres.
+            \end{itemize}
+        \item \textbf{Experiencia Cultural:} Un ambiente festivo con música jarocha y un servicio cálido que celebra la cultura de Veracruz, además de los ya tan conocidos lecheros
+    \end{enumerate}
+\end{itemize}
+
+% --------------------------------------------------------------------
+% 3. CANALES
+% --------------------------------------------------------------------
+\section*{3. Canales}
+\begin{itemize}
+    \textit{¿Cómo estableces contacto con tus clientes?}
+    \begin{itemize}
+        \item \textbf{Canal Físico:} El propio restaurante, diseñado para ser un destino atractivo.
+        \item \textbf{Canales Digitales:} Redes Sociales (Instagram, TikTok, Facebook, X, Youtube \textit{shorts}) para mostrar el buffet y la atmósfera; y una Página Web con menú, precios y ubicación.
+        \item \textbf{Relaciones Públicas:} Colaboraciones con influencers gastronómicos.
+    \end{itemize}
+\end{itemize}
+
+% --------------------------------------------------------------------
+% 4. RELACIÓN CON EL CLIENTE
+% --------------------------------------------------------------------
+\section*{4. Relación con el Cliente}
+\begin{itemize}
+    \textit{¿Cómo se integra en tu modelo?}
+    La relación se basa en la \textbf{asistencia personal y la creación de una comunidad}. El personal explica los platillos y comparte su historia.
+
+    \textit{¿Qué tipo de relación espera cada segmento?}
+    \begin{itemize}
+        \item \textbf{Familias:} Un servicio atento y un ambiente seguro.
+        \item \textbf{Aficionados Gastronómicos:} Interacción con personal conocedor.
+        \item \textbf{Clientes Regulares:} Rapidez, consistencia y un posible programa de lealtad.
+    \end{itemize}
+\end{itemize}
+
+% --------------------------------------------------------------------
+% 5. FUENTES DE INGRESOS
+% --------------------------------------------------------------------
+\section*{5. Fuentes de Ingresos}
+\begin{itemize}
+    \textit{¿Por cuál valor están dispuestos a pagar tus clientes?}
+    Por la \textbf{experiencia completa}: calidad, variedad, libertad de elección y el ambiente cultural.
+
+    \textit{¿Cómo? ¿Cuánto reporta cada fuente al total?}
+    \begin{itemize}
+        \item \textbf{Venta de Buffet por Clases (80\%):} Fuente principal.
+        \item \textbf{Bebidas Alcohólicas Especiales (15\%):} Venta de cervezas, 'toritos' (bebida típica de papantla) y coctelería regional.
+        \item \textbf{Venta de Productos para Llevar (5\%):} Café de Coatepec en grano, dulces típicos y platillos por peso.
+    \end{itemize}
+\end{itemize}
+
+% --------------------------------------------------------------------
+% 6. RECURSOS CLAVE
+% --------------------------------------------------------------------
+\section*{6. Recursos Clave}
+
+\begin{itemize}
+
+    \item \textbf{Físicos:} Un local amplio con cocina de alta capacidad, decoración temática auténtica y aromatizantes típicos como un incienso discreto.
+
+    \item \textbf{Intelectuales:} El \textbf{recetario tradicional auténtico} es el activo más valioso. La marca 'Anderiotti's Buffet'.
+
+    \item \textbf{Humanos:} Una \textbf{Mayora o Chef Ejecutivo} experta en cocina veracruzana, que sea la guardiana de las recetas, junto a personal capacitado en la cultura de la región. Además de vestimenta regional.
+
+    \item \textbf{Financieros:} Capital inicial para la renta, adecuación del local, equipo y costos operativos.
+
+\end{itemize}
+
+
+
+\end{document}

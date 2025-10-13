@@ -1,0 +1,2454 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage[Spanish]{babel}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{amssymb}
+%\usepackage[pctex32]{graphics}
+\usepackage{graphicx}
+\graphicspath{{./figs/}}
+\usepackage{float} 
+\begin{document}
+
+\begin{center}
+   \vspace{2cm} % Espacio inicial
+
+   {\LARGE \textbf{Universidad Nacional Autónoma de México} \\[0.3cm]
+    \LARGE \textbf{Facultad de Ciencias}}
+
+   \vspace{1cm} % Espacio entre título y subtítulo
+
+   {\Large \textbf{Cálculo Diferencial e Integral II \\ Tarea 5}}
+
+   \vspace{1cm} % Espacio entre título y lista de integrantes
+
+   {\Large \textbf{Integrantes:}}
+   
+   \vspace{0.5cm} % Espacio entre "Integrantes" y la lista
+   
+   % Lista de integrantes
+   \Large
+   Mariana Zamudio Marín \\
+   Mera Colín Eduardo\\
+   Fernando Silva Apanco\\
+   Arteaga Mora Jose Abraham
+
+   \vspace{1cm} % Espacio antes de la fecha
+
+   \Large Noviembre 2024
+\end{center}
+
+\vspace{5cm} % Espacio después del bloque centrado
+
+\newcommand{\N}{\ensuremath{\mathbb N }}
+\newcommand{\Z}{\ensuremath{\mathbb Z }}
+\newcommand{\R}{\ensuremath{\mathbb R }}
+\begin{center}
+
+
+\textbf{Tarea 5}
+\textbf{C\'alculo Diferencial e Integral II}
+\end{center}
+
+
+\begin{enumerate}
+\item De las siguientes series, ?`cu\'ales son convergentes y cu\'ales son divergentes?
+\begin{enumerate}
+\item $\displaystyle\sum_{n=1}^{\infty}\,\frac{1}{n^{\frac{3}{2}}}$.
+\[\]
+El criterio de convergencia de series \( p \) dice que en la serie
+\[
+\sum_{n=1}^{\infty} \frac{1}{n^p}
+\]
+si \( p > 1 \), la serie converge, y si \( p \leq 1 \), diverge. Dado que \( p = \frac{3}{2} \) y \( \frac{3}{2} > 1 \), la serie es convergente.
+
+
+\item $\displaystyle\sum_{n=1}^{\infty}\,\frac{1}{n\,(n\,+\,1)}$.
+\[\]
+Descomponiendo en fracciones parciales:
+\[
+\frac{1}{n(n+1)} = \frac{1}{n} - \frac{1}{n+1}
+\]
+Así, 
+\[
+S_n = \sum_{k=1}^{n} \frac{1}{k(k+1)} = \sum_{k=1}^{n} \left( \frac{1}{k} - \frac{1}{k+1} \right),
+\]
+que, al ser una suma telescópica, es igual a:
+\[
+1 - \frac{1}{n+1}.
+\]
+Entonces,
+\[
+\lim_{n \to \infty} S_n = 1,
+\]
+por lo tanto, la serie converge.
+
+\item $\displaystyle\sum_{n=1}^{\infty}\,\frac{1}{n\,\log n}$.
+\[\]
+Se puede definir la convergencia de la serie analizando la integral impropia asociada. Nótese que la serie \( \frac{1}{n \log n} \) no está definida para \( n = 1 \), por lo que empieza desde \( n = 2 \). Entonces:
+\[
+\int_{2}^{\infty} \frac{1}{x \log x} \, dx
+\]
+Haciendo \( u = \log x \), \( du = \frac{dx}{x} \). Los límites de integración cambian: cuando \( x = 2 \), \( u = \log 2 \), y cuando \( x = \infty \), \( u = \infty \).
+\[
+\Rightarrow \int \frac{du}{u} = \log u
+\]
+\[
+\Rightarrow \lim_{b \to \infty} \log u \bigg|_{\log 2}^{b} = \lim_{b \to \infty} \left( \log b - \log (\log 2) \right) = \infty
+\]
+Por lo tanto, la serie diverge.
+
+\item $\displaystyle\sum_{n=1}^{\infty}\,\frac{(-1)^{n-1}\,n}{2^n}$.
+\[\]
+Usando el criterio de la serie alternante, se debe corroborar que: 
+\begin{itemize}
+    \item[i)] \( b_{n+1} \leq b_n \) para toda \( n \),
+    \item[ii)] \( \lim_{n \to \infty} b_n = 0 \).
+\end{itemize}
+Entonces:
+
+\textbf{i)} Es equivalente a decir que \( \frac{b_{n+1}}{b_n} \leq 1 \)
+\[
+\Rightarrow \frac{\frac{n+1}{2^{n+1}}}{\frac{n}{2^n}} = \frac{n+1}{2}
+\]
+\[
+\Rightarrow \frac{n+1}{2} \leq 1 \Rightarrow 1 \leq n
+\]
+Lo cual es cierto.
+
+\textbf{ii)} \( \lim_{n \to \infty} \frac{n}{2^n} \) es una forma \( \frac{\infty}{\infty} \).
+Aplicando L'Hôpital:
+\[
+\lim_{n \to \infty} \frac{1}{2^n \ln 2},
+\]
+y como el denominador crece exponencialmente, 
+\[
+\lim = 0.
+\]
+Por lo tanto, la serie converge.
+
+\item $\displaystyle\sum_{n=1}^{\infty}\,\frac{1}{(n+1)(n+2)(n+3)}$.
+\[\]
+Descomponiendo en fracciones parciales:
+\[
+\frac{1}{(n+1)(n+2)(n+3)} = \frac{A}{n+1} + \frac{B}{n+2} + \frac{C}{n+3}
+\]
+\[
+\Rightarrow 1 = (A + B + C)n^2 + (5A + 4B + 3C)n + (6A + 3B + 2C)
+\]
+De donde se tiene el sistema de ecuaciones:
+\[
+A + B + C = 0
+\]
+\[
+5A + 4B + 3C = 0
+\]
+\[
+6A + 3B + 2C = 1
+\]
+Resolviendo el sistema, obtenemos \( A = C = \frac{1}{2} \) y \( B = -1 \), y por lo tanto:
+\[
+\sum_{n=1}^{\infty} \frac{1}{(n+1)(n+2)(n+3)} = \frac{1}{2} \sum_{n=1}^{\infty} \frac{1}{n+1} - \sum_{n=1}^{\infty} \frac{1}{n+2} + \frac{1}{2} \sum_{n=1}^{\infty} \frac{1}{n+3}
+\]
+Cada término \( \frac{1}{n+k} \) para \( k = 1, 2, 3 \), corresponde a una serie armónica desplazada, y se sabe que esta diverge. Por lo tanto, la serie diverge.
+\item $\displaystyle\sum_{n=1}^{\infty}\,\frac{1}{n\,\log n\,\log\,\log n}$.
+\[\]
+Aplicando el criterio de la integral:
+\[
+\int_{2}^{\infty} \frac{1}{x \log x \log \log x} \, dx,
+\]
+Haciendo \( u = \log \log x \), \( du = \frac{dx}{x \log x} \),
+\[
+\Rightarrow \int_{2}^{\infty} \frac{du}{u},
+\]
+lo cual es una forma de integral que diverge. Por lo tanto, la serie diverge.
+
+\item $\displaystyle\sum_{n=1}^{\infty}\,\frac{\cos n}{n}$.
+\[\]
+El criterio de Dirichlet establece que si una serie de la forma 
+\[
+\sum \frac{a_n}{b_n}
+\]
+con \( a_n \) acotada y \( b_n \) decreciente, converge si \( b_n \) tiende a 0. Como \( a_n = \cos n \) está acotada entre \( -1 \) y \( 1 \) y \( b_n = \frac{1}{n} \) es decreciente y tiende a cero, entonces la serie converge.
+
+\item $\displaystyle\sum_{n=1}^{\infty}\,\frac{\log n}{n^2}$.
+\[\]
+Aplicando el criterio de la integral:
+\[
+\int_{2}^{\infty} \frac{\log x}{x^2} \, dx
+\]
+Integrando por partes:
+\[
+u = \log x, \quad du = \frac{dx}{x}, \quad dv = \frac{dx}{x^2}, \quad v = -\frac{1}{x}
+\]
+Sustituyendo en la fórmula de integración por partes:
+\[
+\int_{2}^{\infty} \frac{\log x}{x^2} \, dx = -\frac{\log x}{x} \bigg|_2^\infty + \int_{2}^{\infty} \frac{dx}{x^2}
+\]
+\[
+= -\frac{\log x}{x} \bigg|_2^\infty - \frac{1}{x} \bigg|_2^\infty
+\]
+Evaluando los límites:
+\[
+= \frac{\log 2}{2} + \frac{1}{2}
+\]
+Por lo tanto, la serie converge.
+
+\item $\displaystyle\sum_{n=1}^{\infty}\,\frac{(-1)^n\,5^n}{n!}$
+
+
+- Si $L<1$ la serie converge\\
+- Si $L>1$ la serie diverge\\
+- Si $L=1$ el criterio es inconcluso\\
+
+
+$a_n=\frac{(-1)^n 5^n}{n!}$
+
+
+Valor absoluto $a_n$ es:
+
+
+$$
+\begin{gathered}
+\left|a_n\right|=\frac{5^n}{n!} \\
+\sqrt[n]{\left|a_n\right|}=\sqrt[n]{\frac{5^n}{n!}}=\frac{\sqrt[n]{5^n}}{\sqrt[n]{n!}}
+\end{gathered}
+$$
+
+- $\sqrt[n]{5^n}=5$
+
+- $n!\approx \sqrt{2 \pi n}\left(\frac{n}{e}\right)^n$
+
+- $\sqrt[n]{n!} \approx \sqrt[n]{\sqrt{2 \pi n}} \cdot \sqrt[n]{\left(\frac{n}{e}\right)^n}$
+
+Evaluando:
+$\sqrt[n]{n!} \approx \sqrt[n]{\sqrt{2 \pi n}} \rightarrow 1$ cuando $n \rightarrow \infty$
+
+
+$\sqrt[n]{\left(\frac{n}{e}\right)^n}=\frac{n}{e}$
+
+
+Por lo tanto
+$\sqrt[n]{n!} \approx \frac{n}{e}$
+$$
+\begin{aligned}
+& \sqrt[n]{\left|a_n\right|}=\frac{5}{\sqrt[n]{n!}} \approx \frac{5}{\frac{n}{e}}=\frac{5 e}{n} \\
+& \lim _{n \rightarrow \infty} \sqrt[n]{\left|a_n\right|}=\lim _{n \rightarrow \infty} \frac{5 e}{n}=0
+\end{aligned}
+$$
+
+Por lo tanto $L=0<1$ la serie converge.
+\newpage
+\item $\displaystyle\sum_{n=1}^{\infty}\,\frac{(-1)^n\,10^{100n}}{n!}$
+
+- Si $L<1$ la serie converge
+
+- Si $L>1$ la serie diverge
+
+- Si $L=1$ el criterio es inconcluso
+
+$$
+\begin{gathered}
+a_n=\frac{(-1)^n 10^{100 n}}{n!} \\
+\left|a_n\right|=\frac{100 n}{n!} \\
+\sqrt[n]{\left|a_n\right|}=\sqrt[n]{\frac{10^{100 n}}{n!}}=\frac{\sqrt[n]{10^{100 n}}}{\sqrt[n]{n!}} \\
+\sqrt[n]{10^{100 n}}=\left(10^{100}\right)^{n / n}=10^{100} \\
+n!\approx \sqrt{2 \pi n}\left(\frac{n}{e}\right)^n \\
+\sqrt[n]{n!} \approx \sqrt[n]{\sqrt{2 \pi n}} \cdot \sqrt[n]{\left(\frac{n}{e}\right)^n}
+\end{gathered}
+$$
+- $\sqrt[n]{\sqrt{2 \pi n}} \rightarrow 1$ cuando $n \rightarrow \infty$
+
+
+- $\sqrt[n]{\left(\frac{n}{e}\right)^n}=\frac{n}{e}$
+por lo tanto
+$$
+\begin{gathered}
+\sqrt[n]{n!}=\frac{n}{e} \\
+\sqrt[n]{\left|a_n\right|}=\frac{\sqrt[n]{10^{100 n}}}{\sqrt[n]{n!}} \approx \frac{10^{100}}{\frac{n}{e}}=\frac{10^{100} e}{n}
+\end{gathered}
+$$
+
+Tomamos el límite cuando $n \rightarrow \infty$
+$$
+\lim _{n \rightarrow \infty} \sqrt[n]{\left|a_n\right|}=\lim _{n \rightarrow \infty} \frac{10^{100} e}{n}=0
+$$
+
+Dado que $L=0<1$ la serie converge
+\newpage
+
+\item $\displaystyle\sum_{n=1}^{\infty}\,\frac{n^n}{n!}$
+
+- Si $L<1$ la serie converge
+
+- Si $L>1$ la serie diverge
+
+- Si $L=1$ el criterio es inconcluso
+
+$$
+\begin{gathered}
+\sqrt[n]{\left|a_n\right|}=\sqrt[n]{\frac{n^n}{n!}}=\frac{\sqrt[n]{n^n}}{\sqrt[n]{n!}} \\
+\sqrt[n]{\left|a_n\right|}=\frac{n}{\sqrt[n]{n!}} \\
+n!\approx \sqrt{2 \pi n}\left(\frac{n}{e}\right)^n \\
+\sqrt[n]{n!} \approx \sqrt[n]{\sqrt{2 \pi n}} \cdot \sqrt[n]{\left(\frac{n}{e}\right)^n}
+\end{gathered}
+$$
+
+- $\sqrt[n]{\sqrt{2 \pi n}} \rightarrow 1$ cuando $n \rightarrow \infty$
+
+- $\sqrt[n]{\left(\frac{n}{e}\right)^n}=\frac{n}{e}$
+
+$$
+\begin{gathered}
+\sqrt[n]{\left(\frac{n}{e}\right)^n}=\frac{n}{e} \\
+\sqrt[n]{n!}=\frac{n}{e} \\
+\sqrt[n]{a_n}=\frac{n}{\frac{n}{e}}=e \\
+\lim _{n \rightarrow \infty} \sqrt[n]{a_n}=e
+\end{gathered}
+$$
+$L=e>1$ la serie diverge
+
+\newpage
+
+\item $\displaystyle\sum_{n=1}^{\infty}\,\frac{\sqrt{n}}{n^2\,+\,1}$
+
+- Si $L<1$ la serie converge
+
+- Si $L>1$ la serie diverge
+
+- Si $ L=1$ el criterio es inconcluso
+
+$$
+\sqrt[n]{a_n}=\sqrt[n]{\frac{\sqrt{n}}{n^2+1}}=\frac{\sqrt[n]{\sqrt{n}}}{\sqrt[n]{n^2+1}}
+$$
+- $\sqrt[n]{\sqrt{n}} \rightarrow(\sqrt{n})^{\frac{1}{n}}=n^{\frac{1}{2 n}} \rightarrow 1$
+
+- $\sqrt[n]{n^2+1} \rightarrow \sqrt[n]{n^2}=\left(n^2\right)^{1 / n}=n^{2 / n} \rightarrow 1$
+$$
+\lim _{n \rightarrow \infty} \sqrt[n]{a_n}=\frac{1}{1}=1
+$$
+$L=1$ el criterio es inconcluso
+
+\item $\displaystyle\sum_{n=1}^{\infty}\,\frac{n^2}{2^n}$
+
+- Si $L<1$ la serie converge
+
+- Si $L>1$ la serie diverge
+
+- Si $L=1$ el criterio es inconcluso
+
+$$
+\sqrt[n]{a_n}=\sqrt[n]{\frac{n^2}{2^n}}=\frac{\sqrt[n]{n^2}}{\sqrt[n]{2^n}}
+$$
+
+- $\sqrt[n]{n^2}=\left(n^2\right)^{\frac{1}{n}}=n^{\frac{2}{n}} \rightarrow 1$
+
+- $\sqrt[n]{2^n}=2$
+$$
+\begin{array}{r}
+\sqrt[n]{a_n}=\frac{\sqrt[n]{n^2}}{\sqrt[n]{2^n}} \rightarrow \frac{1}{2} \\
+\lim _{n \rightarrow \infty} \sqrt[n]{a_n}=\frac{1}{2}
+\end{array}
+$$
+$L<1$ la serie converge
+\newpage
+\item $\displaystyle\sum_{n=1}^{\infty}\,\frac{(n+3)!}{n!\,(3n)!\,3^n}$
+
+- Si $L<1$ la serie converge
+
+- Si $L>1$ la serie diverge
+
+- Si $L=1$ el criterio es inconcluso
+
+$$
+\sqrt[n]{a_n}=\sqrt[n]{\frac{(n+3)!}{n!(3 n)!\cdot 3^n}}=\frac{\sqrt[n]{(n+3)!}}{\sqrt[n]{n!} \sqrt[n]{(3 n)!} \cdot \sqrt[n]{3^n}}
+$$
+
+- $\sqrt[n]{(n+3)!}=(n+3)(n+3)(n+3) n!$
+
+para $n!\rightarrow \infty$
+
+Usando n!:
+$$
+\begin{aligned}
+& n!\approx \sqrt{2 \pi n}\left(\frac{n}{e}\right)^n \\
+& \sqrt[n]{(n+3)!} \approx n
+\end{aligned}
+$$
+
+- $\sqrt[n]{n!} \approx \frac{n}{e}$
+
+- $(3 n)!\approx \sqrt{2 \pi(3 n)}\left(\frac{3 n}{e}\right)^{3 n}$
+
+- $\sqrt[n]{(3 n)!} \approx\left(\frac{3 n}{e}\right)^3=\frac{(3 n)^3}{e^3}$
+
+- $\sqrt[n]{3^n} \approx 3$
+
+Sustituyendo:
+$$
+\begin{array}{r}
+\sqrt[n]{a_n}=\frac{\sqrt[n]{(n+3)!}}{\sqrt[n]{n!} \sqrt[n]{(3 n)!} \cdot \sqrt[n]{3^n}} \\
+\sqrt[n]{a_n} \approx \frac{n}{\frac{n}{e} \cdot \frac{(3 n)^3}{e^3} \cdot 3} \\
+\sqrt[n]{a_n} \approx \frac{n}{\frac{n}{e} \cdot \frac{(3 n)^3}{e^3} \cdot 3}
+\end{array}
+$$
+
+$$
+\begin{gathered}
+\sqrt[n]{a_n} \approx \frac{n e^4}{n \cdot(3 n)^3 \cdot 3} \\
+\sqrt[n]{a_n} \approx \frac{e^4}{(3 n)^3 \cdot 3}
+\end{gathered}
+$$
+$$
+\begin{array}{r}
+n \rightarrow \infty \text { para el termino }(3 n)^3 \text { implica } \sqrt[n]{a_n} \rightarrow 0 \\
+\lim _{n \rightarrow \infty} \sqrt[n]{a_n}=0
+\end{array}
+$$
+$L=0$ por lo que la serie $0<1$ converge
+
+\newpage
+\item $\displaystyle\sum_{n=1}^{\infty}\,\frac{n^k}{a^n}$
+
+- Si $L<1$ la serie converge
+
+- Si $L>1$ la serie diverge
+
+- Si $L=1$ el criterio es inconcluso
+
+$$
+\sqrt[n]{a_n}=\sqrt[n]{\frac{n^k}{a^n}}=\frac{\sqrt[n]{n^k}}{\sqrt[n]{a^n}}
+$$
+
+- $\sqrt[n]{n^k}=\left(n^k\right)^{1 / n}=n^{k / n}$
+$$
+n \rightarrow \infty, n^{k / n} \rightarrow 1
+$$
+
+por lo tanto:
+
+$$
+\sqrt[n]{n^k} \rightarrow 1
+$$
+
+- $\sqrt[n]{a^n}=a$
+$$
+\begin{aligned}
+& \sqrt[n]{a_n}=\frac{\sqrt[n]{n^k}}{\sqrt[n]{a^n}} \rightarrow \frac{1}{a} \\
+& \lim _{n \rightarrow \infty} \sqrt[n]{a_n}=0
+\end{aligned}
+$$
+
+Si $a>1$ entonces $\frac{1}{a}<1$ la serie converge
+
+\item $\displaystyle\sum_{n=1}^{\infty}\,\frac{1}{n^{1+\,\frac{1}{n}}}$
+
+- Si $L<1$ la serie converge
+
+- Si $L>1$ la serie diverge
+
+- Si $L=1$ el criterio es inconcluso
+
+$$
+\begin{gathered}
+a_n=\frac{1}{n^1+\frac{1}{n}} \\
+\sqrt[n]{a_n}=\frac{1}{\sqrt[n]{n^1+\frac{1}{n}}} \\
+\sqrt[n]{a_n}=\frac{1}{\sqrt[n]{n^1+\frac{1}{n}}}=\frac{1}{n^{\frac{1}{n}}+\frac{1}{n^2}}
+\end{gathered}
+$$
+
+- $n^{\frac{1}{n}} \rightarrow 1$
+
+- $\frac{1}{n^2} \rightarrow 1$
+
+- $\sqrt[n]{a_n} \rightarrow 1$
+
+$$
+\lim _{n \rightarrow \infty} \sqrt[n]{a_n}=1
+$$
+
+- Por lo que $L=1$ el criterio es inconcluso
+
+\end{enumerate}
+
+\item ?`Para qu\'e valores de \,$x$\, las siguientes series son absolutamente convergentes?
+
+\begin{enumerate}
+
+\item $\displaystyle\sum_{n=1}^{\infty}\,\frac{x^n}{n\,+\,1}$.
+\[\]
+La serie será absolutamente convergente si 
+\[
+\sum_{n=1}^{\infty} \left| a_n \right| \text{ converge.}
+\]
+Entonces,
+\[
+\sum_{n=1}^{\infty} \left| \frac{x^n}{n+1} \right| = \sum_{n=1}^{\infty} \frac{|x|^n}{n+1}.
+\]
+Si \( |x| \geq 1 \), los términos \( |x|^n \) crecen rápidamente y superan el crecimiento de \( n+1 \). Esto hace que la serie diverja. 
+Para \( |x| < 1 \), podemos comparar la serie con la serie geométrica 
+\[
+\sum_{n=1}^{\infty} |x|^n,
+\]
+que converge justamente para \( |x| < 1 \). Como \( \frac{1}{n+1} < 1 \), la serie original también converge absolutamente.
+
+\item $\displaystyle\sum_{n=1}^{\infty}\,\frac{n^2\,x^n}{2^n}$.
+\[\]
+\[
+\sum_{n=1}^{\infty} \left| \frac{n^2 x^n}{2^n} \right| = \sum_{n=1}^{\infty} n^2 \left( \frac{|x|}{2} \right)^n
+\]
+Aplicando el criterio de la raíz n-ésima:
+\[
+\sqrt[n]{a_n} = \sqrt[n]{n^2} \cdot \sqrt[n]{\left( \frac{|x|}{2} \right)^n} = n^{\frac{2}{n}} \cdot \frac{|x|}{2}
+\]
+Cuando \( n \) tiende a infinito, \( n^{\frac{2}{n}} \) tiende a 1. Por lo tanto,
+\[
+\lim_{n \to \infty} \sqrt[n]{a_n} = \frac{|x|}{2}
+\]
+Donde, si \( \frac{|x|}{2} < 1 \) (es decir, \( |x| < 2 \)), la serie converge absolutamente.
+
+\item $\displaystyle\sum_{n=1}^{\infty}\,\frac{(-1)^{n-1}\,x^{2n-1}}{(2n\,-\,1)!}$.
+\[\]
+Aplicando el criterio de la raíz:
+\[
+\lim_{n \to \infty} \sqrt[n]{a_n} = \lim_{n \to \infty} \sqrt[n]{\frac{|x|^{2n-1}}{(2n-1)!}} = \lim_{n \to \infty} \frac{|x|^{2n-1/n}}{((2n-1)!)^{1/n}}
+\]
+\[
+= \frac{|x|^2}{(2n-1)!} = \frac{|x|^2}{\infty} = 0 < 1
+\]
+Esto implica que la serie converge absolutamente para cualquier valor de \(x\).
+
+\item $\displaystyle\sum_{n=1}^{\infty}\,\frac{(-1)^{n-1}\,x^{2n}}{2^{2n}\,(n)!}$.
+\[\]
+Aplicando el criterio de la razón:
+\[
+\left| \frac{a_{n+1}}{a_n} \right| = \left| \frac{(-1)^n \frac{x^{2n+2}}{2^{2n+2}(n+1)!}}{(-1)^n \frac{x^{2n}}{2^{2n}n!}} \right| = \frac{x^2}{4(n+1)}.
+\]
+Entonces,
+\[
+\lim_{n \to \infty} \frac{x^2}{4(n+1)} = 0 < 1.
+\]
+Por lo tanto, la serie converge para todo \(x\).
+
+\item $\displaystyle\sum_{n=1}^{\infty}\,\frac{n^2\,(x\,+\,2)^n}{2^n}$.
+\[\]
+Aplicando el criterio de la razón:
+\[
+\left| \frac{a_{n+1}}{a_n} \right| = \left| \frac{(n+1)^2 (x+2)^{n+1} / 2^{n+1}}{n^2 (x+2)^n / 2^n} \right| = \left| \frac{(x+2)(n+1)^2}{2n^2} \right|.
+\]
+Ahora,
+\[
+\lim_{n \to \infty} \left| \frac{(x+2)(n+1)^2}{2n^2} \right| = \left| \frac{x+2}{2} \right| < 1.
+\]
+Esto implica:
+\[
+-1 < \frac{x+2}{2} < 1.
+\]
+Despejando \(x\):
+\[
+-4 < x < 0.
+\]
+Por lo tanto, la serie converge para \(x \in (-4, 0)\).
+
+\item $\displaystyle\sum_{n=1}^{\infty}\,\frac{2^n\,(x\,-\,3)^{2n\,-\,1}}{n\,(n\,+\,1)}$.\\
+\\
+Sea el valor absoluto del término general:
+   \[
+   \left|a_n\right| = \frac{2^n |x - 3|^{2n-1}}{n(n+1)}.
+   \]
+
+Entonces aplicamos el criterio de la razón:
+   \[
+   \lim_{n \to \infty} \frac{|a_{n+1}|}{|a_n|} = \lim_{n \to \infty} \frac{2^{n+1} |x - 3|^{2(n+1)-1}}{(n+1)(n+2)} \cdot \frac{n(n+1)}{2^n |x - 3|^{2n-1}}.
+   \]
+
+   \[
+   \lim_{n \to \infty} \frac{|a_{n+1}|}{|a_n|} = 2 |x - 3|^2.
+   \]
+
+Entonces a serie converge absolutamente si:
+   \[
+   2 |x - 3|^2 < 1 \implies |x - 3|^2 < \frac{1}{2} \implies |x - 3| < \frac{1}{\sqrt{2}}.
+   \]
+
+Por lo tanto 
+   \[
+   x \in \left(3 - \frac{1}{\sqrt{2}}, 3 + \frac{1}{\sqrt{2}}\right).
+   \]
+
+
+\item $\displaystyle\sum_{n=1}^{\infty}\,\frac{x^{2n\,+\,1}}{2n\,+\,1}$.
+
+Sea
+   \[
+   \left|a_n\right| = \frac{|x|^{2n+1}}{2n+1}.
+   \]
+
+Dado que \( (2n+1) \) crece linealmente y \(|x|^{2n+1}\) crece exponencialmente para \(|x| > 1\)\\
+\\
+Entonces la serie solo puede converge si \(|x| < 1\).\\
+\\
+Por lo tanto
+   \[
+   x \in (-1, 1).
+   \]
+
+\item $\displaystyle\sum_{n=1}^{\infty}\,\frac{(-1)^n\,x^{2n\,+\,1}}{2n\,+\,1}$.
+
+Sea
+   \[
+   \left|a_n\right| = \frac{|x|^{2n+1}}{2n+1}.
+   \]
+
+Entonces como lo vimos en el inciso anterior la serie converge absolutamente si:
+   \[
+   x \in (-1, 1).
+   \]
+
+\item $\displaystyle\sum_{n=1}^{\infty}\,\frac{(3x\,+\,6)^n}{n!}$.
+
+Sea
+   \[
+   \left|a_n\right| = \frac{|3x + 6|^n}{n!}.
+   \]
+Entonces
+   \[
+   \lim_{n \to \infty} \frac{|a_{n+1}|}{|a_n|} = \lim_{n \to \infty} \frac{|3x + 6|^{n+1}}{(n+1)!} \cdot \frac{n!}{|3x + 6|^n} = \lim_{n \to \infty} \frac{|3x + 6|}{n+1} = 0.
+   \]
+
+Como límite es \(0\), \\
+\\
+Entonces la serie converge  para todos los valores de \(x\).\\
+\\
+Por lo tanto\\
+   \[
+   x \in \mathbb{R}.
+   \]
+
+
+\item $\displaystyle\sum_{n=1}^{\infty}\,\frac{(-1)^{n-1}\,(x\,-\,2)^n}{n\,2^n}$.
+Sea
+   \[
+   \left|a_n\right| = \frac{|x - 2|^n}{n \cdot 2^n}.
+   \]
+
+Entonces
+   \[
+   \lim_{n \to \infty} \frac{|a_{n+1}|}{|a_n|} = \lim_{n \to \infty} \frac{|x - 2|^{n+1}}{(n+1) \cdot 2^{n+1}} \cdot \frac{n \cdot 2^n}{|x - 2|^n} = \lim_{n \to \infty} \frac{|x - 2|}{2} \cdot \frac{n}{n+1}.
+   \]
+
+Entonces
+   \[
+   \lim_{n \to \infty} \frac{|a_{n+1}|}{|a_n|} = \frac{|x - 2|}{2}.
+   \]
+
+Entoncesa serie converge absolutamente si:
+   \[
+   \frac{|x - 2|}{2} < 1 \implies |x - 2| < 2.
+   \]
+
+Por lo tanto 
+   \[
+   x \in (0, 4).
+   \]
+
+
+
+\end{enumerate}
+
+\item Si las series \,$\displaystyle\sum_{n\,=\,1}^\infty\,a_n$\, y \,$\displaystyle\sum_{n\,=\,1}^\infty\,b_n$\, son convergentes, demostrar que
+    \begin{enumerate}
+    \item $\displaystyle\sum_{n\,=\,1}^\infty\,(\alpha\,a_n\,+\,\beta\,b_n)$\, es convergente y converge a \,$\alpha\,\displaystyle\sum_{n\,=\,1}^\infty\,a_n\,+\,\beta\,\displaystyle\sum_{n\,=\,1}^\infty\,b_n$\, para cualesquiera \,$\alpha,\,\beta\,\in\,\R$.
+\[\]
+Dado que las series son convergentes, las sumas parciales \(S_n = \sum_{k=1}^n a_k\) y \(T_n = \sum_{k=1}^n b_k\) tienen límites finitos \(S\) y \(T\). Considerando la suma parcial de \(\sum_{k=1}^\infty (\alpha a_k + \beta b_k)\), entonces:
+\[
+U_n = \sum_{k=1}^n (\alpha a_k + \beta b_k) = \alpha \sum_{k=1}^n a_k + \beta \sum_{k=1}^n b_k = \alpha S_n + \beta T_n.
+\]
+Cuando \(\lim_{n \to \infty}\):
+\[
+\lim_{n \to \infty} U_n = \lim_{n \to \infty} (\alpha S_n + \beta T_n) = \alpha \lim_{n \to \infty} S_n + \beta \lim_{n \to \infty} T_n = \alpha S + \beta T.
+\]
+Por lo tanto:
+\[
+\sum_{k=1}^\infty (\alpha a_k + \beta b_k) = \alpha \sum_{k=1}^\infty a_k + \beta \sum_{k=1}^\infty b_k.
+\]
+
+    \item $\displaystyle\sum_{n\,=\,1}^\infty\,a_n\,b_n$, \,$\displaystyle\sum_{n\,=\,1}^\infty\,|a_n|$, \,$\displaystyle\sum_{n\,=\,1}^\infty\,b_n^2$.
+\[\]
+1. Como \(\sum a_n\) y \(\sum b_n\) son convergentes, \(a_n\) y \(b_n\) son acotadas. Considerando que \(|a_n b_n| \leq |a_n||b_n|\), aplicamos un argumento de comparación. Si \(|a_n| \leq c_n\) y \(\sum c_n\) es convergente, entonces \(\sum a_n b_n\) también lo será. Tomando \(c_n = \frac{|a_n| + |b_n|}{2}\) (por la desigualdad aritmético-geométrica), tenemos que:
+
+\[
+\sum c_n = \frac{1}{2} \sum |a_n| + \frac{1}{2} \sum |b_n|.
+\]
+
+Como \(\sum a_n\) y \(\sum b_n\) son convergentes, entonces \(\sum c_n\) también lo es. Por lo tanto, \(\sum a_n b_n\) converge por comparación.
+\[\]
+2.La convergencia de \(\sum a_n\) no siempre implica que \(\sum |a_n|\) converge, pero si \(\sum |a_n|\) converge, entonces \(\sum a_n\) converge absolutamente.
+\[\]
+3.La convergencia de \(\sum b_n\) no garantiza que \(\sum b_n^2\) sea convergente.
+    \item Dar ejemplos de series de la forma \,$\displaystyle\sum_{n\,=\,1}^\infty\,a_n\,b_n$, \,$\displaystyle\sum_{n\,=\,1}^\infty\,|a_n|$, \,$\displaystyle\sum_{n\,=\,1}^\infty\,b_n^2$\, que sean convergentes y las series \,$\displaystyle\sum_{n\,=\,1}^\infty\,a_n$\, y \,$\displaystyle\sum_{n\,=\,1}^\infty\,b_n$\, son divergentes.
+\[\]
+\begin{enumerate}
+    \item Sea \(a_n = \frac{1}{\log n}\) y \(b_n = \frac{1}{\sqrt{n}}\).  
+    La serie \(\sum a_n b_n = \sum \frac{1}{\sqrt{n} \log n}\), corroborando la convergencia por el criterio de la integral, se observa que es convergente.
+    
+    \item Decir que \(\sum \lvert a_n \rvert\) converge, es decir que la serie es absolutamente convergente, por lo que no hay ejemplo para este caso.
+    
+    \item Sea \(\sum b_n = \sum \frac{1}{n \log n}\).  
+    Usando el criterio de la integral, esta serie diverge. Sin embargo, \(\sum b_n^2 = \sum \frac{1}{n^2 \log^2 n}\), al usar el mismo criterio, se observa que la serie converge.
+\end{enumerate}
+
+    \end{enumerate}
+\newpage
+\item ?`Para que valores de \,$x$\, las series
+\[
+\displaystyle\sum_{n=1}^{\infty}\,\frac{1}{n}\,\cos nx,\quad\displaystyle\sum_{n=1}^{\infty}\,\frac{1}{n}\,\sin nx,\quad\displaystyle\sum_{n=1}^{\infty}\,\frac{1}{n}\,\cos^2 nx,\quad\displaystyle\sum_{n=1}^{\infty}\,\frac{1}{n}\,\sin^2 nx.
+\]
+son convergentes?
+
+\textbf{Ejercicio 1}
+
+$$
+\begin{gathered}
+\sum_{n=1}^{\infty} \frac{1}{n} \cos n x \\
+\sqrt[n]{a_n}=\sqrt[n]{\frac{\cos (n x)}{n}}=\frac{\sqrt[n]{|\cos (n x)|}}{\sqrt[n]{n}}
+\end{gathered}
+$$
+
+- $\sqrt[n]{|\cos (n x)|}$ está acotado entre -1 y 1, y para cualquier valor de $x, \sqrt[n]{|\cos (n x)|} \rightarrow 1$
+
+- $\sqrt[n]{n}=n^{1 / n} \rightarrow 1$ para $n \rightarrow \infty$
+
+Por lo tanto $\sqrt[n]{a_n} \rightarrow 0$ cuando $n \rightarrow \infty$
+
+\textbf{Converge} para cualquier $x$ debido a la oscilación de $cos(nx)$ y la decaída como $\frac{1}{n}$
+
+.
+
+\textbf{Ejercicio 2}
+
+$$
+\begin{gathered}
+\sum_{n=1}^{\infty} \frac{1}{n} \operatorname{senn} x \\
+\sqrt[n]{a_n}=\sqrt[n]{\frac{\operatorname{sen}(n x)}{n}}=\frac{\sqrt[n]{|\operatorname{sen}(n x)|}}{\sqrt[n]{n}}
+\end{gathered}
+$$
+
+- $\quad|\operatorname{sen}(n x)|$ está acotado entre 0 y $1, y$ para cualquier valor de $x, \sqrt[n]{|\operatorname{sen}(n x)|} \rightarrow 1$, conforme $n \rightarrow \infty$ ya que el valor absoluto de sen ( $n x$ )oscila
+
+- $\sqrt[n]{n}=n^{1 / n} \rightarrow 1$ conforme $n \rightarrow \infty$
+
+$$
+\begin{gathered}
+\sqrt[n]{a_n}=\frac{\sqrt[n]{|\operatorname{sen}(n x)|}}{\sqrt[n]{n}} \rightarrow \frac{1}{1}=1 \\
+\lim _{n \rightarrow \infty} \sqrt[n]{a_n}=1
+\end{gathered}
+$$
+
+\textbf{Converge} para cualquier valor de $\boldsymbol{x}$, debido a la oscilación de $\operatorname{sen}(n x)$ y la disminución del término $\frac{1}{n}$
+
+\newpage
+\textbf{Ejercicio 3}
+$$
+\begin{aligned}
+& \sum_{n=1}^{\infty} \frac{1}{n} \cos ^2 n x \\
+& a_n=\frac{\cos ^2(n x)}{n}
+\end{aligned}
+$$
+
+La función $\cos ^2 n x$ está acotada entre $0$ y $1$ para cualquier $n y x$. Esto implica que $\cos ^2 n x$ no crece indefinidamente, pero oscila con $n$ dependiendo del valor de $x$
+
+La serie
+$$
+\sum_{n=1}^{\infty} \frac{1}{n}
+$$
+es una serie $\mathbf{p}$ con $p=1$, $y$ se sabe que diverge.
+El termino $\frac{\cos ^2(n x)}{n}$ tiene un comportamiento similar a $\frac{1}{n}$ ya que el numerador $\cos ^2(n x)$ está acotado, pero no tiende a cero rápidamente. Por lo tanto, la serie:
+$$
+\sum_{n=1}^{\infty} \frac{1}{n} \cos ^2 n x
+$$
+
+Se comporta como una serie $p$ con $p=1$, lo que implica que \textbf{diverge} para cualquier valor de x .
+
+.
+
+\textbf{Ejercicio 4}
+
+$$
+\begin{aligned}
+& \sum_{n=1}^{\infty} \frac{1}{n} \operatorname{sen}^2 n x \\
+& a_n=\frac{\operatorname{sen}^2(n x)}{n}
+\end{aligned}
+$$
+
+La función $\operatorname{sen}^2(n x)$ está acotada entre 0 y 1 para cualquier n y x . Esto implica que $\operatorname{sen}^2(n x)$ oscila con n , dependiendo del valor de x .
+$$
+\sum_{n=1}^{\infty} \frac{1}{n}
+$$
+
+Es una serie $\mathbf{p}$ con $\mathrm{p}=1$, y se sabe que diverge.
+
+El termino $\frac{\operatorname{sen}^2(n x)}{n}$ tiene un comportamiento similar a $\frac{1}{n}$ ya que el numerador $\operatorname{sen}^2(n x)$ está acotado, pero no tiende a cero rápidamente $\frac{1}{n}$. Por lo tanto, la serie:
+$$
+\sum_{n=1}^{\infty} \frac{1}{n} \operatorname{sen}^2 n x
+$$
+\textbf{Diverge para cualquier valor de $\mathbf{x}$} debido a que su término general no decrece lo suficientemente rápido para garantizar la convergencia.
+
+\newpage
+
+\item Sean \,$\{a_n\}$\, y \,$\{b_n\}$\, dos sucesiones tales que \[\sum_{n=1}^{\infty}\, a_n \] es convergente y \,$\{b_n\}$\, es decreciente y positiva. Demostrar que\[\sum_{n=1}^{\infty}\, a_n\,b_n \] is convergente.
+\\
+Demostrar que \( \sum_{n=1}^{\infty} a_n b_n \) es convergente.\\
+
+Demostrar \( \sum_{n=1}^{\infty} a_n b_n \) es convergente.\\
+
+Propiedades de la sucesión \( \{a_n\)
+
+Si \( \{a_n\} \) es convergente, entonces existe un número real \( A \) tal que:
+\[
+\lim_{n \to \infty} a_n = A.
+\]
+Como \( \sum_{n=1}^{\infty} a_n \) es convergente, entonces
+\[
+\lim_{n \to \infty} a_n = 0.
+\]
+Por lo tanto, \( A = 0 \), implica que \( \lim_{n \to \infty} a_n = 0 \).
+
+Si la sucesión \( \{b_n\} \) es decreciente y positiva, entonces:
+\[
+b_1 \geq b_2 \geq b_3 \geq \cdots \quad \text{y} \quad b_n > 0 \, \text{para todo} \, n \in \mathbb{N}.
+\]
+Como \( \{b_n\} \) es decreciente, entonces tiende a un límite \( L \), donde \( L \geq 0 \). Sin embargo, no podemos asumir que \( L = 0 \), ya que \( L \) podría ser un número positivo.
+\\
+Si  \( a_n \to 0 \), quiere decir que existe un valor \( N \) tal que para todo \( n > N \):
+\[
+|a_n| < \epsilon \quad \text{para cualquier} \, \epsilon > 0.
+\]
+Si \( n > N \), obtenemos:
+\[
+|a_n b_n| = |a_n| \cdot b_n.
+\]
+Como \( b_n \) es decreciente y positiva, existe  \( C \) tal que \( b_n \leq C \) para todo \( n \). ]
+Entonces:\[ |a_n b_n| \leq |a_n| \cdot C \quad \text{para todo} \, n > N.\]
+
+Como \( \sum_{n=1}^{\infty} a_n \) es convergente, sabemos que \( n > N \), la serie \( \sum_{n=N}^{\infty} |a_n| \) es convergente.
+Ya que \( C \) es una constante implicaría que  \( \sum_{n=N}^{\infty} |a_n| \cdot C \)  es convergente.
+
+
+\item Sea \,$\sum\,a_n$\, una serie de t\'erminos positivos.
+\begin{enumerate}
+\item Si
+\[
+\lim_{n\,\rightarrow\,\infty}\,n\,\left(\frac{a_{n\,+\,1}}{a_n}\,-\,1\right)\,<\,-1
+\]
+entonces la serie es convergente.
+\item Si
+\[
+\lim_{n\,\rightarrow\,\infty}\,n\,\left(\frac{a_{n\,+\,1}}{a_n}\,-\,1\right)\,>\,-1
+\]
+entonces la serie es divergente.
+\item En caso de que
+\[
+\lim_{n\,\rightarrow\,\infty}\,n\,\left(\frac{a_{n\,+\,1}}{a_n}\,-\,1\right)\,=\,-1
+\]
+
+dar un ejemplo de serie divergente y otro de serie convergente.
+
+
+
+\subsection*{ a) \( L < -1 \)}
+
+Si \( L < -1 \), esto implica que:
+\[
+\frac{a_{n+1}}{a_n} - 1 < -1 \quad \text{es igual a} \quad \frac{a_{n+1}}{a_n} < 0.
+\]
+Es una contradicción, pues \( \{a_n\} \) son positivos por ello es convergente.
+
+\subsection*{ b) \( L > -1 \)}
+
+Si \( L > -1 \)
+\[
+\frac{a_{n+1}}{a_n} - 1 > -1 \quad \text{implica} \quad \frac{a_{n+1}}{a_n} > 0.
+\]
+Por tanto es divergente.
+
+\subsection*{c) \( L = -1 \)}
+
+Serie divergente: 
+Sea \( \sum_{n=1}^{\infty} \frac{1}{n} \). Entonces:
+\[
+\frac{a_{n+1}}{a_n} = \frac{\frac{1}{n+1}}{\frac{1}{n}} = \frac{n}{n+1}.
+\]
+el límite es:
+\[
+\lim_{n \to \infty} \left( \frac{a_{n+1}}{a_n} - 1 \right) = \lim_{n \to \infty} \left( \frac{n}{n+1} - 1 \right) = \lim_{n \to \infty} \left( \frac{n - (n+1)}{n+1} \right) = \lim_{n \to \infty} \frac{-1}{n+1} = 0.
+\]
+Por tanto el límite es 0, la seriediverge.
+\\
+Serie convergente: 
+Sea\( \sum_{n=1}^{\infty} \frac{1}{n^2} \)
+Si \( \sum_{n=1}^{\infty} \frac{1}{n^2} \).
+Entonces:
+\[
+\frac{a_{n+1}}{a_n} = \frac{\frac{1}{(n+1)^2}}{\frac{1}{n^2}} = \frac{n^2}{(n+1)^2}.
+\]
+Límite:
+\[
+\lim_{n \to \infty} \left( \frac{a_{n+1}}{a_n} - 1 \right) = \lim_{n \to \infty} \left( \frac{n^2}{(n+1)^2} - 1 \right) = \lim_{n \to \infty} \left( \frac{n^2 - (n+1)^2}{(n+1)^2} \right) = 0.
+\]
+Por tanto la serie es convergente.
+\end{enumerate}
+
+
+\item Sea
+\[
+a_n\,=\,\int_{(2n\,-\,2)\,\pi}^{(2n\,-\,1)\,\pi}\,\frac{\sin t}{t}\,dt,
+\]
+demostrar que la serie \,$\displaystyle\sum_{n=1}^\infty\,a_n$\, es condicionalmente convergente.
+
+
+Usamos:
+
+\[
+a_n \approx \int_{(2n-2)\pi}^{(2n-1)\pi} \frac{1}{t} \, dt.
+\]
+
+Ahora evaluamos la integral:
+
+\[
+a_n \approx \ln\left( (2n-1)\pi \right) - \ln\left( (2n-2)\pi \right),
+\]
+Entonces:
+
+\[
+a_n \approx \ln\left( \frac{(2n-1)\pi}{(2n-2)\pi} \right) = \ln\left( \frac{2n-1}{2n-2} \right).
+\]
+
+Para \(n\)
+
+\[
+\ln\left( \frac{2n-1}{2n-2} \right) \approx \ln\left( 1 + \frac{1}{2n-2} \right).
+\]
+POr aproximación \(\ln(1+x) \approx x\), esto implica para \(x\) 
+
+\[
+a_n \approx \frac{1}{2n-2}.
+\]
+
+Para \(n\) 
+
+\[
+a_n \sim \frac{1}{2n}.
+\]
+Entonces, si sabemos que \(a_n \sim \frac{1}{2n}\), esto implica que \(\sum_{n=1}^\infty a_n\) es similar a la serie armonica:
+
+\[
+\sum_{n=1}^\infty \frac{1}{n}.
+\]
+Ya que la serie armónica es divergente entonces la serie \(\sum_{n=1}^\infty |a_n|\) \textbf{diverge}.
+Utilizzamos el criterio de Leibniz,  \(\sum (-1)^n b_n\), con \(b_n > 0\), la cual es convergente si:
+
+\begin{itemize}
+    \item Los términos \(b_n = |a_n|\) son decrecientes para \(n\) grande.
+    \item \(\lim_{n \to \infty} b_n = 0\).
+\end{itemize}
+En base a lo anterior:
+\begin{itemize}
+    \item Los términos \(|a_n|\) son decrecientes para \(n\) grande.
+    \item \(\lim_{n \to \infty} |a_n| = 0\).
+\end{itemize}
+
+Por lo tanto, la serie \(\sum_{n=1}^\infty a_n\) \textbf{converge, pero no converge del todo.}
+
+
+
+
+
+
+
+
+
+\item Sea \,$\sum\, a_n$\, una serie convergente \,$(a_n\,\geq\,0)$,\, si \,$r_n\,=\,\sum_{n=k}^{\infty}\, a_n$,\, demostrar que
+\[
+\sum_{n=1}^{\infty}\, \frac{a_n}{r_n}
+\]
+es divergente. Y
+\[
+\sum_{n=1}^{\infty}\, \frac{a_n}{\sqrt{r_n}}
+\]
+es convergente.
+
+
+
+\textbf{Para}
+\[
+r_n = \sum_{k=n}^{\infty} a_k.
+\]
+
+Sabemos que \(\sum a_n\) es convergente, implica \(r_n \to 0\) cuando \(n \to \infty\).
+
+Para \(n\) grande, \(r_n \sim a_n\), por tanto:
+
+\[
+\frac{a_n}{r_n} \sim 1.
+\]
+
+Esto implica que \(\frac{a_n}{r_n}\) se aproximen a 1. 
+Entonces:
+\[
+\sum_{n=1}^{\infty} \frac{a_n}{r_n}
+\]
+Obtenemos:
+comporta como \(\sum_{n=1}^{\infty} 1\), que es divergente.
+\\
+\\
+\textbf{Para}  \(\sum_{n=1}^{\infty} \frac{a_n}{\sqrt{r_n}}\) \textbf{ es convergente.}
+
+si\(n\) entonces, \(r_n \sim a_n\)
+Obtenemos:
+
+\[
+\frac{a_n}{\sqrt{r_n}} \sim \frac{a_n}{\sqrt{a_n}} = \sqrt{a_n}.
+\]
+
+Si \(\sum a_n\) es convergente y \(a_n \to 0\), entonces \(\sum \sqrt{a_n}\) converge.
+
+
+
+
+
+\item Demostrar
+\[
+\sum_{n=1}^{\infty}\,\frac{(-1)^{n-1}}{n}\,=\,\log2
+\]
+
+Definimos a la serie como:  
+\[
+S = \sum_{n=1}^\infty \frac{(-1)^{n-1}}{n}.
+\]
+
+Sabemos que la serie de Taylor del logaritmo natural es:  
+\[
+\log(1+x) = \sum_{n=1}^\infty \frac{(-1)^{n-1}x^n}{n}, \quad |x| \leq 1.
+\]
+
+Entonces evaluamos en \(x = 1\):  
+\[
+\log(1+1) = \sum_{n=1}^\infty \frac{(-1)^{n-1}}{n}.
+\]
+
+Por lo tanto:  
+\[
+\log 2 = \sum_{n=1}^\infty \frac{(-1)^{n-1}}{n}.
+\]
+
+
+
+
+
+
+\item Hallar una reordenaci\'on de la serie \,$\displaystyle\sum_{n=1}^{\infty}\,\frac{(-1)^{n-1}}{n}$,\, tal que el valor de la nueva serie sea \,$\log5$.
+
+Sea  
+\[
+S = \sum_{n=1}^\infty \frac{(-1)^{n-1}}{n}.
+\]  
+Al ser una serie de Leibniz, y converge condicionalmente al valor:  
+\[
+S = \log 2.
+\]  
+
+Entonces la serie \(\sum_{n=1}^\infty \frac{(-1)^{n-1}}{n}\) es condicionalmente convergente porque:
+
+    \[
+    \lim_{n \to \infty} \frac{1}{n} = 0.
+    \]
+    Y los términos decrecen monótonamente:
+    \[
+    \frac{1}{n} > \frac{1}{n+1}, \quad \forall n \geq 1.
+    \]
+
+Ahora dividimos la serie en términos positivos y negativos
+
+
+Entonces 
+\[
+\text{Positivos: } \frac{1}{1}, \frac{1}{3}, \frac{1}{5}, \frac{1}{7}, \dots
+\]
+\[
+\text{Negativos: } -\frac{1}{2}, -\frac{1}{4}, -\frac{1}{6}, -\frac{1}{8}, \dots
+\]
+
+Sea \(P\) la suma de los términos positivos y \(N\) la suma de los términos negativos
+
+Entonces 
+\[
+P = \sum_{k=1}^\infty \frac{1}{2k-1}, \quad N = \sum_{k=1}^\infty \frac{1}{2k}.
+\]
+
+
+Ahora sumamos varios términos positivos consecutivos hasta que la suma parcial exceda \(\log 5\):
+\[
+S_p = \sum_{k=1}^m \frac{1}{2k-1}.
+\]
+Entonces 
+\[
+S_p > \log 5.
+\]
+
+ Entonces
+ \[
+    S_n = S_p - \sum_{k=1}^q \frac{1}{2k}.
+    \]
+    Alternar  positivos y negativos hasta que la suma parcial converge a \(\log 5\).
+
+
+Entonces el error absoluto es:
+\[
+E_k = \left| S_k - \log 5 \right|.
+\]
+
+Cada término adicional \(\frac{1}{n}\) reduce el error absoluto:
+\[
+E_{k+1} < E_k,
+\]
+
+Entonces  \(\frac{1}{n} \to 0\) cuando \(n \to \infty\). Por lo tanto, el error tiende a \(0\):
+\[
+\lim_{k \to \infty} E_k = 0.
+\]
+
+Entonces 
+\[
+S' = \sum_{k=1}^\infty a_{\sigma(k)},
+\]
+
+Entonces consideremos la suma acumulada con algunos términos:
+\begin{enumerate}
+    \item Sumar positivos hasta exceder \(\log 5\):
+    \[
+    S_1 = \frac{1}{1}, \quad S_2 = S_1 + \frac{1}{3}, \quad S_3 = S_2 + \frac{1}{5}.
+    \]
+    \item Corregir con términos negativos:
+    \[
+    S_4 = S_3 - \frac{1}{2}, \quad S_5 = S_4 - \frac{1}{4}.
+    \]
+    \item Continuar alternando:
+    \[
+    S_6 = S_5 + \frac{1}{7}, \quad S_7 = S_6 - \frac{1}{6}.
+    \]
+\end{enumerate}
+Por lo tanto 
+\[
+S' = \frac{1}{1} + \frac{1}{3} + \frac{1}{5} - \frac{1}{2} + \frac{1}{7} - \frac{1}{4} + \frac{1}{9} - \frac{1}{6} + \cdots.
+\]
+
+Esta reordenación converge exactamente al valor deseado \(\log 5\).
+
+
+
+
+
+
+\item Demostrar que
+\[
+\int_0^1\,\dfrac{dx}{x^x}\,=\,\sum_{n\,=\,1}^\infty\,\frac{1}{n^n}
+\]
+
+Escribimos \(x^x\) como \(e^{x \log x}\):  
+\[
+\frac{1}{x^x} = e^{-x \log x}.
+\]
+
+Entonces sea ña expansión en serie de \(e^y\):  
+\[
+e^{-x \log x} = \sum_{n=0}^\infty \frac{(-x \log x)^n}{n!}.
+\]
+
+Entonces integrando en \([0, 1]\):  
+\[
+\int_0^1 \frac{dx}{x^x} = \int_0^1 \sum_{n=0}^\infty \frac{(-1)^n}{n!} x^n (\log x)^n \, dx.
+\]
+
+Ahora para \(n \geq 1\):  
+\[
+\int_0^1 x^n (\log x)^n \, dx = (-1)^n \frac{1}{n^{n+1}}.
+\]
+
+Por lo tanto:  
+\[
+\int_0^1 \frac{dx}{x^x} = \sum_{n=1}^\infty \frac{1}{n^n}.
+\]
+
+
+\item Investigar la convergencia o divergencia de la serie
+\[
+\sum_{n=1}^\infty\,\dfrac{(-1)^{n+1}}{n+1}\,\left(\sum_{k=1}^n\,\dfrac{1}{k}\right)
+\]
+
+Sea el término general de la serie:  
+\[
+a_n = \frac{(-1)^{n+1}}{n+1} \left( \sum_{k=1}^n \frac{1}{k} \right).
+\]
+
+Notamos que la suma parcial de los recíprocos se aproxima al logaritmo natural:  
+   \[
+   \sum_{k=1}^n \frac{1}{k} \sim \log n \quad \text{para \(n\) grande.}
+   \]
+
+Entonces 
+   Para \(n\) grande, el término \(a_n\) se comporta como:  
+   \[
+   a_n \sim \frac{(-1)^{n+1}}{n+1} \cdot \log n.
+   \]
+
+Entonces sea la serie absoluta:  
+\[
+\sum_{n=1}^\infty \left| a_n \right| = \sum_{n=1}^\infty \frac{\log n}{n+1}.
+\]
+
+Para \(n\) grande, \(\frac{\log n}{n+1} \sim \frac{\log n}{n}\). Esta es comparable a una serie \(p\)-armónica ponderada:  
+\[
+\sum_{n=1}^\infty \frac{\log n}{n}.
+\]
+
+Sabemos que la serie \(p\)-armónica con \(p \leq 1\) diverge, y dado que \(\log n\) crece lentamente pero sin límite.
+
+Entonces
+\[
+\sum_{n=1}^\infty \frac{\log n}{n} \quad \text{diverge.}
+\]
+
+Entonces
+   \[
+   \left| a_n \right| \to 0 \quad \text{cuando } n \to \infty.
+   \]
+Por lo que  
+   \[
+   \frac{\log n}{n+1} \to 0 \quad \text{cuando } n \to \infty.
+   \]
+
+En este caso, \(\frac{\log n}{n+1}\) decrece para \(n\) grande.
+
+
+Por lo tanto la serie diverge debido a que se introduce el factor interno \(\sum_{k=1}^n \frac{1}{k}\)
+
+
+
+\item Hallar la suma total de
+\[
+\sum_{n=1}^\infty\,(-1)^{n-1}\,\left(\frac{1}{3n-2}\,-\,\frac{1}{3n-1}\right)
+\]
+
+\[
+\frac{1}{3n - 2} - \frac{1}{3n - 1} = \frac{1}{(3n - 2)(3n - 1)}.
+\]
+
+Por lo tanto, la serie se puede reescribir como:
+\[
+S = \sum_{n=1}^\infty (-1)^{n-1} \frac{1}{(3n - 2)(3n - 1)}.
+\]
+
+
+
+\[
+a_n = \frac{1}{(3n - 2)(3n - 1)}.
+\]
+
+Sabemos que:
+\begin{enumerate}
+    \item Los términos decrecen de manera monótona (\(a_{n+1} < a_n\) para \(n \geq 1\)).
+    \item Los términos tienden a cero (\(\lim_{n \to \infty} a_n = 0\)).
+\end{enumerate}
+
+Por el \textbf{criterio de Leibniz}, la serie converge. Además, observamos que:
+\[
+a_n \sim \frac{1}{(3n)^2} = \frac{1}{9n^2}.
+\]
+
+Esto indica que los términos decrecen como \(O\left(\frac{1}{n^2}\right)\), lo que confirma que la serie converge rápidamente.
+
+
+Dado que \(\frac{1}{(3n - 2)(3n - 1)} \sim \frac{1}{9n^2}\) para \(n\) grande, podemos comparar la serie \(S\) con:
+\[
+\sum_{n=1}^\infty (-1)^{n-1} \frac{1}{n^2}.
+\]
+
+Sabemos que la serie alternante:
+\[
+\sum_{n=1}^\infty (-1)^{n-1} \frac{1}{n^2}
+\]
+converge exactamente a:
+\[
+\frac{\pi^2}{12}.
+\]
+
+\[
+S \approx \frac{1}{9} \sum_{n=1}^\infty (-1)^{n-1} \frac{1}{n^2} = \frac{1}{9} \cdot \frac{\pi^2}{12}.
+\]
+
+Simplificando:
+\[
+S \approx \frac{\pi^2}{108}.
+\]
+
+El valor total aproximado de la suma es:
+\[
+\boxed{S \approx \frac{\pi^2}{108} \approx 0.0914.}
+\]
+
+\item Demostrar que
+\[
+\sum_{n=1}^\infty\,\dfrac{1}{n(4n^2\,-\,1)}\,=\,2\,\log 2\,-\,1
+\]
+
+
+Utilizaqmos fracciones parciales
+
+El denominador \(4n^2 - 1\) pasa a:
+\[
+4n^2 - 1 = (2n-1)(2n+1).
+\]
+obtenemos:
+\[
+\frac{1}{n(4n^2 - 1)} = \frac{1}{n(2n-1)(2n+1)}.
+\]
+
+entonces:
+\[
+\frac{1}{n(2n-1)(2n+1)} = \frac{A}{n} + \frac{B}{2n-1} + \frac{C}{2n+1}.
+\]
+
+Multiplicamos ambos lados por \(n(2n-1)(2n+1)\):
+\[
+1 = A(2n-1)(2n+1) + Bn(2n+1) + Cn(2n-1).
+\]
+
+Buscamos \(A\), \(B\) y \(C\):
+
+\[
+A(2n-1)(2n+1) = A(4n^2 - 1),
+\]
+\[
+Bn(2n+1) = B(2n^2 + n),
+\]
+\[
+Cn(2n-1) = C(2n^2 - n).
+\]
+
+Entonces:
+\[
+1 = A(4n^2 - 1) + B(2n^2 + n) + C(2n^2 - n).
+\]
+
+\[
+1 = (4A + 2B + 2C)n^2 + (B - C)n - A.
+\]
+
+Igualamos \(n^2\), \(n\):
+\[
+4A + 2B + 2C = 0, \quad B - C = 0, \quad -A = 1.
+\]
+
+Obtenemos un sistema y resolvemos:
+
+ \(B - C = 0\) implica \(B = C\).
+
+Sustituimos \(B = C\) en \(4A + 2B + 2C = 0\):
+\[
+4A + 4B = 0 \quad \Rightarrow \quad A + B = 0 \quad \Rightarrow \quad B = -A.
+\]
+Entonces:\(B = -A\) en \(-A = 1\):
+\[
+A = -1, \quad B = 1, \quad C = 1.
+\]
+
+La descomposición es:
+\[
+\frac{1}{n(2n-1)(2n+1)} = \frac{-1}{n} + \frac{1}{2n-1} + \frac{1}{2n+1}.
+\]
+
+Sustituimos la descomposición en la serie:
+\[
+\sum_{n=1}^\infty \frac{1}{n(4n^2 - 1)} = \sum_{n=1}^\infty \left( \frac{-1}{n} + \frac{1}{2n-1} + \frac{1}{2n+1} \right).
+\]
+
+\[
+\sum_{n=1}^\infty \frac{1}{n(4n^2 - 1)} = -\sum_{n=1}^\infty \frac{1}{n} + \sum_{n=1}^\infty \frac{1}{2n-1} + \sum_{n=1}^\infty \frac{1}{2n+1}.
+\]
+
+\[
+\sum_{n=1}^\infty \frac{1}{2n-1} = 1 + \frac{1}{3} + \frac{1}{5} + \cdots,
+\]
+\[
+\sum_{n=1}^\infty \frac{1}{2n+1} = \frac{1}{3} + \frac{1}{5} + \frac{1}{7} + \cdots.
+\]
+
+Obtenemos:
+\[
+\sum_{n=1}^\infty \frac{1}{2n-1} + \sum_{n=1}^\infty \frac{1}{2n+1} = 1 + 2 \left( \frac{1}{3} + \frac{1}{5} + \frac{1}{7} + \cdots \right).
+\]
+Entonces:
+\[
+\sum_{n=1}^\infty \frac{1}{n} = \log 2.
+\]
+
+Por lo tanto:
+\[
+\sum_{n=1}^\infty \frac{1}{n(4n^2 - 1)} = 2 \log 2 - 1.
+\]
+
+
+
+
+
+\newpage
+\item Eval\'uen las siguientes integrales impropias:
+	\begin{enumerate}
+		\item $ \int_{0}^{\infty} \frac{dx}{1+x^2} $
+        $$
+\begin{gathered}
+\int_0^{\infty} \frac{1}{1+x^2} d x=\arctan (x)+c \\
+\int_0^b \frac{1}{1+x^2} d x=[\arctan (x)]_0^b=\arctan (b)-\arctan (0)
+\end{gathered}
+$$
+
+Sabemos que $\arctan (0)=0$
+$$
+\int_0^b \frac{1}{1+x^2} d x=\arctan (b)
+$$
+
+Cuando $b \rightarrow \infty, \arctan (b) \rightarrow \frac{\pi}{2}$ por lo tanto:
+$$
+\lim _{b \rightarrow \infty} \arctan (b)=\frac{\pi}{2}
+$$
+
+Por lo tanto, la integral converge y su valor es:
+$$
+\int_0^{\infty} \frac{1}{1+x^2} d x=\frac{\pi}{2}
+$$
+        
+		\item $ \int_{0}^{1}x\log x dx  $
+
+$$
+\int_0^1 x \log x d x
+$$
+
+Integración por partes:
+$$
+\int u d v=u v-\int v d u .
+$$
+
+- $u=\log (x) \Rightarrow d u=\frac{1}{x} d x$
+
+- $d v=x d x \Rightarrow v=\frac{x^2}{x}$
+
+$$
+\begin{gathered}
+\int_0^1 x \log (x) d x=\frac{x^2}{2} \log (x)-\int_0^1 \frac{x^2}{2} \cdot \frac{1}{x} d x \\
+\int_0^1 x \log (x) d x=\frac{x^2}{2} \log (x)-\int_0^1 \frac{x}{2} d x \\
+\int_0^1 \frac{x}{2} d x=\frac{1}{2} \int_0^1 x d x=\frac{1}{2} \cdot \frac{x^2}{2}=\frac{x^2}{4}
+\end{gathered}
+$$
+
+Evaluamos la integral de 0 a 1
+$$
+\int_0^1 x \log (x) d x=\left[\frac{x^2}{2} \log (x)-\frac{x^2}{4}\right]_0^1
+$$
+
+Cuando $\mathrm{x}=1$
+$$
+\frac{x^2}{2} \log (x)-\frac{x^2}{4}=\frac{1^2}{2} \log (1)-\frac{1^2}{4}=0-\frac{1}{4}=-\frac{1}{4}
+$$
+
+Cuando $\mathrm{x}=0$
+$$
+\frac{x^2}{2} \log (x)-\frac{x^2}{4}=\frac{x^2}{2} \log (x)-0
+$$
+
+Para:
+$$
+\lim _{x \rightarrow 0} \frac{x^2}{2} \log (x)
+$$
+
+Usamos L'Hôpital:
+$$
+\lim _{x \rightarrow 0} \frac{x^2}{2} \log (x)=\lim _{x \rightarrow 0} \frac{\log (x)}{\frac{2}{x^2}}=\lim _{x \rightarrow 0} \frac{-\frac{1}{x}}{-\frac{4}{x^3}}=\lim _{x \rightarrow 0} \frac{x^2}{4}=0
+$$
+
+Por lo que el valor de la integral impropia es:
+$$
+\int_0^1 x \log (x) d x=-\frac{1}{4}
+$$
+
+        
+		\item $ \int_{0}^{1} \cos^2x dx  $
+
+$$
+\begin{gathered}
+\int_0^1 \cos ^2 x d x=\int_0^1 \frac{1+\cos (2 x)}{2} d x \\
+\int_0^1 \cos ^2 x d x=\frac{1}{2} \int_0^1 1 d x+\frac{1}{2} \int_0^1 \cos (2 x) d x
+\end{gathered}
+$$
+
+Evaluamos la integral
+$$
+\begin{aligned}
+\frac{1}{2} \int_0^1 1 d x=\frac{1}{2}[x]_0^1 & =\frac{1}{2}(1-0)=\frac{1}{2} \\
+\frac{1}{2} \int_0^1 \cos (2 x) d x=\frac{1}{2}\left[\frac{\operatorname{sen}(2 x)}{2}\right]_0^1 & =\frac{1}{2} \cdot \frac{1}{2}[\operatorname{sen}(2 \cdot 1)-\operatorname{sen}(0)] \\
+\frac{1}{2} \int_0^1 \cos (2 x) d x & =\frac{1}{4} \operatorname{sen}(2)
+\end{aligned}
+$$
+
+Por lo tanto, la solución de la integral es:
+$$
+\frac{1}{2} \int_0^1 \cos (2 x) d x=\frac{1}{2}+\frac{1}{4} \operatorname{sen}(2)
+$$
+        \newpage
+		\item $\int_{0}^{\frac{\pi}{2}} \sec x dx   $
+
+$$
+\int_0^{\pi / 2} \sec (x) d x=\ln |\sec (x)+\tan (x)|+c
+$$
+
+Evaluamos $x=\pi / 2$
+$$
+\begin{gathered}
+\operatorname{Sec}\left(\frac{\pi}{2}\right)=\frac{1}{\cos \left(\frac{\pi}{2}\right)} \rightarrow \infty \text { por lo que } \cos \left(\frac{\pi}{2}\right)=0 \\
+\tan \left(\frac{\pi}{2}\right) \rightarrow \infty \text { por lo que } \tan =\frac{\operatorname{sen}(x)}{\cos (x)}, y \cos \left(\frac{\pi}{2}\right)=0
+\end{gathered}
+$$
+
+Por lo tanto, en $x=\frac{\pi}{2}$ la expresion $\ln |\sec (x)+\tan (x)|$ tiende a $\ln (\infty)=\infty$
+Evaluamos $x=0$
+$$
+\begin{gathered}
+\ln |\sec (0)+\tan (0)|=\ln |1+0|=\ln (1)=0 \\
+\int_0^{\pi / 2} \sec (x) d x=\infty
+\end{gathered}
+$$
+
+Debido a que el valor de la integral en $x=\pi / 2$ tiende a infinito, la integral diverge
+
+.
+
+
+
+        
+		\item $ \int_{-\infty}^{\infty} \frac{e^x}{1+e^{2x}} dx$
+
+$$
+\begin{gathered}
+\frac{e^x}{1+e^{2 x}} \\
+1+e^{2 x}=\left(e^x+e^{-x}\right) e^x \\
+\int_{-\infty}^{\infty} \frac{1}{\left(e^x+e^{-x}\right)}
+\end{gathered}
+$$
+- $u=e^x \Rightarrow d u=e^x d x$.
+$$
+x \rightarrow-\infty, u \rightarrow 0: y \text { cuando } x \rightarrow \infty, u \rightarrow \infty
+$$
+
+Por lo tanto:
+$$
+\begin{gathered}
+\int_{-\infty}^{\infty} \frac{1}{\left(e^x+e^{-x}\right)} d x=\int_{-\infty}^{\infty} \frac{1}{\left(u+\frac{1}{u}\right)} \frac{d u}{u} \\
+=\int_0^{\infty} \frac{1}{\left(u^2+1\right)} d u \\
+\int_0^{\infty} \frac{1}{\left(u^2+1\right)} d u=\arctan (u)
+\end{gathered}
+$$
+
+Evaluamos:
+$$
+\begin{gathered}
+\int_0^{\infty} \frac{1}{\left(u^2+1\right)} d u=[\arctan (u)]_0^{\infty} \\
+\int_0^{\infty} \frac{1}{\left(u^2+1\right)} d u=\frac{\pi}{2}-0=\frac{\pi}{2}
+\end{gathered}
+$$
+
+La solución de la integral es:
+$$
+\int_{-\infty}^{\infty} \frac{e^x}{1+e^{2 x}} d x=\frac{\pi}{2}
+$$
+        
+		\item $ \int_{-\infty}^{\infty} \frac{dx}{\sqrt{x}(1+x)} $
+
+La función no está definida para $x \leq 0$ ($\sqrt{x}$) debido a lo cual la integral no tiene sentido en $(-\infty, \infty)$,  
+por lo que la integral no existe.
+
+        
+	\end{enumerate}	
+	
+	\item Pru\'ebese la convergencia o divergencia de las integrales impropias:
+	\begin{enumerate}
+		\item $ \int_{0}^{\infty} \frac{dx}{\sqrt{x}(1+x)} $
+        \[\]
+        Se puede aplicar el criterio de comparación para analizar la convergencia de la integral.
+
+Dada la integral:
+\[
+I = \int_{0}^{\infty} \frac{1}{x(1+x)} \, dx.
+\]
+ 
+Para \(x\) cercano a \(0\), sabemos que \(1+x \approx 1\). Por lo tanto, la función \(\frac{1}{x(1+x)}\) se comporta como:
+\[
+\frac{1}{x(1+x)} \approx \frac{1}{x}, \quad \text{cuando } x \text{ es pequeño.}
+\]
+La integral \(\int_{0}^{1} \frac{1}{x} \, dx\) es conocida y converge, ya que:
+\[
+\int_{0}^{1} \frac{1}{x} \, dx = 2.
+\]
+Por lo tanto, la integral en el intervalo \([0, 1]\) es convergente.
+ 
+Para \(x\) grande, \(1+x \approx x\). Por lo que la función \(\frac{1}{x(1+x)}\) se comporta como:
+\[
+\frac{1}{x(1+x)} \approx \frac{1}{x \cdot x} = \frac{1}{x^{3/2}}, \quad \text{cuando } x \text{ es grande.}
+\]
+Ahora, comparando esta función con la integral \(\int_{1}^{\infty} \frac{1}{x^{3/2}} \, dx\), que sabemos que es convergente:
+\[
+\int_{1}^{\infty} \frac{1}{x^{3/2}} \, dx = 2.
+\]
+Por lo tanto, la integral en el intervalo \([1, \infty]\) también es convergente. Como la integral en \([0, 1]\) y en \([1, \infty]\) son convergentes por comparación con funciones conocidas, se concluye que la integral original es convergente.
+
+		\item $ \int_{-\infty}^{\infty} \frac{dx}{1+x^3} $
+        \[\]
+Aplicando el criterio de comparación. La integral que se está analizando es:
+\[
+I = \int_{-\infty}^\infty \frac{1}{1 + x^3} \, dx.
+\]
+
+Para \(x \to \infty\), se sabe que:
+\[
+\frac{1}{1 + x^3} \sim \frac{1}{x^3}.
+\]
+De manera similar, para \(x \to -\infty\), también se tiene:
+\[
+\frac{1}{1 + x^3} \sim \frac{1}{x^3}.
+\]
+Esto se debe a que \(x^3\) crece más rápido que el 1 en el denominador, y el comportamiento de la función es prácticamente el mismo a medida que \(|x|\) se hace muy grande.
+
+Aplicando el criterio de comparación:
+
+La integral \(\int_{1}^\infty \frac{1}{x^3} \, dx\) es convergente, ya que:
+\[
+\int_{1}^\infty \frac{1}{x^3} \, dx = \left[ -\frac{1}{2x^2} \right]_{1}^\infty = \frac{1}{2}.
+\]
+De forma similar, la integral \(\int_{-\infty}^{-1} \frac{1}{x^3} \, dx\) también es convergente.  
+
+Por lo tanto, debido a que la función \(\frac{1}{1 + x^3}\) se comporta como \(\frac{1}{x^3}\) para valores grandes de \(|x|\), se puede concluir que la integral original es convergente.
+
+		\item $ \int_{0}^{\pi} \frac{dx}{1-\cos x} $
+        \[\]
+
+utilizando el criterio de comparación y estudiando el comportamiento de la función \(\frac{1}{1 - \cos(x)}\) cerca de \(x = 0\), ya que el denominador podría causar una singularidad en ese punto.
+
+Para valores pequeños de \(x\), la función \(\cos(x)\) tiene una expansión en serie de Taylor alrededor de \(x = 0\) dada por:
+\[
+\cos(x) \approx 1 - \frac{x^2}{2} \quad \text{para } x \approx 0.
+\]
+Entonces, cerca de \(x = 0\), se puede aproximar \(1 - \cos(x)\) como:
+\[
+1 - \cos(x) \approx \frac{x^2}{2}.
+\]
+Por lo tanto, la función \(\frac{1}{1 - \cos(x)}\) se comporta como:
+\[
+\frac{1}{1 - \cos(x)} \sim \frac{2}{x^2}.
+\]
+
+Análisis de la integral cerca de \(x = 0\):
+
+Para analizar la convergencia de la integral en el intervalo cercano a \(x = 0\), basta con estudiar si la integral:
+\[
+\int_0^\epsilon \frac{1}{x^2} \, dx
+\]
+es convergente para algún \(\epsilon\) pequeño. Evaluamos:
+\[
+\int_0^\epsilon \frac{1}{x^2} \, dx = \left[ -\frac{1}{x} \right]_0^\epsilon = \infty.
+\]
+Como esta integral diverge, podemos concluir que la integral original también diverge debido a la singularidad en \(x = 0\).
+
+Comportamiento para \(x\) cerca de \(\pi\):
+
+En el intervalo \((0, \pi)\), cuando \(x\) se aleja de 0 y se acerca a \(\pi\), la función \(\cos(x)\) es finita y no presenta problemas de divergencia. Por lo tanto, no hay problemas en el límite superior de la integral.
+
+La singularidad en \(x = 0\) es suficiente para que la integral diverja. Por lo tanto, la integral es divergente debido al comportamiento de la función cerca de \(x = 0\).     
+		\item $ \int_{0}^{\infty} \frac{\arctan x}{1+x^2}dx $
+        \[\]
+ siguiendo un enfoque similar al de las anteriores, dividiendo el análisis en dos partes: el comportamiento cerca de \(x = 0\) y el comportamiento cuando \(x \to \infty\).
+
+Comportamiento cerca de \(x = 0\):
+
+En este intervalo, se puede estudiar el comportamiento de la función integrando \(\frac{\arctan(x)}{1 + x^2}\) para \(x\) pequeño.
+
+Para valores de \(x\) cercanos a 0, sabemos que \(\arctan(x) \approx x\) y \(1 + x^2 \approx 1\), por lo que:
+\[
+\frac{\arctan(x)}{1 + x^2} \approx \frac{x}{1} = x.
+\]
+La integral en este intervalo se comporta como:
+\[
+\int_0^\epsilon x \, dx = \left[ \frac{x^2}{2} \right]_0^\epsilon = \frac{\epsilon^2}{2}.
+\]
+Por lo tanto, la integral en el intervalo \([0, \epsilon]\) es finita y no presenta problemas de convergencia en el límite inferior.
+
+Comportamiento para \(x \to \infty\):
+
+Cuando \(x\) es grande, \(\arctan(x)\) se aproxima a \(\frac{\pi}{2}\), y \(1 + x^2 \approx x^2\). Así, para valores grandes de \(x\), se tiene que:
+\[
+\frac{\arctan(x)}{1 + x^2} \approx \frac{\pi}{2x^2}.
+\]
+La integral en el intervalo \([A, \infty)\) se comporta como:
+\[
+\int_A^\infty \frac{\pi}{2x^2} \, dx = \frac{\pi}{2} \int_A^\infty \frac{1}{x^2} \, dx = \frac{\pi}{2} \left[ -\frac{1}{x} \right]_A^\infty = \frac{\pi}{2A}.
+\]
+Por lo tanto, la integral en el intervalo \([A, \infty)\) converge y tiende a 0 cuando \(A \to \infty\).
+
+Dado que la integral es finita tanto cerca de \(x = 0\) como cuando \(x \to \infty\), se concluye que la integral es convergente.      
+		\item $ \int_{1}^{\infty} \frac{x}{1-e^x}dx $
+        \[\]
+Comportamiento cuando \(x \to \infty\):
+
+Para grandes valores de \(x\), la expresión \(e^x\) crece rápidamente, por lo tanto, \(1 - e^x \approx -e^x\). Esto implica que, para \(x\) grande,
+
+\[
+\frac{x}{1 - e^x} \approx \frac{x}{-e^x} = -\frac{x}{e^x}.
+\]
+
+Ahora, la integral de \(\frac{x}{e^x}\) para \(x\) grande. Como \(e^x\) crece mucho más rápido que \(x\), se puede utilizar el criterio de comparación con la función \(\frac{1}{e^x}\), que se sabe que converge. Específicamente,
+
+\[
+\int_A^\infty \frac{x}{e^x} \, dx
+\]
+
+es convergente debido a que \(e^x\) crece exponencialmente, lo que hace que el factor \(\frac{x}{e^x}\) decaiga rápidamente. Por lo tanto, el término \(\frac{x}{1 - e^x}\) es comparable a \(\frac{x}{e^x}\) y la integral es convergente en el intervalo \([A, \infty)\).
+
+Comportamiento cuando \(x \to 1^+\):
+
+Cuando \(x \to 1^+\), \(e^x\) se aproxima a \(e\), por lo que
+
+\[
+1 - e^x \to 1 - e.
+\]
+
+Esto implica que la función integrando se comporta de manera aproximada como
+
+\[
+\frac{x}{1 - e^x} \approx \frac{x}{1 - e},
+\]
+
+que es una función finita y constante. Por lo tanto, la integral en el intervalo \([1, 2]\) no presenta problemas de convergencia y es perfectamente integrable.
+Como la integral en el intervalo \([1, \infty)\) tiene un comportamiento similar a la integral de \(\frac{x}{e^x}\), que es convergente, y en el intervalo \([1, 2]\) no presenta singularidades, se puede concluir que la integral es convergente.        
+		\item $ \int_{0}^{\frac{\pi}{2}} \log \tan x dx  $
+        \[\]
+Para analizar la integral, se examina el comportamiento de la función integrando, especialmente cerca de los límites de integración. Primero, reescribimos la integral para tener el límite inferior más pequeño en la notación estándar:
+\[
+I = \int_0^{\frac{\pi}{2}} \log(\tan(x)) \, dx.
+\]
+
+Comportamiento de \( \log(\tan(x)) \) cuando \( x \to 0^+ \):
+Cuando \( x \to 0^+ \), \( \tan(x) \approx x \), por lo tanto,
+\[
+\log(\tan(x)) \approx \log(x).
+\]
+Se sabe que
+\[
+\int_0^\epsilon \log(x) \, dx
+\]
+converge para \( \epsilon \) pequeño, ya que esta integral tiene una forma conocida cuya solución es:
+\[
+\int_0^\epsilon \log(x) \, dx = \epsilon \log(\epsilon) - \epsilon.
+\]
+Este resultado es finito cuando \( \epsilon \to 0 \). Por lo tanto, no hay problemas de convergencia en el límite \( x \to 0^+ \).
+
+Comportamiento de \( \log(\tan(x)) \) cuando \( x \to \frac{\pi}{2}^- \):
+Cuando \( x \to \frac{\pi}{2}^- \), \( \tan(x) \to \infty \), lo que hace que \( \log(\tan(x)) \to \infty \). Esto sugiere que se necesita investigar más de cerca el comportamiento de la función en este límite.
+
+Para esto, se puede hacer un cambio de variable adecuado para analizar el comportamiento cerca de \( x = \frac{\pi}{2} \). Considerando el cambio de variable \( x = \frac{\pi}{2} - u \), donde \( u \to 0^+ \) cuando \( x \to \frac{\pi}{2} \), entonces:
+\[
+\tan\left(\frac{\pi}{2} - u\right) = \cot(u),
+\]
+y para valores pequeños de \( u \), se tiene que \( \cot(u) \approx \frac{1}{u} \). Por lo tanto, cerca de \( x = \frac{\pi}{2} \), la función \( \log(\tan(x)) \) se comporta aproximadamente como
+\[
+\log\left(\frac{1}{u}\right) = -\log(u).
+\]
+Entonces, cerca de \( x = \frac{\pi}{2} \),
+\[
+\log(\tan(x)) \approx -\log(u).
+\]
+Esto implica que la integral en el límite \( x \to \frac{\pi}{2} \) se comporta como
+\[
+\int_0^\epsilon -\log(u) \, du.
+\]
+La integral de \( -\log(u) \) en el intervalo \( [0, \epsilon] \) es conocida y es convergente:
+\[
+\int_0^\epsilon -\log(u) \, du = -\epsilon \log(\epsilon) + \epsilon.
+\]
+Este término es finito cuando \( \epsilon \to 0 \).
+
+Dado que tanto el comportamiento cerca de \( x = 0 \) como cerca de \( x = \frac{\pi}{2} \) no presentan problemas de divergencia, se concluye que la integral es convergente.
+      
+		\item $ \int_{1}^{\infty} \frac{dx}{x\sqrt{x^2-1}} $
+\[\]       
+
+El integrando es \( \frac{1}{x\sqrt{x^2 - 1}} \). Se puede simplificar usando una sustitución trigonométrica para facilitar su evaluación.
+
+Sea \( x = \sec(u) \), con \( dx = \sec(u)\tan(u) \, du \) y \( x^2 - 1 = \tan^2(u) \). Entonces:
+
+\[
+\frac{1}{x\sqrt{x^2 - 1}} \, dx = \frac{1}{\sec(u)\tan(u)} \cdot \sec(u)\tan(u) \, du = du.
+\]
+
+Los límites de integración cambian:
+
+\begin{itemize}
+    \item Cuando \( x = 1 \), \( \sec(u) = 1 \implies u = 0 \).
+    \item Cuando \( x \to \infty \), \( \sec(u) \to \infty \implies u \to \frac{\pi}{2} \).
+\end{itemize}
+
+Por lo tanto, la integral se transforma en:
+\[
+\int_{1}^{\infty} \frac{dx}{x\sqrt{x^2 - 1}} = \int_{0}^{\pi/2} du.
+\]
+
+Al evaluar la nueva integral:
+\[
+\int_{0}^{\pi/2} du = [u]_{0}^{\pi/2} = \frac{\pi}{2} - 0 = \frac{\pi}{2}.
+\]
+Por lo tanto la integral converge, y su valor es \( \frac{\pi}{2} \).
+
+		\item $ \int_{0}^{\infty}\frac{dx}{1+x^4 \sin x } $
+\[\]        
+
+Considerando el comportamiento del integrando tanto cuando \( x \to 0 \) como cuando \( x \to \infty \):
+
+Cuando \( x \to 0 \), el denominador \( 1 + x^4 \sin(x) \to 1 \) porque \( \sin(x) \approx x \) para \( x \to 0 \), y \( x^4 \cdot x = x^5 \to 0 \). Por lo tanto:
+\[
+\frac{1}{1 + x^4 \sin(x)} \to 1 \quad \text{cuando } x \to 0.
+\]
+El integrando es finito en \( x = 0 \), así que no presenta problemas de divergencia en ese extremo.
+
+Cuando \( x \to \infty \), el término \( x^4 \sin(x) \) oscila debido a \( \sin(x) \), que toma valores entre \(-1\) y \(1\). Esto implica que el denominador \( 1 + x^4 \sin(x) \) oscila entre \( 1 - x^4 \) y \( 1 + x^4 \). 
+
+Sin embargo, dado que \( x^4 \) crece sin límite, los términos oscilatorios no están acotados y hacen que la integral diverja.
+
+Estimación asintótica:
+
+Para valores grandes de \( x \), la magnitud de \( x^4 \sin(x) \) domina en el denominador. Esto implica que:
+\[
+\frac{1}{1 + x^4 \sin(x)} \sim \frac{1}{x^4}.
+\]
+La integral correspondiente sería:
+\[
+\int_{0}^{\infty} \frac{dx}{x^4}.
+\]
+Esta integral converge, pero la oscilación de \( \sin(x) \) en el denominador introduce una divergencia condicional porque los valores negativos del denominador no están cancelados de manera uniforme.
+
+Por lo tanto, la integral diverge debido a la oscilación de \( \sin(x) \) combinada con el crecimiento de \( x^4 \).
+
+		\item $ \int_{0}^{\infty} \frac{x^\alpha}{1+x^\beta\sin^2x}dx $
+\[\]       
+
+Esta integral puede ser impropia en:
+\begin{itemize}
+    \item \( x \to 0 \), si el integrando diverge.
+    \item \( x \to \infty \), donde el comportamiento asintótico del integrando puede determinar la convergencia o divergencia.
+\end{itemize}
+
+Cuando \( x \to 0 \), el término \( \sin^2(x) \sim x^2 \) porque \( \sin(x) \approx x \). El denominador se aproxima a:
+\[
+1 + x^\beta x^2 = 1 + x^{\beta + 2}.
+\]
+Por lo tanto, el integrando tiene el siguiente comportamiento:
+\[
+\frac{x^\alpha}{1 + x^\beta \sin^2(x)} \sim \frac{x^\alpha}{1 + x^{\beta + 2}}.
+\]
+Para valores muy pequeños de \( x \), el término \( 1 + x^{\beta + 2} \sim 1 \), lo que lleva a:
+\[
+\frac{x^\alpha}{1 + x^{\beta + 2}} \sim x^\alpha.
+\]
+La integral en \( x \to 0 \) converge si \( \alpha > -1 \), ya que:
+\[
+\int_{0}^{\epsilon} x^\alpha \, dx = \frac{x^{\alpha + 1}}{\alpha + 1} \bigg|_0^\epsilon
+\]
+es finita si \( \alpha + 1 > 0 \).
+
+Comportamiento en \( x \to \infty \):
+
+Para \( x \to \infty \), el término \( x^\beta \sin^2(x) \) oscila entre \( 0 \) y \( x^\beta \), lo que implica que el denominador \( 1 + x^\beta \sin^2(x) \) oscila entre \( 1 \) y \( 1 + x^\beta \).
+
+Estimación asintótica:
+
+Cuando \( x \) es grande, aproximamos el integrando como:
+\[
+\frac{x^\alpha}{1 + x^\beta \sin^2(x)} \sim \frac{x^\alpha}{x^\beta}.
+\]
+Esto se reduce a:
+\[
+\frac{x^\alpha}{1 + x^\beta \sin^2(x)} \sim x^{\alpha - \beta}.
+\]
+La integral impropia:
+\[
+\int_{1}^{\infty} x^{\alpha - \beta} \, dx
+\]
+converge si \( \alpha - \beta < -1 \). En caso contrario, la integral diverge.
+
+		\item $ \int_{0}^{\pi}x\log \sin x dx  $
+\[\]       
+Determinar su convergencia o divergencia requiere analizar los comportamientos en los extremos \( x \to 0 \) y \( x \to \pi \), ya que la función \( \log(\sin(x)) \) puede divergir debido a los ceros de \( \sin(x) \) en estos puntos. Entonces
+
+Comportamiento de \( \log(\sin(x)) \) en \( x \to 0 \):
+
+Cuando \( x \to 0 \), se tiene que \( \sin(x) \sim x \). Por lo tanto:
+\[
+\log(\sin(x)) \sim \log(x).
+\]
+El integrando cerca de \( x = 0 \) se comporta como:
+\[
+x \log(\sin(x)) \sim x \log(x).
+\]
+Sea 
+\[
+I = \int_0^\epsilon x \log(x) \, dx.
+\]
+Haciendo la sustitución \( x = e^{-u} \), de modo que \( dx = -e^{-u} du \) y \( x \log(x) = e^{-u} (-u) \). Los límites cambian de \( x \in (0, \epsilon) \) a \( u \in (\infty, -\log(\epsilon)) \):
+\[
+I = \int_{\infty}^{-\log(\epsilon)} e^{-u} (-u) (-e^{-u}) \, du = \int_{-\log(\epsilon)}^\infty u e^{-2u} \, du.
+\]
+El término \( u e^{-2u} \) decae rápidamente a medida que \( u \to \infty \), y la integral converge.
+
+Comportamiento de \( \log(\sin(x)) \) en \( x \to \pi \):
+
+Cerca de \( x = \pi \), se puede usar \( \sin(x) \sim \pi - x \). Así:
+\[
+\log(\sin(x)) \sim \log(\pi - x).
+\]
+El integrando cerca de \( x = \pi \) se comporta como:
+\[
+x \log(\sin(x)) \sim x \log(\pi - x).
+\]
+Sea 
+\[
+I = \int_{\pi-\epsilon}^\pi x \log(\pi - x) \, dx.
+\]
+Haciendo la sustitución \( u = \pi - x \), de modo que \( du = -dx \) y los límites cambian de \( x \in (\pi - \epsilon, \pi) \) a \( u \in (0, \epsilon) \). Entonces:
+\[
+I = \int_0^\epsilon (\pi - u) \log(u) (-du) = \int_0^\epsilon (\pi - u)(-\log(u)) \, du.
+\]
+Expandiendo
+\[
+I = \pi \int_0^\epsilon -\log(u) \, du - \int_0^\epsilon u (-\log(u)) \, du.
+\]
+Ambos términos contienen integrales de la forma \( \int_0^\epsilon u^n \log(u) \, du \), las cuales convergen porque la divergencia de \( \log(u) \) en \( u \to 0 \) es contrarrestada por \( u^n \) para \( n > 0 \).
+
+Por lo tanto, la integral converge.
+
+		\item $ \int_{0}^{1} \left(\log \frac{1}{x}\right)^n dx  $
+\[\]       
+La integral se puede reescribir como:
+
+\[
+\int_0^1 (-\log(x))^n \, dx.
+\]
+
+Esto es equivalente a:
+
+\[
+\int_0^1 (-1)^n (\log(x))^n \, dx.
+\]
+
+Dado que $(-1)^n$ es simplemente un factor constante, se puede analizar la integral como:
+
+\[
+\int_0^1 (\log(x))^n \, dx.
+\]
+
+Comportamiento en $x \to 0$:
+
+La función $\log(x)$ tiende a $-\infty$ cuando $x \to 0^+$. Por lo tanto, el integrando $(\log(x))^n$ se comporta de acuerdo con los siguientes casos:
+
+\begin{itemize}
+    \item Si $n \geq 0$, entonces $(\log(x))^n$ se hace cada vez más negativo a medida que $x \to 0^+$.
+    \item Si $n < 0$, la función crece mucho para $x \to 0^+$.
+\end{itemize}
+
+Analizando el comportamiento de la integral para $x$ pequeño. Haciendo un cambio de variable para estudiar este comportamiento en $x \to 0$:
+
+Haciendo la sustitución $x = e^{-t}$, entonces $dx = -e^{-t} \, dt$. Los límites de integración cambian de $x = 0$ a $t = \infty$, y de $x = 1$ a $t = 0$. Esto da lugar a la siguiente integral:
+
+\[
+\int_0^\infty t^n e^{-t} \, dt.
+\]
+
+Esta es la forma estándar de la función Gamma $\Gamma(n+1)$, que converge para $n > -1$.
+Entonces, la integral converge si $n > -1$. Si $n \leq -1$, la integral diverge debido a que $(\log(x))^n$ se vuelve demasiado grande cuando $x \to 0^+$.
+
+		\item $ \int_{0}^{\infty} e^{-x}x^m(\log x)^n dx $
+\[\]        
+Cuando \( x \to 0 \), el factor \( e^{-x} \) tiende a 1, y el integrando se comporta principalmente como \( x^m (\log(x))^n \).
+
+El comportamiento de la integral cerca de \( x = 0 \) es, entonces, similar a:
+
+\[
+\int_0^\epsilon x^m (\log(x))^n \, dx.
+\]
+
+Para ver cómo se comporta, se realiza un cambio de variable\( x = e^{-t} \), lo que implica \( dx = -e^{-t} dt \). Los límites de integración cambian de \( x = 0 \) a \( t = \infty \) y de \( x = \epsilon \) a \( t = -\log(\epsilon) \). La integral se transforma en:
+
+\[
+\int_{-\log(\epsilon)}^\infty e^{-(-t)} e^{-mt} (\log(e^{-t}))^n (-e^{-t} dt).
+\]
+
+Esto se simplifica a:
+
+\[
+\int_{-\log(\epsilon)}^\infty e^{-(m+1)t} (-t)^n \, dt.
+\]
+
+Esta es una integral estándar que involucra la función Gamma extendida, y se sabe que la integral convergerá para \( m+1 > 0 \), es decir, \( m > -1 \).
+
+Para el término \( (-t)^n \), dado que \( n \) es finito, la integral convergerá para \( t \to \infty \) siempre que el decaimiento exponencial \( e^{-(m+1)t} \) sea lo suficientemente fuerte.
+
+Análisis en \( x \to \infty \):
+
+Cuando \( x \to \infty \), el factor \( e^{-x} \) decae rápidamente, y la integral será dominada por el término \( e^{-x} \). El factor \( x^m (\log(x))^n \) crece a una tasa mucho más lenta que el decaimiento de \( e^{-x} \), lo que sugiere que la integral converge rápidamente en el límite superior.
+
+En resumen, en \( x \to \infty \), el integrando se comporta como:
+
+\[
+\int_A^\infty e^{-x} x^m (\log(x))^n \, dx,
+\]
+
+que converge siempre que \( m \) y \( n \) sean finitos debido al fuerte decaimiento de \( e^{-x} \).
+
+Se puede concluir que la integral converge si \( m > -1 \), independientemente del valor de \( n \), ya que el decaimiento de \( e^{-x} \) en el límite \( x \to \infty \) asegura la convergencia.
+
+Además, el comportamiento en \( x \to 0 \) también garantiza que la integral sea convergente bajo la misma condición \( m > -1 \).
+
+Por lo tanto, la integral converge para \( m > -1 \) y cualquier valor de \( n \).
+
+		\item $ \int_{0}^{\pi} \frac{1}{x} \log \sin x dx  $
+\[\]        
+Comportamiento cerca de \( x = 0 \):
+
+Cuando \( x \to 0 \), sabemos que \( \sin(x) \sim x \). Por lo tanto,
+\[
+\log(\sin(x)) \sim \log(x)
+\]
+cuando \( x \) es pequeño. Esto implica que el integrando cerca de \( x = 0 \) se comporta como:
+\[
+\frac{1}{x \log(\sin(x))} \sim \frac{1}{x \log(x)}.
+\]
+Ahora, se debe analizar la integral de este término cercano a 0:
+\[
+I_0 = \int_0^\epsilon \frac{1}{x \log(x)} \, dx.
+\]
+Se puede ver si converge utilizando una sustitución adecuada. Si hacemos la sustitución \( x = e^{-t} \), entonces \( dx = -e^{-t} dt \), y los límites de integración cambian de \( x = 0 \) a \( t = \infty \) y de \( x = \epsilon \) a \( t = -\log(\epsilon) \). La integral se convierte en:
+\[
+I_0 = \int_{\infty}^{-\log(\epsilon)} \frac{e^{-t} (-t)}{e^{-t}} \, dt = \int_{-\log(\epsilon)}^{\infty} -t \, dt.
+\]
+Esta integral diverge en \( t \to \infty \), ya que el término \( -t \) no es suficientemente pequeño para que la integral sea convergente.
+
+Comportamiento cerca de \( x = \pi \):
+
+Cuando \( x \to \pi \), se tiene que \( \sin(x) \sim \pi - x \), por lo que:
+\[
+\log(\sin(x)) \sim \log(\pi - x).
+\]
+El integrando cerca de \( x = \pi \) se comporta como:
+\[
+\frac{1}{x \log(\sin(x))} \sim \frac{1}{x \log(\pi - x)}.
+\]
+Para estudiar el comportamiento de la integral cerca de \( x = \pi \), se puede realizar un cambio de variable \( x = \pi - t \), de modo que \( dx = -dt \). Los límites de integración cambian de \( x = \pi \) a \( t = 0 \) y de \( x = \pi - \epsilon \) a \( t = \epsilon \). La integral se convierte en:
+\[
+I_\pi = \int_{\epsilon}^0 \frac{1}{(\pi - t) \log(t)} (-dt) = \int_0^\epsilon \frac{1}{(\pi - t) \log(t)} \, dt.
+\]
+El factor \( \frac{1}{\log(t)} \) tiene una singularidad en \( t = 0 \), pero el comportamiento de \( \frac{1}{\log(t)} \) no es lo suficientemente severo como para causar divergencia. Sin embargo, dado que \( \log(t) \) se vuelve muy negativo cuando \( t \to 0 \), esta parte de la integral no presenta divergencia.
+
+La integral en \( x \to 0 \) presenta una divergencia debido a la singularidad del término \( \frac{1}{x \log(x)} \). Por lo tanto la integral diverge.
+
+		\item $ \int_{0}^{\frac{\pi}{2}} \frac{x^m}{(\sin x)^n}dx $
+\[\]        
+Comportamiento cerca de \( x = 0 \):
+
+Cuando \( x \to 0 \), se tiene que \( \sin(x) \sim x \). Por lo tanto, en este límite, la integral se comporta como:
+
+\[
+x^m (\sin(x))^n \sim x^m x^n = x^{m - n}.
+\]
+
+La integral cerca de \( x = 0 \) se convierte en:
+
+\[
+I_0 = \int_0^\epsilon x^{m - n} \, dx.
+\]
+
+La convergencia de esta integral depende del exponente \( m - n \). De acuerdo con la regla general para las integrales de la forma \( \int_0^\epsilon x^p \, dx \), esta integral converge si:
+
+\[
+m - n > -1, \quad \text{es decir}, \quad m > n - 1.
+\]
+
+Por lo tanto, la integral converge cerca de \( x = 0 \) si \( m > n - 1 \).
+
+Ahora, el comportamiento cerca de \( x = \frac{\pi}{2} \):
+
+Cuando \( x \to \frac{\pi}{2} \), la función \( \sin(x) \sim 1 \), ya que \( \sin(x) \to 1 \) en este límite. Por lo tanto, en este caso, la integral se comporta como:
+
+\[
+x^m (\sin(x))^n \sim x^m.
+\]
+
+La integral cerca de \( x = \frac{\pi}{2} \) es entonces:
+
+\[
+I_{\frac{\pi}{2}} = \int_{\frac{\pi}{2} - \epsilon}^{\frac{\pi}{2}} x^m \, dx.
+\]
+
+Esta integral converge siempre que \( m \) sea finito, ya que no presenta ninguna singularidad en \( x = \frac{\pi}{2} \).
+
+Se puede concluir que la integral converge si:
+
+\[
+m > n - 1,
+\]
+
+sin importar el valor de \( n \), debido al comportamiento en \( x = 0 \). En el límite \( x \to \frac{\pi}{2} \), la integral no presenta problemas y siempre converge.
+
+		\item $ \int_{-\infty}^{\infty} e^{-x^2}dx $
+\[\]
+Para calcular esta integral, se utilizará un método conocido que involucra el cuadrado de la integral. Considerando la integral en dos dimensiones:
+
+\[
+I_2 = \left( \int_{-\infty}^{\infty} e^{-x^2} \, dx \right) \left( \int_{-\infty}^{\infty} e^{-y^2} \, dy \right).
+\]
+
+De esta forma, obtenemos:
+
+\[
+I_2 = \int_{-\infty}^{\infty} \int_{-\infty}^{\infty} e^{-(x^2 + y^2)} \, dx \, dy.
+\]
+
+Este es un caso adecuado para convertir a coordenadas polares. En coordenadas polares, \( x^2 + y^2 = r^2 \), y el diferencial de área \( dx \, dy \) se convierte en \( r \, dr \, d\theta \). Entonces, la integral se convierte en:
+
+\[
+I_2 = \int_0^{2\pi} \int_0^{\infty} e^{-r^2} r \, dr \, d\theta.
+\]
+
+La integral en \( r \) es una integral que se resuelve con la sustitución \( u = r^2 \), y la integral en \( \theta \) es:
+
+\[
+\int_0^{2\pi} d\theta = 2\pi.
+\]
+
+La integral en \( r \) se resuelve como:
+
+\[
+\int_0^{\infty} e^{-r^2} r \, dr = \frac{1}{2}.
+\]
+
+Por lo tanto, se tiene que:
+
+\[
+I_2 = 2\pi \cdot \frac{1}{2} = \pi.
+\]
+
+Finalmente, tomando la raíz cuadrada, se llega al valor de la integral:
+
+\[
+I = \sqrt{\pi}.
+\]
+
+Entonces la integral converge y su valor es:
+
+\[
+\sqrt{\pi}.
+\]
+
+	\end{enumerate}
+	
+\item ?`Para qu\'e valores de $ n $ las integrales son convergentes?
+	\begin{enumerate}
+		\item $ \int_{0}^{\infty} \frac{dx}{(x^2+a^2)^n} $
+		\item $ \int_{0}^{\infty}x^ne^{-x}dx $
+	\end{enumerate}
+
+{a) \(\int_{0}^{\infty} \frac{dx}{(x^{2}+a^{2})^{n}}\)}
+
+
+La integral
+\[
+\int_{0}^{\infty} \frac{dx}{(x^{2}+a^{2})^{n}}
+\]
+es convergente si el integrando decae suficientemente rápido a medida que \(x \to \infty\).
+
+Para \(x \to \infty\), \( (x^2 + a^2)^n \approx x^{2n} \). Entonces, el integrando se comporta como:
+\[
+\frac{1}{x^{2n}}.
+\]
+La integral
+\[
+\int_{0}^{\infty} \frac{dx}{x^{2n}}
+\]
+es convergente si \(2n > 1\), es decir, \(n > \frac{1}{2}\).
+
+Para \(x \to 0\), \((x^2 + a^2)^n \approx a^{2n}\), que es una constante. Por lo tanto, la integral no tiene problemas de convergencia en el origen.
+
+
+La integral es convergente para \(n > \frac{1}{2}\).
+
+\(\int_{0}^{\infty} x^{n} e^{-x} \, dx\)
+
+
+La integral
+\[
+\int_{0}^{\infty} x^{n} e^{-x} \, dx
+\]
+
+La integral converge para \(n > -1\). Esto se debe a que el término \(e^{-x}\) asegura convergencia en el infinito, mientras que la condición \(n > -1\) asegura que no haya problemas de divergencia en el origen.
+
+
+La integral es convergente para \(n > -1\).
+	\item Demostrar que $ \int_{0}^{\infty}\sin^2[\pi(x+\frac{1}{x})]dx $ no existe.
+    $$
+\begin{gathered}
+\int_0^{\infty} \operatorname{sen}^2\left(\pi\left(x+\frac{1}{x}\right)\right) d x \\
+\int_0^{\infty} \operatorname{sen}^2\left(\pi\left(x+\frac{1}{x}\right)\right) d x=\frac{1}{2} \int_0^{\infty} d x-\frac{1}{2} \int_0^{\infty} \cos \left(2 \pi\left(x+\frac{1}{x}\right)\right) d x \\
+\int_0^{\infty} d x=\infty
+\end{gathered}
+$$
+
+El término $\cos \left(2 \pi\left(x+\frac{1}{x}\right)\right) d x$ oscila infinitamente rápido tanto en $x \rightarrow 0^{+}$
+
+Como en $x \rightarrow \infty$ por lo que no converge
+$$
+\int_0^{\infty} \operatorname{sen}\left(\pi\left(x+\frac{1}{x}\right)\right) d x \text { no existe }
+$$
+	
+	\item ?`Para qu\'e valores de s, $ \int_{0}^{\infty}\frac{x^{s-1}}{1+x}dx $ converge?
+    La integral planteada es:
+
+\[
+I(s) = \int_0^\infty \frac{x^{s-1}}{1+x} \, dx.
+\]
+
+Queremos determinar los valores de \(s\) para los cuales esta integral converge.
+
+
+Cuando \(x \to 0\), el término \(\frac{x^{s-1}}{1+x}\) se aproxima a \(x^{s-1}\). La integral cerca de \(x = 0\) será:
+
+\[
+\int_0^\epsilon x^{s-1} \, dx, \quad \text{(con \(\epsilon\) pequeño)}.
+\]
+
+Esta integral converge si el exponente de \(x^{s-1}\) es mayor que \(-1\), es decir, si:
+
+\[
+s-1 > -1 \implies s > 0.
+\]
+
+Por lo tanto, para que no haya divergencia en \(x \to 0\), **\(s > 0\)**.
+
+Cuando \(x \to \infty\), el término \(\frac{x^{s-1}}{1+x}\) se aproxima a \(x^{s-2}\), ya que el término dominante es \(x\) en el denominador. La integral cerca de \(x = \infty\) será aproximadamente:
+
+\[
+\int_M^\infty x^{s-2} \, dx, \quad \text{(con \(M\) grande)}.
+\]
+
+Esta integral converge si el exponente de \(x^{s-2}\) es menor que \(-1\), es decir, si:
+
+\[
+s-2 < -1 \implies s < 1.
+\]
+
+Por lo tanto, para que no haya divergencia en \(x \to \infty\), \(s < 1\).
+
+
+
+Combinando ambas condiciones:
+
+\[
+0 < s < 1.
+\]
+
+
+La integral \(\int_0^\infty \frac{x^{s-1}}{1+x} \, dx\) converge si y solo si:
+
+\[
+s \in (0, 1).
+\]
+
+	
+	\item Demostrar que $ \lim\limits_{h\rightarrow0}\int_{-a}^{a} \frac{h}{h^2+x^2}dx=\pi $, donde $ a $ es una constante positiva.
+
+ 
+Hacemos el cambio de variable \( x = hu \), con \( dx = h \, du \). Los límites de integración cambian:
+\[
+x = -a \implies u = -\frac{a}{h}, \quad x = a \implies u = \frac{a}{h}.
+\]
+
+El integrando se transforma:
+\[
+\frac{h}{h^2 + x^2} \, dx = \frac{h}{h^2 + (hu)^2} \cdot h \, du = \frac{h}{h^2(1 + u^2)} \cdot h \, du = \frac{1}{1 + u^2} \, du.
+\]
+
+La integral original queda:
+\[
+\int_{-a}^{a} \frac{h}{h^2 + x^2} \, dx = \int_{-\frac{a}{h}}^{\frac{a}{h}} \frac{1}{1 + u^2} \, du.
+\]
+
+\[
+\int \frac{1}{1 + u^2} \, du = \arctan(u) + C.
+\]
+
+Evaluando en los límites:
+\[
+\int_{-\frac{a}{h}}^{\frac{a}{h}} \frac{1}{1 + u^2} \, du = \arctan\left(\frac{a}{h}\right) - \arctan\left(-\frac{a}{h}\right).
+\]
+
+Usando que \( \arctan(-x) = -\arctan(x) \), se simplifica a:
+\[
+\arctan\left(\frac{a}{h}\right) + \arctan\left(\frac{a}{h}\right) = 2 \arctan\left(\frac{a}{h}\right).
+\]
+
+\[
+\lim_{u \to \infty} \arctan(u) = \frac{\pi}{2}.
+\]
+
+Por lo tanto:
+\[
+\lim_{h \to 0} 2 \arctan\left(\frac{a}{h}\right) = 2 \cdot \frac{\pi}{2} = \pi.
+\]
+
+\[
+\lim_{h \to 0} \int_{-a}^{a} \frac{h}{h^2 + x^2} \, dx = \pi.
+\]
+	
+	\item Demostrar que $ \lim\limits_{h\rightarrow0}\int_{-1}^{1} \frac{h}{h^2+x^2}f(x)dx=\pi f(0) $, donde $ f(x) $ es una funci\'on continua en $ [-1,1] $.
+    
+
+Dado que  \( f(x) \) es una función continua en \([-1, 1]\).
+
+\[
+x = -1 \implies t = -\frac{1}{h}, \quad x = 1 \implies t = \frac{1}{h}.
+\]
+
+La integral se convierte en:
+\[
+\int_{-1}^1 \frac{h}{h^2 + x^2} f(x) \, dx = \int_{-\frac{1}{h}}^{\frac{1}{h}} \frac{h}{h^2(1 + t^2)} f(ht) h \, dt.
+\]
+
+Simplificando:
+\[
+\int_{-1}^1 \frac{h}{h^2 + x^2} f(x) \, dx = \int_{-\frac{1}{h}}^{\frac{1}{h}} \frac{1}{1 + t^2} f(ht) \, dt.
+\]
+
+Como \(f(x)\) es continua en \([-1, 1]\), \(f(ht)\) también lo es. Cuando \(h \to 0\), \(ht \to 0\) para valores de \(t\) acotados. Esto implica que \(f(ht) \to f(0)\).
+
+Podemos escribir \(f(ht)\) como:
+\[
+f(ht) = f(0) + (f(ht) - f(0)).
+\]
+
+Sustituyendo en la integral:
+\[
+\int_{-\frac{1}{h}}^{\frac{1}{h}} \frac{1}{1 + t^2} f(ht) \, dt = f(0) \int_{-\frac{1}{h}}^{\frac{1}{h}} \frac{1}{1 + t^2} \, dt + \int_{-\frac{1}{h}}^{\frac{1}{h}} \frac{1}{1 + t^2} (f(ht) - f(0)) \, dt.
+\]
+
+La integral:
+\[
+\int_{-\frac{1}{h}}^{\frac{1}{h}} \frac{1}{1 + t^2} \, dt
+\]
+es conocida. Su resultado es:
+\[
+\int_{-\frac{1}{h}}^{\frac{1}{h}} \frac{1}{1 + t^2} \, dt = \arctan\left(\frac{1}{h}\right) - \arctan\left(-\frac{1}{h}\right) = \pi.
+\]
+
+Por lo tanto, el primer término se evalúa como:
+\[
+f(0) \int_{-\frac{1}{h}}^{\frac{1}{h}} \frac{1}{1 + t^2} \, dt = f(0) \cdot \pi.
+\]
+El segundo término:
+\[
+\int_{-\frac{1}{h}}^{\frac{1}{h}} \frac{1}{1 + t^2} (f(ht) - f(0)) \, dt
+\]
+tiende a \(0\) cuando \(h \to 0\), debido a:
+
+1. \(f(x)\) es continua en \([-1, 1]\), por lo que \(f(ht) - f(0) \to 0\) uniformemente para \(t\) acotado.
+2. La función \(\frac{1}{1 + t^2}\) es integrable en toda la recta real, con valores máximos finitos.
+
+Formalmente, dado que \(f(ht)\) está acotada, existe \(M > 0\) tal que \(|f(ht) - f(0)| \leq M\), y al tomar el límite:
+\[
+\lim_{h \to 0} \int_{-\frac{1}{h}}^{\frac{1}{h}} \frac{1}{1 + t^2} (f(ht) - f(0)) \, dt = 0.
+\]
+
+
+\[
+\lim_{h \to 0} \int_{-1}^1 \frac{h}{h^2 + x^2} f(x) \, dx = \pi f(0).
+\]
+
+
+\[
+\boxed{\lim_{h \to 0} \int_{-1}^1 \frac{h}{h^2 + x^2} f(x) \, dx = \pi f(0).}
+\]
+	
+	\item Suponga que $ |\alpha|\neq |\beta| $. Demuestre que el $ \lim\limits_{T\rightarrow\infty}\int_{0}^{T} \sin \alpha x \sin \beta x dx=0 $
+  
+Queremos demostrar que:
+\[
+\lim_{T \to \infty} \int_0^T \sin(\alpha x) \sin(\beta x) \, dx = 0, \quad \text{si } |\alpha| \neq |\beta|.
+\]
+
+Usamos la identidad:
+\[
+\sin(\alpha x) \sin(\beta x) = \frac{1}{2} \left[ \cos((\alpha - \beta)x) - \cos((\alpha + \beta)x) \right].
+\]
+
+Sustituyendo en la integral:
+\[
+\int_0^T \sin(\alpha x) \sin(\beta x) \, dx = \frac{1}{2} \int_0^T \cos((\alpha - \beta)x) \, dx - \frac{1}{2} \int_0^T \cos((\alpha + \beta)x) \, dx.
+\]
+
+
+\[
+\int_0^T \cos((\alpha - \beta)x) \, dx.
+\]
+Sabemos que la integral de \( \cos(kx) \) es:
+\[
+\int \cos(kx) \, dx = \frac{\sin(kx)}{k}.
+\]
+Por lo tanto:
+\[
+\int_0^T \cos((\alpha - \beta)x) \, dx = \left[ \frac{\sin((\alpha - \beta)x)}{\alpha - \beta} \right]_0^T = \frac{\sin((\alpha - \beta)T)}{\alpha - \beta}.
+\]
+
+
+De manera similar:
+\[
+\int_0^T \cos((\alpha + \beta)x) \, dx = \frac{\sin((\alpha + \beta)T)}{\alpha + \beta}.
+\]
+
+
+Sustituyendo ambas integrales en la expresión original:
+\[
+\int_0^T \sin(\alpha x) \sin(\beta x) \, dx = \frac{1}{2} \cdot \frac{\sin((\alpha - \beta)T)}{\alpha - \beta} - \frac{1}{2} \cdot \frac{\sin((\alpha + \beta)T)}{\alpha + \beta}.
+\]
+Cuando \( T \to \infty \), sabemos que:
+\[
+\sin(kT) \quad \text{oscila entre } -1 \text{ y } 1, \quad \text{para cualquier } k \neq 0.
+\]
+
+\[
+\frac{\sin((\alpha - \beta)T)}{\alpha - \beta} \quad \text{y} \quad \frac{\sin((\alpha + \beta)T)}{\alpha + \beta}
+\]
+tienden a 0, ya que las oscilaciones de \(\sin(kT)\) hacen que las áreas positivas y negativas se cancelen.
+
+Por lo tanto:
+\[
+\lim_{T \to \infty} \int_0^T \sin(\alpha x) \sin(\beta x) \, dx = 0.
+\]
+
+\[
+\boxed{\lim_{T \to \infty} \int_0^T \sin(\alpha x) \sin(\beta x) \, dx = 0, \quad \text{si } |\alpha| \neq |\beta|.}
+\]
+
+\end{enumerate}
+\end{document}

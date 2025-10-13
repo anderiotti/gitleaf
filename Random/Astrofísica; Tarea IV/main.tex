@@ -1,0 +1,92 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage{pgfplots}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{mdframed}
+\usepackage{amsthm}
+\usepackage{physics}
+\usepackage{derivative}
+\usepackage{hyperref}
+\renewcommand{\theenumi}{\roman{enumi}}
+
+\geometry{a4paper, left=2cm, right=2cm, top=1cm, bottom=2cm}
+
+\pgfplotsset{compat=1.18}
+\begin{document}
+
+\begin{minipage}{0.7\textwidth}
+    \small \textbf{ASTROFÍSICA GENERAL}  \\
+    \small {Facultad de Ciencias, Universidad Nacional Autónoma de México} \\
+    \small {Profesor: Margarita Rosado Solis} \\
+    \small {Ayudante: Isidro Ramírez Ballinas}\\
+    \small {Fecha de entrega: 3 de Octubre de 2024} \\
+    \small {Nombre completo: Andrés López González} \\
+    \small {Tarea número IV}
+\end{minipage}
+\hfill
+\begin{minipage}{0.12\textwidth}
+    \includegraphics[width=\linewidth]{logo_universidad}
+\end{minipage}
+
+\section*{Preguntas Semana IV}
+
+\subsubsection*{Paralaje.}
+
+El paralaje en astrofísica es el aparente desplazamiento angular de un objeto en el cielo cuando es observado desde dos posiciones diferentes, una analogía que se nos dió es el efecto de movimiento que percibimos en un objeto al observarlo solo con un ojo y después con el otro, de hecho, esto tambiénes un paralaje pero bajo otro contexto. Este efecto se debe al cambio en la perspectiva del observador y se usa para medir distancias a objetos estelares cercanos.
+
+\textbf{Método de paralajes trigonométricos.}
+El paralaje trigonométrico es un método directo para determinar distancias a estrellas cercanas midiendo el cambio en su posición aparente con respecto a un fondo de estrellas más lejanas. La medición se realiza en diferentes puntos de la órbita de la Tierra alrededor del Sol, generalmente con una diferencia de seis meses, lo que da una base conocida (el diámetro de la órbita terrestre).
+
+El \textbf{ángulo de paralaje} es el ángulo que corresponde al aparente cambio en la posición de una estrella cercana con respecto a un fondo de estrellas distantes, cuando se observa desde dos puntos separados por una distancia conocida, generalmente el diámetro de la órbita terrestre alrededor del Sol.
+
+Volviendo a la analogía anterior, si miras un objeto cercano con un ojo y luego cambias al otro ojo, notarás que el objeto parece "moverse" en relación con el fondo. Este "movimiento" es el paralaje, y el ángulo que forma este desplazamiento con respecto a la estrella y la distancia entre las dos posiciones de observación es el ángulo de paralaje.
+
+\textbf{Cálculo de la distancia.}
+Se dice que el paralaje es directamente el inverso de la distancia, por lo que con solo saber el paralaje podemos saber la distancia calculando su inverso. El problema con este método es que solamente aplica a estrellas relativamente cercanas a la tierra pues el paralaje va a ser perceptible y el cálculo va a ser muy preciso.
+
+\subsection*{1 parsec a centímetros.}
+Partimos de la definición del ángulo de paralaje y la relación geométrica entre la distancia y el paralaje trigonométrico. Un \textbf{parsec (pc)} es la distancia a la que una estrella tiene un ángulo de paralaje de \textbf{1 segundo de arco} \( (1 \, \text{arcsec}) \) cuando se observa desde dos puntos separados por una unidad astronómica (UA), que es la distancia media de la Tierra al Sol, aproximadamente:
+\[
+1 \, \text{UA} = 1.496 \times 10^{13} \, \text{cm}.
+\]
+
+Imaginamos un triángulo rectángulo donde la Tierra en dos posiciones opuestas de su órbita forma la base, y la estrella lejana es el vértice superior. El ángulo de paralaje es el ángulo muy pequeño \( p = 1 \, \text{arcsec} \) entre la estrella y el eje perpendicular al centro del triángulo.
+
+Para ángulos pequeños, usamos la aproximación (es por esto que funciona nuestro cálculo del ejercicio anterior, los ángulos a distancias grandes desde dos puntos de referencia en la tierra son muy pequeños, pero recordemos que si está la estrella demasiado alejada sería impercetible al sensor):
+\[
+\tan(p) \approx p \quad \text{(en radianes)},
+\]
+donde:
+- La \textbf{Base} es \( 1 \, \text{UA} \),
+- La \textbf{Distancia} \( d \) es la distancia a la estrella, que es el parsec que queremos calcular.
+
+Así, la distancia \( d \) en parsecs es:
+\[
+d = \frac{1 \, \text{UA}}{p}.
+\]
+
+Sabemos que \( 1 \, \text{arcsec} \) es igual a:
+\[
+1 \, \text{arcsec} = \frac{1}{3600} \, \text{grados} = \frac{\pi}{648000} \, \text{radianes}.
+\]
+
+Sustituyendo la unidad astronómica y el ángulo en radianes en la fórmula de la distancia, obtenemos:
+\[
+d = \frac{1.496 \times 10^{13} \, \text{cm}}{\frac{\pi}{648000}}.
+\]
+
+Realizando el cálculo, la distancia de un parsec es aproximadamente:
+\[
+d \approx 3.09 \times 10^{18} \, \text{cm}.
+\]
+
+\subsection*{Principales satélites astrométricos.}
+Hipparcos: Fue el primer satélite astrométrico lanzado por la Agencia Espacial Europea (ESA) en 1989. Su misión era realizar un censo preciso de las posiciones, distancias y movimientos de más de 118,000 estrellas. Utilizó paralaje trigonométrico para calcular distancias estelares y logró una precisión de aproximadamente 1 milisegundo de arco.
+
+Gaia: Este es el sucesor de Hipparcos y fue lanzado en 2013 por la ESA. Gaia está realizando un censo tridimensional de mil millones de estrellas en nuestra galaxia con una precisión aún mayor que Hipparcos. Gaia mide posiciones, distancias, movimientos y propiedades físicas de estrellas con una precisión de microsegundos de arco, lo que permite mapear nuestra galaxia con un detalle sin precedentes.
+
+\end{document}

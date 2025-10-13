@@ -1,0 +1,28 @@
+3. Resuelva las siguientes integrales dobles usando el orden de integración que prefiera y dibuje las regiones de integración así como las superficies \( z=f(x, y) \). \\
+a) \( \iint_{D} x \cos (y) d A \) donde \( D \subset \mathbb{R}^{2} \) está acotada por \( y=0, y=x^{2} \) y \( x=1 \). \\
+La región \( D \) está delimitada por \( y = 0 \), \( y = x^2 \) y \( x = 1 \), lo que implica que como región I es \( 0 \leq x \leq 1 \), \( 0 \leq y \leq x^2 \).  
+
+\[
+I = \int_0^1 \int_0^{x^2} x \cos(y) \, dy \, dx.
+\]
+
+La integral interna:
+
+\[
+\int_0^{x^2} x \cos(y) \, dy = x \sin(y) \Big|_0^{x^2} = x \sin(x^2).
+\]
+
+La integral externa:
+
+\[
+I = \int_0^1 x \sin(x^2) dx.
+\]
+
+Hacemos \( u = x^2 \), entonces \( du = 2x dx \):
+
+\[
+I = \frac{1}{2} \int_0^1 \sin u \, du = \frac{1}{2} (-\cos u) \Big|_0^1 = \frac{1}{2} (-\cos 1 + 1)  = \frac{1 - \cos 1}{2}.
+\]
+b) \( \iint_{D}\left(x^{2}+2 y\right) d A \) donde \( D \subset \mathbb{R}^{2} \) está acotada por \( y=x, y=x^{3} \) y \( x \geq 0 \). \\
+c) \( \iint_{D} \ln (y) d A \) donde \( D \subset \mathbb{R}^{2} \) es la región triángular con vértices en: \( (0,1),(1,2),(4,1) \). \\
+d) \( \iint_{D} x y^{2} d A \) donde \( D \subset \mathbb{R}^{2} \) es la región encerrada por \( x=0 \) y \( x=\sqrt{1-y^{2}} \). \\

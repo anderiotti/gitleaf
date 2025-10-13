@@ -1,0 +1,52 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage{pgfplots}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage[thmmarks, amsmath, thref]{ntheorem}
+\usepackage{mdframed}
+\usepackage{amsthm}
+\usepackage{physics}
+\usepackage{derivative}
+\usepackage{hyperref}
+\usepackage{wrapfig}
+\usepackage{amsthm}
+\renewcommand{\theenumi}{\roman{enumi}}
+
+\theoremstyle{nonumberplain}
+\theoremheaderfont{\itshape}
+\theorembodyfont{\upshape}
+\theoremseparator{.}
+\theoremsymbol{\ensuremath{\square}}
+\theoremsymbol{\ensuremath{\blacksquare}}
+\newtheorem{solution}{Solution}
+\theoremseparator{. ---}
+\theoremsymbol{\mbox{\texttt{;o)}}}
+
+\geometry{a4paper, left=2cm, right=2cm, top=1cm, bottom=2cm}
+
+\pgfplotsset{compat=1.18}
+\begin{document}
+
+2. (0.5P) Para poder implementar una fuente puntual, ¿cuáles son las 3 consideraciones (o aproximaciones) que se deben hacer experimentalmente para poder simplificar la expresión de Radiancia? Indica su significado práctico.
+
+\textbf{La fuente debe ser lo suficientemente pequeña en comparación con la distancia R al detector (su dimensión más grande es menor a R/20)}: Si la fuente es pequeña y el detector se coloca a una distancia considerable, la luz que emite se puede considerar como si proviniera de un solo punto. Esto permite que la radiancia no dependa de la posición específica en la fuente, sino solo del ángulo de emisión.
+El medio entre la fuente y el detector debe ser homogéneo y sin absorción significativa
+
+\textbf{El medio entre la fuente y el detector debe ser homogéneo y sin absorción significativa}: Para que la radiancia sea constante a lo largo del trayecto, no debe haber dispersión ni absorción significativa en el medio (por ejemplo, aire limpio y sin partículas). De lo contrario, la atenuación afectaría la medición de la irradiancia.
+El haz de luz debe cumplir con la ley del inverso del cuadrado
+
+\textbf{El haz de luz debe comportarse isotrópico de forma radial y cumplir con la ley del inverso del cuadrado}: En el caso de una fuente puntual ideal (como el LED a distancias suficientemente grandes), la irradiancia medida por el detector debe disminuir con el cuadrado de la distancia. Si esto no se cumple, la fuente no puede ser tratada como puntual, lo que obligaría a un tratamiento más complejo de la radiancia.
+
+
+3. (0.5P) De los resultados del experimento, ¿Cómo deberían ser las ecuaciones que describen los comportamientos de una fuente puntual y un haz colimado?
+Para cualquier caso debe ser de la forma
+$$ I=\frac{k}{r^m} : m\in[0,2] $$
+Para el caso de la fuente puntual tendremos.
+$$ I = \lim_{m \rightarrow 2^-} \frac{k}{r^m} $$
+Para el caso del haz colimado tendremos.
+$$ I = \lim_{m \rightarrow 0^+} \frac{k}{r^m} $$
+\end{document}

@@ -1,0 +1,95 @@
+\section{Ejercicio 45}
+Parametrización de la superficie:
+La mitad superior de la esfera puede parametrizarse en coordenadas polares como:
+\[
+   x = r \cos \theta, \quad y = r \sin \theta, \quad z = \sqrt{a^2 - r^2}
+   \]
+donde \( 0 \leq r \leq t \) y \( 0 \leq \theta \leq 2\pi \).
+
+
+El elemento de área dS en coordenadas polares es dado por:
+\[
+   dS = \sqrt{\left( \frac{\partial x}{\partial r} \right)^2 + \left( \frac{\partial y}{\partial r} \right)^2 + \left( \frac{\partial z}{\partial r} \right)^2} \, dr \, d\theta
+   \]\\
+
+\hline 
+\textit{ }\\
+$\shortparallel$ \\\\
+Lo demostraré rápidamente: 
+Los vectores tangentes a la superficie a lo largo de los ejes x e y son:
+\[
+   \mathbf{r}_x = \frac{\partial \mathbf{r}}{\partial x} = (1, 0, \frac{\partial f}{\partial x})
+   \]
+\[
+   \mathbf{r}_y = \frac{\partial \mathbf{r}}{\partial y} = (0, 1, \frac{\partial f}{\partial y})
+   \]
+
+\noindent El área del paralelogramo formado por estos vectores es la magnitud del producto cruz:
+\[
+   \mathbf{r}_x \times \mathbf{r}_y = \begin{vmatrix}
+   \mathbf{i} & \mathbf{j} & \mathbf{k} \\
+   1 & 0 & \frac{\partial f}{\partial x} \\
+   0 & 1 & \frac{\partial f}{\partial y}
+   \end{vmatrix} = \left(-\frac{\partial f}{\partial x}, -\frac{\partial f}{\partial y}, 1\right)
+   \]
+La magnitud de este vector es:
+\[
+   \left\|\mathbf{r}_x \times \mathbf{r}_y\right\| = \sqrt{\left(-\frac{\partial f}{\partial x}\right)^2 + \left(-\frac{\partial f}{\partial y}\right)^2 + 1^2}
+   \]
+\[
+   = \sqrt{1 + \left(\frac{\partial f}{\partial x}\right)^2 + \left(\frac{\partial f}{\partial y}\right)^2}
+   \]
+
+
+Multiplicando esta magnitud por el área diferencial dxdy en el plano xy, obtenemos el elemento de área sobre la superficie:
+\[
+   dS = \sqrt{1 + \left(\frac{\partial f}{\partial x}\right)^2 + \left(\frac{\partial f}{\partial y}\right)^2} \, dx \, dy
+   \]\\
+\hline
+\textit{ } \\
+   
+Calculando cada derivada...
+\[
+   \frac{\partial x}{\partial r} = \cos \theta, \quad \frac{\partial y}{\partial r} = \sin \theta, \quad \frac{\partial z}{\partial r} = -\frac{r}{\sqrt{a^2 - r^2}}
+   \]
+Entonces:
+\[
+   dS = \sqrt{\cos^2 \theta + \sin^2 \theta + \left( -\frac{r}{\sqrt{a^2 - r^2}} \right)^2} \, dr \, d\theta = \sqrt{1 + \frac{r^2}{a^2 - r^2}} \, dr \, d\theta
+   \]
+\[
+   dS = \frac{a}{\sqrt{a^2 - r^2}} \, dr \, d\theta
+   \]
+
+
+Integramos sobre el disco \( x^2 + y^2 \leq t^2 \):
+\[
+   A(t) = \int_{0}^{2\pi} \int_{0}^{t} \frac{a}{\sqrt{a^2 - r^2}} \, r \, dr \, d\theta
+   \]
+
+
+Evaluamos la integral y calculamos el límite:
+\[
+   A(t) = 2\pi \int_{0}^{t} \frac{ar}{\sqrt{a^2 - r^2}} \, dr
+   \]
+
+Cambiamos de variable \( u = a^2 - r^2 \), entonces \( du = -2r \, dr \), \( r \, dr = -\frac{1}{2} \, du \). Los límites cambian de \( r = 0 \) a \( t \) y \( u = a^2 \) a \( a^2 - t^2 \).
+\[
+   \int \frac{ar}{\sqrt{a^2 - r^2}} \, dr = -a \int \frac{1}{2\sqrt{u}} \, du = -a \left[\sqrt{u}\right]_{a^2}^{a^2 - t^2} = -a\left(\sqrt{a^2 - t^2} - \sqrt{a^2}\right) = a\left(a - \sqrt{a^2 - t^2}\right)
+   \]
+Entonces:
+\[
+   A(t) = 2\pi a(a - \sqrt{a^2 - t^2})
+   \]
+
+
+Límite cuando t→a:
+\[
+   \lim_{t \to a} A(t) = 2\pi a (a - 0) = 2\pi a^2
+   \]
+
+
+Finalmente, como consideramos solo la mitad superior de la esfera, el área total de la esfera es el doble de esto:
+\[
+A = 4\pi a^2
+\]
+Por lo tanto, hemos demostrado que el área de una esfera de radio $a$ es \( 4\pi a^2 \).

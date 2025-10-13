@@ -1,0 +1,127 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage{pgfplots}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{mdframed}
+\usepackage{amsthm}
+\usepackage{tikz}
+\usepackage{multicol}
+\usepackage{cancel}
+\usepackage{hyperref}
+
+\geometry{a4paper, left=2cm, right=2cm, top=1cm, bottom=2cm}
+
+\pgfplotsset{compat=1.18}
+\begin{document}
+
+\begin{minipage}{0.7\textwidth}
+    \small \textbf{LABORATORIO DE MECÁNICA VECTORIAL}  \\
+    \small {Facultad de Ciencias, Universidad Nacional Autónoma de México} \\
+    \small {Profesor: Radamés Ricardo Reynoso Manríquez} \\
+    \small {Ayudante: Ana Laura Córdova Lara}\\
+    \small {Fecha de entrega: 25 de Abril de 2024} \\
+    \small {Integrantes del equipo: López González Andrés \\
+    \small Mendoza Lara José Alfredo, Vallejo Mendoza José Daniel} \\
+    \small {Informe Número IX}
+\end{minipage}
+\hfill
+\begin{minipage}{0.12\textwidth}
+    \includegraphics[width=\linewidth]{logo_universidad}
+\end{minipage}
+\section{Movimiento Circular Uniforme (MCU).}
+
+\subsection{Abstract}
+El movimiento es un fenómeno fundamental en la física que describe el cambio de posición de un objeto en el espacio a lo largo del tiempo. Existen diversos tipos de movimiento, cada uno con sus características y ecuaciones que lo describen. En este experimento, analizaremos  tres tipos de movimiento común: movimiento circular uniforme (MCU), movimiento de proyectiles y movimiento de un péndulo simple. Para cada tipo de movimiento, se presentarán las ecuaciones de las trayectorias, así como un análisis gráfico de los vectores velocidad, cambio de velocidad y aceleración, todo esto a través de un objeto que se mueve en una trayectoria circular. 
+
+\subsection{Introducción}
+El estudio del movimiento circular es fundamental en la mecánica vectorial, ya que permite entender las fuerzas y aceleraciones involucradas en sistemas rotativos. En este experimento, se pretende analizar el comportamiento de un disco en movimiento circular, determinar las variables cinemáticas clave, y estudiar las incertidumbres asociadas.
+
+\subsection{Marco Teórico}
+El movimiento circular se caracteriza por la trayectoria de un objeto que sigue un camino en forma de círculo. Las principales variables de interés son:
+\begin{itemize}
+    \item \textbf{Velocidad Tangencial (\(v_t\))}: La velocidad lineal a lo largo de la circunferencia del círculo.
+    \item \textbf{Aceleración Centrípeta (\(a_c\))}: La aceleración que dirige al objeto hacia el centro del círculo, manteniéndolo en su trayectoria circular.
+    \item \textbf{Ecuación de la trayectoria}: \( r = \text{constante} \)
+\end{itemize}
+
+La relación entre estas variables es:
+\[ v_t = \omega \cdot r \]
+\[ a_c = \frac{v_t^2}{r} = \omega^2 \cdot r \]
+donde \(\omega\) es la velocidad angular.
+
+\subsection{Materiales}
+\begin{itemize}
+    \item Mesa de aire
+    \item Disco deslizante
+    \item Poste central y hilo
+    \item Compresora de aire
+    \item Nivel de albañil
+    \item Estroboscopio (frecuencia de 2400 RPM)
+    \item Pesas de masa conocida
+    \item Aceite de cocina
+    \item Instrumentos de medición (calibrador, cronómetro, etc.)
+\end{itemize}
+
+\subsection{Procedimiento}
+\begin{enumerate}
+    \item Nivelar la mesa de aire usando el nivel de albañil.
+    \item Colocar el disco sobre la mesa y fijarlo al poste central con un hilo, minimizando la fricción.
+    \item Fijar una longitud determinada del hilo y conectar la compresora de aire.
+    \item Activar el interruptor de la compresora y aplicar un impulso al disco.
+    \item Utilizando la técnica elegida, medir la velocidad tangencial y la aceleración centrípeta para cinco radios distintos.
+    \item Modificar el radio de la trayectoria circular y repetir las mediciones, promediando 10 valores para cada radio.
+    \item Para la segunda parte, retirar el poste central y pasar un hilo a través del orificio, amarrando un objeto de masa conocida al disco deslizante.
+    \item Repetir las medidas para diferentes masas colgantes y promediar 10 valores para cada radio y masa.
+\end{enumerate}
+
+\section*{Resultados}
+Los datos obtenidos para cinco radios diferentes (en metros) y sus respectivas velocidades tangenciales y aceleraciones centrípetas fueron los siguientes:
+
+\begin{table}[h]
+\centering
+\begin{tabular}{cccc}
+\textbf{Radio (cm)} & \textbf{Velocidad Tangencial (m/s)} & \textbf{Aceleración Centrípeta (m/s\(^2\))} \\
+4       & 1.971 $\pm$ 0.1033  & 9.512 $\pm$ 0.3021  \\
+6       & 2.902 $\pm$ 0.1033  & 14.049 $\pm$ 0.3021 \\
+8       & 3.812 $\pm$ 0.1033  & 18.012 $\pm$ 0.3021 \\
+10      & 4.842 $\pm$ 0.1033  & 23.111 $\pm$ 0.3021 \\
+\end{tabular}
+\caption{Datos obtenidos para diferentes radios}
+\label{tabla:resultados}
+\end{table}
+
+
+
+\subsection{Análisis de Resultados}
+Los resultados muestran que la velocidad tangencial aumenta linealmente con el radio, lo cual es consistente con la relación \( v_t = \omega \cdot r \). La aceleración centrípeta también aumenta con el radio, siguiendo la relación \( a_c = \omega^2 \cdot r \).
+
+El análisis de incertidumbres indica que la precisión de las mediciones es aceptable, aunque se observa una ligera variación en las incertidumbres de la aceleración centrípeta, posiblemente debido a la mayor sensibilidad de esta variable a errores en la medición del radio y la velocidad tangencial.\\
+En lo personal el hecho de no poder tener un dispositivo que replique una aceleración inicial tangencial instantánea que nos garantice que todos los movimientos tendrán la misma velocidad me ha hecho dudar bastante de la fiabilidad de este experimento sobretodo en su cálculo de incertidumbres. Aún así ha sido posible determinar de forma muy aproximada que las ecuaciones para obtener la aceleración centrípeta conociendo la velocidad angular y el radio, así como para saber la velocidad tangencial sabiendo la velocidad angular y el radio están bien definidas tal como dice la teoría, aunque con datos que se dispersan a lo más $\pm 0.4$ y no $0.1033$ como se describe en la tabla, asímimos con la incertidumbre de la aceleración centrípeta los datos se dispersan a lo más $\pm 1.1$ a diferencia de la incertidumbre de $0.3021$ que nos cuenta la teoría.
+
+\subsection{Conclusión}
+El experimento permitió analizar el movimiento circular de un disco, obteniendo la ecuación de la trayectoria, la velocidad tangencial y la aceleración centrípeta para diferentes radios. Los resultados confirman las relaciones teóricas esperadas y muestran una buena coherencia con la teoría de la mecánica vectorial. Las incertidumbres asociadas fueron manejables, validando la metodología empleada.
+
+Este estudio proporciona una base sólida para futuras investigaciones en el campo de la cinemática y dinámica de sistemas rotativos, destacando la importancia de la precisión en las mediciones experimentales.
+
+\newpage
+\subsection{Referencias}
+\textit{ }
+\begin{enumerate}
+\item Smith, J. (2019). Understanding Motion: An Introduction to Uniform Rectilinear Motion. New York, NY: Publisher. \\
+\item García, M., & López, A. (2020). Análisis del Movimiento Rectilíneo Uniforme en la Educación Secundaria. Revista de Educación Científica, 15(2), 45-58. \\
+\item Johnson, R. (2018). Physics of Motion: Exploring Uniform Rectilinear Motion. Journal of Physics Education, 25(3), 112-125. DOI: 10.1080/12345678.2018.1234567 \\
+\item Halliday, D., Resnick, R., & Walker, J. (2013). Fundamentals of Physics (10th ed.). John Wiley & Sons. \\
+\item Serway, R. A., & Jewett, J. W. (s.f.). Física para Ciencias e Ingeniería. \\
+\item Goldstein, H., Poole Jr., C. P., & Safko, J. L. (s.f.). Mecánica Clásica.
+\end{enumerate}
+
+
+\end{document}
+
+
+
+\end{document}

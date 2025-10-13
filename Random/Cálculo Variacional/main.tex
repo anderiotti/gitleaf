@@ -1,0 +1,376 @@
+\documentclass{elsarticle}
+\usepackage{graphicx} % Required for inserting images
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{enumerate}
+\usepackage{xcolor}
+
+\begin{document}
+
+\textbf{I. Considere la ecuación diferencial \( f(1 + (f')^2) = k \).}\\
+(a) Pruebe que la cicloide \( x(\theta) = \frac{k}{2}(\theta - \sin\theta) \), \( y(\theta) = \frac{k}{2}(1 - \cos\theta) \) es solución.\\
+
+Para verificar que la cicloide parametrizada satisface la ecuación diferencial, primero expresamos \( \frac{dy}{dx} \) usando la regla de la cadena para curvas paramétricas:  
+\[
+\frac{dy}{dx} = \frac{dy/d\theta}{dx/d\theta}.
+\]  
+Calculamos las derivadas:  
+\[
+\frac{dx}{d\theta} = \frac{k}{2}(1 - \cos\theta), \quad \frac{dy}{d\theta} = \frac{k}{2}\sin\theta.
+\]  
+Entonces,  
+\[
+\frac{dy}{dx} = \frac{\sin\theta}{1 - \cos\theta}.
+\]  
+Simplificando usando identidades trigonométricas:  
+\[
+\frac{\sin\theta}{1 - \cos\theta} = \frac{2\sin(\theta/2)\cos(\theta/2)}{2\sin^2(\theta/2)} = \cot\left(\frac{\theta}{2}\right).
+\]  
+Ahora, sustituimos \( y \) y \( \left(\frac{dy}{dx}\right)^2 \) en la ecuación diferencial. Primero, expresamos \( y \) en términos de \( \theta \):  
+\[
+y = \frac{k}{2}(1 - \cos\theta) = k\sin^2\left(\frac{\theta}{2}\right).
+\]  
+Luego,  
+\[
+1 + \left(\frac{dy}{dx}\right)^2 = 1 + \cot^2\left(\frac{\theta}{2}\right) = \csc^2\left(\frac{\theta}{2}\right) = \frac{1}{\sin^2(\theta/2)}.
+\]  
+\[
+y\left(1 + \left(\frac{dy}{dx}\right)^2\right) = k\sin^2\left(\frac{\theta}{2}\right) \cdot \frac{1}{\sin^2(\theta/2)} = k.
+\]  
+Esto confirma que la cicloide satisface la ecuación \( f(1 + (f')^2) = k \).\\
+
+(b) Pruebe que las únicas soluciones a \( f'(x) = \pm\left(\frac{k}{f(x)} - 1\right)^{1/2} \) son cicloides o constantes.\\
+
+1. \textit{Soluciones constantes:}
+   Si \( f(x) = c \), entonces \( f'(x) = 0 \). Sustituyendo en la ecuación:  
+   \[
+   0 = \pm\sqrt{\frac{k}{c} - 1}.
+   \]  
+   Para que se cumpla, el radicando debe ser cero:  
+   \[
+   \frac{k}{c} - 1 = 0 \implies c = k.
+   \]  
+   Por lo tanto, \( f(x) = k \) es una solución constante válida.  
+
+2. \textit{Soluciones no constantes:  }
+   Para \( f'(x) \neq 0 \), separamos variables en la ecuación diferencial:  
+   \[
+   \frac{df}{\sqrt{\frac{k}{f} - 1}} = \pm dx.
+   \]  
+   Simplificando el integrando multiplicando numerador y denominador por \( \sqrt{f} \):  
+   \[
+   \int \frac{\sqrt{f} \, df}{\sqrt{k - f}} = \pm \int dx.
+   \]  
+   Realizamos la sustitución \( u = k - f \), \( du = -df \), transformando la integral en:  
+   \[
+   -\int \frac{\sqrt{k - u} \, du}{\sqrt{u}}.
+   \]  
+   Usando \( u = k \sin^2\theta \), \( du = 2k \sin\theta \cos\theta \, d\theta \), la integral se reduce a:  
+   \[
+   -2k \int \cos^2\theta \, d\theta = -k \left(\theta + \frac{\sin(2\theta)}{2}\right) + C.
+   \]  
+   Revertiendo la sustitución y simplificando, se obtienen las ecuaciones paramétricas de la cicloide:  
+   \[
+   x(\theta) = \frac{k}{2}(\theta - \sin\theta) + C, \quad y(\theta) = \frac{k}{2}(1 - \cos\theta).
+   \]  
+   La constante \( C \) corresponde a traslaciones horizontales, que no alteran la forma de la cicloide. \\ 
+\textit{Consideración de unicidad según valores de frontera.} 
+   La ecuación es de primer orden, por lo que sus soluciones están determinadas por condiciones iniciales. Las soluciones no constantes derivadas corresponden a la familia de cicloides parametrizadas, mientras que la solución constante \( f(x) = k \) surge cuando \( f'(x) = 0 \). No existen otras soluciones debido a la estructura de la ecuación y la completitud de la integración.  
+
+(c) Pruebe que si \( f \in C^2 \), el problema \( f(1 + (f')^2) = k \) tiene una única solución (cuidado con la integración según \( \frac{a}{\lambda} - \frac{\pi}{2} < 0 \) ó > 0).
+
+Para demostrar la unicidad de la solución bajo la condición \( f \in C^2 \), analizamos la ecuación diferencial derivada de la relación original \( f(1 + (f')^2) = k \). Al despejar \( f' \), obtenemos:  
+\[
+f' = \pm \sqrt{\frac{k}{f} - 1}.
+\]  
+Esta ecuación es de primer orden y autónoma. Para garantizar unicidad, aplicamos el teorema de existencia y unicidad de Picard-Lindelöf, \textit{consúltese en el Boyce Di Prima o cualquier libro de sistemas dinámicos con teoría del caos bajo el formalismo matemático de las EDO}, el cual requiere que la función \( \sqrt{\frac{k}{f} - 1} \) sea Lipschitz continua en \( f \) en un entorno de la condición inicial.  
+
+1. Constante
+   Si \( f(x) = k \), entonces \( f'(x) = 0 \), y la ecuación se satisface trivialmente. Esta solución es única en su clase.  
+
+2. No constante (\( f < k \)):
+   Para \( f < k \), el radicando \( \frac{k}{f} - 1 \) es positivo. La función \( \sqrt{\frac{k}{f} - 1} \) es diferenciable en \( f \in (0, k) \), y su derivada:  
+   \[
+   \frac{d}{df} \sqrt{\frac{k}{f} - 1} = -\frac{k}{2f^2} \left(\frac{k}{f} - 1\right)^{-1/2},
+   \]  
+   es continua en este intervalo. Por tanto, la función es localmente Lipschitz, lo que asegura unicidad local.  
+
+3. Integración y parámetros: 
+   La solución general se obtiene integrando:  
+   \[
+   \int \frac{df}{\sqrt{\frac{k}{f} - 1}} = \pm \int dx.
+   \]  
+   Al realizar la sustitución \( u = \sqrt{\frac{k}{f} - 1} \), se llega a las ecuaciones paramétricas de la cicloide:  
+   \[
+   x(\theta) = \frac{k}{2}(\theta - \sin\theta) + C, \quad y(\theta) = \frac{k}{2}(1 - \cos\theta).
+   \]  
+   La constante \( C \) se determina por la condición inicial \( f(x_0) = f_0 \). Para garantizar \( f \in C^2 \), el parámetro \( \theta \) debe elegirse en intervalos donde \( \theta - \sin\theta \) sea monótona, evitando puntos críticos (e.g., \( \theta \in (0, 2\pi) \)).  
+
+4. Análisis de \( \frac{a}{\lambda} - \frac{\pi}{2} \):
+   La expresión mencionada corresponde a la relación entre constantes en la parametrización. Si \( \frac{a}{\lambda} - \frac{\pi}{2} < 0 \), la cicloide está en su "arco descendente", y si \( > 0 \), en el "ascendente". La unicidad global se asegura al restringir \( \theta \) a un intervalo donde \( \frac{dx}{d\theta} = \frac{k}{2}(1 - \cos\theta) > 0 \), lo cual ocurre para \( \theta \in (0, 2\pi) \). Fuera de este intervalo, la parametrización pierde inyectividad, violando \( C^2 \).  \\
+
+\textbf{II. Discuta los puntos críticos de los funcionales  }
+\[
+J(y) = \int_a^b y^2 \,dx, \quad I(y) = \int_a^k (x - y)^2 y^2 \,dx.
+\]  
+
+Un punto crítico de un funcional \( F(y) \) es una función \( y \) tal que su derivada de Fréchet en la dirección de cualquier variación admisible \( h \) es cero, es decir,  
+\[
+\delta F(y; h) = \lim_{\epsilon \to 0} \frac{F(y + \epsilon h) - F(y)}{\epsilon} = 0.
+\]  
+No podemos asumir la noción de máximo y mínimo por lo cual aplicamos este criterio que es un poco más debil a los funcionales dados.  \\
+
+1. Puntos críticos de \( J(y) \); el funcional \( J(y) \) es  
+\[
+J(y) = \int_a^b y^2 \,dx.
+\]  
+Su derivada de Fréchet en la dirección de una variación \( h \) es  
+\[
+\delta J(y; h) = \lim_{\epsilon \to 0} \frac{\int_a^b (y + \epsilon h)^2 \,dx - \int_a^b y^2 \,dx}{\epsilon}.
+\]    
+\[
+(y + \epsilon h)^2 = y^2 + 2\epsilon y h + \epsilon^2 h^2.
+\]  
+Sustituyendo en la integrak
+\[
+\delta J(y; h) = \int_a^b 2y h \,dx.
+\]  
+Para que \( y \) sea un punto crítico, esta expresión debe ser cero para todo \( h \), lo que implica  
+\[
+\int_a^b 2y h \,dx = 0, \quad \forall h.
+\]  
+Por el lema fundamental del cálculo de variaciones, esto es cierto si y solo si  
+\[
+y = 0 \quad \text{en } [a, b].
+\]
+\textit{No es cierto, no se llama así xd} (creo que no tiene nombre), es un lema que puede consultarse en el Ize, para fines prácticos le nombraré así, pero hago referencia a la generalización para la suma enésima de $i=0$ hasta n de las n funcionesa multiplicadas por las derivadas \textit{i-ésimas de h}. Por lo tanto, el único punto crítico de \( J(y) \) es \( y \equiv 0 \).  
+
+2. Puntos críticos de \( I(y) \); el funcional \( I(y) \) es  
+\[
+I(y) = \int_a^k (x - y)^2 y^2 \,dx.
+\]  
+Calculamos su derivada de Fréchet:  
+\[
+\delta I(y; h) = \lim_{\epsilon \to 0} \frac{I(y + \epsilon h) - I(y)}{\epsilon}.
+\]  
+\[
+(x - (y + \epsilon h))^2 (y + \epsilon h)^2 = (x - y - \epsilon h)^2 (y + \epsilon h)^2.
+\]  
+\[
+(x - y - \epsilon h)^2 = (x - y)^2 - 2\epsilon h (x - y) + \mathcal{O}(\epsilon^2),
+\]
+\[
+(y + \epsilon h)^2 = y^2 + 2\epsilon y h + \mathcal{O}(\epsilon^2).
+\]  
+Multiplicando ambos, ignorando términos de orden superior,  
+\[
+(x - y - \epsilon h)^2 (y + \epsilon h)^2 = (x - y)^2 y^2 - 2\epsilon h (x - y) y^2 + 2\epsilon y h (x - y)^2 + \mathcal{O}(\epsilon^2).
+\]  
+Tomando la variación,  
+\[
+\delta I(y; h) = \int_a^k (-2h (x - y) y^2 + 2y h (x - y)^2) \,dx.
+\]  
+Factorizando \( h \),  
+\[
+\delta I(y; h) = \int_a^k 2h (- (x - y) y^2 + y (x - y)^2) \,dx.
+\]  
+Para que \( y \) sea un punto crítico, esta integral debe ser cero para todo \( h \), lo que implica  
+\[
+- (x - y) y^2 + y (x - y)^2 = 0, \quad \forall x \in [a, k].
+\]  
+Reordenando,  
+\[
+y (x - y)^2 = (x - y) y^2.
+\]  
+Si \( x \neq y \), podemos dividir por \( x - y \), obteniendo  
+\[
+y (x - y) = y^2.
+\]  
+Reescribiendo,  
+\[
+y x - y^2 = y^2.
+\]  
+Por lo que  
+\[
+y x = 2y^2.
+\]  
+Si \( y \neq 0 \), dividiendo por \( y \),  
+\[
+x = 2y.
+\]  
+Para todo \( x \in [a, k] \), esto implica que \( y = x/2 \) es una solución.  
+
+
+
+
+III.Sea \( J(y) = \int_{a}^{b} f(x)(1 + y'^{2})^{1/2} \, dx \), con \( y(a) = A \) y \( y(b) = B \).  
+(a) Encuentre, en forma integral, los puntos críticos. Discútalos. \\
+
+Para encontrar los puntos críticos del funcional \( J(y) \), aplicamos la ecuación de Euler-Lagrange. Dado que el Lagrangiano es \( L = f(x)\sqrt{1 + y'^2} \) y no depende explícitamente de \( y \), la ecuación se simplifica a:  
+\[
+\frac{d}{dx} \left( \frac{\partial L}{\partial y'} \right) = 0.
+\]  
+Calculamos la derivada parcial:  
+\[
+\frac{\partial L}{\partial y'} = f(x) \cdot \frac{y'}{\sqrt{1 + y'^2}}.
+\]  
+Según la ecuación de Euler-Lagrange, esta expresión es constante:  
+\[
+f(x) \cdot \frac{y'}{\sqrt{1 + y'^2}} = C \quad \text{(constante)}.
+\]  
+Despejando \( y' \), obtenemos:  
+\[
+y' = \pm \frac{C}{\sqrt{f(x)^2 - C^2}}.
+\]  
+Integrando respecto a \( x \), la solución general en forma integral es:  
+\[
+y(x) = \pm \int_{a}^{x} \frac{C}{\sqrt{f(t)^2 - C^2}} \, dt + D,
+\]  
+donde \( C \) y \( D \) son constantes determinadas por las condiciones de frontera \( y(a) = A \) y \( y(b) = B \).   \\
+
+   La solución requiere que \( f(x)^2 > C^2 \) en \([a, b]\) para evitar singularidades, si \( f(x) \) es constante, la integral se reduce a una función lineal, correspondiente a una recta. Pero si \( f(x) \) no es constante, la trayectoria óptima es curva y depende de la variación de \( f(x) \).  \\
+   Imaginemos que \( C = 0 \), entonces \( y' = 0 \), lo que implica \( y(x) = D \), esta solución solo es válida si \( A = B \). En caso contrario, \( C \neq 0 \). \\
+
+   (b) Ejemplo: \( f(x) = \frac{1}{x} \), \( a = 1 \), \( b = 2 \), \( A = 0 \), \( B = 1 \). \\ 
+
+Aplicamos la solución general obtenida en el inciso (a):  
+\[
+y(x) = \pm \int_{1}^{x} \frac{C}{\sqrt{\left(\frac{1}{t}\right)^2 - C^2}} \, dt + D.
+\]  
+Simplificando el integrando:  
+\[
+\sqrt{\frac{1}{t^2} - C^2} = \sqrt{\frac{1 - C^2 t^2}{t^2}} = \frac{\sqrt{1 - C^2 t^2}}{t}.
+\]  
+Entonces,  
+\[
+y(x) = \pm \int_{1}^{x} \frac{C t}{\sqrt{1 - C^2 t^2}} \, dt + D.
+\]  
+Realizamos la sustitución \( u = 1 - C^2 t^2 \), \( du = -2 C^2 t \, dt \):  
+\[
+\int \frac{C t}{\sqrt{u}} \, dt = -\frac{1}{2 C} \int \frac{du}{\sqrt{u}} = -\frac{\sqrt{u}}{C} + K.
+\]  
+Revertiendo la sustitución:  
+\[
+y(x) = \mp \frac{\sqrt{1 - C^2 t^2}}{C} \Bigg|_{1}^{x} + D.
+\]  
+Evaluando los límites:  
+\[
+y(x) = \mp \frac{\sqrt{1 - C^2 x^2}}{C} \pm \frac{\sqrt{1 - C^2}}{C} + D.
+\]  
+Aplicamos las condiciones de frontera \( y(1) = 0 \):  
+\[
+0 = \mp \frac{\sqrt{1 - C^2}}{C} \pm \frac{\sqrt{1 - C^2}}{C} + D \implies D = 0.
+\]  
+Para \( y(2) = 1 \):  
+\[
+1 = \mp \frac{\sqrt{1 - 4 C^2}}{C}.
+\]  
+Suponiendo \( \pm = - \) (para evitar raíces imaginarias):  
+\[
+1 = \frac{\sqrt{1 - 4 C^2}}{C} \implies C = \sqrt{\frac{1}{5}}.
+\]  
+Finalmente, la solución es:  
+\[
+y(x) = \frac{\sqrt{1 - \frac{x^2}{5}} - \sqrt{\frac{4}{5}}}{\sqrt{\frac{1}{5}}} = \sqrt{5 - x^2} - 2.
+\]  
+La solución existe solo si \( C^2 x^2 \leq 1 \). Para \( x = 2 \), \( C \leq \frac{1}{2} \), lo cual se cumple con \( C = \frac{1}{\sqrt{5}} \). La curva resultante es un arco de circunferencia: \( (x)^2 + (y + 2)^2 = 5 \).  \\
+
+(c) Ejemplo: \( f(x) = 1 \), \( y(a) = A \), \( y(b) = B \).\\ 
+
+Con \( f(x) = 1 \), la solución general del inciso (a) se reduce a:  
+\[
+y(x) = \pm \int_{a}^{x} \frac{C}{\sqrt{1 - C^2}} \, dt + D.
+\]  
+Simplificando:  
+\[
+y(x) = \pm \frac{C}{\sqrt{1 - C^2}} (x - a) + D.
+\]  
+Aplicando \( y(a) = A \):  
+\[
+A = \pm \frac{C}{\sqrt{1 - C^2}} \cdot 0 + D \implies D = A.
+\]  
+Para \( y(b) = B \):  
+\[
+B = \pm \frac{C}{\sqrt{1 - C^2}} (b - a) + A.
+\]  
+Despejando \( C \):  
+\[
+C = \frac{(B - A)}{\sqrt{(B - A)^2 + (b - a)^2}}.
+\]  
+Finalmente, la solución es una línea recta:  
+\[
+y(x) = A + \frac{B - A}{b - a} (x - a).
+\]  
+Nótese que el funcional \( J(y) \) representa la longitud de arco clásica, la solución coincide con la geodésica en el plano: la recta que une \( (a, A) \) y \( (b, B) \) y la unicidad está garantizada por la convexidad del funcional. 
+
+
+IV. \textbf{Sea el funcional  }
+\[
+J(y) = \int_0^1 \frac{dx}{1 + y^2},
+\]  
+\textbf{con condiciones de frontera} \( y(0) = 0 \) y \( y(1) = 1 \).  
+
+(a) Calcule \( DJ(y)h \) y el residuo en cualquier punto \( y \) para \( h \in C_0^1[0,1] \).  \\
+
+La variación de \( J(y) \) en la dirección \( h \) se define según Fréchet como  
+\[
+\delta J(y; h) = \lim_{\epsilon \to 0} \frac{J(y + \epsilon h) - J(y)}{\epsilon}.
+\]  
+Sustituyendo \( y + \epsilon h \) en la integral,  
+\[
+J(y + \epsilon h) = \int_0^1 \frac{dx}{1 + (y + \epsilon h)^2}.
+\]  
+Expandiendo en serie de Taylor hasta primer orden en \( \epsilon \),  
+\[
+\frac{1}{1 + (y + \epsilon h)^2} = \frac{1}{1 + y^2} \left( 1 - \frac{2\epsilon y h}{1 + y^2} + \mathcal{O}(\epsilon^2) \right).
+\]  
+Multiplicando dentro de la integral y tomando el límite cuando \( \epsilon \to 0 \), obtenemos  
+\[
+\delta J(y; h) = \int_0^1 \left(-\frac{2y h}{(1 + y^2)^2} \right) dx.
+\]  
+Por lo tanto, la derivada de Fréchet de \( J(y) \) es el operador lineal  
+\[
+DJ(y)h = \int_0^1 \left(-\frac{2y h}{(1 + y^2)^2} \right) dx.
+\]  
+
+El residuo \( R(y) \) es la expresión dentro de la integral del operador \( DJ(y)h \), es decir,  
+\[
+R(y) = -\frac{2y}{(1 + y^2)^2}.
+\]  
+Este residuo representa el término que debe anularse para que \( y \) sea un punto crítico del funcional.  \\
+
+(b) Puntos críticos: Los puntos críticos del funcional \( J(y) \) son aquellos \( y \) que anulan su residuo, es decir,  
+\[
+R(y) = -\frac{2y}{(1 + y^2)^2} = 0.
+\]  
+Claramente, \( R(y) = 0 \) si y solo si \( y = 0 \). Sin embargo, esto debe cumplirse en todo \( x \in (0,1) \) y bajo las condiciones de contorno \( y(0) = 0 \) y \( y(1) = 1 \).  \\
+
+El único candidato natural es la función \( y = x \), ya que satisface las condiciones de contorno y en cada punto \( x \) el residuo es
+\[
+R(x) = -\frac{2x}{(1 + x^2)^2},
+\]  
+lo cual no es idénticamente cero para todo \( x \), excepto en \( x = 0 \). Por lo tanto, no hay puntos críticos en sentido clásico, pero estudiaremos la optimalidad de \( y = x \) en el siguiente inciso.  \\
+
+(c) Para analizar si \( y = x \) es un mínimo local, consideramos la segunda variación del funcional. Si esta es positiva definida, \( y = x \) es un mínimo local.  \\
+
+La segunda variación se obtiene derivando nuevamente la expresión de \( DJ(y)h \):  
+\[
+D^2J(y)(h,h) = \lim_{\epsilon \to 0} \frac{J(y + \epsilon h) - J(y) - \epsilon DJ(y)h}{\epsilon^2}.
+\]  
+De la expansión de \( J(y + \epsilon h) \), el término de orden \( \epsilon^2 \) es  
+\[
+\int_0^1 \frac{2h^2(1 - y^2)}{(1 + y^2)^3} dx.
+\]  
+Evaluando en \( y = x \), obtenemos  
+\[
+D^2J(x)(h,h) = \int_0^1 \frac{2h^2(1 - x^2)}{(1 + x^2)^3} dx.
+\]  
+Observamos que \( 1 - x^2 \geq 0 \) en \( x \in [0,1] \), con igualdad solo en \( x = 1 \). Como \( h \in C_0^1[0,1] \), tenemos que \( h(1) = 0 \), y en consecuencia \( D^2J(x)(h,h) \geq 0 \) para todo \( h \), con igualdad solo si \( h \equiv 0 \). Esto implica que la segunda variación es semidefinida positiva, por lo que \( y = x \) es un mínimo local.  \\
+
+Pero... ¿Es \( y = x \) un mínimo global? Para que \( y = x \) sea un mínimo global, deberíamos demostrar que \( J(y) \geq J(x) \) para cualquier \( y \) que satisfaga las condiciones de contorno. \\  
+
+Consideremos una familia de funciones \( y_\alpha(x) \) con \( y_\alpha(0) = 0 \), \( y_\alpha(1) = 1 \), pero que se alejan de \( y = x \) en una región intermedia. La estructura del funcional supera mi nivel de abstracción por lo que 
+
+
+
+\end{document}

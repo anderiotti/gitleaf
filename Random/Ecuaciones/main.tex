@@ -1,0 +1,280 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage{pgfplots}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage[thmmarks, amsmath, thref]{ntheorem}
+\usepackage{mdframed}
+\usepackage{amsthm}
+\usepackage{physics}
+\usepackage{proof}
+\usepackage{derivative}
+\usepackage{comment}
+\usepackage{hyperref}
+\usepackage{wrapfig}
+\usepackage{amsthm}
+\usepackage{xcolor}
+\renewcommand{\theenumi}{\roman{enumi}}
+
+\theoremstyle{nonumberplain}
+\theoremheaderfont{\itshape}
+\theorembodyfont{\upshape}
+\theoremseparator{.}
+\theoremsymbol{\ensuremath{\square}}
+\theoremsymbol{\ensuremath{\blacksquare}}
+\newtheorem{solution}{Solution}
+\theoremseparator{. ---}
+\theoremsymbol{\mbox{\texttt{;o)}}}
+
+\pgfplotsset{compat=1.18}
+\begin{document}
+
+El problema que tenemos es:
+
+\[
+\left\{
+\begin{array}{l}
+\dot{x} = 2t(x-1) \\
+x(0) = 2
+\end{array}
+\right.
+\]
+
+Empecemos reescribiendo la ecuación diferencial:
+
+\[
+\dot{x} - 2t x = -2t
+\]
+
+Esta es una ecuación diferencial lineal de primer orden de la forma:
+
+\[
+\dot{x} + P(t)x = Q(t)
+\]
+
+donde \( P(t) = -2t \) y \( Q(t) = -2t \).
+
+
+El factor integrante es:
+
+\[
+\mu(t) = e^{\int P(t)\,dt} = e^{\int -2t\,dt} = e^{-t^2}
+\]
+
+
+Multiplicamos ambos lados por \(\mu(t)\):
+
+\[
+e^{-t^2}\dot{x} - 2t e^{-t^2} x = -2t e^{-t^2}
+\]
+
+El lado izquierdo es la derivada del producto \(e^{-t^2}x\):
+
+\[
+\frac{d}{dt}\left(e^{-t^2} x\right) = -2t e^{-t^2}
+\]
+
+
+\[
+\int \frac{d}{dt}\left(e^{-t^2} x\right) dt = \int -2t e^{-t^2} dt
+\]
+
+\[
+e^{-t^2} x = \int -2t e^{-t^2} dt + C
+\]
+
+Observemos que \(\int -2t e^{-t^2} dt = e^{-t^2}\), ya que la derivada de \(-t^2\) con respecto a \(t\) es \(-2t\):
+
+\[
+e^{-t^2} x = e^{-t^2} + C
+\]
+
+ Despejamos \(x(t)\)
+
+\[
+x(t) = 1 + C e^{t^2}
+\]
+
+ Solo falta aplicar la condición inicial
+
+Usamos \(x(0) = 2\):
+
+\[
+2 = 1 + C e^{0}
+\implies C = 1
+\]
+
+Ordenando
+
+\[
+x(t) = 1 + e^{t^2}
+\]
+
+2. Método de sucesiones de Picard
+
+Ahora, vamos a resolver usando el método de Picard y justificaremos los supuestos del Teorema de Picard-Lindelöf.
+
+La ecuación integral equivalente es:
+
+\[
+x(t) = x_0 + \int_{0}^{t} 2s(x(s)-1) ds
+\]
+donde \(x_0 = 2\). \\
+
+ Primero verificamos las hipótesis del Teorema de Picard-Lindelöf
+
+La función \(f(t, x) = 2t(x-1)\):\\
+
+- Es continua en \(t\) y \(x\) en todo \(\mathbb{R}^2\).\\
+- Su derivada parcial respecto a \(x\) es \(\frac{\partial f}{\partial x} = 2t\), que es continua en \(t\).\\
+- Por lo tanto, satisface la condición de Lipschitz local en \(x\).\\
+
+Esto garantiza, por el Teorema de Picard-Lindelöf, la existencia y unicidad de la solución en algún intervalo alrededor de \(t=0\).\\
+
+Vease ahora la construcción de la sucesión de Picard\\
+
+Definimos la sucesión:
+
+\[
+x_{n+1}(t) = 2 + \int_{0}^{t} 2s(x_n(s)-1) ds
+\]
+
+Hacemos las primeras iteraciones:
+
+Paso 0:
+\[
+x_0(t) = 2
+\]
+
+Paso 1:
+\[
+x_1(t) = 2 + \int_{0}^{t} 2s(2-1) ds = 2 + \int_{0}^{t} 2s\, ds = 2 + [s^2]_0^t = 2 + t^2
+\]
+
+Paso 2:
+\[
+x_2(t) = 2 + \int_{0}^{t} 2s(x_1(s)-1) ds = 2 + \int_{0}^{t} 2s((2 + s^2) - 1) ds = 2 + \int_{0}^{t} 2s(1 + s^2) ds
+\]
+\[
+= 2 + \int_{0}^{t} 2s\, ds + \int_{0}^{t} 2s^3\, ds = 2 + [s^2]_0^t + [\frac{1}{2}s^4]_0^t = 2 + t^2 + \frac{1}{2}t^4
+\]
+
+Paso 3:
+\[
+x_3(t) = 2 + \int_{0}^{t} 2s(x_2(s)-1) ds = 2 + \int_{0}^{t} 2s((2 + s^2 + \frac{1}{2}s^4) - 1) ds
+\]
+\[
+= 2 + \int_{0}^{t} 2s(1 + s^2 + \frac{1}{2}s^4) ds
+\]
+\[
+= 2 + \int_{0}^{t} 2s\, ds + \int_{0}^{t} 2s^3\, ds + \int_{0}^{t} s^5\, ds
+\]
+\[
+= 2 + [s^2]_0^t + [\frac{1}{2}s^4]_0^t + [\frac{1}{6}s^6]_0^t = 2 + t^2 + \frac{1}{2}t^4 + \frac{1}{6}t^6
+\]
+
+El proceso sigue n-ésimas veces, y se observa que la sucesión de Picard está generando la serie de Taylor de \(e^{t^2}\):
+
+\[
+x(t) = 1 + e^{t^2} = 1 + \sum_{n=0}^{\infty} \frac{t^{2n}}{n!}
+\]
+
+Por lo tanto, el método de Picard converge a la solución exacta encontrada previamente.
+\begin{comment}
+12. Suponga que \( F: U \subset \mathbb{R}^{n} \rightarrow \mathbb{R}^{n} \) es un campo vectorial y \( \Gamma \subset U \) una trayectoria simple y suave a tramos, parametrizada por \( \gamma:[a, b] \rightarrow \Gamma \subset \mathbb{R}^{n} \).\\
+(a) Pruebe que
+\[
+\left|\int_{\Gamma} F \cdot \mathrm{~d} \gamma\right| \leq M\left(\ell_{\Gamma}\right)
+\]
+
+Recordemos la definición de la integral de línea
+\[
+\int_{\Gamma} F \cdot \mathrm{d}\gamma = \int_{a}^{b} F(\gamma(t)) \cdot \gamma'(t)\, dt
+\]
+
+Por la desigualdad del valor absoluto de una integral,
+\[
+\left| \int_{a}^{b} f(t) \, dt \right| \leq \int_{a}^{b} |f(t)| \, dt
+\]
+Aplicando esto a nuestra integral...
+
+\[
+\left| \int_{a}^{b} F(\gamma(t)) \cdot \gamma'(t)\, dt \right|
+\leq \int_{a}^{b} \left| F(\gamma(t)) \cdot \gamma'(t) \right| dt
+\]
+
+Por la desigualdad de Cauchy-Schwarz:
+\[
+|F(\gamma(t)) \cdot \gamma'(t)| \leq \|F(\gamma(t))\| \cdot \|\gamma'(t)\|
+\]
+Así que:
+\[
+\left| \int_{a}^{b} F(\gamma(t)) \cdot \gamma'(t)\, dt \right|
+\leq \int_{a}^{b} \|F(\gamma(t))\| \cdot \|\gamma'(t)\| dt
+\]
+
+Por definición, \( M = \max\{\|F(\bar{x})\| : \bar{x} \in \Gamma\} \), así que \( \|F(\gamma(t))\| \leq M \) para todo \( t \). Por lo tanto:
+\[
+\int_{a}^{b} \|F(\gamma(t))\| \cdot \|\gamma'(t)\| dt
+\leq M \int_{a}^{b} \|\gamma'(t)\| dt
+\]
+Y
+\[
+\int_{a}^{b} \|\gamma'(t)\| dt = \ell_{\Gamma}
+\]
+es la longitud de arco de \( \Gamma \).
+
+Unimos todo:
+\[
+\left|\int_{\Gamma} F \cdot \mathrm{d} \gamma\right| \leq M \ell_{\Gamma}
+\]
+
+donde \( M=\max \{\|F(\bar{x})\| \mid \bar{x} \in \Gamma\} \) y \( \ell_{\Gamma} \) es la longitud de arco de \( \Gamma \).
+
+
+(b) Si en cada punto \( \gamma(t) \in \Gamma \) ocurre que \( F(\gamma(t)) \) esta en la misma dirección que el vector tangente a \( \Gamma \) en \( \gamma(t) \). Pruebe que
+\[
+\int_{\Gamma} F \cdot \mathrm{~d} \gamma=\int_{\Gamma}\|F\|\|\mathrm{d} \gamma\|
+\]
+
+Si \( F(\gamma(t)) \) es paralelo a \( \gamma'(t) \), entonces existe una función escalar \( \lambda(t) \geq 0 \) tal que:
+\[
+F(\gamma(t)) = \lambda(t) \gamma'(t)
+\]
+o, más generalmente, la dirección es la misma (podría ser negativa si permite sentido contrario):
+\[
+F(\gamma(t)) = \lambda(t) \frac{\gamma'(t)}{\|\gamma'(t)\|}
+\]
+Multipliquemos por \( \gamma'(t) \):
+\[
+F(\gamma(t)) \cdot \gamma'(t) = \lambda(t) \frac{\gamma'(t)}{\|\gamma'(t)\|} \cdot \gamma'(t) = \lambda(t) \|\gamma'(t)\|
+\]
+Pero también:
+\[
+\|F(\gamma(t))\| = |\lambda(t)|
+\]
+Por lo tanto, si \( \lambda(t) \geq 0 \), entonces:
+\[
+F(\gamma(t)) \cdot \gamma'(t) = \|F(\gamma(t))\| \cdot \|\gamma'(t)\|
+\]
+Así,
+\[
+\int_{\Gamma} F \cdot \mathrm{d} \gamma = \int_{a}^{b} F(\gamma(t)) \cdot \gamma'(t)\, dt = \int_{a}^{b} \|F(\gamma(t))\| \cdot \|\gamma'(t)\| dt
+\]
+Por definición,
+\[
+\int_{\Gamma} \|F\| \|\mathrm{d}\gamma\| = \int_{a}^{b} \|F(\gamma(t))\| \cdot \|\gamma'(t)\| dt
+\]
+por lo que
+\[
+\int_{\Gamma} F \cdot \mathrm{d} \gamma = \int_{\Gamma} \|F\| \|\mathrm{d}\gamma\|
+\]
+\end{comment}
+
+\end{document}
+
+
+

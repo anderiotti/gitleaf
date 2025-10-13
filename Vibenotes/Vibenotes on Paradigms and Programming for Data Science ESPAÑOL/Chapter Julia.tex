@@ -1,0 +1,488 @@
+% Add this line right before your \chapter* command in your .tex file
+\cleardoublepage
+\addcontentsline{toc}{chapter}{Opcional: Introducción a la Programación en Julia para Ciencia de Datos}
+
+\chapter*{Introducción a la Programación en Julia para Ciencia de Datos}
+\label{chap:julia_intro}
+
+En el panorama de los lenguajes de programación para la ciencia de datos, Python ofrece una versatilidad sin igual y R proporciona un entorno profundamente arraigado en la tradición estadística. \textbf{Julia} entra en esta arena con un objetivo singular y ambicioso: resolver el "problema de los dos lenguajes". Históricamente, los científicos de datos prototipaban modelos en un lenguaje dinámico de alto nivel como Python o R por su facilidad de uso, y luego, para aplicaciones de rendimiento crítico, reescribían el código en un lenguaje estático de bajo nivel como C o Fortran. Julia fue concebido para eliminar esta dicotomía. Es un lenguaje dinámico de alto nivel con una sintaxis matemática amigable, y sin embargo, es compilado justo a tiempo (JIT) utilizando el potente framework de compilación LLVM, lo que le permite alcanzar velocidades comparables a las de C.
+
+El diseño de Julia es una síntesis deliberada de las mejores características de sus predecesores. Es interactivo como Python, utiliza una sintaxis matemática familiar para los usuarios de MATLAB, adopta paradigmas funcionales como Lisp, y está construido desde cero para el paralelismo y la computación distribuida. Su característica definitoria, sin embargo, es el \textbf{despacho múltiple}, un paradigma de programación que permite que las funciones se especialicen en los tipos de todos sus argumentos. Esto, combinado con un sofisticado sistema de tipos extensible por el usuario, permite a Julia generar código máquina altamente optimizado sin sacrificar la flexibilidad. Este capítulo proporciona un recorrido fundamental por Julia, destacando las características principales y la mentalidad de programación necesaria para aprovechar su notable rendimiento en la ciencia de datos.
+
+\section{Tipos de Datos y Operadores Básicos}
+\label{sec:julia_data_types}
+Julia es un lenguaje de tipado dinámico, pero permite anotaciones de tipo opcionales. Su sistema de tipos es una piedra angular de su rendimiento. Al conocer los tipos de las variables, el compilador de Julia a menudo puede inferir la salida de las funciones y generar código especializado y altamente eficiente.
+
+\subsection*{Tipos Primitivos Concretos}
+Los tipos numéricos y lógicos fundamentales en Julia son rápidos y explícitos sobre su representación en memoria.
+\begin{itemize}
+    \item \textbf{\jcode{Int64}} y \textbf{\jcode{Int32}}: Enteros con signo de 64 y 32 bits, respectivamente. El tipo de entero por defecto depende de la arquitectura del sistema (normalmente \jcode{Int64}).
+    \item \textbf{\jcode{Float64}} y \textbf{\jcode{Float32}}: Números de punto flotante de precisión de 64 bits (doble) y 32 bits (simple), siguiendo el estándar IEEE 754. \jcode{Float64} es el tipo por defecto para los literales de punto flotante.
+    \item \textbf{\jcode{Bool}}: Valores lógicos, \jcode{true} y \jcode{false}.
+    \item \textbf{\jcode{Char}}: Un solo carácter, encerrado en comillas simples.
+    \item \textbf{\jcode{String}}: Una secuencia de caracteres, encerrada en comillas dobles.
+\end{itemize}
+
+\begin{example}[Inspeccionando Tipos]
+La función \jcode{typeof()} se utiliza para inspeccionar el tipo de cualquier valor.
+\text{ }\begin{minted}{julia}
+# Julia infiere el tipo más específico y concreto por defecto
+x = 10      # typeof(x) es Int64
+y = 3.14    # typeof(y) es Float64
+z = true    # typeof(z) es Bool
+s = "Julia" # typeof(s) es String
+
+println("El tipo de 10 es ", typeof(10))
+println("El tipo de 3.14 es ", typeof(3.14))
+
+# Puedes especificar un tipo explícitamente
+num_float_32 = Float32(10.5)
+println("El tipo de Float32(10.5) es ", typeof(num_float_32))
+\end{minted}
+\end{example}
+
+\subsection*{Operadores y Broadcasting}
+Los operadores de Julia son sintácticamente familiares, pero su comportamiento con las colecciones es explícito.
+
+\subsubsection*{Operadores Aritméticos y Lógicos}
+Los operadores estándar (\jcode{+}, \jcode{-}, \jcode{*}, \jcode{/}, \jcode{^}) funcionan como se espera en valores escalares. Los operadores lógicos incluyen \jcode{&&} (Y con cortocircuito), \jcode{||} (O con cortocircuito), y \jcode{!} (NO).
+
+\begin{remark}[Los Operadores son Funciones]
+En Julia, casi todos los operadores son simplemente funciones con una sintaxis especial. Por ejemplo, \jcode{1 + 2} es internamente equivalente a llamar la función \jcode{+(1, 2)}. Este diseño permite a los desarrolladores extender estas operaciones básicas a sus propios tipos personalizados, un aspecto clave del despacho múltiple.
+\end{remark}
+
+\subsubsection*{Broadcasting: La Sintaxis de Punto para Vectorización}
+A diferencia de R, donde la vectorización es el comportamiento por defecto para la mayoría de las funciones, Julia requiere una instrucción explícita para aplicar una función elemento a elemento a una colección. Esto se hace añadiendo un punto \jcode{.} al nombre de la función. Esto se conoce como \textbf{broadcasting}. Esta sintaxis explícita es una de las características más importantes de Julia, ya que evita la ambigüedad y le da al programador un control detallado sobre el rendimiento.
+
+\begin{example}[Operaciones con Broadcasting]
+\text{ }\begin{minted}{julia}
+# Crear un vector (Array 1D) de enteros
+v = [1, 2, 3, 4]
+
+# Aplicar una función a un escalar funciona normalmente
+sqrt(4) # Resultado: 2.0
+
+# Aplicar una función a un vector sin un punto fallará
+# sqrt(v) # Esto lanzaría un MethodError
+
+# Para aplicar la función elemento a elemento, hacemos broadcasting con un punto
+sqrt.(v) # Resultado: [1.0, 1.414..., 1.732..., 2.0]
+
+# Esto se aplica a todos los operadores también
+v .+ 10   # Suma 10 a cada elemento. Resultado: [11, 12, 13, 14]
+v .^ 2    # Eleva al cuadrado cada elemento. Resultado: [1, 4, 9, 16]
+
+# Definir una función simple
+function sumar_uno(x)
+    return x + 1
+end
+
+# ¡También podemos hacer broadcasting con nuestras propias funciones!
+sumar_uno.(v) # Resultado: [2, 3, 4, 5]
+\end{minted}
+\end{example}
+
+\section{Operaciones sobre Cadenas de Caracteres}
+\label{sec:julia_string_ops}
+El tipo \jcode{String} de Julia es una potente representación de texto codificada en UTF-8. La manipulación de cadenas se maneja a través de una biblioteca de funciones estándar.
+
+Las operaciones clave con cadenas incluyen:
+\begin{itemize}
+    \item \textbf{Interpolación}: Incrustar valores directamente en una cadena, lo que se hace prefijando una variable con un signo de dólar \$, similar a las f-strings de Python.
+    \item \textbf{Concatenación}: Combinar cadenas, típicamente hecho con el operador \jcode{*} o la función \jcode{string()}.
+    \item \textbf{Funciones Estándar}: Un rico conjunto de funciones como \jcode{split()}, \jcode{join()}, \jcode{replace()}, \jcode{strip()}, \jcode{startswith()}, y \jcode{endswith()}.
+\end{itemize}
+
+\begin{example}[Manipulación de Cadenas en Julia]
+\text{ }\begin{minted}{julia}
+# --- Interpolación de Cadenas ---
+nombre_modelo = "BERT"
+puntuacion = 0.951
+println("La puntuación para el modelo $nombre_modelo es $(round(puntuacion*100, digits=1))%.")
+# El segundo $() se usa para incrustar una expresión más compleja.
+
+# --- Concatenación ---
+s1 = "ciencia"
+s2 = "de datos"
+combinado = s1 * " " * s2 # Usando *
+println(combinado)
+
+# --- División y Unión ---
+linea_csv = "id,caracteristica1,caracteristica2"
+cabecera = split(linea_csv, ',')
+println("Dividido: ", cabecera)
+
+# Volver a unir con un separador diferente
+cabecera_unida = join(cabecera, " | ")
+println("Unido: ", cabecera_unida)
+
+# --- Reemplazo ---
+mensaje = "El modelo está sobreajustado."
+mensaje_corregido = replace(mensaje, "sobreajustado" => "bien calibrado")
+println(mensaje_corregido)
+\end{minted}
+\end{example}
+
+\section{Estructuras de Control}
+\label{sec:julia_control_structures}
+La sintaxis de control de flujo de Julia es clara y expresiva. Una característica clave es el uso de la palabra clave \jcode{end} para terminar bloques de código (bucles for, sentencias if, definiciones de funciones, etc.), lo que elimina la ambigüedad sobre dónde termina un bloque.
+
+\subsection*{Condicionales: \jcode{if}, \jcode{elseif}, \jcode{else}}
+La estructura es sencilla. Las condiciones no requieren paréntesis, aunque a menudo se usan por claridad.
+
+\text{ }\begin{minted}{julia}
+valor_p = 0.03
+alpha = 0.05
+
+if valor_p < alpha
+    println("El resultado es estadísticamente significativo (se rechaza H0).")
+elseif valor_p < 0.1
+    println("El resultado es marginalmente significativo.")
+else
+    println("El resultado no es estadísticamente significativo (no se puede rechazar H0).")
+end
+\end{minted}
+Julia también soporta un operador ternario estándar para expresiones condicionales concisas: \jcode{a ? b : c}.
+
+\begin{minted}{julia}
+valor_p = 0.03
+alpha = 0.05
+
+resultado = valor_p < alpha ? "El resultado es estadísticamente significativo (se rechaza H0)." :
+            (valor_p < 0.1 ? "El resultado es marginalmente significativo." :
+            "El resultado no es estadísticamente significativo (no se puede rechazar H0).")
+
+println(resultado)
+# Salida: El resultado es estadísticamente significativo (se rechaza H0).
+\end{minted}
+
+\subsection*{Bucles: \jcode{for} y \jcode{while}}
+\begin{itemize}
+    \item \textbf{Bucle \jcode{for}}: Itera sobre cualquier objeto iterable. La sintaxis \jcode{for i in 1:5} es común para iterar sobre un rango de números.
+    \item \textbf{Bucle \jcode{while}}: Repite un bloque mientras una condición sea \jcode{true}.
+\end{itemize}
+Las palabras clave \jcode{break} y \jcode{continue} funcionan como se espera para controlar el flujo del bucle.
+
+\begin{example}[Bucles en Julia]
+\text{ }\begin{minted}{julia}
+# --- Bucle For ---
+println("Iterando con un bucle for:")
+for i in [1, 2, 3, 5, 8] # Iterar sobre los elementos de un vector
+    println("Número de Fibonacci: $i")
+end
+
+# --- Bucle While ---
+println("\nConvergencia con un bucle while:")
+error = 1.0
+tolerancia = 0.1
+iteracion = 0
+while error > tolerancia
+    global iteracion += 1 # 'global' es necesario para modificar variables de un ámbito externo en el REPL
+    error /= 2
+    println("Iteración $iteracion, Error = $error")
+    if iteracion >= 10
+        println("Máximo de iteraciones alcanzado.")
+        break
+    end
+end
+\end{minted}
+\end{example}
+\begin{remark}[El Rol de los Bucles en Julia]
+Aunque los bucles de Julia son extremadamente rápidos (a menudo tan rápidos como sus equivalentes en C), la sintaxis de broadcasting con punto (\jcode{f.(v)}) sigue siendo preferible para operaciones elemento a elemento en arreglos. Es más concisa y expresa claramente la intención del programador de realizar un cálculo vectorizado.
+\end{remark}
+
+\section{Vectores, Matrices y Arreglos: El Tensor en Julia}
+\label{sec:julia_arrays}
+La piedra angular de toda la computación numérica y científica en Julia es el tipo \textbf{\jcode{Array}}. No es simplemente un contenedor de datos; es la implementación directa y altamente optimizada de un \textbf{tensor} matemático. Recuerda que un tensor es una generalización de vectores y matrices a un número arbitrario de dimensiones. El número de dimensiones a menudo se conoce como el \textbf{orden} o \textbf{rango} del tensor. En este contexto:
+\begin{itemize}
+    \item Un \textbf{\jcode{Vector}} es simplemente un alias conveniente para un \jcode{Array} 1D, representando un tensor de 1er orden.
+    \item Una \textbf{\jcode{Matrix}} es un alias para un \jcode{Array} 2D, representando un tensor de 2do orden.
+    \item Un \jcode{Array{T, N}} es el tipo formal para un tensor de orden \jcode{N}, cuyos elementos son de tipo \jcode{T}.
+\end{itemize}
+Comprender esta estructura formal es el primer paso. El segundo, y podría decirse que más crítico para el rendimiento, es comprender cómo se disponen físicamente estos tensores en la memoria.
+
+\subsection*{La Disposición en Memoria: Orden por Columnas (Column-Major)}
+Una decisión de diseño clave que separa a Julia (junto con Fortran, MATLAB y R) de lenguajes como C, C++ y Python (NumPy) es su disposición en memoria. Los arreglos de Julia se almacenan en \textbf{orden por columnas}. Esto significa que los elementos dentro de la misma columna son contiguos en la memoria.
+
+Considera una matriz de 2x2, $M = \begin{pmatrix} a & c \\ b & d \end{pmatrix}$.
+\begin{itemize}
+    \item En \textbf{orden por filas (row-major)} (NumPy), la disposición en memoria es secuencial por filas: \code{[a, c, b, d]}.
+    \item En \textbf{orden por columnas (column-major)} (Julia), la disposición en memoria es secuencial por columnas: \code{[a, b, c, d]}.
+\end{itemize}
+
+\begin{remark}[Implicaciones de Rendimiento del Orden por Columnas]
+Esta no es una elección arbitraria; tiene profundas implicaciones de rendimiento. Las CPUs modernas no recuperan bytes individuales de la memoria; recuperan "líneas de caché" enteras (típicamente 64 bytes). Cuando accedes a un elemento en la memoria, obtienes a sus vecinos de forma gratuita. En Julia, como las columnas son contiguas, iterar hacia abajo por una columna es excepcionalmente rápido, ya que estás accediendo a datos que ya están en la caché de la CPU. Iterar a través de una fila obliga a la CPU a saltar a través de la memoria y recuperar nuevas líneas de caché para cada elemento, lo que es significativamente más lento. Para un científico de datos, escribir bucles que respeten la disposición por columnas es una técnica de optimización fundamental.
+\end{remark}
+
+\subsection*{Construcción de Arreglos: De Literales a Funciones}
+Julia proporciona un rico conjunto de herramientas para crear arreglos, diseñadas para ser tanto matemáticamente intuitivas como programáticamente potentes.
+
+\subsubsection*{1. Sintaxis de Literales y Concatenación}
+Esta sintaxis está diseñada para reflejar la notación matemática de vectores y matrices.
+\begin{itemize}
+    \item \textbf{Vectores}: Los elementos se separan por comas. Esto crea un vector columna.
+    \item \textbf{Matrices}: Los espacios separan los elementos dentro de una fila (columnas), y los puntos y comas separan las filas mismas.
+    \item \textbf{Concatenación}: Puedes construir arreglos más grandes concatenando otros más pequeños. \jcode{hcat(A, B)} concatena horizontalmente, mientras que \jcode{vcat(A, B)} concatena verticalmente. La sintaxis literal \jcode{[A B]} y \jcode{[A; B]} son atajos convenientes para esto.
+\end{itemize}
+
+\begin{example}[Construcción Literal de Arreglos]
+\text{ }\begin{minted}{julia}
+# Un Vector (vector columna)
+v = [10, 20, 30]
+
+# Una Matriz, construida para parecerse a su representación matemática
+M = [1 2 3; 4 5 6]
+println("Una Matriz de 2x3:\n", M)
+
+# Concatenación horizontal de dos vectores
+v1 = [1, 2]
+v2 = [3, 4]
+h_concat = [v1 v2] # Equivalente a hcat(v1, v2)
+println("\nConcatenación Horizontal:\n", h_concat)
+
+# Concatenación vertical
+v_concat = [v1; v2] # Equivalente a vcat(v1, v2)
+println("\nConcatenación Vertical:\n", v_concat)
+\end{minted}
+\end{example}
+
+\subsubsection*{2. Construcción Funcional}
+Para crear arreglos de tamaño arbitrario, Julia proporciona un conjunto de funciones altamente optimizadas. La sintaxis general es \jcode{nombre_funcion(TipoElemento, dims...)}, donde \jcode{dims} es una tupla o una secuencia de enteros que especifican el tamaño de cada dimensión.
+\begin{itemize}
+    \item \jcode{zeros(Type, dims...)} y \jcode{ones(Type, dims...)}: Crean arreglos llenos de ceros o unos.
+    \item \jcode{rand(Type, dims...)}: Crea un arreglo con números aleatorios.
+    \item \jcode{fill(valor, dims...)}: Crea un arreglo lleno con un \jcode{valor} específico.
+    \item \jcode{similar(A, Type, dims...)}: Crea un arreglo no inicializado con las mismas propiedades (p. ej., denso/disperso) que un arreglo existente \jcode{A}, pero con un nuevo tipo y dimensiones. Esto es útil para escribir algoritmos genéricos y de alto rendimiento.
+\end{itemize}
+
+\begin{example}[Creando Tensores con Funciones]
+Este ejemplo demuestra la creación de tensores de orden superior, abordando directamente el hecho de que estas funciones sirven para cualquier número de dimensiones.
+\begin{minted}{julia}
+# Un tensor de 3er orden (2x2x2) de unos de punto flotante de 32 bits
+tensor_unos = ones(Float32, 2, 2, 2)
+println("Un tensor 2x2x2 de unos:\n", tensor_unos)
+
+# Una matriz 4x5 llena con el valor 42
+mat_llena = fill(42, (4, 5)) # Las dimensiones se pueden pasar como una tupla
+println("\nUna matriz llena con 42:\n", mat_llena)
+\end{minted}
+\end{example}
+
+\subsection*{Inspección de Arreglos}
+Una vez que existe un arreglo, puedes consultar sus propiedades estructurales.
+\begin{itemize}
+    \item \textbf{\jcode{size(A)}}: Devuelve una tupla que contiene las dimensiones.
+    \item \textbf{\jcode{eltype(A)}}: Devuelve el tipo de dato de los elementos.
+    \item \textbf{\jcode{ndims(A)}}: Devuelve el número de dimensiones (el orden del tensor).
+    \item \textbf{\jcode{length(A)}}: Devuelve el número total de elementos.
+\end{itemize}
+
+\subsection*{Indexación y Rebanado: Accediendo a Elementos del Tensor}
+Acceder a los datos dentro de un arreglo de Julia es eficiente y sintácticamente claro.
+
+\subsubsection*{Indexación Escalar y por Rebanadas}
+Accedes a los elementos usando corchetes, proporcionando un índice para cada dimensión. Se utiliza dos puntos \jcode{:} para seleccionar todos los elementos a lo largo de un eje, y la palabra clave \jcode{end} se refiere al último índice.
+
+\begin{example}[Indexación Avanzada]
+\text{ }\begin{minted}{julia}
+M = [10 20 30; 40 50 60; 70 80 90]
+
+# Obtener el elemento en la fila 2, columna 3 (valor es 60)
+el = M[2, 3]
+
+# Obtener la sub-matriz excluyendo la primera fila y la última columna
+sub = M[2:end, 1:end-1]
+println("Sub-matriz:\n", sub)
+\end{minted}
+\end{example}
+
+\subsubsection*{Indexación Lógica}
+Una característica potente común en la computación científica es la capacidad de seleccionar elementos de un arreglo usando una máscara booleana. Esta es una operación vectorizada y altamente eficiente.
+
+\begin{example}[Filtrado con Indexación Lógica]
+\text{ }\begin{minted}{julia}
+# Crear una matriz 3x3 de números aleatorios
+A = rand(3, 3)
+
+# Crear una máscara booleana para todos los elementos mayores que 0.5
+mascara = A .> 0.5
+
+println("Matriz Original:\n", A)
+println("\nMáscara Booleana (A .> 0.5):\n", mascara)
+
+# Seleccionar solo los elementos donde la máscara es verdadera
+# El resultado es un Vector plano de los elementos seleccionados.
+valores_filtrados = A[mascara]
+println("\nValores filtrados: ", valores_filtrados)
+\end{minted}
+\end{example}
+
+\begin{remark}[Vistas vs. Copias: Una Nota Crítica de Rendimiento]
+Al igual que NumPy, rebanar un arreglo en Julia (p. ej., \jcode{A[1:2, :]}) crea una \textbf{copia} de los datos por defecto. Para arreglos muy grandes, esto puede ser ineficiente e intensivo en memoria. Para evitarlo, Julia proporciona un mecanismo para crear una \textbf{vista}, que es un objeto ligero que se refiere a la misma memoria que el arreglo original. Modificar una vista modifica el original. La macro \jcode{@view} es la forma explícita y recomendada de hacerlo.
+
+\begin{minted}{julia}
+A = zeros(3)
+# Crear una vista de los primeros dos elementos
+A_view = @view A[1:2]
+
+# Modificar la vista
+A_view[1] = 99
+
+# ¡El arreglo original A también se modifica!
+println("Arreglo original después de modificar la vista: ", A) # Resultado: [99.0, 0.0, 0.0]
+\end{minted}
+Para un científico de datos, saber cuándo usar vistas para evitar asignaciones de memoria innecesarias es una habilidad clave para el rendimiento.
+\end{remark}
+
+\section{Tuplas, Diccionarios y Otras Colecciones}
+\label{sec:julia_collections}
+
+\subsection*{Tuplas y NamedTuples}
+Una \textbf{Tupla} es una colección inmutable y ordenada de valores. Se crean con paréntesis y son altamente eficientes. Las tuplas son la forma estándar en que las funciones devuelven múltiples valores. Un \textbf{NamedTuple} es similar pero asocia un nombre con cada elemento, lo que lo convierte en una alternativa ligera y de alto rendimiento a un diccionario o una estructura para contener registros.
+
+\text{ }\begin{minted}{julia}
+# Una tupla regular
+mi_tupla = (10, "hola", true)
+a, b, c = mi_tupla # El desempaquetado funciona como en Python
+println("Valor desempaquetado b: $b")
+
+# Un NamedTuple
+# Nótese que el punto y coma es necesario para un NamedTuple de un solo elemento
+punto = (x=1.5, y=2.0, z=0.5)
+println("Accediendo a un elemento con nombre: ", punto.x)
+\end{minted}
+
+\subsection*{Diccionarios (\jcode{Dict})}
+El \textbf{\jcode{Dict}} de Julia proporciona un mapeo de clave-valor y es análogo al diccionario de Python. Se crea con el constructor \jcode{Dict()}. Las claves y los valores pueden ser de cualquier tipo.
+
+\text{ }\begin{minted}{julia}
+# Crear un diccionario que mapea nombres de modelos a sus puntuaciones
+puntuaciones = Dict("RandomForest" => 0.92, "SVM" => 0.89, "RedNeuronal" => 0.94)
+
+# Acceder a un valor
+println("Puntuación de SVM: ", puntuaciones["SVM"])
+
+# Añadir una nueva entrada
+puntuaciones["RegresionLogistica"] = 0.85
+
+# Comprobar si una clave existe
+println("¿Existe 'SVM'? ", haskey(puntuaciones, "SVM"))
+
+# Iterar sobre los pares clave-valor
+for (modelo, puntuacion) in puntuaciones
+    println("- $modelo obtuvo una puntuación de $puntuacion")
+end
+\end{minted}
+
+\begin{remark}[Factores y Listas]
+A diferencia de R, Julia no tiene un tipo \textbf{factor} incorporado. La funcionalidad para datos categóricos es proporcionada por el paquete externo \textbf{\jcode{CategoricalArrays.jl}}, que es el estándar en el ecosistema. De manera similar, Julia no tiene un tipo "lista" que sea distinto de un arreglo. Un \jcode{Vector{Any}} puede contener elementos de diferentes tipos, pero por rendimiento, el código de Julia prefiere fuertemente los arreglos de tipo estable y concreto como \jcode{Vector{Int64}}.
+\end{remark}
+
+\section{Tablas: El Paquete \jcode{DataFrames.jl}}
+\label{sec:julia_dataframes}
+El paquete principal para trabajar con datos tabulares en Julia es \textbf{\jcode{DataFrames.jl}}. Proporciona el tipo \jcode{DataFrame}, que es conceptualmente similar a un DataFrame de Pandas o un \jcode{data.frame} de R. Es una estructura de datos bidimensional donde cada columna es un vector y puede tener un tipo diferente.
+
+\subsection*{Creación y Subconjunto de DataFrames}
+Los DataFrames se crean típicamente a partir de colecciones de columnas con nombre.
+
+\begin{example}[Creando un DataFrame]
+\text{ }\begin{minted}{julia}
+# Primero debes tener el paquete instalado y cargado
+# using Pkg; Pkg.add("DataFrames")
+using DataFrames
+
+# Crear un DataFrame
+df = DataFrame(
+    ID = ["A", "B", "C", "D"],
+    Caracteristica1 = [1.2, 3.4, 5.6, 7.8],
+    Caracteristica2 = [true, false, true, true]
+)
+println(df)
+\end{minted}
+\end{example}
+
+La creación de subconjuntos es potente y tiene una sintaxis específica.
+\begin{itemize}
+    \item \textbf{Columnas}: Pueden seleccionarse con notación de punto (\jcode{df.Caracteristica1}), o programáticamente con corchetes y símbolos (\jcode{df[!, :Caracteristica1]}). Un símbolo (\jcode{:Caracteristica1}) es la representación eficiente de Julia para un nombre.
+    \item \textbf{Filas}: Pueden seleccionarse por su índice o por un vector booleano.
+\end{itemize}
+
+\begin{example}[Creando un Subconjunto de un DataFrame]
+\text{ }\begin{minted}{julia}
+using DataFrames
+df = DataFrame(ID = ["A", "B", "C", "D"], F1 = [1.2, 3.4, 5.6, 7.8], F2 = [true, false, true, true])
+
+# --- Seleccionar una sola columna (devuelve un Vector) ---
+vector_f1 = df.F1
+println("Columna F1: ", vector_f1)
+
+# --- Seleccionar múltiples columnas (devuelve un nuevo DataFrame) ---
+# Nótese el símbolo : para los nombres de las columnas
+sub_df = df[!, [:ID, :F2]]
+println("\nSubconjunto de columnas:\n", sub_df)
+
+# --- Seleccionar filas basadas en una condición ---
+# Obtener todas las filas donde Caracteristica1 es mayor que 3.0
+df_filtrado = df[df.F1 .> 3.0, :] # El .> es el operador "mayor que" con broadcasting
+println("\nFilas filtradas:\n", df_filtrado)
+\end{minted}
+\end{example}
+
+\section{Entrada y Salida de Archivos}
+\label{sec:julia_files}
+
+\subsection*{E/S de Archivos Básica y el Bloque \jcode{do}}
+La forma estándar de trabajar con archivos es con la función \jcode{open()}. Aunque puedes hacer \jcode{open()} y \jcode{close()} manualmente, la forma idiomática y segura es usar la sintaxis del bloque \textbf{\jcode{do}}. Este es el equivalente en Julia de la sentencia \jcode{with} de Python, y garantiza que el archivo se cerrará automáticamente, incluso si ocurren errores.
+
+\begin{example}[Escritura y Lectura Segura de Archivos]
+\text{ }\begin{minted}{julia}
+ruta_archivo = "ejemplo_julia.txt"
+
+# Escribir en un archivo usando un bloque do
+open(ruta_archivo, "w") do f
+    write(f, "Esta es la primera línea.\n")
+    write(f, "El bloque do de Julia asegura que el archivo se cierre.")
+end
+println("Archivo escrito con éxito.")
+
+# Leer todo el contenido del archivo
+contenido = open(ruta_archivo, "r") do f
+    read(f, String)
+end
+println("\nContenido leído del archivo:\n", contenido)
+\end{minted}
+\end{example}
+
+\subsection*{Trabajando con CSVs y Otros Formatos}
+Para datos estructurados, se utilizan paquetes dedicados.
+\begin{itemize}
+    \item \textbf{Archivos CSV}: El paquete \textbf{\jcode{CSV.jl}} es el estándar para leer y escribir CSVs. Es de muy alto rendimiento y se integra perfectamente con \jcode{DataFrames.jl}.
+    \item \textbf{Serialización}: Para guardar y cargar cualquier objeto arbitrario de Julia, se utiliza la biblioteca estándar \textbf{\jcode{Serialization}}. Sus funciones, \jcode{serialize()} y \jcode{deserialize()}, son el equivalente al \jcode{pickle} de Python.
+\end{itemize}
+
+\begin{example}[Leyendo un CSV y Serializando un Objeto]
+\text{ }\begin{minted}{julia}
+using CSV, DataFrames, Serialization
+
+# --- Leyendo un CSV ---
+contenido_csv = "ID,Valor\nA,10\nB,20"
+# CSV.read toma el contenido y el tipo en el que leerlo (un DataFrame)
+df_desde_csv = CSV.read(IOBuffer(contenido_csv), DataFrame)
+println("DataFrame leído desde CSV:\n", df_desde_csv)
+
+# --- Serializando un objeto ---
+# Crear un objeto complejo (un diccionario)
+mi_modelo = Dict(
+    "tipo" => "Red Neuronal",
+    "capas" => [784, 128, 64, 10],
+    "activacion" => "ReLU"
+)
+
+# Serializar el objeto a un archivo
+serialize("mi_modelo.bin", mi_modelo)
+
+# Deserializarlo de nuevo
+modelo_cargado = deserialize("mi_modelo.bin")
+println("\nTipo de modelo cargado: ", modelo_cargado["tipo"])
+\end{minted}
+\end{example}

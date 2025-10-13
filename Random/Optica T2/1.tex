@@ -1,0 +1,62 @@
+\begin{figure}
+    \centering
+    \includegraphics[width=1\linewidth]{image.png}
+\end{figure}
+
+El objetivo es encontrar la envolvente de esta familia de elipsoides lo cual se obtiene eliminando el parámetro \( h \), por lo cual debemos derivar \( G \) respecto al parámetro \( h \) e imponer que la derivada sea cero:
+
+\[
+\frac{\partial G}{\partial h} = 0.
+\]
+
+\[
+\frac{\partial}{\partial h} \left[ n_e^2 (x_e - h)^2 + n_o^2 z_e^2 - n_o^2 (h \xi_0)^2 \right] = 2 n_e^2 (x_e - h)(-1) - 2 n_o^2 h \xi_0^2 = 0.
+\]
+
+\[
+-2 n_e^2 (x_e - h) - 2 n_o^2 h \xi_0^2 = 0.
+\]
+
+\[
+n_e^2 (x_e - h) = n_o^2 h \xi_0^2.
+\]
+
+\[
+h (n_e^2 + n_o^2 \xi_0^2) = n_e^2 x_e.
+\]
+
+\[
+\Rightarrow h = \frac{n_e^2 x_e}{n_e^2 + n_o^2 \xi_0^2}.
+\]
+
+Sustituyéndolo en la ecuación de la familia de elipsoides:
+
+\[
+n_e^2 \left( x_e - \frac{n_e^2 x_e}{n_e^2 + n_o^2 \xi_0^2} \right)^2 + n_o^2 z_e^2 - n_o^2 \left( \frac{n_e^2 x_e}{n_e^2 + n_o^2 \xi_0^2} \xi_0 \right)^2 = 0.
+\]
+
+Factorizando \( x_e \):
+
+\[
+n_e^2 \left( x_e \left( 1 - \frac{n_e^2}{n_e^2 + n_o^2 \xi_0^2} \right) \right)^2 + n_o^2 z_e^2 - n_o^2 x_e^2 \frac{n_e^4 \xi_0^2}{(n_e^2 + n_o^2 \xi_0^2)^2} = 0.
+\]
+
+Simplificando los coeficientes:
+
+\[
+n_e^2 x_e^2 \left( \frac{n_o^2 \xi_0^2}{(n_e^2 + n_o^2 \xi_0^2)^2} \right) + n_o^2 z_e^2 - n_o^2 x_e^2 \frac{n_e^4 \xi_0^2}{(n_e^2 + n_o^2 \xi_0^2)^2} = 0.
+\]
+
+Factorizando \( x_e^2 \):
+
+\[
+x_e^2 \left( \frac{n_e^2 n_o^2 \xi_0^2 - n_o^2 n_e^4 \xi_0^2}{(n_e^2 + n_o^2 \xi_0^2)^2} \right) + n_o^2 z_e^2 = 0.
+\]
+
+Como el coeficiente de \( x_e^2 \) se anula, la ecuación resultante es:
+
+\[
+n_o^2 z_e^2 = 0 \Rightarrow z_e = 0.
+\]
+
+De aquí vease que esta es la ecuación de una línea recta en el plano \( x_ez_e \), lo que confirma que la envolvente es un frente de onda plano. Esto concuerda con la teoría de Huygens en medios anisótropos, donde la propagación de una onda extraordinaria se describe por la superposición de frentes de onda secundarios que en conjunto forman una onda plana.

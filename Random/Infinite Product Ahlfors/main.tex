@@ -1,0 +1,404 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage{pgfplots}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage[thmmarks, amsmath, thref]{ntheorem}
+\usepackage{mdframed}
+\usepackage{amsthm}
+\usepackage{physics}
+\usepackage{proof}
+\usepackage{derivative}
+\usepackage{comment}
+\usepackage{hyperref}
+\usepackage{wrapfig}
+\usepackage{amsthm}
+\usepackage{xcolor}
+\renewcommand{\theenumi}{\roman{enumi}}
+
+\theoremstyle{nonumberplain}
+\theoremheaderfont{\itshape}
+\theorembodyfont{\upshape}
+\theoremseparator{.}
+\theoremsymbol{\ensuremath{\square}}
+\theoremsymbol{\ensuremath{\blacksquare}}
+\newtheorem{solution}{Solution}
+\theoremseparator{. }
+\theoremsymbol{\mbox{\texttt{;o)}}}
+
+\pgfplotsset{compat=1.18}
+\begin{document}
+
+DESARROLLOS EN SERIE Y PRODUCTOS
+191
+
+\section{2.2. Productos Infinitos. Un producto infinito de números complejos}
+\[
+p_{1} p_{2} \cdots p_{n} \cdots=\prod_{n=1}^{\infty} p_{n}
+\]
+se evalúa tomando el límite de los productos parciales \( P_{n}=p_{1} p_{2} \cdots p_{n} \). Se dice que converge al valor \( P=\lim _{n \rightarrow \infty} P_{n} \) si este límite existe y es diferente de cero. Existen buenas razones para excluir el valor cero. Por un lado, si se permitiera el valor \( P=0 \), cualquier producto infinito con un factor 0 convergería, y la convergencia no dependería de toda la secuencia de factores. Por otro lado, en ciertas conexiones esta convención es demasiado radical. De hecho, deseamos expresar una función como un producto infinito, y esto debe ser posible incluso si la función tiene ceros. Por esta razón, establecemos el siguiente acuerdo: Se dice que el producto infinito (14) converge si y solo si a lo más un número finito de los factores son cero, y si los productos parciales formados por los factores no nulos tienden a un límite finito diferente de cero.
+
+En un producto convergente, el factor general \( p_{n} \) tiende a 1; esto es claro al escribir \( p_{n}=P_{n} / P_{n-1} \), omitiendo los factores cero. En vista de este hecho, es preferible escribir todos los productos infinitos en la forma
+\[
+\prod_{n=1}^{\infty}\left(1+a_{n}\right)
+\]
+de modo que \( a_{n} \rightarrow 0 \) es una condición necesaria para la convergencia.
+
+Si ningún factor es cero, es natural comparar el producto (15) con la serie infinita
+\[
+\sum_{n=1}^{\infty} \log \left(1+a_{n}\right)
+\]
+
+Dado que los \( a_{n} \) son complejos, debemos acordar una rama definida de los logaritmos, y decidimos elegir la rama principal en cada término. Denotemos las sumas parciales de (16) por \( S_{n} \). Entonces \( P_{n}=e^{S_{n}} \), y si \( S_{n} \rightarrow S \) se sigue que \( P_{n} \) tiende al límite \( P=e^{S} \) que es \( \neq 0 \). En otras palabras, la convergencia de (16) es una condición suficiente para la convergencia de (15).
+
+Para probar que la condición también es necesaria, supongamos que \( P_{n} \rightarrow P \neq 0 \). No es cierto, en general, que la serie (16), formada con los valores principales, converja al valor principal de \( \log P \); lo que deseamos mostrar es que converge a algún valor de \( \log P \). Para mayor claridad, adoptaremos temporalmente la notación de denotar el valor principal del logaritmo por Log y su parte imaginaria por Arg.
+
+Debido a que \( P_{n} / P \rightarrow 1 \) es claro que \( \log \left(P_{n} / P\right) \rightarrow 0 \) para \( n \rightarrow \infty \). Existe un entero \( h_{n} \) tal que \( \log \left(P_{n} / P\right)=S_{n}-\log P+h_{n} \cdot 2 \pi i \). Pasamos a las diferencias para obtener \( \left(h_{n+1}-h_{n}\right) 2 \pi i=\log \left(P_{n+1} / P\right)- \) \( \log \left(P_{n} / P\right)-\log \left(1+a_{n}\right) \) y por lo tanto \( \left(h_{n+1}-h_{n}\right) 2 \pi=\operatorname{Arg}\left(P_{n+1} / P\right)- \) \( \operatorname{Arg}\left(P_{n} / P\right)-\operatorname{Arg}\left(1+a_{n}\right) \). Por definición, \( \left|\operatorname{Arg}\left(1+a_{n}\right)\right| \leqq \pi \), y sabemos que \( \operatorname{Arg}\left(P_{n+1} / P\right)-\operatorname{Arg}\left(P_{n} / P\right) \rightarrow 0 \). Para \( n \) grande esto es incompatible con la ecuación anterior a menos que \( h_{n+1}=h_{n} \). Por lo tanto, \( h_{n} \) es finalmente igual a un entero fijo \( h \), y se sigue de \( \log \left(P_{n} / P\right)=S_{n}-\log P+ \) \( h \cdot 2 \pi i \) que \( S_{n} \rightarrow \log P-h \cdot 2 \pi i \). Hemos demostrado:
+
+\begin{theorem}[5]
+El producto infinito \( \prod_{1}^{\infty}\left(1+a_{n}\right) \) con \( 1+a_{n} \neq 0 \) converge simultáneamente con la serie \( \sum_{1}^{\infty} \log \left(1+a_{n}\right) \) cuyos términos representan los valores de la rama principal del logaritmo.
+\end{theorem}
+
+La cuestión de la convergencia de un producto puede reducirse así a la cuestión más familiar sobre la convergencia de una serie. Puede reducirse aún más observando que la serie (16) converge absolutamente al mismo tiempo que la serie más simple \( \Sigma\left|a_{n}\right| \). Esto es una consecuencia inmediata del hecho de que
+\[
+\lim _{z \rightarrow 0} \frac{\log (1+z)}{z}=1
+\]
+
+Si cualquiera de las series (16) o \( \sum_{1}^{\infty}\left|a_{n}\right| \) converge, tenemos \( a_{n} \rightarrow 0 \), y para un \( \varepsilon>0 \) dado, la doble desigualdad
+\[
+(1-\varepsilon)\left|a_{n}\right|<\left|\log \left(1+a_{n}\right)\right|<(1+\varepsilon)\left|a_{n}\right|
+\]
+se cumplirá para todo \( n \) suficientemente grande. Se sigue inmediatamente que las dos series son de hecho simultáneamente absolutamente convergentes.
+
+Se dice que un producto infinito es absolutamente convergente si y solo si la serie correspondiente (16) converge absolutamente. Con esta terminología podemos enunciar nuestro resultado en los siguientes términos:
+
+\begin{theorem}[6]
+Una condición necesaria y suficiente para la convergencia absoluta del producto \( \prod_{1}^{\infty}\left(1+a_{n}\right) \) es la convergencia de la serie \( \sum_{1}^{\infty}\left|a_{n}\right| \).
+\end{theorem}
+
+En el último teorema, el énfasis está en la convergencia absoluta. Por ejemplos simples puede mostrarse que la convergencia de \( \sum_{1}^{\infty} a_{n} \) no es ni suficiente ni necesaria para la convergencia del producto \( \prod_{1}^{\infty}\left(1+a_{n}\right) \).
+
+Es claro qué debe entenderse por un producto infinito uniformemente convergente cuyos factores son funciones de una variable. La presencia de ceros puede causar algunas pequeñas dificultades que usualmente pueden evitarse considerando solo conjuntos en los que a lo sumo un número finito de los factores pueden anularse. Si estos factores se omiten, es suficiente estudiar la convergencia uniforme del producto restante. Los Teoremas 5 y 6 tienen análogos obvios para convergencia uniforme. Si examinamos las demostraciones, encontramos que todas las estimaciones pueden hacerse uniformes, y las conclusiones conducen a convergencia uniforme, al menos en conjuntos compactos.
+
+\section*{EJERCICIOS}
+1. Demuestre que
+\[
+\prod_{n=2}^{\infty}\left(1-\frac{1}{n^{2}}\right)=\frac{1}{2}
+\]
+2. Pruebe que para \( |z|<1 \)
+\[
+(1+z)\left(1+z^{2}\right)\left(1+z^{4}\right)\left(1+z^{8}\right) \ldots=\frac{1}{1-z}
+\]
+3. Demuestre que
+\[
+\prod_{1}^{\infty}\left(1+\frac{z}{n}\right) e^{-z / n}
+\]
+converge absoluta y uniformemente en todo conjunto compacto.
+4. Pruebe que el valor de un producto absolutamente convergente no cambia si los factores se reordenan.
+5. Muestre que la función
+\[
+\theta(z)=\prod_{1}^{\infty}\left(1+h^{2 n-1} e^{z}\right)\left(1+h^{2 n-1} e^{-z}\right)
+\]
+donde \( |h|<1 \) es analítica en todo el plano y satisface la ecuación funcional
+\[
+\theta(z+2 \log h)=h^{-1} e^{-z} \theta(z)
+\]
+
+\subsection*{2.3. Productos Canónicos.} Una función que es analítica en todo el plano se dice entera o integral. Las funciones enteras más simples que no son polinomios son \( e^{z}, \sin z \) y \( \cos z \).
+
+Si \( g(z) \) es una función entera, entonces \( f(z)=e^{g(z)} \) es entera y \( \neq 0 \). Recíprocamente, si \( f(z) \) es cualquier función entera que nunca se anula, demostremos que \( f(z) \) es de la forma \( e^{g(z)} \). Para ello observamos que la función \( f^{\prime}(z) / f(z) \), siendo analítica en todo el plano, es la derivada de una función entera \( g(z) \). De este hecho inferimos, mediante cálculo, que \( f(z) e^{-g(z)} \) tiene derivada cero, y por lo tanto \( f(z) \) es un múltiplo constante de \( e^{g(z)} \); la constante puede absorberse en \( g(z) \).
+
+Con este método también podemos encontrar la función entera más general con un número finito de ceros. Supongamos que \( f(z) \) tiene \( m \) ceros en el origen (\( m \) puede ser cero), y denotemos los otros ceros por \( a_{1}, a_{2}, \ldots, a_{N} \), repitiendo los ceros múltiples. Es entonces evidente que podemos escribir
+\[
+f(z)=z^{m} e^{\varrho(z)} \prod_{1}^{N}\left(1-\frac{z}{a_{n}}\right)
+\]
+
+Si hay infinitos ceros, podemos intentar obtener una representación similar mediante un producto infinito. La generalización obvia sería
+\[
+f(z)=z^{m} e^{g(z)} \prod_{1}^{\infty}\left(1-\frac{z}{a_{n}}\right)
+\]
+
+Esta representación es válida si el producto infinito converge uniformemente en todo conjunto compacto. De hecho, si esto es así, el producto representa una función entera con ceros en los mismos puntos (excepto en el origen) y con las mismas multiplicidades que \( f(z) \). Se sigue que el cociente puede escribirse en la forma \( z^{m} e^{g(z)} \).
+
+El producto en (17) converge absolutamente si y solo si \( \sum_{1}^{\infty} 1 /\left|a_{n}\right| \) es convergente, y en este caso la convergencia también es uniforme en todo disco cerrado \( |z| \leqq R \). Solo bajo esta condición especial podemos obtener una representación de la forma (17).
+
+En el caso general, deben introducirse factores de convergencia. Consideramos una sucesión arbitraria de números complejos \( a_{n} \neq 0 \) con \( \lim _{n \rightarrow \infty} a_{n}=\infty \), y demostramos la existencia de polinomios \( p_{n}(z) \) tales que
+\[
+\prod_{1}^{\infty}\left(1-\frac{z}{a_{n}}\right) e^{p_{n}(z)}
+\]
+converge a una función entera. El producto converge junto con la serie cuyo término general es
+\[
+r_{n}(z)=\log \left(1-\frac{z}{a_{n}}\right)+p_{n}(z)
+\]
+
+donde la rama del logaritmo se elegirá de modo que la parte imaginaria de \( r_{n}(z) \) esté comprendida entre \( -\pi \) y \( \pi \) (incluyendo estos valores).
+
+Para un \( R \) dado, consideramos solo los términos con \( \left|a_{n}\right|>R \). En el disco \( |z| \leqq R \), la rama principal de \( \log \left(1-z / a_{n}\right) \) puede desarrollarse en una serie de Taylor
+\[
+\log \left(1-\frac{z}{a_{n}}\right)=-\frac{z}{a_{n}}-\frac{1}{2}\left(\frac{z}{a_{n}}\right)^{2}-\frac{1}{3}\left(\frac{z}{a_{n}}\right)^{3}-\cdots .
+\]
+
+Cambiamos los signos y elegimos \( p_{n}(z) \) como una suma parcial
+\[
+p_{n}(z)=\frac{z}{a_{n}}+\frac{1}{2}\left(\frac{z}{a_{n}}\right)^{2}+\cdots+\frac{1}{m_{n}}\left(\frac{z}{a_{n}}\right)^{m_{n}} .
+\]
+
+Entonces \( r_{n}(z) \) tiene la representación
+\[
+r_{n}(z)=-\frac{1}{m_{n}+1}\left(\frac{z}{a_{n}}\right)^{m_{n}+1}-\frac{1}{m_{n}+2}\left(\frac{z}{a_{n}}\right)^{m_{n}+2}-\cdots
+\]
+y obtenemos fácilmente la estimación
+\[
+\left|r_{n}(z)\right| \leqq \frac{1}{m_{n}+1}\left(\frac{R}{\left|a_{n}\right|}\right)^{m_{n}+1}\left(1-\frac{R}{\left|a_{n}\right|}\right)^{-1} .
+\]
+
+Supongamos ahora que la serie
+\[
+\sum_{n=1}^{\infty} \frac{1}{m_{n}+1}\left(\frac{R}{\left|a_{n}\right|}\right)^{m_{n}+1}
+\]
+converge. Por la estimación (19) se sigue primero que \( r_{n}(z) \rightarrow 0 \), y por lo tanto \( r_{n}(z) \) tiene una parte imaginaria entre \( -\pi \) y \( \pi \) tan pronto como \( n \) sea suficientemente grande. Además, la comparación muestra que la serie \( \Sigma r_{n}(z) \) es absoluta y uniformemente convergente para \( |z| \leqq R \), y así el producto (18) representa una función analítica en \( |z|<R \). Para el razonamiento tuvimos que excluir los valores \( \left|a_{n}\right| \leqq R \), pero es claro que la convergencia uniforme de (18) no se ve afectada cuando los factores correspondientes se toman nuevamente en cuenta.
+
+Solo queda mostrar que la serie (20) puede hacerse convergente para todo \( R \). Pero esto es obvio, pues si tomamos \( m_{n}=n \) es claro que (20) tiene una serie mayorante geométrica con razón \( <1 \) para cualquier valor fijo de \( R \).
+
+\begin{theorem}[7]
+Existe una función entera con ceros prescritos arbitrariamente \( a_{n} \), siempre que, en el caso de infinitos ceros, \( a_{n} \rightarrow \infty \). Toda función entera con estos y ningún otro cero puede escribirse en la forma
+\[
+f(z)=z^{m} e^{g(z)} \prod_{n=1}^{\infty}\left(1-\frac{z}{a_{n}}\right) e^{\frac{z}{a_{n}}+\frac{1}{2}\left(\frac{z}{a_{n}}\right)^{2}+\cdots+\frac{1}{m_{n}}\left(\frac{z}{a_{n}}\right)^{m_{n}}}
+\]
+
+Este teorema se debe a Weierstrass. Tiene el siguiente corolario importante:
+
+\begin{corollary}
+Toda función que es meromorfa en todo el plano es el cociente de dos funciones enteras.
+\end{corollary}
+
+En efecto, si \( F(z) \) es meromorfa en todo el plano, podemos encontrar una función entera \( g(z) \) que tenga los polos de \( F(z) \) como ceros. El producto \( F(z) g(z) \) es entonces una función entera \( f(z) \), y obtenemos \( F(z)=f(z)/g(z) \).
+
+La representación (21) se vuelve considerablemente más interesante si es posible elegir todos los \( m_{n} \) iguales entre sí. La demostración anterior ha mostrado que el producto
+\[
+\prod_{1}^{\infty}\left(1-\frac{z}{a_{n}}\right) e^{\frac{z}{a_{n}}+\frac{1}{2}\left(\frac{z}{a_{n}}\right)^{2}+\cdots+\frac{1}{h}\left(\frac{z}{a_{n}}\right)^{h}}
+\]
+converge y representa una función entera siempre que la serie \( \sum_{n=1}^{\infty}\left(R /\left|a_{n}\right|\right)^{h+1} /(h+1) \) converja para todo \( R \), es decir, siempre que \( \Sigma 1 /\left|a_{n}\right|^{h+1}<\infty \). Supongamos que \( h \) es el menor entero para el cual esta serie converge; la expresión (22) se llama entonces el \textit{producto canónico} asociado con la sucesión \( \left\{a_{n}\right\} \), y \( h \) es el \textit{género} del producto canónico.
+
+Siempre que sea posible, usamos el producto canónico en la representación (21), que queda así determinada de manera única. Si en esta representación \( g(z) \) se reduce a un polinomio, se dice que la función \( f(z) \) es de \textit{género finito}, y el género de \( f(z) \) se define como igual al grado de este polinomio o al género del producto canónico, el que sea mayor. Por ejemplo, una función entera de género cero es de la forma
+\[
+C z^{m} \prod_{1}^{\infty}\left(1-\frac{z}{a_{n}}\right)
+\]
+con \( \Sigma 1 /\left|a_{n}\right|<\infty \). La representación canónica de una función entera de género 1 es de la forma
+\[
+C z^{m} e^{\alpha z} \prod_{1}^{\infty}\left(1-\frac{z}{a_{n}}\right) e^{z / a_{n}}
+\]
+con \( \Sigma 1 /\left|a_{n}\right|^{2}<\infty, \Sigma 1 /\left|a_{n}\right|=\infty \), o de la forma
+\[
+C z^{m} e^{\alpha z} \prod_{1}^{\infty}\left(1-\frac{z}{a_{n}}\right)
+\]
+
+con \( \Sigma 1 /\left|a_{n}\right|<\infty, \alpha \neq 0 \).
+
+Como aplicación, consideremos la representación en producto de \( \sin \pi z \). Los ceros son los enteros \( z= \pm n \). Dado que \( \Sigma 1 / n \) diverge y \( \Sigma 1 / n^{2} \) converge, debemos tomar \( h=1 \) y obtenemos una representación de la forma
+\[
+\sin \pi z=z e^{g(z)} \prod_{n \neq 0}\left(1-\frac{z}{n}\right) e^{z / n}
+\]
+
+Para determinar \( g(z) \), formamos las derivadas logarítmicas en ambos lados. Encontramos
+\[
+\pi \cot \pi z=\frac{1}{z}+g^{\prime}(z)+\sum_{n \neq 0}\left(\frac{1}{z-n}+\frac{1}{n}\right)
+\]
+donde el procedimiento es fácil de justificar por convergencia uniforme en cualquier conjunto compacto que no contenga los puntos \( z=n \). Por comparación con la fórmula anterior (10), concluimos que \( g^{\prime}(z)=0 \). Por lo tanto, \( g(z) \) es una constante, y como \( \lim _{z \rightarrow 0} \sin \pi z / z=\pi \), debemos tener \( e^{g(z)}=\pi \), y así
+\[
+\sin \pi z=\pi z \prod_{n \neq 0}\left(1-\frac{z}{n}\right) e^{z / n}
+\]
+
+En esta representación, los factores correspondientes a \( n \) y \( -n \) pueden agruparse, y obtenemos la forma simple
+\[
+\sin \pi z=\pi z \prod_{1}^{\infty}\left(1-\frac{z^{2}}{n^{2}}\right) .
+\]
+
+Se sigue de (23) que \( \sin \pi z \) es una función entera de género 1.
+
+\section*{EJERCICIOS}
+1. Supongamos que \( a_{n} \rightarrow \infty \) y que los \( A_{n} \) son números complejos arbitrarios. Demuestre que existe una función entera \( f(z) \) que satisface \( f\left(a_{n}\right)=A_{n} \).
+
+\emph{Sugerencia:} Sea \( g(z) \) una función con ceros simples en los \( a_{n} \). Demuestre que
+\[
+\sum_{1}^{\infty} g(z) \frac{e^{\gamma_{n}\left(z-a_{n}\right)}}{z-a_{n}} \cdot \frac{A_{n}}{g^{\prime}\left(a_{n}\right)}
+\]
+converge para alguna elección de los números \( \boldsymbol{\gamma}_{n} \).
+
+2. Demuestre que
+\[
+\sin \pi(z+\alpha)=e^{\pi z \cot \pi \alpha} \prod_{-\infty}^{\infty}\left(1+\frac{z}{n+\alpha}\right) e^{-z /(n+\alpha)}
+\]
+
+\noindent donde el producto se toma sobre todos los enteros \( n \), positivos y negativos.
+
+con \( \Sigma 1 /\left|a_{n}\right|<\infty, \alpha \neq 0 \).
+
+Como aplicación, consideremos la representación en producto de \( \sin \pi z \). Los ceros son los enteros \( z= \pm n \). Dado que \( \Sigma 1 / n \) diverge y \( \Sigma 1 / n^{2} \) converge, debemos tomar \( h=1 \) y obtenemos una representación de la forma
+\[
+\sin \pi z=z e^{g(z)} \prod_{n \neq 0}\left(1-\frac{z}{n}\right) e^{z / n}
+\]
+
+Para determinar \( g(z) \), formamos las derivadas logarítmicas en ambos lados. Encontramos
+\[
+\pi \cot \pi z=\frac{1}{z}+g^{\prime}(z)+\sum_{n \neq 0}\left(\frac{1}{z-n}+\frac{1}{n}\right)
+\]
+donde el procedimiento es fácil de justificar por convergencia uniforme en cualquier conjunto compacto que no contenga los puntos \( z=n \). Por comparación con la fórmula anterior (10), concluimos que \( g^{\prime}(z)=0 \). Por lo tanto, \( g(z) \) es una constante, y como \( \lim _{z \rightarrow 0} \sin \pi z / z=\pi \), debemos tener \( e^{g(z)}=\pi \), y así
+\[
+\sin \pi z=\pi z \prod_{n \neq 0}\left(1-\frac{z}{n}\right) e^{z / n}
+\]
+
+En esta representación, los factores correspondientes a \( n \) y \( -n \) pueden agruparse, y obtenemos la forma simple
+\[
+\sin \pi z=\pi z \prod_{1}^{\infty}\left(1-\frac{z^{2}}{n^{2}}\right) .
+\]
+
+Se sigue de (23) que \( \sin \pi z \) es una función entera de género 1.
+
+\section*{EJERCICIOS}
+1. Supongamos que \( a_{n} \rightarrow \infty \) y que los \( A_{n} \) son números complejos arbitrarios. Demuestre que existe una función entera \( f(z) \) que satisface \( f\left(a_{n}\right)=A_{n} \).
+
+\emph{Sugerencia:} Sea \( g(z) \) una función con ceros simples en los \( a_{n} \). Demuestre que
+\[
+\sum_{1}^{\infty} g(z) \frac{e^{\gamma_{n}\left(z-a_{n}\right)}}{z-a_{n}} \cdot \frac{A_{n}}{g^{\prime}\left(a_{n}\right)}
+\]
+converge para alguna elección de los números \( \boldsymbol{\gamma}_{n} \).
+
+2. Demuestre que
+\[
+\sin \pi(z+\alpha)=e^{\pi z \cot \pi \alpha} \prod_{-\infty}^{\infty}\left(1+\frac{z}{n+\alpha}\right) e^{-z /(n+\alpha)}
+\]
+
+\noindent donde el producto se toma sobre todos los enteros \( n \), positivos y negativos.
+
+cuando \( \alpha \) no es un entero. \emph{Sugerencia:} Denote el factor delante del producto canónico por \( g(z) \) y determine \( g^{\prime}(z) / g(z) \).
+
+3. ¿Cuál es el género de \( \cos \sqrt{z} \)?
+
+4. Si \( f(z) \) es de género \( h \), ¿qué tan grande y qué tan pequeño puede ser el género de \( f\left(z^{2}\right) \)?
+
+5. Demuestre que si \( f(z) \) es de género 0 o 1 con ceros reales, y si \( f(z) \) es real para \( z \) real, entonces todos los ceros de \( f^{\prime}(z) \) son reales. \emph{Sugerencia:} Considere \( \operatorname{Im} f^{\prime}(z) / f(z) \).
+
+\subsection*{2.4. La Función Gamma} La función \( \sin \pi z \) tiene todos los enteros como ceros, y es la función más simple con esta propiedad. Ahora introduciremos funciones que tienen solo los enteros positivos o solo los negativos como ceros. La función más simple con, por ejemplo, los enteros negativos como ceros es el producto canónico correspondiente:
+\[
+G(z)=\prod_{1}^{\infty}\left(1+\frac{z}{n}\right) e^{-z / n}
+\]
+
+Es evidente que \( G(-z) \) tiene entonces los enteros positivos como ceros, y por comparación con la representación en producto (23) de \( \sin \pi z \), encontramos inmediatamente
+\[
+z G(z) G(-z)=\frac{\sin \pi z}{\pi}
+\]
+
+Debido a la manera en que \( G(z) \) ha sido construida, está destinada a tener otras propiedades simples. Observamos que \( G(z-1) \) tiene los mismos ceros que \( G(z) \), y además un cero en el origen. Por lo tanto, es claro que podemos escribir
+\[
+G(z-1)=z e^{\gamma(z)} G(z)
+\]
+donde \( \gamma(z) \) es una función entera. Para determinar \( \gamma(z) \), tomamos las derivadas logarítmicas en ambos lados. Esto da la ecuación
+\[
+\sum_{n=1}^{\infty}\left(\frac{1}{z-1+n}-\frac{1}{n}\right)=\frac{1}{z}+\gamma^{\prime}(z)+\sum_{n=1}^{\infty}\left(\frac{1}{z+n}-\frac{1}{n}\right) .
+\]
+
+En la serie de la izquierda podemos reemplazar \( n \) por \( n+1 \). Con este cambio obtenemos
+\[
+\begin{aligned}
+\sum_{n=1}^{\infty}\left(\frac{1}{z-1+n}-\frac{1}{n}\right) & =\frac{1}{z}-1+\sum_{n=1}^{\infty}\left(\frac{1}{z+n}-\frac{1}{n+1}\right) \\
+& =\frac{1}{z}-1+\sum_{n=1}^{\infty}\left(\frac{1}{z+n}-\frac{1}{n}\right)+\sum_{n=1}^{\infty}\left(\frac{1}{n}-\frac{1}{n+1}\right) .
+\end{aligned}
+\]
+
+La última serie tiene suma 1, y por lo tanto la ecuación (27) se reduce a \( \gamma^{\prime}(z)=0 \).
+
+Así, \( \gamma(z) \) es una constante, que denotamos por \( \gamma \), y \( G(z) \) tiene la propiedad reproductiva \( G(z-1)=e^{\gamma} z G(z) \). Es algo más simple considerar la función \( H(z)=G(z) e^{\gamma z} \) que evidentemente satisface la ecuación funcional \( H(z-1)=z H(z) \).
+
+El valor de \( \gamma \) se determina fácilmente. Tomando \( z=1 \) tenemos
+\[
+1=G(0)=e^{\gamma} G(1)
+\]
+y por lo tanto
+\[
+e^{-\gamma}=\prod_{n=1}^{\infty}\left(1+\frac{1}{n}\right) e^{-1 / n}
+\]
+
+Aquí, el producto parcial n-ésimo puede escribirse en la forma
+\[
+(n+1) e^{-(1+\frac{1}{2}+\frac{1}{3}+\cdots+\frac{1}{n})}
+\]
+y obtenemos
+\[
+\gamma=\lim _{n \rightarrow \infty}\left(1+\frac{1}{2}+\frac{1}{3}+\cdots+\frac{1}{n}-\log n\right) .
+\]
+
+La constante \( \gamma \) se llama constante de Euler; su valor aproximado es 0.57722.
+
+Si \( H(z) \) satisface \( H(z-1)=z H(z) \), entonces \( \Gamma(z)=1 /[z H(z)] \) satisface \( \Gamma(z-1)=\Gamma(z)/(z-1) \), o
+\[
+\Gamma(z+1)=z \Gamma(z)
+\]
+
+Esta relación resulta ser más útil, y por esta razón se ha convertido en costumbre ampliar el conjunto restringido de funciones elementales incluyendo \( \Gamma(z) \) bajo el nombre de función gamma de Euler.
+
+Nuestra definición conduce a la representación explícita
+\[
+\Gamma(z)=\frac{e^{-\gamma z}}{z} \prod_{n=1}^{\infty}\left(1+\frac{z}{n}\right)^{-1} e^{z / n}
+\]
+y la fórmula (26) toma la forma
+\[
+\Gamma(z) \Gamma(1-z)=\frac{\pi}{\sin \pi z}
+\]
+
+Observamos que \( \Gamma(z) \) es una función meromorfa con polos en \( z=0 \), \( -1,-2, \ldots \) pero sin ceros.
+
+Tenemos \( \Gamma(1)=1 \), y por la ecuación funcional encontramos \( \Gamma(2)=1 \), \( \Gamma(3)=1 \cdot 2 \), \( \Gamma(4)=1 \cdot 2 \cdot 3 \) y en general \( \Gamma(n)=(n-1)! \). La función \( \Gamma \) puede considerarse así como una generalización del factorial. De (30) concluimos que \( \Gamma\left(\frac{1}{2}\right)=\sqrt{\pi} \).
+
+Otras propiedades se encuentran más fácilmente considerando la segunda derivada de \( \log \Gamma(z) \) para la cual encontramos, por (29), la expresión muy simple
+\[
+\frac{d}{d z}\left(\frac{\Gamma^{\prime}(z)}{\Gamma(z)}\right)=\sum_{n=0}^{\infty} \frac{1}{(z+n)^{2}}
+\]
+
+Por ejemplo, es evidente que \( \Gamma(z) \Gamma\left(z+\frac{1}{2}\right) \) y \( \Gamma(2 z) \) tienen los mismos polos, y usando (31) encontramos de hecho que
+\[
+\begin{array}{l}
+\frac{d}{d z}\left(\frac{\Gamma^{\prime}(z)}{\Gamma(z)}\right)+\frac{d}{d z}\left(\frac{\Gamma^{\prime}\left(z+\frac{1}{2}\right)}{\Gamma\left(z+\frac{1}{2}\right)}\right)=\sum_{n=0}^{\infty} \frac{1}{(z+n)^{2}}+\sum_{n=0}^{\infty} \frac{1}{\left(z+n+\frac{1}{2}\right)^{2}} \\
+\quad=4\left[\sum_{n=0}^{\infty} \frac{1}{(2 z+2 n)^{2}}+\sum_{n=0}^{\infty} \frac{1}{(2 z+2 n+1)^{2}}\right]=4 \sum_{m=0}^{\infty} \frac{1}{(2 z+m)^{2}} \\
+\quad=2 \frac{d}{d z}\left(\frac{\Gamma^{\prime}(2 z)}{\Gamma(2 z)}\right)
+\end{array}
+\]
+
+Por integración obtenemos
+\[
+\Gamma(z) \Gamma\left(z+\frac{1}{2}\right)=e^{a z+b} \Gamma(2 z)
+\]
+donde las constantes \( a \) y \( b \) aún deben determinarse. Sustituyendo \( z=\frac{1}{2} \) y \( z=1 \) usamos los valores conocidos \( \Gamma\left(\frac{1}{2}\right)=\sqrt{\pi}, \Gamma(1)=1 \), \( \Gamma\left(1 \frac{1}{2}\right)=\frac{1}{2} \Gamma\left(\frac{1}{2}\right)=\frac{1}{2} \sqrt{\pi}, \Gamma(2)=1 \) y llegamos a las relaciones
+\[
+\frac{1}{2} a+b=\frac{1}{2} \log \pi, \quad a+b=\frac{1}{2} \log \pi-\log 2 .
+\]
+
+Se sigue que
+\[
+a=-2 \log 2 \quad \text{y} \quad b=\frac{1}{2} \log \pi+\log 2 ;
+\]
+el resultado final es así
+\[
+\sqrt{\pi} \Gamma(2 z)=2^{2 z-1} \Gamma(z) \Gamma\left(z+\frac{1}{2}\right)
+\]
+que se conoce como la fórmula de duplicación de Legendre.
+
+\section*{EJERCICIOS}
+1. Demuestre la fórmula de Gauss:
+\[
+(2 \pi)^{\frac{n-1}{2}} \Gamma(z)=n^{z-\frac{1}{2}} \Gamma\left(\frac{z}{n}\right) \Gamma\left(\frac{z+1}{n}\right) \cdots \Gamma\left(\frac{z+n-1}{n}\right) .
+\]
+2. Demuestre que
+\[
+\Gamma\left(\frac{1}{6}\right)=2^{-1}\left(\frac{3}{\pi}\right)^{\frac{1}{4}} \Gamma\left(\frac{1}{3}\right)^{2}
+\]
+3. ¿Cuáles son los residuos de \( \Gamma(z) \) en los polos \( z=-n \)?
+
+
+
+
+\end{document}
+

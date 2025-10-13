@@ -1,0 +1,53 @@
+7. Sea \( V \) un \( \mathbb{R} \)-espacio vectorial con un producto escalar \( \langle-,-\rangle \) positivo definido y \( W \) el subespacio generado por el conjunto ortonormal \( \left\{v_{1}, v_{2}, \ldots, v_{k}\right\} \).
+(a) Demuestra la Identidad de Parseval: Dados \( u \in W \) y \( w \in V \), entonces
+\[
+\langle u, w\rangle=\sum_{i=1}^{k}\left\langle u, v_{i}\right\rangle\left\langle v_{i}, w\right\rangle
+\]
+(b) Demuestra la Desigualdad de Bessel: Para cualesquiera \( v \in V \)
+\[
+\sum_{i=1}^{k}\left\langle u, v_{i}\right\rangle^{2} \leq\|u\|^{2}
+\]
+
+La igualdad se satisface si \( u \in W \). \\
+
+\begin{solution}
+
+\textbf{Parte (a): Demostración de la Identidad de Parseval.} \\
+Dado que \( u \in W \), \( u \) se puede expresar como una combinación lineal de los vectores ortonormales \( v_1, v_2, \ldots, v_k \). Así, podemos escribir:
+\[
+   u = \sum_{i=1}^{k} c_i v_i
+   \]
+donde \( c_i = \langle u, v_i \rangle \) debido a la propiedad de ortonormalidad.\\
+Al calcular el producto escalar \(\langle u, w \rangle\), tenemos: 
+\[
+   \langle u, w \rangle = \left\langle \sum_{i=1}^{k} c_i v_i, w \right\rangle = \sum_{i=1}^{k} c_i \langle v_i, w \rangle
+   \]
+Sustituyendo \( c_i = \langle u, v_i \rangle \), obtenemos:
+\[
+   \langle u, w \rangle = \sum_{i=1}^{k} \langle u, v_i \rangle \langle v_i, w \rangle
+   \]
+\textbf{Parte (b): Demostración de la Desigualdad de Bessel}.\\
+Consideremos la proyección ortogonal de \( v \) sobre \( W \), denotada por \( v_W \). La proyección \( v_W \) se define como:
+\[
+u_W = \sum_{i=1}^{k} \langle u, v_i \rangle v_i
+\]
+De aquí se sigue que.
+\[
+\|u_W\|^2 = \left\langle \sum_{i=1}^{k} \langle u, v_i \rangle v_i, \sum_{j=1}^{k} \langle u, v_j \rangle v_j \right\rangle = \sum_{i=1}^{k} \langle u, v_i \rangle^2
+\]
+Ahora, descomponemos \( u \) como la suma de su proyección \( u_W \) y una componente ortogonal \( u_\perp \) a \( W \).
+\[
+u = u_W + u_\perp
+\]
+Dado que \( u_W \) es ortogonal a \( u_\perp \), por el teorema de Pitágoras, tenemos:
+\[
+\|u\|^2 = \|u_W\|^2 + \|u_\perp\|^2 \geq \|u_W\|^2 = \sum_{i=1}^{k} \langle u, v_i \rangle^2
+\]
+Esto demuestra que:
+\[
+\sum_{i=1}^{k} \langle u, v_i \rangle^2 \leq \|u\|^2
+\]
+La igualdad se cumple si y solo si \( u_\perp = 0 \), es decir, si \( u \in W \), en cuyo caso \( u = u_W \).
+
+
+\end{solution}

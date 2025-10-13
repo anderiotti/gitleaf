@@ -1,0 +1,115 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage{pgfplots}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{mdframed}
+\usepackage{amsthm}
+\usepackage{physics}
+\usepackage{derivative}
+\usepackage{hyperref}
+\usepackage{wrapfig}
+\renewcommand{\theenumi}{\roman{enumi}}
+
+\geometry{a4paper, left=2cm, right=2cm, top=1cm, bottom=2cm}
+
+\pgfplotsset{compat=1.18}
+\begin{document}
+
+\begin{minipage}{0.7\textwidth}
+    \small \textbf{LABORATORIO DE FENOMENOS COLECTIVOS}  \\
+    \small {Facultad de Ciencias, Universidad Nacional Autónoma de México} \\
+    \small {Profesor: Eduardo Morales Gamboa} \\
+    \small {Fecha de entrega: 22 de Octubre del 2024} \\
+    \small {Nombre completo: Andrés López González} \\
+    \small {Tarea ajuste polinomial}
+\end{minipage}
+\hfill
+\begin{minipage}{0.12\textwidth}
+    \includegraphics[width=\linewidth]{logo_universidad}
+\end{minipage}
+
+\subsection*{Ajuste polinomial por mínimos cuadrados.}
+
+Queremos ajustar un polinomio de la forma:
+
+\[
+P(x) = a_2x^2 + a_1x
+\]
+
+a un conjunto de datos \((x_i, y_i)\), con \(i = 1, 2, \dots, N\), utilizando el método de mínimos cuadrados.
+
+\subsubsection*{Definir el error cuadrático}
+
+El error cuadrático se define como:
+
+\[
+S(a_1, a_2) = \sum_{i=1}^N \left( y_i - P(x_i) \right)^2 = \sum_{i=1}^N \left( y_i - (a_2x_i^2 + a_1x_i) \right)^2
+\]
+
+\subsubsection*{Minimización del error}
+
+Para minimizar \(S(a_1, a_2)\), derivamos con respecto a \(a_1\) y \(a_2\) y las igualamos a cero.
+
+\subsubsubsection*{Derivada con respecto a \(a_1\):}
+
+\[
+\frac{\partial S}{\partial a_1} = -2 \sum_{i=1}^N \left( y_i - (a_2x_i^2 + a_1x_i) \right) x_i = 0
+\]
+
+\subsubsubsection*{Derivada con respecto a \(a_2\):}
+
+\[
+\frac{\partial S}{\partial a_2} = -2 \sum_{i=1}^N \left( y_i - (a_2x_i^2 + a_1x_i) \right) x_i^2 = 0
+\]
+
+\subsubsection*{Sistema de ecuaciones lineales}
+
+Las ecuaciones resultantes son:
+
+\[
+\sum_{i=1}^N y_i x_i = a_1 \sum_{i=1}^N x_i^2 + a_2 \sum_{i=1}^N x_i^3
+\]
+
+\[
+\sum_{i=1}^N y_i x_i^2 = a_1 \sum_{i=1}^N x_i^3 + a_2 \sum_{i=1}^N x_i^4
+\]
+
+\subsubsection*{Resolviendo el sistema}
+
+Podemos escribir el sistema de ecuaciones en forma matricial:
+
+\[
+\begin{pmatrix}
+\sum x_i^2 & \sum x_i^3 \\
+\sum x_i^3 & \sum x_i^4
+\end{pmatrix}
+\begin{pmatrix}
+a_1 \\
+a_2
+\end{pmatrix}
+=
+\begin{pmatrix}
+\sum y_i x_i \\
+\sum y_i x_i^2
+\end{pmatrix}
+\]
+
+Resolviendo el sistema de ecuaciones, obtenemos las expresiones de \(a_1\) y \(a_2\):
+
+\[
+a_1 = \frac{\sum y_i x_i \sum x_i^4 - \sum y_i x_i^2 \sum x_i^3}{\left( \sum x_i^2 \right) \left( \sum x_i^4 \right) - \left( \sum x_i^3 \right)^2}
+\]
+
+\[
+a_2 = \frac{\sum y_i x_i^2 \sum x_i^2 - \sum y_i x_i \sum x_i^3}{\left( \sum x_i^2 \right) \left( \sum x_i^4 \right) - \left( \sum x_i^3 \right)^2}
+\]
+
+\subsubsection*{Conclusión}
+
+Las expresiones para los coeficientes \(a_1\) y \(a_2\) del polinomio de grado 2 ajustado se encuentran resolviendo este sistema lineal, calculando las respectivas sumas sobre los datos \((x_i, y_i)\).
+
+\end{document}

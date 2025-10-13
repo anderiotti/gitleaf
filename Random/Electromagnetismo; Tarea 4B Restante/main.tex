@@ -1,0 +1,47 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage{pgfplots}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{mdframed}
+\usepackage{amsthm}
+\usepackage{physics}
+\usepackage{derivative}
+\usepackage{hyperref}
+\renewcommand{\theenumi}{\roman{enumi}}
+
+\geometry{a4paper, left=2cm, right=2cm, top=1cm, bottom=2cm}
+
+\pgfplotsset{compat=1.18}
+\begin{document}
+
+\begin{minipage}{0.7\textwidth}
+    \small \textbf{ELECTROMAGNETISMO I}  \\
+    \small {Facultad de Ciencias, Universidad Nacional Autónoma de México} \\
+    \small {Fecha de entrega: 24 de Septiembre de 2024} \\
+    \small {Nombre completo: Andrés López González} \\
+    \small {Tarea número IV.B}
+\end{minipage}
+\hfill
+\begin{minipage}{0.12\textwidth}
+    \includegraphics[width=\linewidth]{logo_universidad}
+\end{minipage}
+
+\section*{Inciso faltante}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.8\linewidth]{image.png}
+    \label{fig:enter-label}
+\end{figure}
+
+Si $r << l_1 + l_2$ es posible considerar la barra como si estuviese centrada en el origen, la carga total $Q = \lambda L = \lambda (l_1+l_2)$, por lo que tendríamos que.
+\begin{equation}
+    \phi(\mathbb{P}) = \frac{1}{4 \pi \epsilon_0} \frac{\lambda(l_1+l_2)}{l_1+l_2}ln \Big|  \frac{\sqrt{r^2+(\frac{l_1+l_2}{2})^2}+(\frac{l_1+l_2}{2})}{\sqrt{r^2+(\frac{l_1+l_2}{2})^2}-(\frac{l_1+l_2}{2})} \Big|
+\end{equation}
+Es demasiado similar el resultado solo que la carga como $\lambda L$ no aparece en la fórmula que dedujimos en A, solo se observa la densidad lineal de la carga sin la A. Además aquí tenemos algo de la forma $l_{relativo,2}=l_{relativo1}$ que es lo que llamamos $\frac{l_1+l_2}{2}$, esto dado que nuestro sistema de referencia ahora está centrado, \textit{en el centro}, de ambos extremos del tubo.
+
+\end{document}

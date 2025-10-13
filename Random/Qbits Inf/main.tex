@@ -1,0 +1,484 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage{pgfplots}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage[thmmarks, amsmath, thref]{ntheorem}
+\usepackage{mdframed}
+\usepackage{amsthm}
+\usepackage{physics}
+\usepackage{proof}
+\usepackage{derivative}
+\usepackage{hyperref}
+\usepackage{wrapfig}
+\usepackage{amsthm}
+\usepackage{xcolor}
+\renewcommand{\theenumi}{\roman{enumi}}
+
+\pgfplotsset{compat=1.18}
+\begin{document}
+
+\section*{Conocimientos Previos para Qubits Fotónicos}
+
+\subsection*{Introducción a Qubits Fotónicos}
+
+Los qubits fotónicos representan una plataforma prometedora para la computación cuántica debido a propiedades físicas únicas que los distinguen de otras implementaciones, como qubits superconductores o de espín. A continuación, se detallan sus ventajas clave y los desafíos asociados.
+
+\subsubsection*{Ventajas Clave}
+
+\begin{enumerate}
+    \item \textbf{Baja Decoherencia:}  
+    Los fotones interactúan débilmente con su entorno, lo que minimiza la decoherencia. Mientras que los qubits superconductores (ej. transmon) tienen tiempos de coherencia del orden de microsegundos a milisegundos, los estados cuánticos fotónicos pueden mantener su coherencia durante tiempos prolongados (hasta segundos en sistemas aislados). Esto se debe a que los fotones, al ser bosones sin carga eléctrica, no experimentan interacciones electromagnéticas significativas en medios dieléctricos.
+
+    \item \textbf{Transmisión a Larga Distancia:}  
+    Los fotones se propagan eficientemente en fibra óptica o espacio libre, con pérdidas típicas de 0.2 dB/km (medida para cuantificar la atenuación) en fibra estándar. Esta propiedad es fundamental para aplicaciones como la distribución cuántica de claves (QKD: método de cifrado inviolable que usa estados cuánticos para generar claves secretas) y redes cuánticas repetidoras (sistemas que amplían el alcance del entrelazamiento cuántico mediante nodos intermedios), donde la información debe viajar cientos de kilómetros sin degradación. Por ejemplo, el protocolo TF-QKD (Twin-Field QKD: variante avanzada que combina señales de dos usuarios en un punto intermedio para superar límites de distancia) ha demostrado tasas de transmisión segura de 1 Mbps a 600 km usando fibras con memorias cuánticas (dispositivos que almacenan y recuperan estados cuánticos en átomos o iones).
+
+    \item \textbf{Operación a Temperatura Ambiente:}  
+    A diferencia de los qubits superconductores, que requieren criogenia a temperaturas cercanas al cero absoluto ($\sim 10$ mK), los sistemas fotónicos operan eficientemente a temperatura ambiente. Esto elimina la necesidad de infraestructura criogénica compleja, reduciendo costos y facilitando la escalabilidad.
+\end{enumerate}
+
+\subsubsection*{Desafío Principal: Interacción Débil}
+
+La principal limitación de los qubits fotónicos es la dificultad para implementar compuertas cuánticas de dos qubits (ej. CNOT, CZ), ya que los fotones no interactúan fuertemente entre sí. La interacción fotón-fotón en el vacío es despreciable, lo que obliga a emplear estrategias indirectas:
+
+\begin{enumerate}
+    \item \textbf{Computación Cuántica Basada en Medición (MBQC):}  
+    Utiliza estados enrejados (cluster states) y mediciones adaptativas para simular compuertas. Un cluster state es un estado de muchos cuerpos donde la información cuántica se propaga mediante mediciones locales. Por ejemplo, una compuerta CNOT puede implementarse midiendo qubits específicos en una red 2D, con correcciones clásicas basadas en los resultados.
+
+    \item \textbf{Medios No Lineales:}  
+Materiales con no linealidades ópticas intensas (propiedades que modifican la luz de forma no proporcional a su intensidad), como anillos resonantes de silicio (estructuras microscópicas que confinan luz en chips fotónicos), permiten interacciones efectivas mediante el efecto Kerr (fenómeno donde el índice de refracción del material depende de la intensidad lumínica). Este fenómeno induce un desplazamiento de fase dependiente de la intensidad:
+
+\[
+\hat{H}_{\text{Kerr}} = \hbar \chi (\hat{a}^\dagger)^2 \hat{a}^2,
+\]
+donde \(\chi\) es la no linealidad (medida de cuánto cambia el índice de refracción con la intensidad) y \(\hat{a}\) el operador de aniquilación (operador cuántico que destruye un fotón). Esto permite compuertas controladas (operaciones cuánticas donde un fotón modifica el estado de otro) cuando dos fotones coinciden en el medio, alterando mutuamente sus fases.
+
+    \item \textbf{Interferencia Cuántica:}  
+    El efecto Hong-Ou-Mandel (HOM) en un beam splitter genera correlaciones cuánticas. Si dos fotones idénticos inciden simultáneamente en un beam splitter 50:50, interfieren destructivamente y salen por el mismo puerto. Esta no linealidad efectiva permite operaciones condicionales: la detección de fotones en puertos específicos proyecta el estado residual en un espacio entrelazado.
+\end{enumerate}
+
+\subsection*{Codificación de Información en Qubits Fotónicos}
+
+La información cuántica en fotones puede codificarse en múltiples grados de libertad (DoF: propiedades físicas independientes como polarización o momento angular), cada uno con ventajas y limitaciones técnicas.
+
+\subsubsection*{Grados de Libertad Comunes}
+
+\begin{enumerate}
+    \item \textbf{Polarización:}  
+    Codifica el qubit en la polarización horizontal ($|H\rangle$) o vertical ($|V\rangle$). Manipulación mediante componentes ópticos pasivos (waveplates, polarizadores). La matriz de Jones para un waveplate de retardo $\delta$ es:
+    \[
+    W(\delta) = \begin{pmatrix}
+    e^{i\delta/2} & 0 \\
+    0 & e^{-i\delta/2}
+    \end{pmatrix}.
+    \]
+    \textbf{Limitaciones:} Sensibilidad a birrefringencia en fibras, que introduce ruido de polarización.
+
+    \item \textbf{Momento Angular Orbital (OAM):}
+Utiliza modos Laguerre-Gauss (haces de luz con estructura espiral) con número cuántico topológico $\ell$ (carga orbital que determina cuántas vueltas completa la fase de la luz en una longitud de onda). Un qudit (bit cuántico multidimensional) de dimensión $d$ puede codificarse usando $\ell \in {-m, ..., m}$. La complejidad experimental aumenta con $d$, ya que la detección requiere hologramas (patrones de interferencia para medir la estructura espiral) o multiplexores espaciales (dispositivos que separan diferentes modos espaciales).
+
+    \item \textbf{Tiempo-bin:}  
+    Codifica el qubit en la llegada temporal del fotón (ej. $|early\rangle$, $late\rangle$). Ideal para fibras ópticas, ya que es inmune a fluctuaciones de polarización o fase. La interferometría de medición diferencial permite reconstruir el estado cuántico.
+
+    \item \textbf{Número de Fotones (Estados Fock):}  
+    Codifica información en el número exacto de fotones en un modo óptico ($|n\rangle$). Aunque teóricamente potente, la generación eficiente de estados Fock (ej. mediante conversión paramétrica) es técnicamente desafiante, con eficiencias típicas $<$80\%.
+\end{enumerate}
+
+\subsubsection*{Retos Experimentales}
+
+La eficiencia total de un sistema fotónico se calcula como:
+\[
+\eta_{\text{total}} = \eta_{\text{gen}} \times \eta_{\text{trans}} \times \eta_{\text{det}},
+\]
+donde $\eta_{\text{gen}}$ (generación), $\eta_{\text{trans}}$ (transmisión), y $\eta_{\text{det}}$ (detección) suelen ser $\sim 70\%$, $90\%$, y $80\%$ respectivamente en sistemas actuales. Pérdidas acumuladas limitan la escalabilidad, requiriendo el desarrollo de fuentes de fotones únicos de alta eficiencia y detectores superconductores (SNSPD) con eficiencias $>$95\%.
+
+\subsection*{Implementación de Compuertas Cuánticas}
+
+\subsubsection*{Compuerta CNOT Fotónica}
+
+Un protocolo común utiliza interferencia en un polarizing beam splitter (PBS) y medición Bell:
+
+\begin{enumerate}
+    \item \textbf{Preparación:} Generar un par EPR $|\Phi^+\rangle = \frac{1}{\sqrt{2}}(|HH\rangle + |VV\rangle)$.
+    \item \textbf{Interferencia:} El PBS aplica la transformación:
+    \[
+    \hat{U}_{\text{PBS}}|H\rangle|H\rangle \rightarrow |H\rangle|H\rangle, \quad \hat{U}_{\text{PBS}}|H\rangle|V\rangle \rightarrow |V\rangle|H\rangle.
+    \]
+    \item \textbf{Medición:} Detectar fotones en los modos de salida, colapsando el estado residual en una combinación que simula la acción CNOT tras correcciones clásicas.
+\end{enumerate}
+
+La fidelidad experimental está limitada por la indistinguibilidad espectral y espacial de los fotones. Avances recientes en puntos cuánticos (quantum dots) han alcanzado fidelidades del 95\%.
+
+\subsection*{Comparativa de Esquemas de Codificación}
+
+\begin{table}[h]
+\centering
+\small
+\begin{tabular}{|l|c|c|c|}
+\hline
+\textbf{Codificación} & \textbf{Ancho de banda} & \textbf{Coherencia} & \textbf{Complejidad} \\
+\hline
+Polarización & 1-10 GHz & 1-100 ms & Baja \\
+OAM ($\ell=\pm 5$) & 50+ GHz & 10-100 $\mu$s & Alta \\
+Tiempo-bin & 1-100 MHz & $>$1 s & Moderada \\
+Fock states & 1-10 GHz & N/A & Alta \\
+\hline
+\end{tabular}
+\end{table}
+
+\subsubsection*{Selección de Codificación Óptima}
+
+\begin{itemize}
+    \item \textbf{QKD:} Polarización (protocolo BB84) o tiempo-bin (TF-QKD) para máxima distancia.
+    \item \textbf{Computación Cuántica:} OAM para procesamiento paralelo en qudits, Fock states para algoritmos como Boson Sampling.
+    \item \textbf{Memorias Cuánticas:} Tiempo-bin acoplado a memorias atómicas (ej. átomos de rubidio en cavidades ópticas).
+\end{itemize}
+
+\section{Operaciones y Compuertas con Qubits Fotónicos}
+
+\subsection*{El Problema de la No Interacción}
+
+La implementación de compuertas cuánticas en sistemas fotónicos enfrenta un desafío fundamental: la interacción extremadamente débil entre fotones. En medios lineales, la sección transversal de interacción fotón-fotón es del orden de:
+\[
+\sigma_{\text{interacción}} \sim 10^{-30}\ \text{m}^2 \quad (\text{vs}\ 10^{-20}\ \text{m}^2\ \text{en átomos}),
+\]
+lo que hace imposible realizar compuertas como CNOT o CZ de manera directa. Esta limitación obliga a emplear estrategias de ingeniería cuántica no triviales.
+
+\subsubsection*{Solución 1: Computación Cuántica Basada en Medición (MBQC)}
+
+El enfoque MBQC utiliza \textbf{estados cluster}, definidos como:
+\[
+|\text{Cluster}\rangle = \bigotimes_{\langle i,j \rangle} CZ_{ij} |+\rangle^{\otimes n},
+\]
+donde $|+\rangle = \frac{1}{\sqrt{2}}(|0\rangle + |1\rangle)$ y $CZ_{ij}$ aplica una compuerta control-Z entre los qubits $i$ y $j$. La computación se realiza mediante mediciones adaptativas en una secuencia predefinida, donde los resultados determinan las bases de medición posteriores. En experimentos recientes con 8 qubits, se han alcanzado fidelidades del 89\% (Bristol, 2022). Sin embargo, la preparación "offline" de estados cluster y la necesidad de correcciones clásicas en tiempo real imponen desafíos de escalabilidad.
+
+\subsection*{No Linealidades Ópticas para Compuertas}
+
+\subsubsection*{Efecto Kerr en Nano-fotónica}
+
+En medios no lineales, el efecto Kerr induce un cambio de fase dependiente de la intensidad luminosa:
+\[
+\Delta\phi = \gamma n_{\text{fotones}} \quad (\gamma_{\text{Si}_3\text{N}_4} = 10^{-19}\ \text{m}^2/\text{W}),
+\]
+donde $\gamma$ es el coeficiente no lineal y $n_{\text{fotones}}$ el número de fotones en el modo. En anillos resonantes de nitruro de silicio ($\text{Si}_3\text{N}_4$) con factores de calidad $Q > 10^6$, se logran desplazamientos de fase de $\pi$ con potencias ópticas moderadas ($\sim 1$ mW). Esto permite implementar compuertas CZ deterministas, donde un fotón control modifica la fase de un fotón objetivo. Experimentos recientes reportan fidelidades del 99.2\% y tiempos de operación de $<1$ ps (Nature Photonics, 2023).
+
+\subsubsection*{Limitaciones de Materiales}
+
+Aunque prometedores, los materiales no lineales presentan desafíos:
+\begin{itemize}
+    \item \textbf{Pérdidas ópticas}: Dispersión Raman y Brillouin en anillos resonantes.
+    \item \textbf{No linealidad débil}: Requiere estructuras de confinamiento extremo (ej. guías de onda de 200 nm x 500 nm).
+\end{itemize}
+
+\subsection*{Compuertas Deterministas vs. Probabilistas}
+
+\begin{table}[h]
+\centering
+\small
+\begin{tabular}{|l|c|c|}
+\hline
+\textbf{Característica} & \textbf{Determinista} & \textbf{Probabilista} \\
+\hline
+Mecanismo & Efecto Kerr & Interferencia HOM \\
+Eficiencia & 100\% & 50\% \\
+Fidelidad & $>99\%$ & $95\%$ \\
+Escalabilidad & Alta & Media \\
+\hline
+\end{tabular}
+\caption{Comparación de esquemas de compuertas fotónicas.}
+\end{table}
+
+\subsubsection*{Compuertas Probabilistas por Interferencia HOM}
+
+En un beam splitter 50:50, dos fotones indistinguibles interfieren según:
+\[
+|1,1\rangle \xrightarrow{\text{BS}} \frac{|2,0\rangle - |0,2\rangle}{\sqrt{2}}.
+\]
+La post-selección de eventos donde ambos fotones salen por el mismo puerto permite implementar operaciones condicionales. Sin embargo, la eficiencia máxima es del 50\% debido a las estadísticas de Bose-Einstein. Este enfoque es utilizado en protocolos de fusión de entrelazamiento y compuertas lineales ópticas.
+
+\subsection*{Implementación de Compuertas en Chips Fotónicos}
+
+Un circuito integrado para compuertas CZ típicamente incluye:
+\begin{enumerate}
+    \item \textbf{Acopladores direccionales}: Dividen fotones con relación 50:50.
+    \item \textbf{Anillos resonantes}: Radio $R = 5\ \mu\text{m}$, sintonizados para inducir un desplazamiento de fase $\Delta\phi = \pi$ con dos fotones.
+    \item \textbf{Guías de onda acopladas}: Minimizan pérdidas ($<0.1$ dB/cm).
+\end{enumerate}
+
+En este diseño, dos fotones ingresan al anillo simultáneamente. La no linealidad Kerr induce un cambio de fase condicional, implementando la compuerta CZ. Experimentos recientes demuestran tasas de operación de 10 MHz, limitadas principalmente por la velocidad de generación de fotones únicos (Nature Photonics, 2023).
+
+\section{Aplicaciones Prácticas}
+
+\subsection*{Comunicación Cuántica Fotónica}
+
+\subsubsection*{QKD BB84 con Polarización}
+
+El protocolo BB84 utiliza dos bases de polarización:
+\begin{itemize}
+    \item Base rectilínea: $\{|H\rangle, |V\rangle\}$.
+    \item Base diagonal: $\{|+\rangle = \frac{1}{\sqrt{2}}(|H\rangle + |V\rangle), |-\rangle = \frac{1}{\sqrt{2}}(|H\rangle - |V\rangle)\}$.
+\end{itemize}
+Un intruso que mida en la base incorrecta introduce errores detectables, garantizando seguridad. En 2023, se logró una tasa de transmisión segura de 1 kbps a 600 km usando fibras con pérdidas de 0.16 dB/km y detectores superconductores (SNSPD).
+
+\subsubsection*{Teleportación Cuántica}
+
+El protocolo de teleportación involucra tres pasos:
+\begin{enumerate}
+    \item Crear un par EPR: $\frac{1}{\sqrt{2}}(|HH\rangle + |VV\rangle)$.
+    \item Medición Bell en los fotones de Alice (control y mensaje).
+    \item Corrección unitaria en el fotón de Bob basada en los resultados clásicos.
+\end{enumerate}
+Experimentos recientes han teleportado estados quánticos entre nodos separados por 1,200 km usando satélites, con fidelidades del 85\%.
+
+\subsection*{Boson Sampling}
+
+\subsubsection*{Complejidad Computacional}
+
+Boson Sampling consiste en muestrear la distribución de probabilidad de $n$ fotones indistinguibles en una red interferométrica de $m \gg n$ modos. La complejidad clásica crece como $O(n!)$, haciéndolo intratable para $n > 50$. El experimento Jiuzhang (2021) utilizó 76 fotones y una red de 100 modos, requiriendo $\sim 10^{23}$ años de cómputo clásico para simular.
+
+\subsubsection*{Componentes Clave}
+
+\begin{itemize}
+    \item \textbf{Fuentes de fotones únicos}: Emisión determinista con quantum dots (eficiencia $\sim 70\%$).
+    \item \textbf{Redes interferométricas}: Estabilidad térmica $<1$ nm y pérdidas $<0.5$ dB por componente.
+    \item \textbf{Detectores de alta eficiencia}: SNSPD con eficiencia del 95\% y tiempo muerto $<10$ ns.
+\end{itemize}
+
+\subsection*{Sistemas Híbridos Cuánticos}
+
+\subsubsection*{Quantum Internet}
+
+Los fotones actúan como "mensajeros" entre plataformas cuánticas:
+\begin{itemize}
+    \item \textbf{Conversión de qubits}: Superconductores a fotones mediante cavidades ópticas acopladas a qubits transmon (Delft, 2022). Eficiencias de conversión alcanzan el 85\%.
+    \item \textbf{Memorias cuánticas}: Átomos de rubidio en cavidades de Fabry-Pérot almacenan estados fotónicos con tiempos de coherencia de 1 s.
+\end{itemize}
+
+\subsubsection*{Retos Técnicos}
+
+\begin{itemize}
+    \item \textbf{Eficiencia en interfaces}: Pérdidas en acoplamiento fibra-chip ($\sim 3$ dB por interfaz).
+    \item \textbf{Sincronización}: Control de retardos temporales $<1$ ps en redes multinodo.
+\end{itemize}
+
+\subsection*{Comparativa de Aplicaciones Clave}
+
+\begin{table}[h]
+\centering
+\small
+\begin{tabular}{|l|l|l|l|}
+\hline
+\textbf{Aplicación} & \textbf{Plataforma} & \textbf{Ventaja} & \textbf{Desafío} \\
+\hline
+QKD & Polarización & 600 km en fibra & Pérdidas exponenciales \\
+Boson Sampling & Fock states & Ventaja cuántica demostrada & Escalamiento a $n > 100$ \\
+Quantum Internet & Híbridos & Baja decoherencia & Estandarización de protocolos \\
+\hline
+\end{tabular}
+\caption{Resumen de aplicaciones fotónicas prácticas.}
+\end{table}
+
+\subsubsection*{Conclusiones}
+
+\begin{itemize}
+    \item La fotónica domina en comunicaciones cuánticas de larga distancia gracias a su baja decoherencia.
+    \item Algoritmos como Boson Sampling requieren mejoras en generación y detección de fotones para superar $n=100$.
+    \item Los sistemas híbridos, aunque prometedores, necesitan interfaces más eficientes y protocolos de sincronización robustos.
+\end{itemize}
+
+\section{Estado Actual y Retos en Qubits Fotónicos}
+
+\subsection*{Escalabilidad y Gestión de Pérdidas}
+
+La escalabilidad de sistemas fotónicos enfrenta un desafío fundamental: las pérdidas ópticas acumulativas. En fibras estándar, la atenuación típica ($\alpha = 0.2$ dB/km) limita la distancia de transmisión útil a una longitud de media energía:
+\[
+L_{1/2} = \frac{3 \ln 10}{10 \alpha} \approx 15\ \text{km}.
+\]
+Para superar esto, se exploran dos enfoques complementarios:
+
+\begin{enumerate}
+    \item \textbf{Chips Fotónicos de Ultra-Bajas Pérdidas}: Guías de onda en nitruro de silicio ($\text{Si}_3\text{N}_4$) con pérdidas $\alpha < 0.1$ dB/cm permiten integración densa de componentes (acopladores, divisores, resonadores). Estos chips reducen la huella física en 100x comparado con sistemas discretos.
+    
+    \item \textbf{Repetidores Cuánticos}: Nodos basados en memorias de iones (ej. $\text{Yb}^+$) almacenan estados cuánticos, permitiendo distribución de entrelazamiento en saltos de 50 km. Protocolos como DLCZ (Duan-Lukin-Cirac-Zoller) alcanzan tasas de entrelazamiento de 1 Hz por nodo (Nature, 2023).
+\end{enumerate}
+
+\subsubsection*{Corrección de Errores Cuánticos}
+
+Los códigos cuánticos fotónicos deben compensar pérdidas y errores de operación:
+
+\begin{table}[h]
+\centering
+\small
+\begin{tabular}{|l|c|c|}
+\hline
+\textbf{Código} & \textbf{Redundancia} & \textbf{Fidelidad Post-Corrección} \\
+\hline
+Gato (Cat States) & 5x & 99.2\% \\
+Superficie & 9x & 99.9\% \\
+\hline
+\end{tabular}
+\end{table}
+
+El código de superficie, aunque más redundante, ofrece protección contra errores arbitrarios mediante qubits físicos dispuestos en una red 2D. Su implementación en fotónica requiere sincronización temporal de fotones con precisión $<1$ ps.
+
+\subsection*{Avances en Componentes Críticos}
+
+\subsubsection*{Fuentes de Fotones Únicos}
+
+\begin{table}[h]
+\centering
+\small
+\begin{tabular}{|l|c|c|}
+\hline
+\textbf{Tecnología} & \textbf{Tasa (Hz)} & \textbf{Indistinguibilidad} \\
+\hline
+SPDC & $10^6$ & 95\% \\
+Quantum Dots & $10^9$ & 99\% \\
+Silicio & $10^7$ & 98\% \\
+\hline
+\end{tabular}
+\end{table}
+
+\begin{itemize}
+    \item \textbf{SPDC (Conversión Paramétrica)}: Genera pares entrelazados mediante cristales no lineales (BBO, PPKTP). Limitado por emisión probabilista y tasa de coincidencia.
+    \item \textbf{Quantum Dots}: Emisores determinísticos en matrices de GaAs. Avances recientes en "purgado espectral" mejoran la indistinguibilidad a 99.5\% (Optica, 2024).
+\end{itemize}
+
+\subsubsection*{Detectores de Alta Performance}
+
+\begin{itemize}
+    \item \textbf{SNSPD (Superconducting Nanowire)}: Eficiencia $\eta > 95\%$, tiempo muerto $\tau_{\text{muerto}} < 10$ ns, operación a 2 K. Arrays de 256 píxeles (MIT, 2023) permiten detección multiplexada en redes cuánticas.
+    \item \textbf{SPAD (Silicon Photomultiplier)}: Eficiencia $\sim70\%$ a temperatura ambiente, útil para QKD en sistemas comerciales. Ruido térmico limita su uso a tasas $<10^6$ cps.
+\end{itemize}
+
+\subsection*{Retos y Hoja de Ruta Tecnológica}
+
+\begin{table}[h]
+\centering
+\small
+\begin{tabular}{|l|l|}
+\hline
+\textbf{Reto} & \textbf{Solución Emergente} \\
+\hline
+Interconexión con pérdidas & Guías de onda fotónicas en $\text{Si}_3\text{N}_4$ (0.01 dB/cm) \\
+Corrección de errores escalable & Códigos GKP (Gottesman-Kitaev-Preskill) \\
+Generación eficiente de fotones & Quantum dots con purga espectral activa \\
+Escalado masivo & Integración híbrida CMOS-fotónica \\
+\hline
+\end{tabular}
+\end{table}
+
+\subsubsection*{Tendencias Clave}
+
+\begin{itemize}
+    \item \textbf{Conversión de Frecuencia}: Interfaces superconductores-fotónicos que mapean qubits de microondas (4 GHz) a fotones ópticos (200 THz) con eficiencia del 85\% (Nature, 2023).
+    \item \textbf{Control Cuántico Integrado}: Chips ASIC para controlar arrays de 100+ modos fotónicos con retardos ajustables (Nature Electronics, 2024).
+\end{itemize}
+
+\subsection*{Estado Actual y Metas Futuras}
+
+\subsubsection*{Plataformas Líderes}
+
+\begin{itemize}
+    \item \textbf{Xanadu (Borealis)}: 216 qubits fotónicos usando estados squeezed en redes programables. Aplicación principal: Boson Sampling con 216 modos.
+    \item \textbf{PsiQuantum}: Objetivo de integrar 1 millón de qubits en chips de silicio-fotónica, enfocado en simulación de materiales.
+\end{itemize}
+
+\subsubsection*{Récords Recientes}
+
+\begin{itemize}
+    \item \textbf{QKD}: Transmisión segura a 600 km en fibra estándar (NICT, Japón 2023), usando protocolo TF-QKD con tasa de 1 kbps.
+    \item \textbf{Teleportación Cuántica}: Enlace satelital de 1,200 km entre estaciones terrestres en China y Austria, con fidelidad media del 85\%.
+\end{itemize}
+
+\subsubsection*{Desafíos Pendientes}
+
+\begin{enumerate}
+    \item \textbf{Eficiencia Total del Sistema}: Mejorar $\eta_{\text{sistema}} = \eta_{\text{gen}} \times \eta_{\text{trans}} \times \eta_{\text{det}}$ del 50\% actual a >90\%, requiriendo:
+    \begin{itemize}
+        \item Fuentes deterministas con $\eta_{\text{gen}} > 95\%$
+        \item Fibras ultratransparentes (0.15 dB/km)
+        \item SNSPD con $\eta_{\text{det}} > 99\%$
+    \end{itemize}
+    
+    \item \textbf{Integración Plug-and-Play}: Desarrollo de estándares de interfaz cuántica (QIaaS) para conectar dispositivos heterogéneos.
+\end{enumerate}
+
+\section*{Cierre: Futuro de la Fotónica Cuántica}
+
+\subsection*{Rol en Infraestructuras Cuánticas}
+
+\begin{itemize}
+    \item \textbf{Repetidores Cuánticos}: Nodos con memorias de iones ($\text{Eu}^{3+}$ en $\text{Y}_2\text{SiO}_5$) alcanzarán $\eta_{\text{nodo}} > 90\%$ para 2030, permitiendo redes globales.
+    \item \textbf{Comunicación Satelital}: Constelaciones de satélites cuánticos (ej. proyecto QUESS) expandirán cobertura a zonas remotas.
+\end{itemize}
+
+\subsection*{Ventajas Algorítmicas y Aplicaciones}
+
+\begin{itemize}
+    \item \textbf{Boson Sampling}: Con 50 fotones, supera la simulación clásica ($\mathcal{O}(n^2)$ vs $\mathcal{O}(n!)$). Aplicaciones en grafos complejos y teoría de matrices.
+    \item \textbf{Simulación Molecular}: Cálculo de energías de enlace con precisión <1\% usando 50 qubits fotónicos, relevante para diseño de fármacos.
+\end{itemize}
+
+\subsection*{Sistemas Híbridos}
+
+\begin{table}[h]
+\centering
+\small
+\begin{tabular}{lcc}
+\toprule
+\textbf{Plataforma} & \textbf{Qubits} & \textbf{Fidelidad} \\
+\midrule
+Superconductores + Fotones & 100 & 92\% \\
+Iones + Fibra & 50 & 95\% \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{itemize}
+    \item \textbf{Superconductores-Fotones}: Conversión microondas-óptica mediante piezo-óptica, permitiendo conexión entre centros de datos cuánticos.
+    \item \textbf{Iones-Fibra}: Memorias cuánticas con coherencia de segundos, ideales para repetidores.
+\end{itemize}
+
+\subsection*{Conclusión Sintética}
+
+La fotónica cuántica se consolida como columna vertebral de las tecnologías cuánticas distribuidas. Mientras persisten retos en escalabilidad y eficiencia, avances en materiales (quantum dots, $\text{Si}_3\text{N}_4$), códigos de corrección (GKP), y arquitecturas híbridas trazan un camino claro hacia aplicaciones prácticas en comunicación, computación, y simulación dentro de la próxima década.
+
+\section*{Referencias}
+\begin{enumerate}
+    \item Nielsen, M. A., \& Chuang, I. L. (2010). \emph{Quantum Computation and Quantum Information}. Cambridge University Press. (Fundamentos teóricos de qubits y algoritmos)
+    
+    \item Walmsley, I. (2015). \emph{Quantum photonics}. Science, 348(6236). (Visión general de fotónica cuántica)
+    
+    \item Bennett, C. H., \& Brassard, G. (1984). \emph{Quantum cryptography: Public key distribution and coin tossing}. Proceedings of IEEE International Conference on Computers, Systems and Signal Processing. (Protocolo BB84 original)
+    
+    \item Raussendorf, R., \& Briegel, H. J. (2001). \emph{A one-way quantum computer}. Physical Review Letters, 86(22). (MBQC y cluster states)
+    
+    \item Aaronson, S., \& Arkhipov, A. (2013). \emph{The computational complexity of linear optics}. STOC '11. (Teoría de Boson Sampling)
+    
+    \item Zhong, H.-S. et al. (2020). \emph{Quantum computational advantage using photons}. Science, 370(6523). (Experimento Jiuzhang)
+    
+    \item Liao, S.-K. et al. (2017). \emph{Satellite-to-ground quantum key distribution}. Nature, 549(7670). (QKD satelital con Micius)
+    
+    \item Kimble, H. J. (2008). \emph{The quantum internet}. Nature, 453(7198). (Visión de redes cuánticas)
+    
+    \item Carolan, J. et al. (2015). \emph{Universal linear optics}. Science, 349(6249). (Computación cuántica fotónica programable)
+    
+    \item Mirrahimi, M. et al. (2014). \emph{Dynamically protected cat-qubits: A new paradigm for universal quantum computation}. Physical Review X, 4(1). (Códigos de gato)
+    
+    \item Senellart, P. et al. (2017). \emph{High-performance semiconductor quantum-dot single-photon sources}. Nature Nanotechnology, 12(11). (Fuentes de quantum dots)
+    
+    \item Natarajan, C. M. et al. (2012). \emph{Superconducting nanowire single-photon detectors: Physics and applications}. Optics Express, 20(1). (SNSPD)
+    
+    \item Wehner, S. et al. (2018). \emph{Quantum internet: A vision for the road ahead}. Science, 362(6412). (Arquitectura de Internet Cuántica)
+    
+    \item Wang, J. et al. (2020). \emph{Integrated photonic quantum technologies}. Nature Photonics, 14(5). (Chips fotónicos integrados)
+    
+    \item Lucamarini, M. et al. (2018). \emph{Overcoming the rate–distance limit of quantum key distribution without quantum repeaters}. Nature, 557(7705). (Protocolo TF-QKD)
+\end{enumerate}
+
+
+\end{document}

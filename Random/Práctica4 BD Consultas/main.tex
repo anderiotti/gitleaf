@@ -1,0 +1,152 @@
+\documentclass{article}
+\usepackage{graphicx} % Required for inserting images
+
+\setlength{\headheight}{13.5pt}
+\addtolength{\voffset}{-1.5cm}
+\addtolength{\hoffset}{-1cm}
+\addtolength{\textwidth}{2cm}
+\addtolength{\textheight}{3cm}
+
+%Header-Footer
+\usepackage{fancyhdr}
+%Header Info
+\lhead{Profesor: C\'esar Hern\'andez Cruz}
+\rhead{\'Algebra Lineal I 2024-1}
+
+\title{BDE: Práctica   4 Modelo Entidad - Relación}
+\author{Carlos Fabián Esteva Gallegos, Andrés López González} 
+
+\begin{document}
+
+\maketitle
+
+\textbf{Objetivo:} Realizar consultas en SQL a las bases de datos de los sistemas de Reclusorios y Pacientes en base de datos Postgres.
+
+\section*{Actividad 1:}
+En las bases de datos Reclusorios\_XXX y Pacientes\_XXX QUE CREASTE EN LA PRACTICA ANTERIOR, cargar 10 registros en las tablas correspondientes a las entidades fuertes y los registros que correspondan en las entidades débiles conforme a las siguientes restricciones:
+
+a) Las llaves primarias no deben ser numéricas, sino alfanuméricas empezando por tres letras y tres números.
+
+\begin{table}[h]
+    \centering
+    \begin{tabular}{|l|l|}
+        \hline
+        Id paciente & PAC001 \\
+        \hline
+        Id juez & JUE004 \\
+        \hline
+        Id enfermedad & ENF003 \\
+        \hline
+    \end{tabular}
+\end{table}
+
+b) Recuerde las reglas de integridad de dominio, de valor y referencias vistas en clase y respétalas al cargar la información.
+
+
+
+\section*{Actividad 2: Verifique los datos capturados}
+
+a) Consulte todos los registros de todas las tablas de Reclusorios\_XXX.
+
+
+b) Consulte todos los registros de todas las tablas y Pacientes\_XXX.
+
+\section*{Actividad 3: Realizar las siguientes consultas al Sistema Reclusorios\_XXX}
+
+\begin{enumerate}
+    \item[i.] Dado el nombre del recluso, obtener quien fue el juez que lo juzgo y cuántos días deberá cumplir por condena.
+    
+    \item[ii.] Dado el nombre del juez, obtener el nombre de los reclusos que ha juzgado, así como el promedio de días que suele poner por condena a estos reclusos.
+    
+    \item[iii.] Dado el nombre del delito, obtener el número de reclusos que están cumpliendo condena por ese mismo delito.
+    
+    \item[iv.] Dado el número de días obtener el nombre de los reclusos que cumplen una pena del mismo número de días.
+\end{enumerate}
+
+
+\section*{Actividad 4: Realizar las siguientes consultas al Sistema Pacientes\_XXX}
+
+\begin{enumerate}
+    \item[i.] Dado el nombre de un paciente, conocer el nombre de todas las enfermedades que ha padecido.
+    
+    \item[ii.] Dado el nombre de una enfermedad, conocer el nombre y domicilio de todos los pacientes que la han padecido.
+    
+    \item[iii.] Dado el nombre de una enfermedad, conocer el nombre de todos los pacientes para los cuales su padre o su madre hayan padecido dicha enfermedad.
+    
+    \item[iv.] Dado el nombre de un paciente, conocer todas las enfermedades que hayan padecido los hermanos y primos de dicho paciente.
+    
+    \item[v.] Conocer el nombre de todas las enfermedades contagiosas, y para cada una de éstas, conocer el nombre de todos los pacientes que la hayan padecido.
+\end{enumerate}
+
+\begin{verbatim}
+SELECT * FROM a
+INNER JOIN b ON a.key = b.key
+
+SELECT * FROM a
+LEFT JOIN b ON a.key = b.key
+
+SELECT * FROM a
+WHERE b.key IS NULL
+
+SELECT * FROM a
+WHERE a.key IS NULL
+
+SELECT * FROM a
+FULL JOIN b ON a.key = b.key
+
+SELECT * FROM a
+RIGHT JOIN b ON a.key = b.key
+
+SELECT * FROM a
+WHERE a.key IS NULL
+\end{verbatim}
+
+a) Cree las tablas y capture los datos EN LA BASE DE DATOS QUE ACABAS DE CREAR que se indican a continuación:
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|l|l|l|l|l|}
+        \hline
+        \textbf{id\_Empleado} & \textbf{Nombre\_Empleado} & \textbf{id\_Proy} & \textbf{id\_Proy} & \textbf{Nombre\_Proyecto} \\
+        \hline
+        EMP001 & Juan Pérez & PROY001 & PROY001 & Inteligencia Negocio \\
+        \hline
+        EMP002 & Pedro López & NULL & PROY003 & Big Data \\
+        \hline
+        EMP004 & Armando Contreras & NULL & PROY005 & Aseguramiento Calidad \\
+        \hline
+        EMP005 & Elisa Ramírez & PROY003 & & \\
+        \hline
+        EMP007 & Laura Rodríguez & PROY003 & & \\
+        \hline
+        EMP009 & Esteban Gutiérrez & PROY001 & & \\
+        \hline
+        EMP010 & Claudia Méndez & PROY003 & & \\
+        \hline
+    \end{tabular}
+\end{table}
+
+b) Investigue la sintaxis para diferentes tipos de join y resuelva las siguientes consultas:
+
+\begin{enumerate}
+    \item[i.] Obtener todos los Empleados que tienen Proyectos asignados
+    
+    \item[ii.] De todos los Empleados, quienes tienen Proyecto y quienes no
+    
+    \item[iii.] Obtener todos los Empleados y los Proyectos, así como los Empleados sin Proyecto y los Proyectos sin Empleado
+    
+    \item[iv.] Obtener los Empleados sin Proyecto y los Proyectos sin Empleados
+    
+    \item[v.] Obtener los Empleados que no tienen Proyecto asignado
+    
+    \item[vi.] Obtener los Proyectos que no tienen Empleado asignado
+\end{enumerate}
+
+
+\end{document}
+
+
+
+
+
+\end{document}

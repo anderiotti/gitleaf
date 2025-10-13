@@ -1,0 +1,152 @@
+\documentclass{article}
+\usepackage[spanish]{babel} 
+\usepackage{amsmath}
+\usepackage{float}
+\usepackage{graphicx}
+\graphicspath{{tablasla}}
+
+\title{ISICIY}
+\author{José Daniel Vallejo Mendoza}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+%\tableofcontents
+
+\begin{abstract}
+%\addcontentsline{toc}{abstract}{abstract}
+
+ La intención de este documento es recopilar de manera sistemática una serie de mediciones obtenidas a partir de una metodología pragmática en un laboratorio de mecánica clásica; evaluar si las conclusiones a las que nos guían dichas mediciones son congruentes con nuestros conocimientos de física o si, por el contrario, hay una discrepancia entre lo que vemos y lo que conocemos. \par
+Se exponen los parámetros de una serie de cuerpos esféricos homogéneos (que se dividen en canicas y bolas de plastilina) cuya masa y radio medimos; de esta manera podemos calcular su volumen de forma teórica para más adelante comparar esos resultados con los que se obtuvieron experimentalmente (haciendo uso de una cantidad de agua fija y una probeta graduada). habiendo medido el volumen y masa de los cuerpos, comparamos los datos para saber como se relacionan estas dos propiedades, y tratar de inferir en una propiedad adicional derivada de las dos anteriores. 
+Después, haciendo uso de un dinamómetro, pesamos cada uno de los cuerpos previamente mencionados; observamos como el peso de un cuerpo varía en función de su masa y discurrimos nuevamente en una constante de proporcionalidad.
+\end{abstract}
+
+
+\section*{Marco teórico}
+%\addcontentsline{toc}{section}{Marco teórico}
+\begin{itemize}
+\item La densidad es una propiedad que poseen los cuerpos homogéneos. Esta propiedad relaciona la masa que posee un cuerpo y la manera en la que se distribuye dicha masa a lo largo de un espacio tridimensional (la masa se distribuye equitativamente a lo largo del espacio, por eso se dice que el cuerpo es homogéneo). Las unidades en las que está dada la densidad, que es una magnitud física derivada y escalar, son unidades de masa entre unidades de longitud al cubo 
+\begin{equation}
+    \rho = \frac{m}{v}
+\end{equation}
+La densidad es proporcional a la masa e inversamente proporcional al volumen; un cuerpo que existe en un espacio reducido y es muy masivo, es muy denso.
+\item La fuerza que experimentan los cuerpos que están dentro del alcance de la gravedad terrestre es directamente proporcional a la masa que poseen. Dicha fuerza se denomina peso (w). La dirección del peso que un cuerpo experimenta es hacía el centro de la tierra y puede variar en función de la distancia de dicho cuerpo a la superficie terrestre (gravedad y peso específicos) dado que 
+\begin{equation}
+    F = G \cdot \frac{ m_{1}m_{2}}{r^2}
+\end{equation}
+donde G es la constante de la gravitación universal ($G = 6.67 \cdot 10^{-11}\frac{m^{3}}{kg\cdot s^2}$) F es la fuerza de atracción entre dos cuerpos de masa $m_{1}, m_{2}$ que se encuentran separados por una distancia r. Si tomamos a F como el peso ($w = m_{1}g$ donde g es la gravedad) obtenemos que
+\begin{equation}
+    g = G \cdot \frac{m_{2}}{r^2}
+\end{equation}
+se puede apreciar que la gravedad que experimenta un cuerpo de masa $m_{1}$ por la acción de un cuerpo de masa $m_{2}$ es inversamente proporcional a la distancia entre ambos cuerpos. \par
+En general, decimos que si un cuerpo se encuentra sobre la superficie terrestre experimenta una aceleración debida a la gravedad de magnitud $g = 9.81 \frac{m}{s^2}$ en dirección hacía el centro de la tierra.
+\end{itemize}
+
+
+\section*{Objetivos}
+\addcontentsline{toc}{section}{Objetivos}
+\begin{enumerate}
+    \item Establecer una relación de proporcionalidad entre la masa y el volumen para determinar la densidad de algunos materiales, asociando las incertidumbres correspondientes (absoluta y relativa).
+    \item Establecer la relación entre el peso (en newtons) y la masa (en kilogramos) de los objetos, y asociar las incertidumbres (absoluta y relativa) en cada caso.
+    \item Obtener para ambos casos, la constante de proporcionalidad, con su respectiva incertidumbre.
+    \item Comparar los resultados obtenidos con los valores teóricos reportados en la
+literatura.
+\end{enumerate}
+
+
+\subsection*{Equipo utilizado}
+%\addcontentsline{toc}{subsection}{Equipo utilizado}
+\begin{enumerate}
+    \item Agua
+    \item Balanza
+    \item Cinta adhesiva
+    \item Dinamómetro
+    \item Hilo
+    \item Probeta graduada
+\end{enumerate}
+
+\section{Resultados}
+
+\renewcommand{\tablename}{Tabla de datos}
+\begin{table}[h]
+\centering
+\begin{tabular}{|c||c|c|c|c|}
+\hline
+ &  Diámetro $\pm 0.05 cm$ & Masa $\pm 0.01 g$ & Volumen $\pm0.1cm^3$ & Peso $\pm 0.2 N$ \\ \hline \hline
+Canica 1 & 1.50 cm & 6.61 g & $1.8 cm^3$ & 0.04 N\\ \hline
+Canica 2 & 1.70 cm & 8.45 g & $2.6 cm^3$ & 0.08 N \\ \hline
+Canica 3 & 1.30 cm & 4.80 g & $1.2 cm^3$ & 0.03 N \\ \hline
+Bola 1 & 2.50 cm & 17.28 g & $8.2cm^3$ & 0.16 N \\ \hline
+Bola 2 & 2.30 cm & 14.56 g & $6.4cm^3$ & 0.13 N \\ \hline
+Bola 3 & 3.00 cm & 47.14 g & $14.1cm^3$ & 0.45 N \\ \hline
+Bola 4 & 2.50 cm & 16.58 g & $8.0cm^3$ & 0.15 N \\ \hline
+Bola 5 & 1.90 cm & 9.62 g & $3.6cm^3$ & 0.09 N \\ \hline
+\end{tabular}
+\caption{Parámetros medidos para los cuerpos}
+\end{table} \par
+
+\renewcommand{\figurename}{Gráfica}
+\begin{figure} [h]
+    \centering
+    \includegraphics{tablasla/volumen-masacanicas.png}
+    \caption{Volumen de las canicas en funcion de la masa}
+\end{figure} \par
+Para obtener la mejor recta ajustada a los datos debemos usar las fórmulas: 
+\begin{equation}
+    m = \frac{E}{D}
+\end{equation} 
+\begin{equation}
+    C = \Bar{Y} - m\Bar{X}
+\end{equation} 
+\begin{equation}
+    E = (\sum_{i=1}^{n}X_{i}Y_{i}) - n\Bar{X}\Bar{Y}
+\end{equation}
+\begin{equation}
+    D = (\sum_{i=1}^{n}X_{i}^2) - n\Bar{X}^{2}
+\end{equation} 
+Donde m es la pendiente de la recta que mejor se ajusta a los datos de la gráfica, C es la ordenada al origen de dicha recta, $\Bar{X}$ es el promedio de las masas y $\bar{Y}$ es el promedio de los volúmenes. \par
+Sea \[\Bar{X} = 6.62g, \Bar{Y} = 1.87cm^{3}\] \[(\sum_{i=1}^{n}X_{i}Y_{i}) = (6.61g)(1.8cm^{3}) + (8.45g)(2.6cm^{3}) + (4.8g)(1.2cm^{3}) = 39.8g\cdot cm^{3}
+\]
+\[
+n\Bar{X}\Bar{Y} = 37.1g\cdot cm^3\]\par Entonces \[E = 39.8g\cdot cm^{3} - 37.1g\cdot cm^{3} = 2.7g\cdot cm^3\] \par
+Y sea \[n\Bar{X}^2 = 131.4g^2\]
+\[\sum_{i=1}^{n}X_{i}^2 = 138g^2\]\par
+Entonces,
+\[D = 138g^2 - 131.4g^2 = 6.6g^2\]\par
+Y\[m = \frac{E}{D} = 0.4\frac{cm^3}{g} = \rho^{-1}\]\par
+\[\rho = 2.4\frac{g}{cm^3}\]
+Y la ordenada al origen está dada por \[C =1.87cm^3 - (0.4\frac{cm^3}{g})(6.62g) \] 
+\[C = -0.79cm^3\]\par
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width = 0.75\textwidth]{tablasla/graficadensidac.png}
+    \caption{Recta que mejor se ajusta a los datos. $f(x) = (0.4\frac{cm^3}{g})x -0.79cm^3$}
+    \label{fig:enter-label}
+\end{figure} 
+\newpage
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.8\textwidth]{tablasla/volumenbolas.png}
+    \caption{Gráfica volumen en función de la masa para las bolas.\newline
+    $f(x)=0.2\frac{cm^3}{g}x + 2.9cm^3$} 
+    \label{fig:bolas}
+\end{figure} 
+
+Análogamente, seguimos el mismo proceso para las bolas de plastilina.
+En este caso tenemos que la densidad de las bolas es $\rho = (0.2\frac{cm^3}{g})^{-1}$ como se aprecia en \ref{fig:bolas} y $\rho = 5\frac{g}{cm^3}$
+\newpage
+\section*{Peso y aceleración de los cuerpos}
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.8\textwidth]{tablasla/pesoenfunciondemasa.png}
+    \caption{Peso de los cuerpos en función de las masas $f(x) = 0.0098x-0.01N$}
+    \label{fig:enter-label}
+\end{figure}
+Como la masa está dada en gramos para todos los cuerpos, para que la ecuación de la recta sea congruente debemos transformar a x en kilogramos. De esta manera podemos llevar a cabo la suma. Al transformar los gramos a kilogramos la ecuación de la recta se escribe como: \[f(x)=9.8\frac{m}{s^2}(x\cdot10^{-3} - 0.01N)\]
+\[f(x)=(9.8\frac{m}{s^2}\cdot10^{-3})x-0.01N\]
+\[m = 9.8\frac{m}{s^2}\cdot 10^{-3} = g \cdot10^{-3}\]
+\end{document}

@@ -1,0 +1,421 @@
+\chapter{Introduction to Programming in R for Data Science}
+\label{chap:r_intro}
+
+Having established a foundation in Python, we now turn our attention to the other titan of the data science world: \textbf{R}. While Python is a general-purpose language with powerful data science libraries, R was designed from the ground up by statisticians, for statisticians. Its syntax and core data structures are purpose-built for data manipulation, statistical modeling, and visualization. To a newcomer, R's philosophy may seem idiosyncratic, but it is deeply rooted in a functional, vector-based paradigm that, once mastered, allows for incredibly expressive and powerful data analysis.
+
+The central design principle of R is that almost every object is a \textbf{vector}. A single number is a vector of length one; a string of text is a character vector; a column of data is a vector. Consequently, nearly all of R's functions are \textbf{vectorized}, meaning they are optimized to operate on entire vectors at once. This focus on vectorization minimizes the need for explicit loops, leading to code that is not only faster but also more concise and closer to the mathematical language of statistics. This chapter provides a foundational tour of the R language, focusing on the core concepts required to begin tackling real-world data science problems. We will frequently draw comparisons to Python to highlight the philosophical and syntactic differences that define R's unique identity.
+
+\section{Data Types and Basic Operators}
+\label{sec:r_data_types}
+In R, the fundamental units of data are \textbf{atomic vectors}. Unlike Python's distinct scalar types, even a single value in R is considered a vector of length one. The "type" of a vector refers to the type of data it holds. All elements within an atomic vector must be of the same type.
+
+\subsection*{The Main Atomic Vector Types}
+R's primary data types are all vector-based:
+\begin{itemize}
+    \item \textbf{\rcode{numeric}}: The default type for numbers. It represents double-precision floating-point numbers, analogous to Python's \code{float}.
+    \item \textbf{\rcode{integer}}: Represents integer values. To create an integer, one must append an \rcode{L} to the number (e.g., \rcode{10L}). Without the \rcode{L}, the number is treated as \rcode{numeric}.
+    \item \textbf{\rcode{character}}: Represents text data, equivalent to Python's strings. Strings are defined using either single (\rcode{'}) or double (\rcode{"}) quotes.
+    \item \textbf{\rcode{logical}}: Represents boolean values, \rcode{TRUE} and \rcode{FALSE}. These can be abbreviated to \rcode{T} and \rcode{F}, though using the full words is strongly recommended for clarity.
+\end{itemize}
+
+\begin{example}[Creating and Inspecting Atomic Vectors]
+The \rcode{class()} function is used to check the type of an object, and \rcode{typeof()} reveals its internal storage mode.
+\begin{minted}{r}
+# A single number is a numeric vector of length 1
+x_num <- 10.5
+class(x_num) # "numeric"
+typeof(x_num) # "double"
+
+# An integer must be specified with L
+y_int <- 5L
+class(y_int) # "integer"
+typeof(y_int) # "integer"
+
+# A character vector (string)
+z_char <- "Data Science"
+class(z_char) # "character"
+
+# A logical vector
+a_log <- TRUE
+class(a_log) # "logical"
+\end{minted}
+\end{example}
+
+\begin{remark}[Automatic Coercion]
+If you attempt to create an atomic vector with elements of different types, R will \textbf{coerce} them into a single, most flexible type to maintain consistency. The hierarchy of flexibility is generally: \rcode{logical} $\to$ \rcode{integer} $\to$ \rcode{numeric} $\to$ \rcode{character}.
+\begin{minted}{r}
+# R will coerce everything to the most flexible type: character
+mixed_vector <- c(TRUE, 10L, 3.14, "hello")
+print(mixed_vector) # "TRUE"  "10"    "3.14"  "hello"
+class(mixed_vector) # "character"
+\end{minted}
+\end{remark}
+
+\subsection*{Operators in R}
+Operators in R are, in fact, functions that are designed to work on vectors. Their vectorized nature is their most powerful feature.
+
+\subsubsection*{Arithmetic Operators}
+When an arithmetic operation is performed on two vectors, R applies the operation element-wise. If the vectors are of different lengths, R recycles the elements of the shorter vector to match the length of the longer one.
+\begin{itemize}
+    \item \rcode{+}: Addition, \rcode{-}: Subtraction, \rcode{*}: Multiplication, \rcode{/}: Division
+    \item \rcode{^} or \rcode{**}: Exponentiation
+    \item $\%\%$: Modulo (remainder)
+    \item $\%/\%$: Integer division
+\end{itemize}
+
+\begin{example}[Vectorized Arithmetic]
+\text{ }\begin{minted}{r}
+# Create two vectors
+a <- c(10, 20, 30)
+b <- c(2, 5, 10)
+
+# Element-wise operations
+a + b # Result: 12 25 40
+a * b # Result: 20 100 300
+
+# Recycling: The shorter vector (5) is recycled
+a + 5 # Result: 15 25 35
+
+# A warning is issued if the longer vector is not a multiple of the shorter one
+c(1, 2, 3, 4) + c(10, 20) # Result: 11 22 13 24 (no warning)
+c(1, 2, 3, 4, 5) + c(10, 20) # Warning is produced
+\end{minted}
+\end{example}
+
+\subsubsection*{Logical and Relational Operators}
+These also operate in a vectorized, element-wise fashion.
+\begin{itemize}
+    \item Relational: \rcode{<}, \rcode{>}, \rcode{<=}, \rcode{>=}, \rcode{==} (equality), \rcode{!=} (inequality).
+    \item Logical (element-wise): \rcode{&} (AND), \rcode{|} (OR), \rcode{!} (NOT).
+    \item Logical (short-circuiting): \rcode{&&} and \rcode{||}. These are used in control flow (\rcode{if} statements) and only evaluate the first element of each vector, stopping as soon as the result is determined.
+\end{itemize}
+
+\begin{example}[Vectorized Logical Operations]
+\text{ }\begin{minted}{r}
+x <- c(5, 15, 25)
+y <- c(10, 10, 30)
+
+# Which elements in x are greater than 10?
+x > 10 # Result: FALSE  TRUE  TRUE
+
+# Which elements are greater in x OR y?
+(x > 10) | (y > 10) # Result: FALSE  TRUE  TRUE
+\end{minted}
+\end{example}
+
+\section{Operations on Character Strings}
+\label{sec:r_string_ops}
+String manipulation in R is traditionally handled through functions rather than object methods. While base R provides a solid set of tools, the modern and highly recommended approach is to use the \textbf{\rcode{stringr}} package, which is part of the \textbf{Tidyverse}, a collection of R packages designed for data science. \rcode{stringr} provides a more consistent, intuitive, and powerful interface for string operations.
+
+Key string manipulation functions (showing both base R and \rcode{stringr}) include:
+\begin{itemize}
+    \item \textbf{Concatenation}: Combining strings.
+        \begin{itemize}
+            \item Base R: \rcode{paste()} and \rcode{paste0()}.
+            \item \rcode{stringr}: \rcode{str_c()}.
+        \end{itemize}
+    \item \textbf{Splitting}: Breaking a string into pieces.
+        \begin{itemize}
+            \item Base R: \rcode{strsplit()}.
+            \item \rcode{stringr}: \rcode{str_split()}.
+        \end{itemize}
+    \item \textbf{Replacement}: Finding and replacing substrings.
+        \begin{itemize}
+            \item Base R: \rcode{sub()} (first match) and \rcode{gsub()} (all matches).
+            \item \rcode{stringr}: \rcode{str_replace()} and \rcode{str_replace_all()}.
+        \end{itemize}
+    \item \textbf{Trimming}: Removing whitespace.
+        \begin{itemize}
+            \item Base R: \rcode{trimws()}.
+            \item \rcode{stringr}: \rcode{str_trim()}.
+        \end{itemize}
+\end{itemize}
+
+\begin{example}[String Manipulation with \rcode{stringr}]
+\text{ }\begin{minted}{r}
+# Load the stringr library first
+# install.packages("stringr") if you don't have it
+library(stringr)
+
+# --- Concatenation ---
+str_c("Model", "Accuracy", "F1-Score", sep = " | ")
+# Result: "Model | Accuracy | F1-Score"
+
+# --- Splitting ---
+csv_line <- "2025-09-27,AAPL,316.50"
+# str_split returns a list, as it can operate on a vector of strings
+str_split(csv_line, pattern = ",")
+# Result: [[1]] [1] "2025-09-27" "AAPL" "316.50"
+
+# --- Replacement ---
+message <- "The data contains noisy observations and dirty values."
+str_replace_all(message, "dirty", "clean")
+# Result: "The data contains noisy observations and clean values."
+
+# --- Trimming ---
+user_input <- "   some important data   "
+str_trim(user_input)
+# Result: "some important data"
+\end{minted}
+\end{example}
+
+For formatting strings (embedding values), base R provides the \rcode{sprintf()} function, which works similarly to the C function of the same name.
+
+\begin{minted}{r}
+model <- "Random Forest"
+accuracy <- 0.925
+sprintf("The accuracy of the %s model was %.3f.", model, accuracy)
+# Result: "The accuracy of the Random Forest model was 0.925."
+\end{minted}
+
+\section{Control Structures}
+\label{sec:r_control_structures}
+Control structures direct the flow of execution in R programs. Like Python, they allow for conditional execution and looping. The syntax, however, relies on parentheses for conditions and curly braces \rcode{\{\}} to define code blocks.
+
+\subsection*{Conditionals: \rcode{if}, \rcode{else if}, \rcode{else}}
+The logic is identical to Python's, but the syntax differs.
+\begin{minted}{r}
+score <- 0.65
+
+if (score >= 0.9) {
+  category <- "High Confidence"
+} else if (score >= 0.7) {
+  category <- "Medium Confidence"
+} else if (score >= 0.5) {
+  category <- "Low Confidence"
+} else {
+  category <- "Negative Prediction"
+}
+print(category) # "Low Confidence"
+\end{minted}
+R also has a vectorized conditional function, \rcode{ifelse(test, yes, no)}, which is very useful for creating new vectors based on a condition.
+
+\subsection*{Loops: \rcode{for} and \rcode{while}}
+\begin{itemize}
+    \item \textbf{\rcode{for} loop}: Iterates over each element of a vector or list.
+    \item \textbf{\rcode{while} loop}: Repeats a block as long as a condition is \rcode{TRUE}.
+\end{itemize}
+The statements \rcode{break} (to exit a loop) and \rcode{next} (to skip to the next iteration, like Python's \code{continue}) are used to control loop flow.
+
+\begin{example}[Looping in R]
+\text{ }\begin{minted}{r}
+# --- For Loop ---
+# Loop through numbers 1 to 10
+for (i in 1:10) {
+  if (i %% 2 == 0) {
+    # Skip even numbers
+    next
+  }
+  print(paste("Processing odd number:", i))
+}
+
+# --- While Loop ---
+countdown <- 5
+while (countdown > 0) {
+  print(paste(countdown, "..."))
+  countdown <- countdown - 1
+}
+print("Liftoff!")
+\end{minted}
+\end{example}
+
+\begin{remark}[The R Philosophy on Loops]
+While R has perfectly functional loops, idiomatic R code avoids them whenever possible. The heavy emphasis on vectorization means that most tasks that would require a loop in other languages can be accomplished with a faster and more concise vectorized function call. The \rcode{apply} family of functions (\rcode{lapply}, \rcode{sapply}, \rcode{apply}) and the \rcode{map} functions from the Tidyverse package \rcode{purrr} are the preferred tools for iterating over collections. A beginner's transition to thinking in R is marked by the shift from writing \rcode{for} loops to seeking vectorized solutions.
+\end{remark}
+
+\section{Vectors, Matrices, and Arrays}
+\label{sec:r_vectors_matrices_arrays}
+These are the foundational data structures for numerical work in R. They are all variations of vectors with different dimension attributes.
+
+\subsection*{Vectors}
+As we've seen, vectors are the fundamental data type. They are created with the \rcode{c()} (combine) function. R's indexing is \textbf{1-based}, a crucial difference from Python's 0-based indexing. A powerful feature of R is \textbf{logical subsetting}, where a logical vector is used to select elements from another vector.
+
+\begin{example}[Vector Creation and Subsetting]
+\text{ }\begin{minted}{r}
+# Create a numeric vector
+temps <- c(25.2, 28.1, 19.5, 22.8, 31.0)
+
+# --- Indexing (1-based) ---
+# Get the first element
+temps[1] # 25.2
+
+# Get the first and third elements
+temps[c(1, 3)] # 25.2 19.5
+
+# --- Logical Subsetting ---
+# Find temperatures above 25 degrees
+high_temps <- temps[temps > 25]
+print(high_temps) # 25.2 28.1 31.0
+\end{minted}
+\end{example}
+
+\subsection*{Matrices and Arrays}
+A \textbf{matrix} is simply a vector with a two-dimensional \rcode{dim} attribute. An \textbf{array} generalizes this concept to any number of dimensions. They are created with the \rcode{matrix()} and \rcode{array()} functions, respectively.
+
+\begin{example}[Creating and Indexing a Matrix]
+\text{ }\begin{minted}{r}
+# Create a matrix with 3 rows and 2 columns from the numbers 1 to 6
+m <- matrix(1:6, nrow = 3, ncol = 2)
+print(m)
+#      [,1] [,2]
+# [1,]    1    4
+# [2,]    2    5
+# [3,]    3    6
+
+# Get the element at row 2, column 2
+m[2, 2] # 5
+
+# Get the entire first row
+m[1, ] # 1 4
+
+# Get the entire second column
+m[, 2] # 4 5 6
+\end{minted}
+\end{example}
+
+
+\section{Factors, Lists, and "Dictionaries"}
+\label{sec:r_factors_lists}
+
+\subsection*{Factors: R's Categorical Data Type}
+A \textbf{factor} is a special type of vector used to store categorical data. Internally, R stores factors as a vector of integers, with a corresponding set of character labels for each integer. This is a very memory-efficient way to store categorical variables (e.g., "Male", "Female", "Other") and is essential for many statistical modeling functions in R.
+
+\begin{minted}{r}
+# Create a vector of educational levels
+education_levels <- c("High School", "Bachelor's", "Master's", "Bachelor's", "PhD")
+
+# Convert it to a factor
+education_factor <- factor(education_levels)
+
+print(education_factor)
+# [1] High School Bachelor's  Master's    Bachelor's  PhD
+# Levels: Bachelor's High School Master's PhD
+
+# R knows the unique categories (levels)
+levels(education_factor)
+\end{minted}
+
+\subsection*{Lists: Generic Collections}
+While an atomic vector must contain elements of the same type, a \textbf{list} is a generic, recursive vector that can hold any collection of R objects, including other lists. This makes it the R equivalent of a Python list in terms of flexibility.
+
+Elements are accessed with double square brackets \rcode{[[...]]} to extract a single element, or single brackets \rcode{[...]} to get a sub-list. Lists can also have named elements, which is how R emulates dictionaries.
+
+\begin{example}[Lists and "Dictionaries"]
+\text{ }\begin{minted}{r}
+# A list containing different object types
+my_list <- list(
+  model_name = "SVM",
+  accuracy = 0.89,
+  is_trained = TRUE,
+  parameters = c('C'=1.0, 'kernel'='rbf')
+)
+
+# --- Accessing Elements ---
+# Using [[...]] to extract an element
+my_list[[1]] # "SVM"
+
+# Using the dollar sign ($) for named elements
+my_list$accuracy # 0.89
+
+# Using single brackets returns a sub-list
+my_list[1]
+# $model_name
+# [1] "SVM"
+# This is a list of length 1, not the string "SVM" itself.
+\end{minted}
+\end{example}
+
+\begin{remark}[R's lack of Tuples and Dictionaries]
+R does not have dedicated \rcode{tuple} or \rcode{dict} types like Python. The role of a dictionary is filled entirely by \textbf{named lists}, as shown above. The concept of an immutable list (a tuple) does not have a direct equivalent in base R, though the general philosophy encourages treating data as immutable where possible.
+\end{remark}
+
+\section{Tables: The \rcode{data.frame}}
+\label{sec:r_data_frames}
+The \textbf{\rcode{data.frame}} is the most important data structure in R for data analysis. It is R's representation of a table of data, with rows representing observations and columns representing variables. A data frame is technically a list of equal-length vectors. Each vector is a column, and the elements of the vectors form the rows.
+
+Columns are accessed using the \rcode{$} operator or \rcode{[[...]]} notation. Rows and columns can be subsetted using the \rcode{[row, col]} syntax, similar to matrices.
+
+\begin{example}[Creating and Subsetting a Data Frame]
+\text{ }\begin{minted}{r}
+# Create a data frame
+cities_df <- data.frame(
+  City = c("New York", "Los Angeles", "Chicago"),
+  State = c("NY", "CA", "IL"),
+  Population = c(8.8, 4.0, 3.9)
+)
+print(cities_df)
+
+# --- Accessing Columns ---
+# Using the $ operator (most common)
+cities_df$Population # Returns the Population vector
+
+# --- Subsetting Rows and Columns ---
+# Get the first row
+cities_df[1, ]
+
+# Get the City and Population for the first two rows
+cities_df[1:2, c("City", "Population")]
+\end{minted}
+\end{example}
+
+\begin{remark}[The Modern Data Frame: The Tibble]
+The Tidyverse provides a modern reimagining of the data frame called a \textbf{tibble}. Tibbles are data frames, but they tweak some older behaviors to make life easier. For instance, they have a much nicer printing method, they never change variable types or names, and they are stricter about subsetting. Most modern R code uses tibbles, often created with the \rcode{tibble()} function or by reading data with \rcode{readr}.
+\end{remark}
+
+\section{File Input and Output}
+\label{sec:r_files}
+Interacting with files is a core task in any data analysis workflow. R provides robust functions for reading data from and writing data to disk.
+
+\subsection*{Reading and Writing CSV Files}
+The most common data format for tabular data is CSV. R's base functionality for this is strong, but the modern approach using the \rcode{readr} package (part of the Tidyverse) is generally preferred for its speed and better type-inference.
+\begin{itemize}
+    \item Base R: \rcode{read.csv()} and \rcode{write.csv()}.
+    \item \rcode{readr} (Tidyverse): \rcode{read_csv()} and \rcode{write_csv()}.
+\end{itemize}
+
+\begin{example}[Reading a CSV with \rcode{readr}]
+\text{ }\begin{minted}{r}
+# install.packages("readr") if needed
+library(readr)
+
+# Create a temporary CSV file for the example
+csv_content <- "model_id,model_type,accuracy\n101,CNN,0.92\n102,Transformer,0.95"
+write_file(csv_content, "models.csv")
+
+# Read the CSV file into a tibble
+models_tbl <- read_csv("models.csv")
+
+# read_csv provides a nice summary of the columns it parsed
+print(models_tbl)
+\end{minted}
+\end{example}
+
+\subsection*{Serialization: Saving and Loading R Objects}
+When you want to save not just tabular data, but any R object (a list, a trained model, a complex vector) to disk and load it back later, you use R's native serialization format.
+\begin{itemize}
+    \item \textbf{\rcode{saveRDS(object, file = "path.rds")}}: Saves a single R object to a specified file. The \rcode{.rds} extension is a convention.
+    \item \textbf{\rcode{readRDS(file = "path.rds")}}: Loads a single R object from a file that was saved with \rcode{saveRDS()}.
+\end{itemize}
+This is the standard, recommended way to save and load individual R objects, preserving their full structure and class.
+
+\begin{example}[Saving and Loading a Trained Model]
+\text{ }\begin{minted}{r}
+# Imagine 'my_model' is a complex, trained model object
+my_model <- list(
+  type = "Random Forest",
+  params = list(ntree = 500, mtry = 3),
+  coefficients = runif(10) # 10 random coefficients
+)
+
+# Save the single model object to a file
+saveRDS(my_model, file = "trained_model.rds")
+
+# ... later, in a different R session ...
+
+# Load the model object back into memory
+loaded_model <- readRDS(file = "trained_model.rds")
+
+print("Loaded model type:")
+print(loaded_model$type)
+\end{minted}
+\end{example}

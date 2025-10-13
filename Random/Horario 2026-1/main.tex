@@ -1,0 +1,41 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{multirow}
+\usepackage{array}
+\usepackage{geometry}
+\geometry{margin=1cm}
+
+\begin{document}
+
+\begin{table}[h]
+\centering
+\caption{Horario Semanal}
+\label{tab:horario}
+\begin{tabular}{|c|c|c|c|c|c|}
+\hline
+\textbf{Hora} & \textbf{Lunes} & \textbf{Martes} & \textbf{Miércoles} & \textbf{Jueves} & \textbf{Viernes} \\
+\hline
+8:00-9:00 & \multirow{2}{*}{Paradigmas (C-11)} & & \multirow{2}{*}{Paradigmas (C-11)} & & \multirow{3}{*}{Paradigmas (C-11)} \\
+\cline{1-1}\cline{3-3}\cline{5-5}
+9:00-10:00 & & & & & \\
+\hline
+10:00-11:00 & \multirow{2}{*}{Bases datos (C-11)} & \multirow{2}{*}{Métodos math (C-21)} & \multirow{2}{*}{Métodos math (C-21)} & \multirow{2}{*}{Métodos math (C-21)} & \\
+\cline{1-1}\cline{6-6}
+11:00-12:00 & & & & & Mat. discretas (C-11) \\
+\hline
+12:00-13:00 & \multirow{2}{*}{Comp. conc. (C-22)} & \multirow{2}{*}{Probabilidad (C-21)} & \multirow{2}{*}{Comp. conc. (C-22)} & \multirow{2}{*}{Comp. conc. (C-11)} & \multirow{2}{*}{Probabilidad (C-21)} \\
+\cline{1-1}\cline{6-6}
+13:00-14:00 & & & & & \\
+\hline
+14:00-15:00 & \multirow{2}{*}{Mat. discretas (C-21)} & & \multirow{2}{*}{Mat. discretas (C-21)} & \multirow{2}{*}{Probabilidad (C-11)} & \multirow{2}{*}{Probabilidad (C-21)} \\
+\cline{1-1}\cline{3-3}\cline{6-6}
+15:00-16:00 & & & & & \\
+\hline
+16:00-17:00 & \multirow{2}{*}{Óptica (O229)} & \multirow{2}{*}{Relatividad (IA)} & \multirow{2}{*}{Óptica (O229)} & \multirow{2}{*}{Relatividad (IA)} & \multirow{2}{*}{Óptica (O229)} \\
+\cline{1-1}\cline{6-6}
+17:00-18:00 & & & & & \\
+\hline
+\end{tabular}
+\end{table}
+
+\end{document}

@@ -1,0 +1,96 @@
+1. (1pt) Prueba que en una permutación aleatoria uniforme de \( n \) objetos numerados \( s_{1}, s_{2}, \ldots s_{n} \). Para toda \( i, j, k, \ell \) en \( \{1,2, \ldots, n\} \) con \( i \) distinto de \( j \) y \( k \) distinto de \( \ell \) :
+\[
+\mathbb{P}\left(s_{k}=i\right)=\frac{1}{n} \quad y \quad \mathbb{P}\left(s_{k}=i, s_{l}=j\right)=\frac{1}{n(n-1)}
+\]
+
+Sea \( S \) una permutación aleatoria uniforme de \( n \) elementos. Fijemos \( k \in \{1, \ldots, n\} \) y \( i \in \{1, \ldots, n\} \). Consideremos el evento \( s_k = i \), es decir, que el valor \( i \) esté en la posición \( k \).
+
+Al fijar \( s_k = i \), los demás \( n - 1 \) elementos pueden permutarse en cualquier orden, por lo que hay \((n-1)!\) permutaciones favorables.
+El total de permutaciones posibles es \( n! \).
+
+Así, la probabilidad es:
+\[
+\mathbb{P}(s_k = i) = \frac{\textit{\# casos favorables}}{\textit{\# casos totales}} = \frac{(n-1)!}{n!} = \frac{1}{n}.
+\]
+
+\hspace{11cm} $\square$
+
+Por otro lado, consideremos \( i \neq j \) y \( k \neq \ell \), y el evento \( s_k = i \) y \( s_\ell = j \).
+
+Al fijar \( s_k = i \) y \( s_\ell = j \), los restantes \( n - 2 \) elementos pueden permutarse en cualquier orden, por lo que hay \((n-2)!\) permutaciones favorables.
+El total sigue siendo \( n! \).
+
+Por lo tanto,
+\[
+\mathbb{P}(s_k = i, s_\ell = j) = \frac{(n-2)!}{n!} = \frac{1}{n(n-1)}.
+\]
+
+\QED
+
+2. (2pt) Prueba que en una permutación aleatoria uniforme, dado que se conocen los primeros \( k \) elementos de la permutación, el resto forma una permutación uniforme dentro del conjunto de los elementos restantes.
+
+Sea \( S = (s_1, s_2, \ldots, s_n) \) una permutación aleatoria uniforme de \( n \) elementos. Supongamos que conocemos los valores de \( S \) en las primeras \( k \) posiciones, es decir, para \( l = 1, \ldots, k \), \( s_l = a_l \), con \( a_l \) valores fijos y conocidos.
+Entonces, la sub-secuencia \( (s_{k+1}, s_{k+2}, \ldots, s_n) \) forma una permutación uniforme de los \( n-k \) elementos restantes.
+Por lo tanto, el número de permutaciones posibles para las posiciones restantes es \((n-k)!\).
+Queremos calcular la probabilidad condicional
+\[
+\mathbb{P}\bigl(s_{k+1} = \alpha_{k+1}, \ldots, s_n = \alpha_n \mid s_1 = a_1, \ldots, s_k = a_k \bigr).
+\]
+Por definición de probabilidad condicional y la uniformidad de \( S \),
+\[
+\begin{aligned}
+\mathbb{P}\bigl(s_{k+1} = \alpha_{k+1}, \ldots, s_n = \alpha_n \mid s_1 = a_1, \ldots, s_k = a_k\bigr)
+&= \frac{\mathbb{P}\left(s_1 = a_1, \ldots, s_k = a_k, s_{k+1} = \alpha_{k+1}, \ldots, s_n = \alpha_n \right)}{\mathbb{P}\left(s_1 = a_1, \ldots, s_k = a_k \right)} \\
+&= \frac{\frac{1}{n!}}{\frac{(n-k)!}{n!}} \\
+&= \frac{1}{(n-k)!}.
+\end{aligned}
+\]
+Esto muestra que condicionando en los primeros \( k \) valores, la distribución de los valores restantes es uniforme sobre las permutaciones de los \( n-k \) elementos restantes.\\
+
+\QED
+
+3. (2pt) Prueba que en una permutación aleatoria uniforme, dado que se conocen \( k \) elementos de la permutación (no necesariamente consecutivos), el resto forma una permutación uniforme dentro del conjunto de los elementos restantes. \\
+
+Sea \( S = (s_1, \ldots, s_n) \) una permutación aleatoria uniforme de \( n \) elementos y sea \( I = \{i_1, \ldots, i_k\} \subseteq \{1, \ldots, n\} \) un conjunto de posiciones con valores conocidos \( s_{i_j} = a_{i_j} \), todos distintos. Como \( S \) es uniforme, cada permutación tiene probabilidad \( \frac{1}{n!} \).
+Se debe fijar los valores en las posiciones \( I \) restringe el espacio a permutaciones que asignan \( A = \{a_{i_1}, \ldots, a_{i_k}\} \) en esas posiciones, por lo que hay exactamente \((n-k)!\) permutaciones posibles. Entonces, la probabilidad condicional de cualquier permutación específica \( \alpha \) de los valores restantes en las posiciones \( J = \{1, \ldots, n\} \setminus I \) es
+\[
+\mathbb{P}\bigl(s_j = \alpha_j, j \in J \mid s_{i_j} = a_{i_j}, j=1,\ldots,k\bigr) = \frac{\frac{1}{n!}}{\frac{(n-k)!}{n!}} = \frac{1}{(n-k)!}.
+\]
+Esto implica que la sub-permutación restante es uniforme sobre las permutaciones de los elementos restantes; como ya hemos demostrado este teorema, podremos usarlo en incisos posteriores.
+
+\QED
+
+4. (3pt) El siguiente algoritmo genera una permutación uniforme de \( n \) objetos numerados. Prueba que el algoritmo es correcto: es decir, que la probabilidad de generar cualquier permutación fija es igual a \( (n!)^{-1} \) :\\
+(a) Elige de forma sucesiva y sin reemplazo números uniformemente aleatorios en \( \{1,2, \ldots n\} \) y denótalos \( s_{1}, s_{2}, \ldots s_{n} \). \\
+
+
+
+La probabilidad de que el algoritmo genere la permutación \( \pi = (\pi_1, \pi_2, \ldots, \pi_n) \) es el producto de las probabilidades condicionales en cada paso:
+\[
+\mathbb{P}(S = \pi) = \mathbb{P}(s_1 = \pi_1) \times \mathbb{P}(s_2 = \pi_2 \mid s_1 = \pi_1) \times \cdots \times \mathbb{P}(s_n = \pi_n \mid s_1 = \pi_1, \ldots, s_{n-1} = \pi_{n-1}).
+\]
+
+Cálculo de cada término:
+
+
+
+\(\mathbb{P}(s_1 = \pi_1) = \frac{1}{n}\) porque es elegido uniformemente entre \( n \) números.
+
+
+\(\mathbb{P}(s_2 = \pi_2 \mid s_1 = \pi_1) = \frac{1}{n-1}\) porque es elegido uniformemente entre los \( n - 1 \) restantes.
+
+
+En general,
+
+
+\[
+\mathbb{P}(s_k = \pi_k \mid s_1 = \pi_1, \ldots, s_{k-1} = \pi_{k-1}) = \frac{1}{n - (k-1)}.
+\]
+
+Producto total:
+
+\[
+\mathbb{P}(S = \pi) = \frac{1}{n} \times \frac{1}{n-1} \times \cdots \times \frac{1}{1} = \frac{1}{n!}.
+\]
+
+\QED

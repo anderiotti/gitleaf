@@ -1,0 +1,125 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage{pgfplots}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage[thmmarks, amsmath, thref]{ntheorem}
+\usepackage{mdframed}
+\usepackage{amsthm}
+\usepackage{physics}
+\usepackage{derivative}
+\usepackage{hyperref}
+\usepackage{wrapfig}
+\usepackage{amsthm}
+\renewcommand{\theenumi}{\roman{enumi}}
+
+\theoremstyle{nonumberplain}
+\theoremheaderfont{\itshape}
+\theorembodyfont{\upshape}
+\theoremseparator{.}
+\theoremsymbol{\ensuremath{\square}}
+\theoremsymbol{\ensuremath{\blacksquare}}
+\newtheorem{solution}{Solution}
+\theoremseparator{. ---}
+\theoremsymbol{\mbox{\texttt{;o)}}}
+
+\geometry{a4paper, left=2cm, right=2cm, top=1cm, bottom=2cm}
+
+\pgfplotsset{compat=1.18}
+\begin{document}
+
+3. (1P) Para concluir el experimento es necesario comparar los resultados de intensidad obtenidos con ambas fuentes, sin embargo, es probable que las escalas sean diferentes en magnitud por lo que habrá que “normalizar” cada conjunto de datos experimentales. Indica como se hace eso, y cuál sería la incertidumbre de los nuevos valores.\\
+
+
+Se tiene la expresión para la intensidad en función de la distancia \( r \):  
+
+\[
+I = \frac{k}{r^m}
+\]
+
+Dado que \( m \) es constante, la única variable con incertidumbre es \( r \), por lo que usamos propagación de incertidumbre con derivadas parciales:
+
+\[
+\Delta I = \left| \frac{\partial I}{\partial r} \right| \Delta r
+\]
+
+Calculamos la derivada de \( I \) con respecto a \( r \):
+
+\[
+\frac{\partial I}{\partial r} = -m k r^{-m-1} = -m \frac{k}{r^{m+1}}
+\]
+
+Como \( I = \frac{k}{r^m} \), podemos reescribir la derivada como:
+
+\[
+\frac{\partial I}{\partial r} = -m \frac{I}{r}
+\]
+
+Sustituyendo en la expresión de incertidumbre:
+
+\[
+\Delta I = \left| -m \frac{I}{r} \right| \Delta r
+\]
+
+\[
+\Delta I = m \frac{I}{r} \Delta r
+\]
+
+Por lo tanto, la incertidumbre en la intensidad \( I \) se propaga como:
+
+\[
+\Delta I = m \frac{k}{r^m} \frac{\Delta r}{r}
+\]
+
+o de manera más compacta:
+
+\[
+\Delta I = m \frac{I}{r} \Delta r
+\]
+
+Dado que se comparan dos conjuntos de datos experimentales de intensidad, es necesario normalizar cada conjunto de datos para que las escalas sean comparables, sabemos por Berta Oda que existen dos métodos de normalización: \\
+
+\textbf{Normalización por el Valor Máximo}\\
+Una forma común de normalizar los datos es dividiendo cada valor de intensidad entre el valor máximo del conjunto:
+
+\[
+I' = \frac{I}{I_{\max}}
+\]
+
+La incertidumbre de \( I' \) se obtiene propagando la incertidumbre de \( I \) y de \( I_{\max} \) mediante:
+
+\[
+\Delta I' = I' \sqrt{\left(\frac{\Delta I}{I}\right)^2 + \left(\frac{\Delta I_{\max}}{I_{\max}}\right)^2}
+\]
+
+Sustituimos \( \Delta I = m \frac{I}{r} \Delta r \):
+
+\[
+\Delta I' = \frac{I}{I_{\max}} \sqrt{\left( \frac{m \Delta r}{r} \right)^2 + \left(\frac{\Delta I_{\max}}{I_{\max}}\right)^2}
+\]
+
+\newpage
+
+\textbf{Normalización Min-Max}\\
+Otra opción es normalizar los datos en el rango \([0,1]\) usando:
+
+\[
+I' = \frac{I - I_{\min}}{I_{\max} - I_{\min}}
+\]
+
+En este caso, la incertidumbre normalizada se propaga como:
+
+\[
+\Delta I' = \frac{\Delta I}{I_{\max} - I_{\min}}
+\]
+
+Reemplazando \( \Delta I \):
+
+\[
+\Delta I' = \frac{m \frac{I}{r} \Delta r}{I_{\max} - I_{\min}}
+\]
+
+\end{document}

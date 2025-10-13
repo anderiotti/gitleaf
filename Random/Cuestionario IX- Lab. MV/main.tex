@@ -1,0 +1,100 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage{pgfplots}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{mdframed}
+\usepackage{amsthm}
+\usepackage{physics}
+\usepackage{derivative}
+\usepackage{hyperref}
+\renewcommand{\theenumi}{\roman{enumi}}
+
+\geometry{a4paper, left=2cm, right=2cm, top=1cm, bottom=2cm}
+
+\pgfplotsset{compat=1.18}
+\begin{document}
+
+\begin{minipage}{0.7\textwidth}
+    \small \textbf{LABORATORIO DE MECÁNICA VECTORIAL}  \\
+    \small {Facultad de Ciencias, Universidad Nacional Autónoma de México} \\
+    \small {Profesor: Radamés Ricardo Reynoso Manríquez} \\
+    \small {Ayudante: Ana Laura Córdova Lara}\\
+    \small {Fecha de entrega: 23 de Abril de 2024} \\
+    \small {Nombre completo: Andrés López González} \\
+    \small {Tarea número IX}
+\end{minipage}
+\hfill
+\begin{minipage}{0.12\textwidth}
+    \includegraphics[width=\linewidth]{logo_universidad}
+\end{minipage}
+
+\section*{Cuestionario IX}
+PREGUNTA I. Explique en detalle cada una de las Leyes de Newton, y su importancia.\\
+\textit{La Primera Ley (Ley de la Inercia) establece que un objeto permanece en estado de reposo o en movimiento uniforme en línea recta, a menos que una fuerza externa actúe sobre él. Esto implica que los objetos no cambian su estado de movimiento sin intervención externa. La importancia radica en que introduce el concepto de inercia y el marco para entender el equilibrio y las condiciones de movimiento sin aceleración, además de visualizar en un mundo de condiciones perfectas como es el movimiento rectilíneo uniforme con planos sin fricción.}\\
+
+\textit{La Segunda Ley (Ley Fundamental de la Dinámica) establece que la aceleración de un objeto es directamente proporcional a la fuerza neta que actúa sobre él e inversamente proporcional a su masa. Matemáticamente, se expresa como.
+\begin{equation}
+    \Vec{F} = \dv{\Vec{p}}{t} = \Dot{m}\Vec{v} + m\Vec{a}
+\end{equation}
+Donde F es la fuerza, p el momentum, m es la masa del objeto, a es su aceleración y v su velocidad. Esta ley es crucial porque conecta fuerza, masa y aceleración en sistemas de masa constante, permitiendo cuantificar el efecto de las fuerzas sobre el movimiento de un objeto.}\\
+
+\textit{La Tercera Ley (Ley de Acción-Reacción) establece que para cada acción, hay una reacción igual y opuesta. En términos sencillos, si un objeto A ejerce una fuerza sobre un objeto B, entonces el objeto B ejerce una fuerza de igual magnitud pero en sentido opuesto sobre el objeto A. Esta ley es importante para comprender la interacción entre objetos y el principio de conservación del momento lineal en sistemas aislados.}\\\\
+
+
+PREGUNTA II. Investigue y describa ampliamente las implicaciones, y aplicaciones de las Leyes de Newton.\\
+\textit{Las Leyes de Newton tienen muy numerosas implicaciones y aplicaciones, algunas de ellas son... Dinámica de Sistemas Mecánicos: Las Leyes de Newton permiten analizar y predecir el comportamiento de sistemas mecánicos, desde objetos simples hasta sistemas complejos, como vehículos, maquinaria, y sistemas de transporte. Aeronáutica y Astronáutica: En el diseño y análisis de aviones, cohetes y satélites, las Leyes de Newton son esenciales para calcular trayectorias, fuerzas de despegue, y estabilidad en vuelo. Ingeniería Estructural: Se utilizan para calcular cargas, tensiones y fuerzas en estructuras, garantizando la estabilidad y seguridad de edificios y puentes. Robótica y Automatización: En la robótica, las Leyes de Newton son fundamentales para el diseño de mecanismos, actuadores y algoritmos de control que permiten el movimiento y la manipulación precisos. Simulación y Modelado: Las Leyes de Newton proporcionan la base para simulaciones y modelados en ingeniería y física, permitiendo predecir el comportamiento de sistemas antes de construirlos. Investigación Científica: En física experimental y teórica, las Leyes de Newton son la base para investigar fenómenos y comprobar teorías.}\\\\
+
+PREGUNTA III. Desarrolle y resuelva el problema de dos cuerpos, sobre los cuales se está ejerciendo la fuerza (que genera una 
+ aceleración a), y la tensión que une ambos cuerpos, y el peso de un objeto en caída vertical.\\
+ \textit{Supongamos un sistema con dos cuerpos unidos por una cuerda con tensión \(T\).} \\ 
+\textit{Si se ejerce una fuerza sobre uno de los cuerpos, ambos experimentan aceleración. Vamos a resolver el problema para encontrar la tensión en la cuerda y la aceleración del sistema.} \\
+
+\textit{Sistema de ecuaciones.}\\
+\textit{Para el cuerpo 1, la Segunda Ley de Newton se puede escribir como:} \\ 
+\[
+F - T = m_1  a
+\]
+
+\textit{Para el cuerpo 2, la tensión es la única fuerza que provoca aceleración, por lo que:} \\ 
+\[
+T = m_2  a
+\]
+
+\textit{Resolviendo para la aceleración \(a\)}.\\
+\textit{Usando las ecuaciones anteriores, podemos resolver para \(a\):} \\
+\textit{De la primera ecuación, obtenemos \(a = \frac{F - T}{m_1}\).} \\ 
+\textit{De la segunda ecuación, \(a = \frac{T}{m_2}\).} \\
+
+\textit{Igualando estas dos expresiones, obtenemos:} \\ 
+\[
+F - m_2  a = m_1  a
+\]
+
+\textit{Esto se puede reescribir como:} \\ 
+\[
+F = (m_1 + m_2)  a
+\]
+
+\textit{Por lo tanto, la aceleración común del sistema se puede encontrar como:} \\ 
+\[
+a = \frac{F}{m_1 + m_2}
+\]
+
+\textit{Resolviendo para la tensión \(T\)}.\\
+\textit{Ahora que conocemos \(a\), podemos resolver para \(T\):} \\
+\[
+T = m_2  a = m_2  \frac{F}{m_1 + m_2}
+\]
+
+\textit{Esto determina la tensión en la cuerda y la aceleración del sistema de dos cuerpos.}\\\\
+ 
+ 
+PREGUNTA IV. ¿Cuáles son las propiedades generales (o 
+ fundamentales) de las fuerzas mecánicas? ¿En qué casos se aplican?\\
+ \textit{Las fuerzas mecánicas tienen las siguientes propiedades generales... Magnitud: La magnitud de una fuerza representa la cantidad de fuerza que se está aplicando. Dirección: La dirección en la cual se aplica la fuerza. Punto de Aplicación: El lugar en el cual se aplica la fuerza. Línea de Acción: La línea a lo largo de la cual actúa la fuerza. Estas propiedades permiten analizar y describir las fuerzas en sistemas mecánicos. Las fuerzas mecánicas se aplican en diversos contextos como... Fuerzas de Contacto: Generadas por interacción física entre dos objetos. Ejemplos incluyen fricción, tensión, y normalidad. Fuerzas a Distancia: Actúan sin contacto directo entre objetos, como la gravedad y el magnetismo. Fuerzas Conservativas: Estas fuerzas tienen campos de fuerza asociados y conservan la energía mecánica, como la gravedad. Fuerzas No Conservativas: Fuerzas como la fricción que no conservan la energía mecánica.}
+
+\end{document}

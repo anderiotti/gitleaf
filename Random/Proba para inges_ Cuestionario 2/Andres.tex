@@ -1,0 +1,107 @@
+
+
+8. (2pt) Se tiene una urna llena de bolas con la siguiente composición: 2 rojas, 3 verdes, 5 azules. Se extraen 3 bolas sin reemplazo. Cuál es la probabilidad de que sólo la tercera bola sea azul.
+
+Dado que la urna contiene 2 bolas rojas (r), 3 verdes (v) y 5 azules (a), y se extraen 3 bolas sin reemplazo, queremos encontrar la probabilidad de que solo la tercera bola sea azul.
+Definimos los eventos mutuamente excluyentes \(B_i\), \(i = 1, \ldots, 4\), que representan las combinaciones posibles de colores en las dos primeras bolas (sin incluir azul):\\
+
+\(B_1 = rv\) (primera roja, segunda verde)\\
+\(B_2 = rr\) (primera roja, segunda roja)\\
+\(B_3 = vv\) (primera verde, segunda verde)\\
+\(B_4 = vr\) (primera verde, segunda roja)\\
+
+Por el teorema de la probabilidad total, la probabilidad de que la tercera bola sea azul y las dos primeras no azules es
+\[
+P(A) = \sum_{i=1}^4 P(A \mid B_i) P(B_i).
+\]
+La probabilidad condicional de que la tercera bola sea azul dado cualquiera de los \(B_i\) es
+\[
+P(A \mid B_i) = \frac{5}{8},
+\]
+ya que quedan 5 bolas azules de un total de 8 después de sacar las dos primeras no azules.
+Calculamos las probabilidades de los eventos \(B_i\):
+\[
+P(B_1) = \frac{2}{10} \times \frac{3}{9} = \frac{6}{90} = \frac{1}{15},
+\]
+\[
+P(B_2) = \frac{2}{10} \times \frac{1}{9} = \frac{2}{90} = \frac{1}{45},
+\]
+\[
+P(B_3) = \frac{3}{10} \times \frac{2}{9} = \frac{6}{90} = \frac{1}{15},
+\]
+\[
+P(B_4) = \frac{3}{10} \times \frac{2}{9} = \frac{6}{90} = \frac{1}{15}.
+\]
+Sumamos estas probabilidades:
+\[
+\sum_{i=1}^4 P(B_i) = \frac{1}{15} + \frac{1}{45} + \frac{1}{15} + \frac{1}{15} = \frac{3}{45} + \frac{1}{45} + \frac{3}{45} + \frac{3}{45} = \frac{10}{45} = \frac{2}{9}.
+\]
+Finalmente, la probabilidad buscada es
+\[
+P(A) = \frac{5}{8} \times \frac{2}{9} = \frac{10}{72} = \frac{5}{36}.
+\]
+
+9. (5pt) Se tiene una urna llena de bolas con la siguiente composición: 2 rojas, 3 verdes, 5 azules. Se extraen 3 bolas sin reemplazo. Cuál es la probabilidad de que las tres bolas sean de colores distintos?
+
+Definimos los eventos \(B_i\), con \(i \in I:= \{1, \ldots, 6\} \), que corresponden a las permutaciones posibles de sacar una bola de cada color en orden distinto:
+\[
+B_1 = arv, \quad B_2 = avr, \quad B_3 = var, \quad B_4 = vra, \quad B_5 = rva, \quad B_6 = rav,
+\]
+donde \(a\), \(r\), \(v\) representan las bolas azul, roja y verde, respectivamente. Estos eventos son mutuamente excluyentes (disjuntos).
+La probabilidad de cada evento \(B_i\) es el producto de las probabilidades sucesivas de sacar cada bola sin reemplazo. Por ejemplo, para \(B_1 = arv\):
+\[
+P(B_1) = \frac{5}{10} \times \frac{2}{9} \times \frac{3}{8}.
+\]
+De forma más general para cualquier $ s_k \neq s_i \neq s_j \neq s_k \quad\forall i,j, k \in \{1, 2, 3\}: k \neq i \neq j \neq k$
+\[
+P(B_i) = \prod_{i=1}^3 \frac{s_i}{10!7!^{-1}}
+\]
+Así que se cumple principio de la simetría por lo cual podemos tomar un elemento fijo pero arbitrario del espacio de eventos o bien proceder con el análisis pero asumir 6 veces la misma probabilidad.
+
+\[
+P = \sum_{i=1}^6 P(B_i) = \sum_{i=1}^6 P(B) \cdot i^0 = 6P(B) = \prod_{i=1}^3 \frac{6s_i}{10!7!^{-1}} = \frac{6 \cdot 2 \cdot 5 \cdot 3}{10 \cdot 9 \cdot 8}
+\]
+Esto trivialmente es
+\[
+P = \frac{1}{4}.
+\]
+
+
+10. (2pt) Explica detalladamente la prueba que usa probabilidad condicional para calcular la probabilidad de lo siguiente: Una lista de reproducción está ordenada al azar. Considera que hay 8 canciones de 7 artistas distintos. ¿Cuál es la probabilidad de que la lista tenga dos canciones consecutivas del mismo artista?
+
+Definimos el evento \(A_i\): "La posición \(c_i\) contiene una canción del artista \(A_0\)", lo que queremos calcular es la probabilidad de que las dos canciones de \(A_0\) estén en posiciones consecutivas, es decir, que exista algún \(i\) tal que \(c_i\) y \(c_{i+1}\) sean ambas canciones de \(A_0\). Consideramos las 8 posiciones (casillas) de la lista: \(c_1, c_2, \ldots, c_8\) donde \(c_i\) es la posición donde aparece la primera canción de \(A\).
+
+Por las simetrías del proble a, la probabilidad de que las dos canciones de \(A_0\) estén juntas en el par de posiciones \((c_i, c_{i+1})\) es la misma para cada \(i \in \mathbb{N}_1^7\).
+
+
+Entonces, calculamos la probabilidad condicional:
+
+
+\[
+P(\text{canciones en } c_{i} \text{ y } c_{i+1} \in A_0) = P(c_i \in A_0) \times P(c_{i+1} \in A_0 \mid c_i \in A_0).
+\]
+
+La probabilidad de que la canción en \(c_i\) sea de \(A_0\) es:
+
+\[
+P(c_i \in A_0) = \frac{2}{8} = \frac{1}{4},
+\]
+pues hay 2 canciones de \(A_0\) entre 8 canciones totales.
+
+Dado que \(c_i\) es una canción de \(A_0\), solo queda 1 canción de \(A_0\) para colocar en las 7 posiciones restantes, por lo que:
+
+\[
+P(c_{i+1} \in A_0 \mid c_i \in A_0) = \frac{1}{7}.
+\]
+
+Por lo tanto,
+
+\[
+P(\text{canciones en } c_i \text{ y } c_{i+1} \in A_0) = \frac{2}{8} \times \frac{1}{7} = \frac{1}{28}.
+\]
+
+Como hay 7 pares consecutivos, y estos eventos son mutuamente excluyentes (las dos canciones solo pueden estar juntas en un único par consecutivo), la probabilidad total de que las dos canciones estén juntas es
+
+\[
+7 \times \frac{1}{28} = \frac{7}{28} = \frac{1}{4}.
+\]

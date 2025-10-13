@@ -1,0 +1,135 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage{pgfplots}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{mdframed}
+\usepackage{amsthm}
+\usepackage{physics}
+\usepackage{derivative}
+\usepackage{hyperref}
+\usepackage{wrapfig}
+\renewcommand{\theenumi}{\roman{enumi}}
+
+\geometry{a4paper, left=2cm, right=2cm, top=1cm, bottom=2cm}
+
+\pgfplotsset{compat=1.18}
+\begin{document}
+
+\begin{minipage}{0.7\textwidth}
+    \small \textbf{ASTROFÍSICA GENERAL}  \\
+    \small {Facultad de Ciencias, Universidad Nacional Autónoma de México} \\
+    \small {Profesor: Margarita Rosado Solis} \\
+    \small {Ayudante: Isidro Ramírez Ballinas}\\
+    \small {Fecha de entrega: 24 de Octubre de 2024} \\
+    \small {Nombre completo: Andrés López González} \\
+    \small {Tarea número VI}
+\end{minipage}
+\hfill
+\begin{minipage}{0.12\textwidth}
+    \includegraphics[width=\linewidth]{logo_universidad}
+\end{minipage}
+
+\section*{Preguntas Semana VI}
+
+\subsection*{Chandrasekhar: Figura, Límite y Premio Nobel}
+
+Subrahmanyan Chandrasekhar fue un físico y astrofísico indo-estadounidense, nacido en 1910, conocido principalmente por su trabajo sobre la estructura y evolución de las estrellas. A lo largo de su carrera, Chandrasekhar contribuyó a una amplia variedad de campos en la física teórica y la astrofísica, incluidos la dinámica estelar, las atmósferas estelares, la radiación y el transporte de energía, entre otros.
+
+\subsubsection*{El Límite de Chandrasekhar}
+
+El límite de Chandrasekhar es el valor máximo de masa que puede tener una enana blanca para que se mantenga estable bajo la degeneración de electrones. Este límite es aproximadamente \( 1.44 \, M_{\odot} \) (donde \( M_{\odot} \) es la masa del Sol). Por encima de este límite, la presión de degeneración de los electrones ya no puede soportar la gravedad de la estrella, lo que lleva al colapso gravitacional.
+
+Este concepto fue fundamental para comprender la evolución estelar y el destino final de las estrellas, conduciendo a la formación de estrellas de neutrones o agujeros negros.
+
+\subsubsection*{Premio Nobel de Física}
+
+Chandrasekhar recibió el Premio Nobel de Física en 1983, compartido con William Fowler, por sus estudios sobre los procesos físicos importantes en la estructura y evolución de las estrellas. El premio reconoció sus investigaciones sobre el límite de masa para enanas blancas y su contribución al estudio de agujeros negros y la dinámica estelar.
+
+\subsection*{Cinco telescopios espaciales}
+
+\subsubsection*{1. Observatorio de rayos X Chandra}
+\begin{itemize}
+    \item \textbf{Lanzamiento:} 23 de julio de 1999
+    \item \textbf{Agencia:} NASA
+    \item \textbf{Instrumentos principales:} Conjunto de telescopios de rayos X y cámaras CCD.
+    \item \textbf{Rango de observación:} Rayos X de alta energía (0.1-10 keV).
+    \item \textbf{Objetivo:} Estudiar la emisión de rayos X de cuerpos celestes como agujeros negros, cúmulos de galaxias y supernovas.
+    \item \textbf{Ubicación:} Órbita altamente elíptica terrestre.
+\end{itemize}
+
+\subsubsection*{2. Telescopio Espacial Hubble}
+\begin{itemize}
+    \item \textbf{Lanzamiento:} 24 de abril de 1990
+    \item \textbf{Agencia:} NASA/ESA
+    \item \textbf{Instrumentos principales:} Cámara de Campo Amplio, Espectrógrafo de Imágenes del Telescopio Espacial.
+    \item \textbf{Rango de observación:} Ultravioleta, visible e infrarrojo cercano.
+    \item \textbf{Objetivo:} Producir imágenes detalladas de galaxias, nebulosas y estrellas, y estudiar el universo lejano.
+    \item \textbf{Ubicación:} Órbita baja terrestre.
+\end{itemize}
+
+\subsubsection*{3. Telescopio Espacial James Webb}
+\begin{itemize}
+    \item \textbf{Lanzamiento:} 25 de diciembre de 2021
+    \item \textbf{Agencia:} NASA/ESA/CSA
+    \item \textbf{Instrumentos principales:} NIRCam, NIRSpec, MIRI.
+    \item \textbf{Rango de observación:} Infrarrojo cercano y medio (0.6 a 28.3 micrómetros).
+    \item \textbf{Objetivo:} Estudiar la formación de estrellas, la evolución de galaxias y el universo temprano.
+    \item \textbf{Ubicación:} Punto de Lagrange L2, a 1.5 millones de km de la Tierra.
+\end{itemize}
+
+\subsubsection*{4. Observatorio Espacial Fermi}
+\begin{itemize}
+    \item \textbf{Lanzamiento:} 11 de junio de 2008
+    \item \textbf{Agencia:} NASA
+    \item \textbf{Instrumentos principales:} Telescopio de gran área (LAT), Monitor de destellos de rayos gamma (GBM).
+    \item \textbf{Rango de observación:} Rayos gamma (8 keV a más de 300 GeV).
+    \item \textbf{Objetivo:} Detectar y estudiar explosiones de rayos gamma, púlsares y agujeros negros.
+    \item \textbf{Ubicación:} Órbita baja terrestre.
+\end{itemize}
+
+\subsubsection*{5. Observatorio Espacial Spitzer}
+\begin{itemize}
+    \item \textbf{Lanzamiento:} 25 de agosto de 2003
+    \item \textbf{Agencia:} NASA
+    \item \textbf{Instrumentos principales:} Cámara de matriz de infrarrojos (IRAC), Espectrógrafo de imágenes de infrarrojos (IRS).
+    \item \textbf{Rango de observación:} Infrarrojo medio y lejano (3-180 micrómetros).
+    \item \textbf{Objetivo:} Estudiar objetos fríos como exoplanetas, discos protoplanetarios y galaxias infrarrojas.
+    \item \textbf{Ubicación:} Órbita heliocéntrica.
+\end{itemize}
+
+\subsection*{Radiación sincrotrónica vs ciclotrónica}
+
+\subsubsection*{Radiación sincrotrónica}
+
+La radiación sincrotrónica se produce cuando partículas cargadas, como electrones, se mueven a velocidades relativistas en campos magnéticos. Estas partículas experimentan aceleración transversal y emiten radiación electromagnética.
+
+\begin{itemize}
+    \item \textbf{Velocidad de las partículas:} Relativista.
+    \item \textbf{Rango de frecuencias:} Amplio, desde radio hasta rayos X y gamma.
+    \item \textbf{Espectro:} Continuo y suave, con polarización fuerte.
+    \item \textbf{Fuentes:} Púlsares, núcleos galácticos activos, restos de supernovas.
+    \item \textbf{Dependencia del campo magnético:} Fuertemente dependiente del campo magnético y la energía de las partículas.
+\end{itemize}
+
+\subsubsection*{Radiación ciclotrónica}
+
+La radiación ciclotrónica ocurre cuando partículas cargadas se mueven en espiral en un campo magnético a velocidades no relativistas. Esta radiación se produce a frecuencias específicas llamadas frecuencias ciclotrónicas.
+
+\begin{itemize}
+    \item \textbf{Velocidad de las partículas:} No relativista.
+    \item \textbf{Rango de frecuencias:} Generalmente en el rango de radio.
+    \item \textbf{Espectro:} Discreto, con picos en frecuencias específicas.
+    \item \textbf{Fuentes:} Atmósferas de planetas y estrellas, plasma en campos magnéticos.
+    \item \textbf{Dependencia del campo magnético:} Directamente dependiente de la fuerza del campo magnético y la carga de las partículas.
+\end{itemize}
+
+
+
+\end{document}
+
+
+

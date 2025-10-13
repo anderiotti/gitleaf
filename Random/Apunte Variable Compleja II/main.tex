@@ -1,0 +1,85 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage{pgfplots}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{mdframed}
+\usepackage{amsthm}
+\usepackage{tikz}
+\usepackage{multicol}
+\usepackage[dvipsnames]{xcolor}
+
+\geometry{a4paper, left=2cm, right=2cm, top=1cm, bottom=2cm}
+
+\pgfplotsset{compat=1.18}
+\begin{document}
+
+
+Una homotopía es una deformación continua entre dos funciones o caminos. En el contexto de funciones complejas, se define formalmente de la siguiente manera:  
+
+Definición 1.1 (Homotopía):  
+Sea \( H: [0,1] \times \Omega \rightarrow \mathbb{C} \) una función continua, donde \( \Omega \subseteq \mathbb{C} \) es un dominio. Decimos que \( H \) es una homotopía entre \( f_0 \) y \( f_1 \) si:  
+\[
+\begin{cases}
+H(0, z) = f_0(z) & \forall z \in \Omega, \\
+H(1, z) = f_1(z) = f(H(z)) & \forall z \in \Omega.
+\end{cases}
+\]  
+Aquí, \( f_0 \) y \( f_1 \) se denominan homotópicas, denotado \( f_0 \simeq f_1 \).  
+
+Considérese una familia de funciones \( \{f_t\}_{t \in [0,1]} \) definidas por:  
+\[
+H(t, z) = f_t(z),
+\]  
+donde \( H \) es continua en ambas variables. Esta construcción permite "conectar" \( f_0 \) con \( f_1 \) mediante un parámetro \( t \).  
+
+Ejemplo 2.1:  
+Si \( f(z) \) y \( \tilde{f}(z) \) son homotópicas, existe una homotopía \( H \) tal que:  
+\[
+\tilde{f}(H(z)) = H(f(z)).
+\]  
+Esto induce la relación conmutativa:  
+\[
+\tilde{f} \circ H = H \circ f.
+\]  
+[Diagrama]  
+Diagrama conmutativo que ilustra \( \tilde{f} \circ H = H \circ f \).  
+
+
+
+ 2.2 Homotopía entre Caminos  
+Sean \( \tilde{\beta} \) y \( H(\tilde{\beta}) \) dos caminos en \( \mathbb{C} \). Una homotopía \( h \) que los conecta se define como:  
+\[
+h: [0,1] \times [0,1] \rightarrow \mathbb{C}, \quad h(t, s) = \tilde{H}(t, \alpha(s)),
+\]  
+donde \( \alpha: [0,1] \rightarrow \Omega \) es un camino base. Las condiciones de frontera son:  
+\[
+\begin{cases}
+h(0, s) = \tilde{H}(0, \alpha(s)) = \beta(s), \\
+h(1, s) = \tilde{H}(1, \alpha(s)) = H(\beta(s)).
+\end{cases}
+\]  
+
+Proposición 2.2:  
+Bajo la homotopía \( h \), se satisface:  
+\[
+\tilde{f}(H(\alpha(s))) = H(f(\alpha(s))) = H(\beta(s)).
+\]  
+Esto implica que \( \tilde{f} \cdot H = H \cdot f \), destacando la estructura de grupo fundamental subyacente.  
+
+
+
+1. Continuidad: La función \( H \) debe ser continua en todas sus variables para preservar la estructura topológica.  \\
+2. Composición de Funciones: La relación \( \tilde{f} = H \cdot f \cdot H^{-1} \) sugiere una conjugación por \( H \), común en transformaciones conformes.  \\
+3. Aplicaciones: Las homotopías son fundamentales en el estudio de integrales de contorno, teoremas de Cauchy y monodromía.  \\\\
+
+
+
+Verifique que la homotopía \( h(t, s) = (1 - t) \cdot \beta(s) + t \cdot H(\beta(s)) \) satisface las condiciones de continuidad y frontera para caminos en \( \mathbb{C} \).  
+
+    
+
+\end{document}

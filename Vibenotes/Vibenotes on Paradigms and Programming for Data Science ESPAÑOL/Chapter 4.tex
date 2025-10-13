@@ -1,0 +1,136 @@
+\chapter{Theory and Architecture of Classifiers}
+\label{chap:classifiers}
+
+At the heart of machine learning lies the task of pattern recognition: the automated process of identifying regularities in data and using these regularities to take actions, such as making predictions. The most fundamental and ubiquitous pattern recognition task is \textbf{classification}. From identifying a fraudulent transaction to diagnosing a medical condition from an image, classification is the engine that drives a vast array of modern intelligent systems.
+
+This chapter builds the theoretical machinery required to understand how a computational system can learn to perform this task. We will begin by formalizing the classification problem itself, moving from abstract objects to concrete mathematical representations. We will then explore the crucial art and science of \textbf{feature engineering}—the process of selecting the right representations for our data. With these foundations, we will construct a taxonomy to organize the landscape of classification algorithms before delving into the architecture of two principal families of classifiers: those based on geometric distance and those founded on the rigorous principles of probability theory. This is a journey from intuition to formalism, designed to provide a deep and lasting understanding of how machines learn to distinguish, categorize, and decide.
+
+\section{The Classification Problem}
+\label{sec:classification_problem}
+Before we can build a classifier, we must first define its task with mathematical precision. The goal of classification is to assign a discrete label to an object based on its observable characteristics.
+
+Let us define a \textbf{universe of work}, $\Omega$, as the set of all possible objects we might wish to classify. This universe is considered to be partitioned into a finite set of $K$ mutually exclusive and exhaustive classes, $\mathcal{Y} = \{\alpha_1, \alpha_2, \dots, \alpha_K\}$. For any given object $\omega \in \Omega$, our objective is to determine to which class $\alpha_k$ it belongs.
+
+Computers, however, do not operate on abstract objects; they operate on numbers. The first step in any classification problem is therefore to transform an object $\omega$ into a numerical representation. This is achieved by measuring $N$ of its characteristics, resulting in a \textbf{feature vector}, $X \in \mathbb{R}^N$. The $N$-dimensional space that contains all possible feature vectors is known as the \textbf{feature space}, $\mathcal{X}$.
+
+The classification problem is thus reduced to finding a decision function, or \textbf{classifier}, $f$, that maps the feature space to the set of class labels:
+$$ f: \mathcal{X} \to \mathcal{Y} $$
+The central challenge of machine learning is to learn this function $f$ from a set of examples, such that it generalizes well to new, unseen objects.
+
+\section{Feature Engineering}
+\label{sec:feature_engineering}
+The transformation of a real-world object into a feature vector $X$ is arguably the most critical step in the entire machine learning pipeline. This process, known as \textbf{feature engineering}, is both an art and a science. The performance of even the most sophisticated algorithm is fundamentally limited by the quality of the features it is given. A well-chosen set of features can make a complex problem trivial, while a poor set can make even a simple problem impossible to solve.
+
+\subsection*{Criteria for an Optimal Feature Set}
+The selection of an optimal set of discriminant features is guided by a number of theoretical and practical principles. An ideal feature set should possess the following five properties:
+
+\begin{enumerate}
+    \item \textbf{Discriminant Capacity}: This is the most important theoretical property. A feature has high discriminant capacity if its values are systematically different for objects belonging to different classes. From a statistical perspective, this means the feature should maximize the variance \textit{between} classes while minimizing the variance \textit{within} each class.
+    
+    \item \textbf{Reliability}: This property implies that objects from the same class should yield similar feature vectors. Statistically, this corresponds to low dispersion (e.g., low variance) in the feature values for each class. A reliable feature produces a tight, compact cluster of data points for each class in the feature space.
+    
+    \item \textbf{Independence}: The features in a feature vector should ideally be uncorrelated with one another. In linear algebra terms, they should be as close to orthogonal as possible. A feature that is highly correlated with another adds little new information for discrimination and can introduce multicollinearity issues in some models, making the system unnecessarily complex.
+    
+    \item \textbf{Economy}: The process of extracting or calculating the feature values must be computationally and financially feasible. A feature that provides perfect discrimination but requires a supercomputer to calculate may be practically useless.
+    
+    \item \textbf{Speed}: The time required to compute the feature for a new object must not be so long as to render the classification system inviable for its intended application.
+\end{enumerate}
+
+\section{A Taxonomy of Classification Algorithms}
+\label{sec:classifier_taxonomy}
+The vast landscape of classification algorithms can be organized by a taxonomy based on their operational principles. Understanding these distinctions provides a mental framework for choosing the right algorithm for a given problem.
+
+\begin{itemize}
+    \item \textbf{A Priori vs. A Posteriori (Learning-based)}: This distinction is based on the method of construction. An \textit{a priori} classifier is built in a single step by calculating its decision functions directly from a training sample. The Euclidean classifier we will soon discuss is a classic example. In contrast, an \textit{a posteriori} classifier is built through an iterative training process, where the model progressively "learns" to recognize patterns by adjusting its parameters over multiple passes through the data. The Perceptron and modern neural networks fall into this category.
+    
+    \item \textbf{Supervised vs. Unsupervised}: This is the most fundamental distinction, based on the nature of the training data. In \textit{supervised} learning, the algorithm is provided with a sample of feature vectors that are already correctly labeled with their corresponding classes. The goal is to learn a mapping from features to labels. In \textit{unsupervised} learning, the algorithm is given only the feature vectors, without any labels. The goal is not to assign a predefined label, but to discover the natural structure or groupings (clusters) within the data itself.
+    
+    \item \textbf{Deterministic vs. Non-Deterministic (Probabilistic)}: This distinction concerns the nature of the classifier's output. A \textit{deterministic} classifier assigns a "hard" label to an input object; it belongs to class $\alpha_i$, and that is the final decision. A \textit{non-deterministic} or probabilistic classifier provides a more nuanced output: it assigns a probability of membership to each of the possible classes. This is often far more useful in practice, as it quantifies the model's uncertainty in its decision.
+\end{itemize}
+
+\section{Models of Classification Based on Distance}
+\label{sec:distance_classifiers}
+The most intuitive way to classify an object is to compare it to known examples. Distance-based models formalize this intuition by representing classes as points or distributions in the feature space and assigning a new object to the class to which it is "closest." The definition of "closeness," however, is what differentiates the models.
+
+\subsection*{The Euclidean Distance Classifier}
+This classifier is deterministic, supervised, and a priori. It is the simplest instantiation of geometric classification, based on the familiar concept of Euclidean distance.
+
+\subsubsection*{Mathematical Concept: The Class Prototype}
+The model assumes that each class $\alpha_k$ can be adequately represented by a single "exemplar" vector, known as the \textbf{prototype} or \textbf{centroid}, $Z_k$. This centroid is typically calculated as the mean of the feature vectors of all training samples belonging to that class.
+
+\subsubsection*{Decision Rule and Boundary}
+The decision rule is straightforward: an unknown feature vector $X$ is assigned to the class whose centroid $Z_k$ is closest in terms of Euclidean distance. Mathematically, the predicted class $\hat{y}$ is:
+$$ \hat{y} = \arg\min_{k \in \{1, \dots, K\}} d_E(X, Z_k) = \arg\min_{k \in \{1, \dots, K\}} \sqrt{(X - Z_k)^T (X - Z_k)} $$
+The decision boundary between any two classes, $\alpha_i$ and $\alpha_j$, is the set of points equidistant from their centroids, $Z_i$ and $Z_j$. This boundary is a hyperplane that is the perpendicular bisector of the line segment connecting the two centroids. The collection of these hyperplanes partitions the feature space into a Voronoi tessellation.
+
+\subsubsection*{Derivation of the Linear Discriminant Function}
+For computational efficiency, we can work with the squared Euclidean distance, which removes the square root and preserves the ordering of distances.
+$$ d_E^2(X, Z_k) = (X - Z_k)^T (X - Z_k) = X^T X - 2X^T Z_k + Z_k^T Z_k $$
+When comparing distances for a given point $X$ across different classes $k$, the term $X^T X$ is constant and can be ignored. To turn this into a function to be maximized rather than minimized, we can negate the remaining terms, leading to a discriminant function $fd_k(X)$ for each class:
+$$ fd_k(X) = X^T Z_k - \frac{1}{2} Z_k^T Z_k $$
+The decision rule then becomes: assign $X$ to the class $\alpha_k$ for which $fd_k(X)$ is maximum. This function is linear in $X$, hence this classifier is a \textbf{linear classifier}.
+
+\subsection*{The Statistical Classifier and Mahalanobis Distance}
+The Euclidean classifier's strength is its simplicity, but its weakness is its assumption that distance is equal in all directions. It implicitly assumes that the data clusters for each class are spherical and have similar sizes. When this is not the case (e.g., when features are correlated), a more sophisticated distance metric is required.
+
+\subsubsection*{Mathematical Motivation: Beyond Spherical Clusters}
+Consider two classes whose data points form elliptical, rotated clusters in the feature space. A new point might be closer to centroid $Z_1$ in Euclidean terms, yet it clearly appears to belong to the distribution of class $\alpha_2$. The Euclidean metric is blind to the shape, or \textbf{covariance}, of the data. We need a distance metric that accounts for this.
+
+\subsubsection*{Formal Introduction to Mahalanobis Distance}
+The Mahalanobis distance is a measure of the distance between a point $X$ and a distribution, introduced formally as:
+$$ d_M(X, \alpha_k)^2 = (X - m_k)^T C_k^{-1} (X - m_k) $$
+where $m_k$ is the mean vector (centroid) of class $\alpha_k$ and $C_k$ is the covariance matrix of the class.
+
+\subsubsection*{Computational Interpretation: The Role of the Inverse Covariance Matrix}
+The power of this metric lies in the term $C_k^{-1}$, the inverse of the covariance matrix.
+\begin{itemize}
+    \item The \textbf{covariance matrix $C_k$} describes the shape and orientation of the data cloud for class $\alpha_k$. Its diagonal elements are the variances of each feature, and its off-diagonal elements are the covariances between features.
+    \item The \textbf{inverse covariance matrix $C_k^{-1}$} acts as a linear transformation that "deforms" the feature space. Specifically, it de-correlates and scales the features, effectively transforming the elliptical data cloud of class $\alpha_k$ into a standardized, spherical cloud.
+\end{itemize}
+In this transformed space, the Mahalanobis distance is equivalent to the squared Euclidean distance. It is therefore often interpreted as measuring distance in units of standard deviation from the centroid, accounting for the data's variance and correlation structure.
+
+Because the Mahalanobis distance involves a quadratic form ($X^T C_k^{-1} X$), the resulting decision boundaries are no longer simple hyperplanes but are instead \textbf{conic sections} (ellipses, parabolas, or hyperbolas), allowing for far more flexible separation of classes.
+
+\section{Probabilistic Classification (Bayesian Approach)}
+\label{sec:probabilistic_classifiers}
+A more fundamental approach to classification is to frame it as a problem of inferring probabilities. Instead of a deterministic assignment, we ask: given an observed feature vector $X$, what is the probability that it belongs to class $\alpha_k$? This approach is rooted in Bayes' Theorem.
+
+\subsection*{Theoretical Foundation: Bayes' Theorem}
+Bayes' Theorem provides the mathematical engine for updating our beliefs in the face of new evidence. In the context of classification, it is written as:
+$$ P(\alpha_k | X) = \frac{P(X | \alpha_k) P(\alpha_k)}{P(X)} $$
+Each term has a specific name and role:
+\begin{itemize}
+    \item \textbf{$P(\alpha_k | X)$} is the \textbf{posterior probability}: the probability that the object belongs to class $\alpha_k$ \textit{given} that we have observed the feature vector $X$. This is the quantity we wish to compute.
+    \item \textbf{$P(X | \alpha_k)$} is the \textbf{likelihood}: the probability of observing the feature vector $X$ \textit{given} that the object belongs to class $\alpha_k$. This is a class-conditional probability density that can be modeled from the training data.
+    \item \textbf{$P(\alpha_k)$} is the \textbf{prior probability}: our belief that a randomly selected object belongs to class $\alpha_k$, before observing any features.
+    \item \textbf{$P(X)$} is the \textbf{evidence}: the total probability of observing the feature vector $X$. It acts as a normalization constant, ensuring the posterior probabilities sum to one. $P(X) = \sum_{j=1}^{K} P(X | \alpha_j) P(\alpha_j)$.
+\end{itemize}
+
+\subsection*{The Optimal Bayes Classifier}
+The decision rule for an optimal classifier is the \textbf{Maximum A Posteriori (MAP)} rule: assign the object $X$ to the class $\alpha_k$ that has the highest posterior probability.
+$$ \hat{y} = \arg\max_{k \in \{1, \dots, K\}} P(\alpha_k | X) $$
+Since the evidence term $P(X)$ is the same for all classes, it does not affect the maximization, and the rule can be simplified to:
+$$ \hat{y} = \arg\max_{k \in \{1, \dots, K\}} P(X | \alpha_k) P(\alpha_k) $$
+The expression to be maximized, $fd_k(X) = P(X | \alpha_k) P(\alpha_k)$, serves as our probabilistic discriminant function.
+
+\subsection*{The Normality Hypothesis and Discriminant Functions}
+To make this model practical, we must choose a specific mathematical form for the likelihood function $P(X | \alpha_k)$. A very common and mathematically convenient assumption is that the feature vectors for each class are drawn from a \textbf{Multivariate Normal (Gaussian) distribution}.
+
+The probability density function for an $N$-dimensional vector $X$ from class $\alpha_k$ is given by:
+$$ P(X | \alpha_k) = \frac{1}{(2\pi)^{N/2} |C_k|^{1/2}} \exp\left(-\frac{1}{2}(X - m_k)^T C_k^{-1} (X - m_k)\right) $$
+where $m_k$ is the mean vector and $C_k$ is the covariance matrix for class $\alpha_k$. Notice that the term in the exponential is precisely the squared Mahalanobis distance.
+
+To simplify the discriminant function, we can take its natural logarithm. Since the logarithm is a monotonically increasing function, maximizing $\log(fd_k(X))$ is equivalent to maximizing $fd_k(X)$. This is computationally advantageous as it converts products into sums and eliminates the exponential.
+$$ \log(fd_k(X)) = \log(P(X | \alpha_k)) + \log(P(\alpha_k)) $$
+Substituting the Multivariate Normal PDF and discarding constants that are the same for all classes, we arrive at the \textbf{Quadratic Discriminant Function}:
+$$ fd_k(X) = -\frac{1}{2}(X - m_k)^T C_k^{-1} (X - m_k) - \frac{1}{2}\log|C_k| + \log P(\alpha_k) $$
+This model is known as Quadratic Discriminant Analysis (QDA).
+
+\begin{remark}[From Quadratic to Linear to Euclidean]
+This general quadratic discriminant function makes a beautiful connection back to our simpler models under specific assumptions:
+\begin{enumerate}
+    \item \textbf{Equal Covariance Matrices ($C_k = C$ for all $k$)}: If we assume all classes share the same covariance matrix, the quadratic term $X^T C^{-1} X$ becomes the same for all classes and can be discarded. The resulting discriminant function is now \textbf{linear} in $X$. This is the basis of Linear Discriminant Analysis (LDA).
+    \item \textbf{Identity Covariance Matrix ($C = I$)}: If we further assume the features are uncorrelated and have unit variance, the covariance matrix becomes the identity matrix ($C=I$). In this case, $C^{-1}=I$ and $|C|=1$. The LDA discriminant function simplifies to $X^T m_k - \frac{1}{2}m_k^T m_k$ (assuming equal priors), which is \textbf{identical to the discriminant function derived for the Euclidean classifier}.
+\end{enumerate}
+This demonstrates a profound theoretical unity: the simple geometric classifier based on Euclidean distance is a special, highly constrained case of the more general probabilistic classifier under the assumption of spherical, equal-sized Gaussian distributions for each class.
+\end{remark}

@@ -1,0 +1,96 @@
+\documentclass{article}
+\usepackage{graphicx} % Required for inserting images
+\usepackage{amsmath}
+\usepackage{amsfonts}
+
+
+\begin{document}
+
+\section*{Ejercicio IV}
+
+Realice lo que se pide, planteando una integral doble y resolviéndola. \\
+
+a) Pruebe que el área del conjunto \( A = \{(x,y) \in \mathbb{R}^2 | x^2 + y^2 \leq 1\} \) es \( \pi \).  \\
+
+b) Pruebe que el área del conjunto \( B = [0, \sqrt{2}] \times [0, \sqrt{2}] \) es 2.
+
+Inciso (a): Área del conjunto \( A \) \\
+El conjunto \( A \) es el disco unitario centrado en el origen, es decir,  
+\[
+A = \{(x,y) \in \mathbb{R}^2 \mid x^2 + y^2 \leq 1\}.
+\]  
+Para calcular su área, utilizamos el cambio de coordenadas polares demostrado en geometría analítica y empleado en cálculo 2:  
+\[
+x = r\cos\theta, \quad y = r\sin\theta, \quad r^2 = x^2+y^2
+\]  
+El elemento de área en coordenadas polares es \( dA = r\, dr\, d\theta \). Como el disco abarca todo el ángulo \( \theta \) desde \( 0 \) hasta \( 2\pi \) y el radio \( r \) varía desde \( 0 \) hasta \( 1 \), podemos aplicar teorema de Fubini (nótese que será análogo para el ejercicio 7 y 8) la integral doble que da el área es:
+
+\[
+\iint_A dA = \int_0^{2\pi} \int_0^1 r\, dr\, d\theta.
+\]
+
+Resolviendo la integral interna respecto a \( r \):
+
+\[
+\int_0^1 r\, dr = \frac{1}{2} r^2 \Big|_0^1 = \frac{1}{2}.
+\]
+
+Ahora integramos respecto a \( \theta \):
+
+\[
+\int_0^{2\pi} \frac{1}{2} d\theta = \frac{1}{2} \theta \Big|_0^{2\pi} = \frac{1}{2} (2\pi - 0) = \pi.
+\]
+
+Por lo tanto, el área del conjunto \( A \) es \( \pi \), como se quería demostrar.\\
+
+
+
+sobre la región dada. La población total se obtiene con la integral doble:
+
+\[
+P = \int_0^{10} \int_0^{10} 100(y+1) \,dx\, dy.
+\]
+
+Como \( f(x,y) \) no depende de \( x \), la integral en \( x \) es sencilla:
+
+   \[
+   \int_0^{10} 100(y+1) \,dx = 100(y+1) \int_0^{10} dx = 100(y+1)(10) = 1000(y+1).
+   \]
+
+Ahora, integramos en \( y \):
+
+   \[
+   P = \int_0^{10} 1000(y+1) \, dy.
+   \]
+
+   Resolviendo:
+
+   \[
+   P = 1000 \int_0^{10} (y+1) \, dy.
+   \]
+
+   La integral es:
+
+   \[
+   \int (y+1) \, dy = \frac{y^2}{2} + y.
+   \]
+
+   Evaluamos en los límites \( y=0 \) a \( y=10 \):
+
+   \[
+   \left[ \frac{y^2}{2} + y \right]_0^{10} = \left( \frac{10^2}{2} + 10 \right) - \left( \frac{0^2}{2} + 0 \right).
+   \]
+
+   \[
+   = \left( \frac{100}{2} + 10 \right) = (50+10) = 60.
+   \]
+
+Ahora solo multiplicamos por 1000:
+
+   \[
+   P = 1000 \times 60 = 60000.
+   \]
+
+$\therefore$ La población total en la región es 60,000 personas.
+
+\end{document}

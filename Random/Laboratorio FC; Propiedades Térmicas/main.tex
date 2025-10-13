@@ -1,0 +1,231 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage{pgfplots}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{mdframed}
+\usepackage{amsthm}
+\usepackage{tikz}
+\usepackage{multicol}
+\usepackage{cancel}
+\usepackage{hyperref}
+
+\geometry{a4paper, left=2cm, right=2cm, top=1cm, bottom=2cm}
+
+\pgfplotsset{compat=1.18}
+\begin{document}
+
+\begin{minipage}{0.7\textwidth}
+    \small \textbf{LABORATORIO DE FENÓMENOS COLECTIVOS}  \\
+    \small {Facultad de Ciencias, Universidad Nacional Autónoma de México} \\
+    \small {Profesor: Eduardo Morales Gamboa} \\
+    \small {Ayudante: Angélica Tapia Pazos}\\
+    \small {Fecha de entrega: 18 de Noviembre de 2024} \\
+    \small {Integrantes del equipo: López Gónzalez A. , Hernández Gómez A. \\ Villanueva Sanluis A. , Ornelas Arias C., L. S. Erick A.
+    \small {Informe Final}
+\end{minipage}
+\hfill
+\begin{minipage}{0.12\textwidth}
+    \includegraphics[width=\linewidth]{logo_universidad}
+\end{minipage} \\\\\\
+\textbf{Propiedades Térmicas}\\
+
+\hline
+
+\section{Abstract}
+
+En este trabajo se presenta un análisis experimental detallado sobre las propiedades térmicas fundamentales de diversos materiales, con énfasis en el calor latente de fusión del hielo y los coeficientes de dilatación volumétrica de metales bajo enfriamiento. Se emplearon métodos calorimétricos para determinar el calor latente de fusión del hielo, obteniendo un valor consistente con la literatura, y se cuantificaron las desviaciones atribuibles a la pureza química del agua utilizada. Paralelamente, se midieron las variaciones volumétricas de lingotes de cobre y aluminio, así como de una esfera de acero, sometidos a cambios de temperatura controlados, calculando sus coeficientes de dilatación volumétrica. Los resultados muestran concordancia general con los valores teóricos, aunque presentan desviaciones atribuibles a las limitaciones en la precisión instrumental y la variabilidad inherente en las propiedades de los materiales estudiados. Este estudio subraya la importancia de considerar incertidumbres experimentales y propiedades intrínsecas del sistema para la interpretación de resultados en experimentos térmicos.\\
+
+\textit{\textbf{keywords:} Dilatación Volumétrica, Calor Latente, Transferencia de Energía.} \\
+
+\hline
+
+\section{Marco Teórico}
+El calorímetro es una herramienta utilizada para medir el calor presente en reacciones químicas, procesos de fusión, entre otras. Por su construcción esta herramienta es capaz de aislar termodinámicamente, siendo una pared adiabática, la materia dentro de ésta; este aislamiento permite, con ayuda de un termómetro, medir la variación de la temperatura para poder calcular el calor ganado o perdido de la materia dentro de dicha herramienta. Se conocen calorímetrosa de \textit{poliestireno}, \textit{acero inoxidable}, \textit{de bomba}, y el de \textit{diferencial de barrido}. \cite{Calorímetro}
+        
+        El calor latente de fusión es una constante, distinta para cada líquido, que se define como la cantidad de energía requerida para transformar un kilogramo de masa sólida a su fase líquida, cuando ésta ya ha alcanzado su temperatura de fusión; de la definición de calor $Q = m \cdot L_{f}$, obtenemos regularmente:
+        \begin{equation}
+            L_{f} = \frac{Q}{m}
+        \end{equation}
+        
+        Donde Q es la energía absorbida por unidad de masa, la variable m es la masa y $L_{f}$ es el "Calor lantente de fusión". \cite{CalorLatente} \\\\
+
+        Sin embargo en nuestro caso tenemos un sistema de 3 distintos objetos, en donde debemos considerar tanto las propiedades del agua, del hielo como las del vaso del calorímetro. Es así que nos resulta la siguiente expresión.
+        \begin{align*}
+    Q_{perdido\;agua} &= Q_{ganado\;hielo} \\
+    -(m_ac_a(T_f-T_a)-m_cc_c(T_f-T_a)) &= m_hc_h(T_f-T_h)+m_hL_h \\
+    -(m_ac_a+m_cc_c)(T_f-T_a) &= m_hc_h|T_h| + m_hL_f \\
+    \frac{(m_ac_a+m_cc_c)(T_a-T_f)-m_hc_h|T_h|}{m_h} &= L_f
+\end{align*}
+
+        El coeficiente de dilatación es una constante, enciertas condiciones, propia de los materiales, la cual mide cuánto se expande o contrae un material al experimentar un cambio de la temperatura. Cuantifica así el relativo cambio en su longitud, área ó volúmen. Al cambio en su longitud se le llama \textit{dilatación lineal ($\alpha$)}. Matemáticamente se representa como: 
+        \begin{equation}
+            \alpha = \frac{1}{L_{0}}\frac{\Delta L}{ \Delta T}
+        \end{equation}
+        El cambio en su área se le define como \textit{dilatación superficial ($\beta$)}, dada por:
+        \begin{equation}
+            \beta = \frac{1}{A_{0}}\frac{\Delta A}{ \Delta T}
+        \end{equation}
+        Mientras que al cambio del volumen se nombra \textit{dilatación volumétrica ($\gamma$)}, conocida como:
+        \begin{equation}
+            \gamma = \frac{1}{V_{0}}\frac{\Delta V}{ \Delta T}
+        \end{equation} 
+
+        Decimos que en ciertas ocaciones es constante ya que este comportamiento es casi constante dentro de un determinado rango de temperatura. Esto ya que la estructura molecular de los materiales no responde de manera lineal a grandes cambios de temperatura. Para dichas condiciones se calcula aparte el valor de estos coeficientes. \cite{CoeficientesDilatación}
+
+\section{Objetivos y conceptos clave}
+\subsection{Objetivos}
+        \begin{itemize}
+            \item Conocer el calor latente de fusión del hielo.
+            \item Conocer el coeficiente de dilatación del aluminio, cobre, acero y agua.
+        \end{itemize}
+
+    \subsection{Conceptos Clave}
+        \begin{itemize}
+            \item Calor Latente de Fusión,
+            \item Coeficiente de Dilatación.
+        \end{itemize}
+
+
+\section{Materiales}
+\subsection{Calor latente de Fusión}
+            \begin{itemize}
+                \item Báscula electrónica.
+                \item Calorímetro.
+                \item Termómetro.
+                \item Hielo.
+                \item Agua.
+            \end{itemize}
+
+\subsection{Coeficiente de Dilatación.}
+            \begin{itemize}
+                \item Tornillo micrométrico.
+                \item Vernier.
+                \item Balín de metal.
+                \item Lingote de Cobre
+                \item Lingote de aluminio
+                \item Refrigerador.
+                \item Reloj.
+            \end{itemize}
+
+\section{Arreglo experimental}
+\subsection{Calor Latente de Fusión.}
+        Se colocó agua de laboratorio en el interior del calorímetro, registramos con el termómetro de mercurio la temperatura de este así como su masa $m_a$. Después, se colocó un hielo de masa $m_h$ en el agua, inmediatamente se cerró el calorímetro con el termómetro sellando el último hueco de intercambio de calor, lo dejamos disolverse completamente y obtuvimos una temperatura de equilibrio $T_f$, registramos la masa total del agua y la restamos con la masa inicial; para obtener el calor latente investigamos el calor específico del agua de laboratorio y el calorímetro de aluminio, así como pesamos el vasito de calorímetro que estuvo interactuando en el cambio de calor.
+    
+    \subsection{Coeficiente de Dilatación.}
+        Se midió la longitud de los lingotes con un vernier, así como la altura y ancho con un tornillo micrométrico. con el tornillo se midió el diámetro del balín. Se guardó el balín y los lingotes en el refrigerador del laboratorio durante 20 minutos. Luego se registró de nuevo el largo, ancho y diámetro del balín.
+
+\section{Resultados}
+\subsection{Calor latente de Fusión}
+Para esta primera parte, obtuvimos los siguientes resultados que son los necesarios para la obtención del calor latente del hielo según lo establecido en el marco teórico.
+
+\begin{table}[h!]
+\centering
+\begin{tabular}{@{}ll@{}}
+\toprule
+\textbf{Parámetro}                             & \textbf{Valor}          \\ \midrule
+Masa inicial de agua tarada                   & 225.68 g                \\
+Temperatura inicial del agua                  & 22 \textdegree{}C       \\
+Temperatura inicial del hielo                 & -13 \textdegree{}C      \\
+Temperatura final en equilibrio               & 14 \textdegree{}C       \\
+Masa del vasito en equilibrio térmico         & 45.85 g                 \\
+Masa final del agua (incluyendo hielo derretido) & 245.64 g             \\
+Masa del hielo derretido                      & 19.96 g                 \\ \bottomrule
+\end{tabular}
+\caption{Datos experimentales para el equilibrio térmico.}
+\label{tab:equilibrio_termico}
+\end{table}
+
+De donde la incertidumbre asociada a las masas es de $0.005g$ y a las temperaturas $0.5^{\circ}C$.
+
+\subsection{Coeficiente de Dilatación}
+
+Para esta parte, obtuvimos la siguiente tabla en la que hemos hecho un adelanto del análisis de resultado para que pueda usted lector apreciar el cambio en los volúmenes. Considérese que esto se hizo bajo condiciones $T_o = 22^{\circ}C \rightarrow T_f = -13^{\circ}C \Rightarrow \Delta T = -35^{\circ}C$.
+
+\begin{table}[h]
+\centering
+\begin{tabular}{lrr}
+\hline
+\multicolumn{3}{|c|}{Cubo de cobre}                                                                                                      \\ \hline
+\multicolumn{1}{|l|}{Medida ($x$ mm $\pm 0.005mm$)}      & \multicolumn{1}{l|}{Temperatura Ambiental} & \multicolumn{1}{l|}{Enfriado}    \\ \hline
+\multicolumn{1}{|l|}{Largo}                              & \multicolumn{1}{r|}{59.75}                 & \multicolumn{1}{r|}{59.6}        \\ \hline
+\multicolumn{1}{|l|}{Ancho}                              & \multicolumn{1}{r|}{19.04}                 & \multicolumn{1}{r|}{19.04}       \\ \hline
+\multicolumn{1}{|l|}{Altura}                             & \multicolumn{1}{r|}{19.01}                 & \multicolumn{1}{r|}{19.03}       \\ \hline
+\multicolumn{1}{|l|}{Volumen ($mm^3 \pm 0.000853mm^3$)}  & \multicolumn{1}{r|}{21626.5364}            & \multicolumn{1}{r|}{21594.93952} \\ \hline
+                                                         & \multicolumn{1}{l}{}                       & \multicolumn{1}{l}{}             \\ \hline
+\multicolumn{3}{|c|}{Cubo de aluminio}                                                                                                   \\ \hline
+\multicolumn{1}{|l|}{Medida ($x$ mm $\pm 0.005mm$)}      & \multicolumn{1}{l|}{Temperatura Ambiental} & \multicolumn{1}{l|}{Enfriado}    \\ \hline
+\multicolumn{1}{|l|}{Largo}                              & \multicolumn{1}{r|}{59.7}                  & \multicolumn{1}{r|}{59.55}       \\ \hline
+\multicolumn{1}{|l|}{Ancho}                              & \multicolumn{1}{r|}{19.28}                 & \multicolumn{1}{r|}{19.24}       \\ \hline
+\multicolumn{1}{|l|}{Altura}                             & \multicolumn{1}{r|}{19.24}                 & \multicolumn{1}{r|}{19.23}       \\ \hline
+\multicolumn{1}{|l|}{Volumen ($mm^3 \pm 0.000861mm^3$)}  & \multicolumn{1}{r|}{22145.54784}           & \multicolumn{1}{r|}{22032.61866} \\ \hline
+                                                         & \multicolumn{1}{l}{}                       & \multicolumn{1}{l}{}             \\ \hline
+\multicolumn{3}{|c|}{Esfera de acero}                                                                                                    \\ \hline
+\multicolumn{1}{|l|}{Medida ($x$ mm $\pm 0.0005mm$)}     & \multicolumn{1}{l|}{Temperatura Ambiental} & \multicolumn{1}{l|}{Enfriado}    \\ \hline
+\multicolumn{1}{|l|}{Diámetro}                           & \multicolumn{1}{r|}{25.40}                 & \multicolumn{1}{r|}{25.38}       \\ \hline
+\multicolumn{1}{|l|}{Volumen ($mm^3 \pm 0.0000214mm^3$)} & \multicolumn{1}{r|}{8580.246639}           & \multicolumn{1}{r|}{8559.994295} \\ \hline
+\end{tabular}
+\caption{Tabla de resultados de cambios volumétricos en cada objeto en función de la temperatura}
+\label{Volumenes}
+\end{table}
+
+\section{Análisis de Resultados}
+\subsection{Calor latente de Fusión}
+
+Obtuvimos el valor del calor latente en calorías y lo multiplicamos por su equivalencia en joules para mejor interpretación, vease en la siguiente tabla.
+\begin{table}[h]
+\begin{tabular}{|l|r|}
+\hline
+Calor latente cal/kg & $87.94066132 \pm 7.31\%$ \\ \hline
+Joules/kg            & $367.943727 \pm 7.31\%$  \\ \hline
+\end{tabular}
+\end{table}
+Según reporta la literatura el calor latente del hielo oscila centralmente en 334 Joules/kg, que considerando nuestras incertidumbres asociadas nos da un valor demasiado apegado, inclusive sin considerarlas nuestro valor es muy correcto pues estamos trabajando con agua del laboratorio que por algún u otro factor de contaminación puede variar en su composición química, por ende, en su calor latente asociado.
+
+\subsection{Coeficiente de Dilatación}
+
+Nótese en \ref{Volumenes} que el cambio volumétrico al enfriarse tiende a ser negativo para todos los casos (todavía no nos metemos al coeficiente de dilatación volumétrica), para el primer caso del cubo de cobre tenemos que $V_{inicial} \rightarrow V_{final}$ es de la forma $21626.5364 \rightarrow 21594.93952$, \textit{nótese que omitimos las unidades pues el cociente volumétrico al usarse las mismas unidades las anula}. Usando la fórmula (iv) discutida en el marco teórico tenemos que el coeficiente de dilatación volumétrico es explícitamente dado por.
+
+\begin{equation}
+    \gamma_{cobre} = \frac{1}{V_{0}}\frac{\Delta V}{ \Delta T} = \frac{-31.59688u^3}{21626.5364u^3 \cdot (-35^{\circ}C) } = (41.74353 \cdot 10^{-6} \pm 35.912 \%) ^{\circ}C^{-1}
+\end{equation}
+
+Quien es lo suficientemente fiel a la teoría que indica un coeficiente volumétrico de $(35.1 \cdot 10^{-6})^{\circ}C^{-1}$, asociamos esta y futuras varianzas a la pureza química del material.\\
+
+Para nuestro segundo caso del cubo de aluminio la transición es de $22145.54784 \rightarrow 22032.61866$, por lo que con un procedimiento análogo obtenemos que el coeficiente volumétrico es.
+
+\begin{equation}
+    \gamma_{aluminio} = (105.69736 \cdot 10^{-6} \pm 47.288 \%) ^{\circ}C^{-1}
+\end{equation}
+
+La teoría nos reporta que su coeficiente volumétrico es $(67.2 \cdot 10^{-6})^{\circ}C^{-1}$, en este caso se ha alejado casi en el doble pero nos mantenemos en el orden de cifras y un incremento de casi el $50\%$ que sigue siendo una buena medición pues trabajamos con valores muy pequeños.\\
+
+Finalmente para nuestra esfera de acero, la transición es $8580.246639 \rightarrow 8559.994295$, quien nos da el siguiente coeficiente de dilatación volumétrica.
+
+\begin{equation}
+    \gamma_{acero} = (57.43843 \cdot 10^{-6} \pm 42.182 \%) ^{\circ}C^{-1}
+\end{equation}
+
+En este caso nuestra variación es grande comparada con la literatura que reporta su coeficiente volumétrico de $(34.5 \cdot 10^{-6})^{\circ}C^{-1}$, sin embargo, hemos notado que un cambio de solo 0.01mm en la medición del diámetro causa diferencias muy importantes en el resultado final del coeficiente de dilatación volumétrico, además que en diferentes fuentes los valores oscilan bastante, así que nuevamente nos parece un dato apegado al fenómeno.
+
+\section{Conclusión}
+
+Los resultados obtenidos en este estudio demuestran la capacidad de los métodos experimentales para caracterizar las propiedades térmicas de los materiales con un nivel aceptable de precisión, considerando las limitaciones instrumentales y los factores externos. La determinación del calor latente de fusión del hielo mostró una coincidencia significativa con los valores reportados en la literatura, lo que valida la metodología aplicada y resalta la influencia de factores como la pureza del agua en las mediciones. Por otra parte, el análisis de los coeficientes de dilatación volumétrica en el cobre, aluminio y acero destacó una correspondencia cualitativa con los valores teóricos, aunque con variaciones cuantitativas atribuibles a las sensibilidades instrumentales y la posible heterogeneidad en la composición de los materiales utilizados.
+
+Estos resultados no solo ratifican la pertinencia de los principios termodinámicos subyacentes, sino que también subrayan la importancia de evaluar de manera rigurosa las incertidumbres asociadas. El presente estudio sienta un precedente para optimizar experimentos futuros mediante el refinamiento de las condiciones experimentales y el uso de técnicas de mayor resolución, promoviendo una comprensión más precisa y robusta de las propiedades térmicas de los materiales en contextos académicos e industriales.
+
+\section{Referencias}
+
+\nocite{*}
+\bibliographystyle{acm}
+\bibliography{Bibliografía}
+
+
+\end{document}
+
+
+
+\end{document}

@@ -1,0 +1,142 @@
+% Relatividad_Especial — Cono de Luz y Tiempo Propio
+% Documento en estilo libro, redactado en español y pensado como apunte formal.
+\documentclass[12pt,oneside]{book}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish]{babel}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{microtype}
+\usepackage{geometry}
+\geometry{verbose,tmargin=2.5cm,bmargin=2.5cm,lmargin=3cm,rmargin=3cm}
+
+
+\begin{document}
+\frontmatter
+\tableofcontents
+\mainmatter
+
+\chapter{Introducción}
+La teoría de la relatividad especial, tal como fue formulada por Albert Einstein en 1905, describe la relación entre espacio y tiempo para observadores inerciales. Sus dos postulados fundamentales son:
+\begin{enumerate}
+  \item Las leyes de la física son las mismas en todos los sistemas de referencia inerciales.
+  \item La velocidad de la luz en el vacío $c$ es la misma para todos los observadores inerciales, independientemente del movimiento de la fuente o del observador.
+\end{enumerate}
+Este capítulo se centra en el concepto de tiempo propio, la invarianza del intervalo espacio-temporal y en la descripción geométrica del cono de luz en el espacio de Minkowski. Además se calcula cómo se transforma la pendiente de las rectas que representan rayos de luz cuando se cambia de sistema de referencia mediante una transformación de Lorentz.
+
+\chapter{Métrica de Minkowski e intervalo invariantes}
+En coordenadas $(t,x,y,z)$, la métrica de Minkowski (con convención de signo $(-,+,+,+)$) define el intervalo de Minkowski entre dos eventos infinitesimalmente cercanos por
+\begin{equation}\label{eq:intervalo}
+  ds^2 = -c^2 dt^2 + dx^2 + dy^2 + dz^2.
+\end{equation}
+El valor de $ds^2$ clasifica los desplazamientos:
+\begin{itemize}
+  \item $ds^2<0$: intervalo {\it tiempo--like} (existe un sistema en el que los dos eventos ocurren en el mismo lugar espacial).
+  \item $ds^2=0$: intervalo {\it lightlike} o nulo (separación por un rayo de luz).
+  \item $ds^2>0$: intervalo {\it espacio--like} (existe un sistema donde los eventos son simultáneos pero en lugares distintos).
+\end{itemize}
+
+Definimos el tiempo propio $\tau$ asociado a la trayectoria de un observador (o reloj) mediante la relación
+\begin{equation}\label{eq:proper_time_def}
+  ds^2 = -c^2 d\tau^2\quad(\text{para desplazamientos tiempo--like}).
+\end{equation}
+De la ecuación (\ref{eq:intervalo}) se obtiene para una partícula que se mueve con velocidad tres--vectorial $\mathbf{v}=d\mathbf{x}/dt$:
+\begin{equation}\label{eq:dtau}
+  d\tau = dt\,\sqrt{1-\dfrac{v^2}{c^2}},\qquad v^2=\mathbf{v}\cdot\mathbf{v}.
+\end{equation}
+Esta relación expresa que el intervalo de tiempo propio entre dos sucesos en la trayectoria del reloj es menor que el intervalo de tiempo coordenado $dt$ medido en un sistema en el que el reloj se desplaza.
+
+\section{Factor de Lorentz}
+Es habitual definir el factor de Lorentz
+\begin{equation}
+  \gamma(v) = \frac{1}{\sqrt{1-\dfrac{v^2}{c^2}}}.
+\end{equation}
+Con esta notación se reescribe (\ref{eq:dtau}) como
+\begin{equation}
+  d\tau = \frac{dt}{\gamma(v)}\quad\Longrightarrow\quad dt = \gamma(v)\, d\tau.
+\end{equation}
+La interpretación física: para un observador que ve un reloj moverse con velocidad $v$, el intervalo de tiempo propio medido por ese reloj entre dos marcas es $d\tau$, mientras que en el marco en reposo respecto al que se mide $v$ el tiempo transcurrido es mayor, $dt=\gamma d\tau$. En el límite $v\to c$ se tiene $\gamma\to\infty$ y $d\tau\to 0$, es decir, una partícula que se desplazase a la velocidad de la luz no experimentaría tiempo propio (esto es consistente con que las partículas con masa no alcanzan $c$).
+
+\chapter{Dilatación temporal: ejemplo y deducción}
+Consideremos un reloj "propio" que en su propio sistema marca un intervalo $\Delta\tau$. Un observador que ve el reloj desplazarse con velocidad constante $v$ medirá para el mismo proceso un intervalo coordenado $\Delta t$ dado por
+\begin{equation}\label{eq:time_dilation}
+  \Delta t = \gamma(v)\, \Delta\tau.
+\end{equation}
+Este es el fenómeno conocido como dilatación temporal: los relojes en movimiento parecen ir más despacio desde el punto de vista de un observador externo.
+
+Ejemplo: si $\Delta\tau=1\,\mathrm{s}$ y $v=0.6c$ entonces $\gamma\approx 1/\sqrt{1-0.36}=1/\sqrt{0.64}=1.25$ y el observador externo registra $\Delta t=1.25\,\mathrm{s}$.
+
+\chapter{Cono de luz y pendientes en el diagrama espacio--tiempo}
+\section{Cono de luz en 1+1 dimensiones}
+Para simplificar, trabajaremos en 1+1 dimensiones con coordenadas $(t,x)$. La condición de luz nula (rayos de luz) se obtiene imponiendo $ds^2=0$ en (\ref{eq:intervalo}):
+\begin{equation}\label{eq:null_condition}
+  -c^2 dt^2 + dx^2 = 0 \quad\Longrightarrow\quad \frac{dx}{dt}=\pm c.
+\end{equation}
+Si se grafica $x$ en el eje horizontal y $ct$ en el eje vertical (es decir, usando la coordenada temporal escalada $ct$ para impartir dimensiones homogéneas), las rectas de luz satisfacen
+\begin{equation}
+  x=\pm ct
+\end{equation}
+y forman ángulos de $45^{\circ}$ con los ejes: este conjunto de rectas describe el \emph{cono de luz} en cada evento.
+
+\section{Pendiente de una recta representando un rayo de luz visto desde otro observador}
+El enunciado pide calcular la pendiente de la recta (es decir, la relación entre las coordenadas temporales y espaciales) del rayo de luz cuando se cambia a otro sistema de referencia que se mueve a velocidad $v$ respecto del primero. Empleamos la transformación de Lorentz (en 1+1D):
+\begin{align}
+  t' &= \gamma(v)\left(t - \frac{v}{c^2}x\right),\\
+  x' &= \gamma(v)\left(x - v t\right).
+\end{align}
+Sea una recta nula en el sistema no primado dada por $x= c t$ (rayos que se propagan hacia $+x$). Insertando en la transformación:
+\begin{align*}
+  x' &= \gamma\left(ct - vt\right) = \gamma t\,(c-v),\\
+  t' &= \gamma\left(t - \dfrac{v}{c^2}ct\right) = \gamma t\left(1-\dfrac{v}{c}\right).
+\end{align*}
+Por tanto,
+\begin{equation}
+  \frac{x'}{t'} = \frac{\gamma t\,(c-v)}{\gamma t\left(1-\dfrac{v}{c}\right)} = c.
+\end{equation}
+Es decir, la ecuación de la luz en el sistema primado es $x' = c t'$, con la misma pendiente en unidades de $x'$ frente a $t'$. En unidades donde graficamos $ct$ en el eje vertical, la pendiente geométrica de la recta (ángulo de 45°) se conserva: las transformaciones de Lorentz preservan la condición nula $ds^2=0$, por lo que las rectas de luz siguen siendo rectas de pendiente $\pm c$ (o ±1 si se mide en unidades con $c=1$).
+
+\section{Interpretación geométrica}
+La invariancia de la velocidad de la luz es geométrica: las transformaciones de Lorentz son rotaciones hiperbólicas en el espacio de Minkowski que preservan la métrica (es decir, preservan $ds^2$). En consecuencia la estructura causal —el cono de luz— es la misma para todos los observadores inerciales.
+
+\chapter{Transformaciones y adición de velocidades}
+La adición relativista de velocidades en una sola dimensión se obtiene considerando la relación entre velocidades de la misma partícula medida en marcos distintos. Si una partícula tiene velocidad $u$ en el sistema original, su velocidad $u'$ en el sistema que se desplaza con velocidad $v$ viene dada por
+\begin{equation}\label{eq:vel_add}
+  u' = \frac{u-v}{1-\dfrac{uv}{c^2}}.
+\end{equation}
+En particular, si $u=c$ entonces $u'=c$, lo que ilustra de nuevo que la velocidad de la luz es invariante.
+
+\chapter{Observaciones y casos límite}
+\begin{itemize}
+  \item Cuando $v\to 0$ se recupera la física clásica: $\gamma\to1$ y las transformaciones de Lorentz dejan de diferir de la transformación identidad.
+  \item En el límite $v\to c$ la dilatación temporal se hace arbitrariamente grande ($\gamma\to\infty$) y el tiempo propio tiende a cero para trayectorias que se aproximan a las ligeras (null).
+  \item Las partículas con masa no alcanzan $c$, por lo que siempre experimentan un tiempo propio $\Delta\tau>0$.
+\end{itemize}
+
+\chapter{Ejemplos resueltos}
+\section{Ejemplo 1: cálculo explícito de $\Delta t$ y $\Delta\tau$}
+Suponga un reloj que marca $\Delta\tau=2\,\mathrm{s}$ en su propio marco. Si se mueve a $v=0.8c$ con respecto a un observador $O$, entonces
+\begin{align*}
+  \gamma(0.8c) &= \frac{1}{\sqrt{1-0.8^2}} = \frac{1}{\sqrt{1-0.64}}=\frac{1}{\sqrt{0.36}}=\tfrac{5}{3}\approx1.6667,\\
+  \Delta t &= \gamma\,\Delta\tau \approx 1.6667\times2\,\mathrm{s}=3.3334\,\mathrm{s}.
+\end{align*}
+
+\section{Ejemplo 2: transformando una recta de luz}
+Demostración alternativa: partir de la condición nula $ds^2=0$ y aplicar la matriz de Lorentz
+\begin{equation}
+  \Lambda( v) = \begin{pmatrix}\gamma & -\gamma v/c\\ -\gamma v/c & \gamma\end{pmatrix}
+\end{equation}
+sobre el vector $(ct,x)^{T}$. La nulidad se mantiene pues $\Lambda^{T} \eta\, \Lambda = \eta$, donde $\eta=\mathrm{diag}(-1,1)$ es la forma bilineal de Minkowski en 1+1D.
+
+\chapter{Conclusión}
+Hemos presentado una formulación clara y coherente de tiempo propio, tiempo coordenado, la invarianza del intervalo de Minkowski y la estructura del cono de luz. Se ha mostrado explícitamente que la pendiente geométrica de las rectas que representan rayos de luz se conserva bajo transformaciones de Lorentz: las líneas nulas se transforman en líneas nulas. Además se dedujo la dilatación temporal y la fórmula de adición de velocidades, con ejemplos numéricos.
+
+\backmatter
+\chapter*{Referencias sugeridas}
+\begin{itemize}
+  \item A. Einstein, "Zur Elektrodynamik bewegter K{"o}rper" (1905) — Artículo fundacional.
+  \item R. Resnick, \emph{Introduction to Special Relativity}.
+  \item M. P. Hobson, G. Efstathiou, A. N. Lasenby, \emph{General Relativity: An Introduction for Physicists} (capítulos introductorios).
+\end{itemize}
+
+\end{document}

@@ -1,0 +1,168 @@
+2. Pruebe los siguientes incisos usando inducción matemática: \\
+a) \( 1^{3}+2^{3}+\ldots+n^{3}=(1+2+\ldots n)^{2} \forall n \in \mathbb{N} \). \\
+Veamos la base (\(n=1\)): 
+\[
+     1^{3} = 1,\quad (1)^{2} =1\quad\Longrightarrow\text{vale.}
+   \]
+Hipótesis de inducción: Supongamos para un \(n\ge1\) que
+\[
+     1^{3}+2^{3}+\cdots+n^{3} = \Bigl(1+2+\cdots+n\Bigr)^{2}
+     =\Bigl(\frac{n(n+1)}{2}\Bigr)^{2}.
+   \]
+Tesis de inducción (\(n\to n+1\)):
+\[
+   1^{3}+\cdots+n^{3}+(n+1)^{3}
+   =\Bigl(\frac{n(n+1)}{2}\Bigr)^{2}+(n+1)^{3}
+   = (n+1)^{2}\Bigl[\frac{n^{2}}{4} + (n+1)\Bigr].
+   \]
+Pero
+\[
+   \frac{n^{2}}{4} + (n+1)
+   = \frac{n^{2}+4n+4}{4}
+   = \frac{(n+2)^{2}}{4},
+   \]
+así que
+\[
+   1^{3}+\cdots+(n+1)^{3}
+   = (n+1)^{2}\,\frac{(n+2)^{2}}{4}
+   = \Bigl(\frac{(n+1)(n+2)}{2}\Bigr)^{2},
+   \]
+que es justo \(\bigl(1+2+\cdots+(n+1)\bigr)^{2}.\) \\
+
+b) \( \frac{1}{2}+\frac{1}{4}+\ldots+\frac{1}{2^{n}}=1-\frac{1}{2^{n}} \forall n \in \mathbb{N} \). \\
+
+Paso base (\(n=1\)): \\
+\(\frac12 = 1-\frac12\). \\
+Hipótesis de inducción: \\ 
+\(\displaystyle \sum_{k=1}^{n}\frac1{2^{k}}
+     = 1 - \frac1{2^{n}}.\) \\
+Tesis de inducción:
+\[
+     \sum_{k=1}^{n+1}\frac1{2^{k}}
+     = \Bigl(1 - \frac1{2^{n}}\Bigr) + \frac1{2^{n+1}}
+     = 1 - \Bigl(\frac1{2^{n}} - \frac1{2^{n+1}}\Bigr)
+     = 1 - \frac{1}{2^n} \Big(1 - \frac{1}{2^1}\Big)
+     = 1 - \frac1{2^{n+1}}.
+   \]
+
+
+c) Encuentre una fórmula para la suma de los \( n \) primeros números naturales impares, es decir;
+\( 1+3+\ldots+(2 n-1)=? \quad \forall n \in \mathbb{N} \). \\
+Podemos inducir un desplazamiento de $n = 2k-1$, usamos la fórmula para la suma de los primeros n naturales. 
+\[
+\sum_{k=1}^n (2k - 1) = 2 \sum_{k=1}^n k - \sum_{k=1}^n 1 = 2 \frac{n(n+1)}{2} - n = n(n+1) - n = n^2
+\]
+
+
+
+
+d) Pruebe que 7 divide a \( 11^{n}-4^{n} \quad \forall n \in \mathbb{N} \). \\
+Base (\(n=1\)): \(11-4=7\), divisible por 7. \\
+Hipótesis: Supongamos \(7\mid(11^{n}-4^{n})\). \\
+Tésis: \\
+\begin{align*}
+     11^{n+1}-4^{n+1}
+     &= 11\cdot11^{n} -4\cdot4^{n} \\
+     &= 11(11^{n}-4^{n}) \;+\; (11-4)\,4^{n} \\
+     &= 11 \cdot 7k_1 \;+\; 7 \cdot 4^{n}, \quad k_1 \in \mathbb{Z} \textit{ Vease que por hipótesis inductiva esto es divisible por 7} \\
+     &= 7 \cdot (11 \cdot k_1 + 4) \\
+     &= 7k : k \in \mathbb{Z}
+\end{align*}
+
+
+e) Pruebe que 36 divide a \( 7^{n}-6 n-1 \forall n \in \mathbb{N} \). \\
+Base \(n=1\): \(7^{1}-6\cdot1-1=7-6-1=0\), trivialmente es múltiplo de 36. \\
+
+Hipótesis: Supongamos para algún \(n\ge1\) que
+\[
+     7^{n}-6n-1 = 36\,k \quad(k\in\mathbb Z).
+   \]
+
+
+Tésis \(n\to n+1\):
+\begin{align*}
+   7^{n+1}-6(n+1)-1
+   &=7\cdot7^{n}-6n-6-1 \\
+   &?= 7\bigl(7^{n}-6n-1\bigr) \;+\; \bigl(7\cdot(6n+1)-6n-7\bigr). \quad why?
+\end{align*}
+
+Vease que es la misma técnica del ejercicio anterior pero más compleja de ver, desarrollemos un poco el lado derecho:
+\[
+7 \bigl(7^{n} - 6n - 1\bigr) = 7 \cdot 7^{n} - 7 \cdot 6n - 7 \cdot 1 = 7^{n+1} - 42n - 7,
+\]
+\[
+7 \cdot (6n + 1) - 6n - 7 = 42n + 7 - 6n - 7 = 36n.
+\]
+Sumando ambos:
+\[
+7^{n+1} - 42n - 7 + 36n = 7^{n+1} - 6n - 7.
+\]
+Que es lo que teníamos previamente; seguimos en donde nos quedamos. Por hipótesis \(7^{n}-6n-1=36k\), y
+\[
+     7\cdot(6n+1)-6n-7 = 42n+7-6n-7 =36n.
+   \]
+Luego
+\[
+     7^{n+1}-6(n+1)-1
+     =7\cdot(36k) +36n =36\,(7k+n).
+   \]
+Concluimos que también es múltiplo de 36. \\
+
+
+
+f) Pruebe que \( n+1<n^{2} \) para todo numero natural \( 2 \leq n \). \\
+Base \(n=2\): \(2+1=3<4=2^{2}\). \\
+Hipótesis: Supongamos \(n+1<n^{2}\). \\
+Tésis:
+\[
+     (n+1)+1 = n+2,
+     \quad
+     (n+1)^{2} = n^{2}+2n+1.
+   \]
+Como \(n\ge2\),
+\[
+     (n+1)^{2} - (n+2) = n^{2}+2n+1 -n -2 = n^{2}+n-1 \ge 4+2-1=5>0,
+   \]
+de modo que \(n+2<(n+1)^{2}\).\\
+
+g) Pruebe que \( n^{2}<n \) ! para todo numero natural \( 4 \leq n \). \\
+Base \(n=4\): \(4^{2}=16<24=4!\). \\
+Hipótesis: Supongamos \(n^{2}<n!\). \\ 
+Tésis:
+\[
+     (n+1)^{2} = n^{2}+2n+1
+     < n! + 2n+1.
+   \]
+Pero para \(n\ge4\), \(n!\ge24\) mientras que \(2n+1\le2\cdot n +1 \le9\).
+Así \(n! +2n+1 \le n! +n! =2\,n!\), y por tanto
+\[
+     (n+1)^{2} <2\,n! < (n+1)\,(n!)
+     =(n+1)!.
+   \]
+   
+
+
+h) ¿A partir de qué numero natural se cumple que \( n^{2}<2^{n} \) ? Use inducción.
+
+Primero probemos a mano: \\
+$n=1 \rightarrow$ \(1<2\); cumple \\
+$n=2 \rightarrow$ \(4<4\); no cumple \\
+$n=3 \rightarrow$ \(9<8\); no cumple \\
+$n=4 \rightarrow$ \(16<16\); no cumple \\
+$n=5 \rightarrow$ \(25<32\); cumple \\ 
+$n=6 \rightarrow$ \(36<64\); cumple \\
+Parece que a partir de \(n_{0}=5\) se mantiene. Ahora la inducción para \(n\ge5\): \\
+
+Base \(n=5\): \(5^{2}=25<32=2^{5}\). \\
+Hipótesis: Supongamos \(k^{2}<2^{k}\) para algún \(k\ge5\). \\
+Tésis:
+\[
+     (k+1)^{2} = k^{2} +2k+1 < 2^{k} +2k+1.
+   \]
+Pero para \(k\ge5\), \(2^{k}\ge32\) y \(2k+1\le2\cdot k+1\le11\), luego
+\[
+     2^{k}+2k+1 \le 2^{k}+2^{k} =2\cdot2^{k} =2^{k+1}.
+   \]
+De donde \((k+1)^{2}<2^{k+1}\).
+
+Con esto queda demostrado que para todo \(n\ge5\), \(n^{2}<2^{n}\). \\\\

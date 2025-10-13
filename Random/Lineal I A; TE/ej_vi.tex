@@ -1,0 +1,90 @@
+6. (1 pt) Determine las condiciones de \( a, b, c \in \mathbb{Z} \) para que
+\[
+\operatorname{det}\left(\begin{array}{ccc}
+a+b & c & c \\
+a & b+c & a \\
+b & b & a+c
+\end{array}\right)
+\]
+sea múltiplo de 8 . \\
+
+\begin{solution}
+Para determinar las condiciones sobre \( a, b, c \in \mathbb{Z} \) para que el determinante de la matriz dada sea múltiplo de 8, seguimos los siguientes pasos:
+Consideremos la matriz:
+\[
+A = \begin{pmatrix}
+a+b & c & c \\
+a & b+c & a \\
+b & b & a+c
+\end{pmatrix}
+\]
+Calculamos el determinante de A:
+\[
+\det(A) = \begin{vmatrix}
+a+b & c & c \\
+a & b+c & a \\
+b & b & a+c
+\end{vmatrix}
+\]
+Expandimos el determinante utilizando la regla de Sarrus:
+\[
+\det(A) = (a+b)\left( (b+c)(a+c) - a \cdot b \right) - c\left( a(a+c) - a \cdot b \right) + c\left( a \cdot b - b(b+c) \right)
+\]
+Simplificamos cada término:
+
+Calculamos (b+c)(a+c)−a⋅b:
+
+\[
+(b+c)(a+c) = ab + ac + bc + c^2
+\]
+\[
+(ab + ac + bc + c^2) - ab = ac + bc + c^2
+\]
+
+Multiplicamos por (a+b):
+
+\[
+(a+b)(ac + bc + c^2) = a^2c + abc + ac^2 + abc + b^2c + bc^2
+\]
+
+Calculamos −c(a(a+c)−a⋅b):
+
+\[
+a(a+c) = a^2 + ac
+\]
+\[
+a^2 + ac - ab = a^2 + ac - ab
+\]
+\[
+-c(a^2 + ac - ab) = -a^2c - a c^2 + a b c
+\]
+
+Calculamos c(a⋅b−b(b+c)):
+
+\[
+b(b+c) = b^2 + bc
+\]
+\[
+a b - (b^2 + bc) = a b - b^2 - bc
+\]
+\[
+c(a b - b^2 - bc) = a b c - b^2 c - b c^2
+\]
+Sumamos todos los términos:
+\[
+\det(A) = (a^2c + 2abc + a c^2 + b^2c + b c^2) + (-a^2c - a c^2 + a b c) + (a b c - b^2 c - b c^2)
+\]
+Simplificando:
+\[
+\det(A) = 4 a b c
+\]
+Queremos que det(A) sea múltiplo de 8:
+\[
+4 a b c \equiv 0 \pmod{8}
+\]
+Dividimos ambos lados por 4:
+\[
+a b c \equiv 0 \pmod{2}
+\]
+Esto implica que el producto abc debe ser par. Es decir, al menos uno de los números a,b o c debe ser par.
+\end{solution}

@@ -1,0 +1,200 @@
+1. En un grupo de 100 personas el 84\% tiene los ojos castaños, 
+el 24\% tiene los cabellos castaños y el 15\% tiene los ojos y los cabellos castaños. 
+¿Cuál es la probabilidad de que una persona elegida al azar no tenga ni los ojos ni 
+los cabellos castaños?
+
+Utilizaremos el \textbf{Principio de Inclusión-Exclusión} para calcular la probabilidad 
+de que una persona tenga al menos una de las características.
+
+Sea A el evento de que una persona tenga los ojos castaños.
+$$P(A) = 0.84$$
+
+Sea B el evento de que una persona tenga los cabellos castaños.
+$$P(B) = 0.24$$
+
+Sea $A\cap B$ el evento de que una persona tenga ambos 
+(ojos y cabellos castaños).
+
+$$P(A \cap B) = 0.15$$
+
+
+Primero, calculamos la probabilidad de que una persona tenga ojos castaños o 
+cabellos castaños:
+
+$$P(A \cup B) = P(A) + P(B) - P(A \cap B)$$
+$$P(A \cup B) = 0.84 + 0.24 - 0.15$$
+$$P(A \cup B) = 1.08 - 0.15$$
+$$P(A \cup B) = 0.93$$
+
+Esta es la probabilidad de que una persona tenga al menos una de las características. 
+Para encontrar la probabilidad de que una persona no tenga ni los ojos ni los 
+cabellos castaños, simplemente restamos la probabilidad total menos la probabilidad 
+de que tenga al menos una característica:
+
+$$P(\text{Ni A ni B}) = 1 - P(A \cup B)$$
+$$P(\text{Ni A ni B}) = 1 - 0.93$$
+$$P(\text{Ni A ni B}) = 0.07$$
+
+Por lo tanto, la probabilidad de que una persona elegida al azar no tenga ni los 
+ojos ni los cabellos castaños es del 0.07.
+
+\newpage
+
+2. Dos dados se lanzan al azar (considera que son distinguibles y convencionales) 
+¿Cuál es la probabilidad de que la suma de sus caras sea menor a 11?
+
+Cuando se lanzan dos dados distinguibles, cada dado tiene 6 caras. 
+El número total de resultados posibles es el producto del número de 
+resultados para cada dado.
+
+Número total de resultados posibles: 36
+
+Es más sencillo calcular la probabilidad del evento complementario que la suma de las 
+caras sea 11 o más, y luego restar esta probabilidad de 1.
+
+Los resultados donde la suma es 11 o más son:
+
+Suma = 11: $(5, 6), (6, 5)$
+
+Suma = 12: $(6, 6)$
+
+Número de resultados donde la suma es 11 o más: 3 resultados.
+
+Sea $S$ el evento de que la suma de las caras de los dos dados sea 11 o más.
+
+Ahora, calculamos la probabilidad de que la suma sea 11 o más:
+$$P(S) = \frac{\text{Número de resultados con suma} \geq 11}{\text{Número total de resultados}}$$
+$$P(S) = \frac{3}{36}$$
+$$P(S) = \frac{1}{12}$$
+
+Finalmente, calculamos la probabilidad de que la suma sea menor a 11 ($\lnot  S$):
+$$P(\lnot S) = 1 - P(S)$$
+$$P(\lnot S) = 1 - \frac{1}{12}$$
+$$P(\lnot S) = \frac{11}{12}$$
+
+Por lo tanto, la probabilidad de que la suma de las caras de dos dados distinguibles 
+sea menor a 11 es de 11/12.
+
+\newpage
+
+3. Elegimos una carta al azar en una baraja de naipes (con 52 cartas). 
+¿Cuál es la probabilidad de que la carta sea roja o tenga una figura?
+
+Este problema también utiliza el \textbf{Principio de Inclusión-Exclusión}.
+
+Número total de cartas en la baraja: 52
+
+Sea \textbf{R} el evento de que la carta elegida sea \textbf{roja}.
+
+Hay 2 palos rojos (corazones y diamantes), y cada palo tiene 13 cartas.
+
+Número de cartas rojas: $2 \times 13 = 26$. Entonces
+$$P(R) = \frac{26}{52} = \frac{1}{2}$$
+
+Sea \textbf{F} el evento de que la carta elegida sea una figura 
+(K, Q, J). Hay 3 figuras por cada uno de los 4 palos.
+
+Número de figuras: $3 \times 4 = \textbf{12}$
+$$P(F) = \frac{12}{52} = \frac{3}{13}$$
+
+Sea $R \cap F$ el evento de que la carta sea roja y figura. Hay 3 figuras en 
+corazones y otras 3 figuras en diamantes.
+
+Número de figuras rojas: $3 + 3 = 6$
+$$P(R \cap F) = \frac{6}{52} = \frac{3}{26}$$
+
+Ahora, aplicamos el Principio de Inclusión-Exclusión para encontrar la probabilidad de 
+que la carta sea roja o una figura:
+
+$$P(R \cup F) = P(R) + P(F) - P(R \cap F)$$
+$$P(R \cup F) = \frac{26}{52} + \frac{12}{52} - \frac{6}{52}$$
+$$P(R \cup F) = \frac{26 + 12 - 6}{52}$$
+$$P(R \cup F) = \frac{32}{52}$$
+$$P(R \cup F) = \frac{8}{13}$$
+
+Por lo tanto, la probabilidad de que la carta sea roja o tenga una figura es de 8/13.
+
+\newpage
+
+4. De forma simultánea elegimos dos cartas al azar en una baraja de naipes 
+(con 52 cartas). ¿Cuál es la probabilidad de que formen un par?
+
+Para este problema, usaremos combinaciones porque el orden en que se eligen 
+las cartas no importa.
+
+Número total de formas de elegir 2 cartas de 52:
+
+Usamos la fórmula de combinaciones $C(n, k) = \frac{n!}{k! \cdot (n-k)!}$
+
+$C(52, 2) = \frac{52!}{2! \cdot (52-2)!} = \frac{52 \times 51}{2} = 26 \times 51 = 1326$.
+
+Este es el denominador de nuestra probabilidad.
+
+Número de formas de elegir un par:
+    
+Para formar un par, primero debemos elegir el valor del par. Hay 13 
+valores posibles (As, 2, 3, ..., 10, J, Q, K).
+
+$C(13, 1) = 13$ formas de elegir el valor.
+
+Una vez elegido el valor (por ejemplo, "ases"), necesitamos elegir 2 cartas de ese valor de las 4 
+disponibles (por ejemplo, los 4 ases).
+
+$C(4, 2) = \frac{4!}{2! \cdot (4-2)!} = \frac{4 \times 3}{2} = 6$ 
+formas de elegir 2 cartas de un valor específico.
+
+Número total de pares posibles:
+    
+(Número de formas de elegir el valor) $\times$ (Número de formas de elegir 2 cartas de ese valor)
+$13 \times 6 = 78$.
+Este es el numerador de nuestra probabilidad.
+    
+Finalmente, calculamos la probabilidad de formar un par:
+$$P(\text{Par}) = \frac{\text{Número de formas de formar un par}}{\text{Número total de formas de elegir 2 cartas}}$$
+$$P(\text{Par}) = \frac{78}{1326}$$
+
+Para simplificar la fracción, podemos dividir por 6:
+$$P(\text{Par}) = \frac{\frac{78}{6}}{\frac{1326}{6}} = \frac{13}{221}$$
+
+Por lo tanto, la probabilidad de que las dos cartas elegidas formen un par es de 13/221.
+
+\newpage
+
+5: Si dos personas tienen que sus cumpleaños ocurren en un día al azar 
+(considera años de 365 días), ¿Cuál es la probabilidad de que las dos personas tengan el mismo cumpleaños?
+
+En este problema, consideramos 365 días posibles para el cumpleaños de cada persona.
+
+Número total de combinaciones posibles para los cumpleaños de dos personas:
+
+La primera persona puede tener su cumpleaños en cualquiera de los 365 días.
+
+La segunda persona también puede tener su cumpleaños en cualquiera de los 365 días.
+
+Por lo tanto, el número total de pares de cumpleaños posibles es: $365 \times 365 = 133,225$.
+Este es el denominador de nuestra probabilidad.
+
+Número de formas en que las dos personas tengan el mismo cumpleaños:
+
+Si la primera persona nace en un día específico (ej. 1 de enero), la segunda persona debe nacer en ese 
+mismo día (1 de enero) para que tengan el mismo cumpleaños.
+
+La primera persona puede nacer en cualquiera de los 365 días.
+
+Para que la segunda persona tenga el mismo cumpleaños, solo hay una opción para su día de nacimiento 
+(el mismo que la primera).
+
+Así, el número de formas en que ambos tengan el mismo cumpleaños es: 
+        
+$365 \text{ (opciones primer cumpleaños)} \times 1 \text{(opción para el segundo)} = 365$.
+
+Este es el numerador de nuestra probabilidad.
+
+Finalmente, calculamos la probabilidad de que las dos personas tengan el mismo cumpleaños:
+$$P(\text{Mismo Cumpleaños}) = \frac{\text{Número de formas de tener el mismo cumpleaños}}{\text{Número total de combinaciones de cumpleaños}}$$
+$$P(\text{Mismo Cumpleaños}) = \frac{365}{365 \times 365}$$
+$$P(\text{Mismo Cumpleaños}) = \frac{1}{365}$$
+
+Por lo tanto, la probabilidad de que dos personas tengan el mismo cumpleaños es de 1/365.
+
+\newpage

@@ -1,0 +1,150 @@
+5. Encuentre los siguientes conjuntos. \\
+a) \( \bigcap_{n \in \mathbb{N}}\left[-\frac{1}{n}, 1+\frac{1}{n}\right] \). \\
+Sean los intervalos
+\[
+I_n = \left[-\frac{1}{n}, 1 + \frac{1}{n}\right], \quad n \in \mathbb{N}.
+\]
+
+Queremos mostrar que $I_n \supseteq I_{n+1} \text{ para todo } n \in \mathbb{N}$, esto para usar propiedades de conjuntos.
+
+\medskip
+
+Observemos los extremos de cada intervalo:
+
+\[
+-\frac{1}{n} \leq -\frac{1}{n+1}, \quad \text{y} \quad 1 + \frac{1}{n} \geq 1 + \frac{1}{n+1}.
+\]
+
+Esto se cumple porque:
+
+\[
+\frac{1}{n} > \frac{1}{n+1} > 0,
+\]
+
+por lo que
+
+\[
+-\frac{1}{n} < -\frac{1}{n+1} \quad \Rightarrow \quad -\frac{1}{n} \leq -\frac{1}{n+1},
+\]
+
+y
+
+\[
+1 + \frac{1}{n} > 1 + \frac{1}{n+1}.
+\]
+
+Por lo tanto,
+
+\[
+I_n = \left[-\frac{1}{n}, 1 + \frac{1}{n}\right] \supseteq \left[-\frac{1}{n+1}, 1 + \frac{1}{n+1}\right] = I_{n+1}.
+\]
+
+\medskip
+
+Como los intervalos forman una cadena decreciente:
+
+\[
+I_1 \supseteq I_2 \supseteq I_3 \supseteq \cdots,
+\]
+
+la intersección
+
+\[
+\bigcap_{n=1}^\infty I_n = \lim_{n \to \infty} I_n = \left[\lim_{n \to \infty} -\frac{1}{n}, \lim_{n \to \infty} \left(1 + \frac{1}{n}\right)\right] = [0,1].
+\]
+
+
+b) $\bigcap_{n \in \mathbb{N}} \left(1 - \frac{1}{n}, 1 + \frac{1}{n}\right)$
+
+\medskip
+
+Sea la sucesión de intervalos abiertos
+\[
+J_n = \left(1 - \frac{1}{n}, 1 + \frac{1}{n}\right), \quad n \in \mathbb{N}.
+\]
+
+Mostremos que J_n \supseteq J_{n+1} \text{ para todo } n \in \mathbb{N}.
+
+\medskip
+
+Observemos los extremos:
+
+\[
+1 - \frac{1}{n} < 1 - \frac{1}{n+1}, \quad \text{y} \quad 1 + \frac{1}{n} > 1 + \frac{1}{n+1}.
+\]
+
+Esto se debe a que \( \frac{1}{n} > \frac{1}{n+1} > 0 \), por lo que:
+
+\[
+1 - \frac{1}{n} < 1 - \frac{1}{n+1} \quad \Rightarrow \quad \text{el extremo izquierdo de } J_n \text{ es menor que el de } J_{n+1},
+\]
+y
+\[
+1 + \frac{1}{n} > 1 + \frac{1}{n+1} \quad \Rightarrow \quad \text{el extremo derecho de } J_n \text{ es mayor que el de } J_{n+1}.
+\]
+
+Por lo tanto,
+
+\[
+J_n \supseteq J_{n+1}.
+\]
+
+\medskip
+
+Como los intervalos forman una cadena decreciente, la intersección es:
+
+\[
+\bigcap_{n=1}^\infty J_n = \lim_{n \to \infty} J_n = \left(\lim_{n \to \infty} \left(1 - \frac{1}{n}\right), \lim_{n \to \infty} \left(1 + \frac{1}{n}\right) \right) = (1, 1).
+\]
+
+\medskip
+
+\text{Pero } (1,1) \text{ es el intervalo vacío, entonces:}
+
+\[
+\bigcap_{n=1}^\infty \left(1 - \frac{1}{n}, 1 + \frac{1}{n}\right) = \varnothing.
+\]
+
+\bigskip
+
+c) \displaystyle \bigcup_{n \in \mathbb{N}} [2n, 2n + 1]
+
+\medskip
+
+Consideremos la sucesión de intervalos cerrados
+
+\[
+K_n = [2n, 2n + 1], \quad n \in \mathbb{N}.
+\]
+
+Cada intervalo tiene longitud 1 y comienza en un número par creciente.
+
+\medskip
+
+Observemos que para \( m \neq n \), los intervalos \( K_n \) y \( K_m \) son disjuntos porque
+
+\[
+\text{si } m > n, \quad \min K_m = 2m \geq 2(n+1) > 2n + 1 = \max K_n.
+\]
+
+\medskip
+
+Por lo tanto, la unión
+
+\[
+\bigcup_{n=1}^\infty [2n, 2n + 1]
+\]
+
+es la unión disjunta de segmentos separados que son:
+
+\[
+[2,3] \cup [4,5] \cup [6,7] \cup \cdots.
+\]
+
+\medskip
+
+No se puede simplificar más, y el conjunto resultante es
+
+\[
+\{ x \in \mathbb{R} : x \in [2n, 2n+1] \text{ para algún } n \in \mathbb{N} \}.
+\]

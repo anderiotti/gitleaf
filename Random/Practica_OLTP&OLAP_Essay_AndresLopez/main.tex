@@ -1,0 +1,76 @@
+\documentclass[12pt, letterpaper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+\usepackage{geometry}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{times}
+
+\geometry{
+ a4paper,
+ total={170mm,257mm},
+ left=20mm,
+ top=20mm,
+}
+
+\title{\textbf{Fundamentos de Sistemas de Información: Una Perspectiva Matemática de OLTP, OLAP y el Modelo Relacional}}
+
+\begin{document}
+
+\maketitle
+
+\section*{Introducción}
+
+Imaginemos que los datos crudos son como una oficina con espacios para gabinetes pero con todo totalmente desordenado, en ese estado, es intratable manejar la información y más aún llegar a conclusiones analíticas. El valor real aparece cuando empezamos a medir sus propiedades y a encontrar las funciones que describen su comportamiento, transformando el caos en un modelo entendible. Los Sistemas de Información (SI) son precisamente eso: el conjunto de herramientas que nos permiten 'medir' y 'modelar' el universo de datos de una organización.
+
+En el corazón de estos sistemas, hay dos enfoques fundamentales para interactuar con los datos, casi como dos tipos de mediciones en un experimento: el Procesamiento de Transacciones en Línea (OLTP) y el Procesamiento Analítico en Línea (OLAP). El primero es como registrar la posición y momento de cada partícula individual en tiempo real, una operación rápida y precisa. El segundo es como analizar el conjunto completo de datos, por ejemplo en mediciones para calcular propiedades macroscópicas como la presión o la temperatura, o empresarialmente como patrones de negocio. Este ensayo explora ambos paradigmas y se sumerge en el framework matemático que los sostiene a ambos: el modelo relacional.
+
+\section*{OLTP vs. OLAP: Operadores Discretos vs. Análisis de Conjuntos}
+
+Los sistemas OLTP (Transactional) son el motor operacional. Su trabajo es ejecutar una cantidad masiva de operaciones pequeñas, atómicas y de alta frecuencia. Piensa en el sistema de registro de un banco. Cada transacción (un depósito, un retiro) es una función simple que se aplica a un estado del sistema para producir el siguiente: $S_{n+1} = f(S_n, \text{transacción})$. La clave aquí es la atomicidad: la función se ejecuta por completo o no se ejecuta en absoluto. No puede dejar el sistema en un estado intermedio inconsistente. El foco de OLTP es la velocidad, la capacidad de manejar miles de estas 'funciones' por segundo (concurrencia) y la integridad, garantizando que el estado del sistema siempre sea válido. Los datos son el estado actual y granular del sistema.
+
+Por otro lado, los sistemas OLAP (Analítico) tienen un propósito completamente distinto. No se preocupan por las operaciones individuales, sino por el análisis del conjunto de datos históricos acumulados. Si los datos de OLTP son un stream de eventos, los datos de OLAP son el gran 'tensor' o matriz que construimos con esos eventos a lo largo del tiempo. Las consultas OLAP no son funciones simples, sino operadores complejos que actúan sobre esta entidad: una suma sobre una dimensión, un promedio, o el cálculo de una correlación. Estos sistemas se alimentan de los datos de OLTP mediante un proceso de ETL (Extraer, Transformar, Cargar), que se puede ver como una gran función de mapeo $T: \text{Espacio de Datos OLTP} \rightarrow \text{Espacio de Datos OLAP}$. La estructura de datos suele ser multidimensional (los famosos 'cubos OLAP', que para nosotros son simplemente tensores o arrays), permitiendo 'rebanar' el tensor (slicing) para analizarlo desde diferentes ejes o perspectivas. Su objetivo es la inteligencia de negocio y el soporte a la decisión.
+
+\section*{El Modelo Relacional}
+
+Tanto OLTP como OLAP necesitan una forma rigurosa de estructurar los datos. El modelo relacional, propuesto por Ed. Codd, es esencialmente una aplicación de la teoría de conjuntos y la lógica de predicados. Aquí, los datos se organizan en relaciones (tablas), que no son más que conjuntos de tuplas (filas).
+
+Desde una perspectiva matemática:
+\begin{itemize}
+    \item Una tabla es una \textit{relación}: un conjunto de elementos que cumplen ciertas propiedades.
+    \item Una fila es una \textit{tupla}: un 'vector' ordenado de valores $(v_1, v_2, ..., v_n)$ (\textit{Disclaimer: NO es un vector, pero es lindo verlo de esta forma pues es más intuitivo operadores como proyección, selección, permutación, consideración de productos cartesianos de espacios vectoriales (muy útil para propiedades ACID y reglas de Ed. Codd.), etc...}).
+    \item Una columna define un \textit{atributo} o dominio para una componente del vector-tupla (lo que dijimos, puede tomarse de alguna forma al dominio como un espacio vectorial, para tomar la tupla como elementos del producto cartesiano de estos, aunque claramente los dominios no son un espacio vectorial, no tendría sentido definir a los strings, integers, money, etc. como tal... ¿o sí? (\textit{tema de discusión para otro ensayo, pero si inclusive los colores son un espacio vectorial en la que incluso se definen matrices de cambio de base RGB isomorfo a YMCK entonces podríamos jugar con algunos dominios para ver si son un E.V.})).
+\end{itemize}
+
+El diseño de una base de datos relacional sigue un proceso lógico:
+
+\begin{enumerate}
+    \item \textbf{Diseño Conceptual (Modelo Entidad-Relación):} Es la fase de abstracción. Se identifican las 'entidades' (los tipos de objetos o conjuntos sobre los que queremos guardar datos) y las 'relaciones' (las asignaciones o mapeos entre esos conjuntos). Se define la \textbf{llave primaria}, que es un atributo (o conjunto de ellos) que funciona como un identificador único para cada tupla. Es una función inyectiva $f: \text{tupla} \rightarrow \text{ID único}$.
+
+    \item \textbf{Diseño Lógico (Traducción al Modelo Relacional):} Aquí, el modelo abstracto se traduce a la estructura de tablas. Las entidades se convierten en tablas, y las relaciones entre ellas se materializan usando \textbf{llaves foráneas}. Una llave foránea en la tabla A que apunta a la tabla B es esencialmente la implementación de una función $g: A \rightarrow B$, que mapea cada tupla de A a una tupla específica en B.
+
+    \item \textbf{Diseño Físico:} Se implementa el modelo lógico en un sistema gestor de bases de datos (SGBD) específico, usando el lenguaje SQL, que es la interfaz estándar para realizar operaciones de álgebra relacional (como uniones, proyecciones, selecciones) sobre las tablas.
+\end{enumerate}
+
+\section*{La Importancia de la Normalización: Encontrando una Base Ortogonal}
+
+La normalización es un proceso para organizar las columnas y tablas de una base de datos para minimizar la redundancia de datos. Se puede pensar como un proceso para encontrar una 'base' más eficiente y lógicamente coherente para representar tus datos, eliminando dependencias extrañas. La idea central es la dependencia funcional, que es exactamente lo que parece en matemáticas: decimos que un atributo Y depende funcionalmente de X (escrito $X \rightarrow Y$) si para cada valor de X existe exactamente un valor de Y. Es decir, $Y = f(X)$.
+
+Las formas normales son reglas para asegurar que estas dependencias funcionales estén bien estructuradas:
+
+\begin{itemize}
+    \item \textbf{Primera Forma Normal (1FN):} Cada atributo en una tupla debe ser atómico. Esto significa que cada componente de tu vector debe ser un escalar, no otro vector o conjunto. Por ejemplo, `(id, nombre, [teléfono1, teléfono2])` viola la 1FN.
+
+    \item \textbf{Segunda Forma Normal (2FN):} Si la llave primaria es compuesta (ej. (ID\_Curso, ID\_Estudiante)), todos los demás atributos deben depender funcionalmente de la llave completa, no de una parte de ella. La función debe ser $f(\text{ID\_Curso, ID\_Estudiante})$, no $g(\text{ID\_Estudiante})$.
+
+    \item \textbf{Tercera Forma Normal (3FN):} Elimina las dependencias transitivas. Si tenemos que la llave primaria determina el atributo A, y a su vez el atributo A determina el atributo B ($PK \rightarrow A$ y $A \rightarrow B$), entonces estamos ante una dependencia transitiva. Matemáticamente, si $a=f(pk)$ y $b=g(a)$, entonces $b=g(f(pk))$. La 3FN nos dice que $b$ no pertenece a esta tabla, sino que debería estar en otra tabla junto con $A$, para representar la función $g$ de forma explícita y separada.
+\end{itemize}
+
+Llegar a la 3FN generalmente es suficiente para tener un diseño limpio y robusto, especialmente para sistemas OLTP donde la consistencia es crucial.
+
+\section*{Conclusión}
+
+La dualidad OLTP/OLAP refleja dos necesidades complementarias: la ejecución precisa de operaciones discretas y el análisis global de los datos resultantes. Los sistemas OLTP son como el mecanismo que registra cada evento atómico, aplicando una función $S_{n+1} = f(S_n, \text{evento})$ para construir el historial del sistema. Los sistemas OLAP, por su parte, actúan como el analista (el lector en este punto notará que este adjetivo es redundante pero es el único realmente bueno para identificarlo) que aplica operadores complejos ($\sum, \int$, medias, etc.) sobre todo el conjunto de datos para extraer insights y descubrir patrones.
+
+Ambos mundos se apoyan en el rigor del modelo relacional, que con su fundamento en la teoría de conjuntos y su proceso de refinamiento a través de la normalización, proporciona la estructura matemática necesaria para que los datos sean consistentes y fiables. Entender esta arquitectura es clave para construir cualquier sistema de información que sea a la vez eficiente en su operación y potente en su capacidad de análisis.
+
+\end{document}

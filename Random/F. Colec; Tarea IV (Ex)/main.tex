@@ -1,0 +1,142 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage{pgfplots}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{mdframed}
+\usepackage{amsthm}
+\usepackage{tikz}
+\usepackage{multicol}
+\usepackage{cancel}
+\usepackage{hyperref}
+\newcommand{\cls}{^{\circ}C}
+
+\geometry{a4paper, left=2cm, right=2cm, top=1cm, bottom=2cm}
+
+\pgfplotsset{compat=1.18}
+\begin{document}
+\renewcommand{\theenumi}{\roman{enumi}} %Números romanos en minúscula
+
+\begin{minipage}{0.7\textwidth}
+    \small \textbf{Fenómenos Colectivos}  \\
+    \small {Facultad de Ciencias, Universidad Nacional Autónoma de México} \\
+    \small {Profesora: Dra. Catalina Elizabeth Stern Forgach} \\
+    \small {Ayudante: M. Tyra Delgadillo Mendoza} \\
+    \small {Fecha de entrega: Miércoles 22 de Mayo del 2024} \\
+    \small {Nombre completo: Andrés López González} \\
+    \small {Tarea Examen}
+\end{minipage}
+\hfill
+\begin{minipage}{0.12\textwidth}
+    \includegraphics[width=\linewidth]{logo_universidad}
+\end{minipage}\\\\
+
+\subsection*{ECUACIÓN DE BERNOULLI}
+
+\noindent I. Como vimos en clase, las ecuaciones de Bernoulli se obtuvieron a partir de descomponer las ecuaciones de Euler en las coordenadas de la línea de corriente. La ecuación de Bernoulli es una ecuación de momento válida entre dos puntos de una línea de corriente para un flujo inviscido, incompresible, estacionario. Explica estos tres términos. \\
+
+\begin{enumerate}
+    \item Inviscido: En un flujo inviscido, nos referimos a que la viscosidad del fluido es despreciada. La viscosidad es una medida de la resistencia interna del fluido al... \textit{flujo}, y en un fluido ideal (inviscido), esta resistencia es nula. Esto significa que no hay fuerzas viscosas que disipen energía dentro del fluido, y las únicas fuerzas que se consideran son las fuerzas de presión y las fuerzas inerciales; una comparación intuitiva (aunque inexacta) es en los circuitos eléctricos donde un superconductor perfecto sería como un fluído inviscido total.
+    \item Incompresible: Un flujo incompresible es aquel en el que la densidad del fluido permanece constante a lo largo del movimiento. Para fluidos líquidos, esta es una aproximación válida \textbf{en la mayoría de los casos}, ya que los líquidos son relativamente incomprensibles en comparación con los gases. De forma matemática tenemos la condición de incompresibilidad expresada como $\nabla \cdot v = 0$, donde \textbf{v} es el campo de velocidad del fluido, aunque claro, esto solo es una simplificación de una ecuación diferencial parcial que entre otras cosas relaciona la densidad pero esta queda fuera del curso (pertenece a dinámica de medios deformables).
+    \item Estacionario: Un flujo estacionario es aquel en el que las propiedades del flujo no cambian con el tiempo en ningún punto del espacio. Esto implica que las variables del flujo, como la velocidad, la presión y la densidad, son funciones solo de las coordenadas espaciales y no del tiempo. Podemos notar que la derivada parcial para cualsea propiedad del flujo con respecto al tiempo es cero.
+\end{enumerate}
+
+\noindent II. Se puede demostrar que, si además el flujo no tiene vorticidad, la ecuación de Bernoulli es válida entre dos puntos cualesquiera, aunque no estén sobre la misma línea de corriente. Un flujo que tiene estas cuatro características se llama flujo ideal. Explica qué es la vorticidad. \\
+
+\textit{Nota: Un flujo que es inviscido, incompresible, estacionario y sin vorticidad se denomina flujo ideal}
+\begin{enumerate}
+    \item Vorticidad: La vorticidad es una medida de la rotación local de un fluido en un punto dado y está definida de una manera muy linda, es el rotacional del campo de velocidad $\Vec{\omega} = \Vec{\nabla} \times \Vec{v}$, es \textbf{muy importante} puntualizar que se trabaja con vectores. La vorticidad describe la tendencia de las partículas fluidas a girar alrededor de un eje, además es un vector cuya dirección indica el eje de rotación y cuya magnitud nos muestra la intensidad de la rotación. En un flujo potencial o irrotacional, se piensa que la vorticidad es cero, las matemáticas están de acuerdo pues en todo punto del fluido ($\Vec{\nabla} \times \Vec{v} = \Vec{0}$). Este tipo de flujo es especialmente significativo porque en estos casos, la ecuación de Bernoulli se puede aplicar entre cualesquiera dos puntos del flujo, no solo a lo largo de una línea de corriente. Para demostrar esto considérese la ecuación de Euler en su forma integrodiferencial, siendo esta la misma de siempre pero con una integral con respecto al espacio (s).
+    \begin{equation}
+    \int \left( g\frac{d\Delta z}{ds} + \frac{\partial P}{\rho\partial s} + \frac{1}{2}\frac{\partial v^2}{\partial s} + \frac{\partial v}{\partial t} \right)ds = \textit{constante}
+    \end{equation}
+    Nótese que la parcial de $\Vec{v}$ con respecto a \textit{s} es totalmente diferente a la parcial con respecto al tiempo, este término es eliminado por lo antes argumentado en [I.iii] y como resultante podemos generalizar la ecuación como
+    \begin{equation*}
+        g\Delta z + \frac{P}{\rho} + \frac{v^2}{2} = \textit{constante}
+    \end{equation*}
+    Y esta constante es la misma para cualsea partícula fluída, independientemente de si están sobre la misma línea de corriente.}
+\end{enumerate}
+
+\noindent III. Hay una segunda ecuación de Bernoulli en la dirección perpendicular a la línea de corriente. Esta ecuación es muy importante porque explica los cambios de presión que dependen de la geometría. Explica con esta ecuación cómo cambia la presión desde el centro hacia afuera de un huracán. \\\\
+La segunda ecuación de Bernoulli en la dirección perpendicular a la línea de corriente describe cómo la presión varía debido a la curvatura de las líneas de corriente. Esta ecuación es fundamental para entender fenómenos como el efecto centrífugo en flujos curvados, en particular sistemas atmosféricos como los huracanes. \\
+La ecuación en la dirección perpendicular a la línea de corriente se deriva del equilibrio de fuerzas centrípetas necesarias para mantener el flujo en una trayectoria curvada. Si consideramos un elemento de fluido en una línea de corriente curvada de radio \textbf{R}, la fuerza centrípeta es proporcionada por el gradiente de presión transversal a la línea de corriente. Esto se expresa como.
+\begin{equation}
+    \nabla P \cdot \Vec{l_n} = \frac{\partial P}{\partial n} = \rho \frac{v^2}{\textbf{R}}
+\end{equation}
+En donde $\Vec{l_n}$ es la dirección normal a la línea de corriente y todas las demás variables son triviales lo qué representan. Sabiendo esto, en el caso de un huracán, el flujo de aire es altamente curvado alrededor del ojo del huracán. \\
+Cerca del centro del huracán, el radio de curvatura \textbf{R} es pequeño, lo que implica un mayor gradiente de presión transversal. Desde el centro hacia afuera, la velocidad del viento $\Vec{v}$ aumenta hasta un cierto punto (el radio de los vientos máximos), y luego disminuye. La presión es más baja en el centro del huracán y aumenta hacia el exterior. La fuerza centrífuga debido al movimiento curvado del aire hace que la presión sea más baja en el centro, lo cual es una característica distintiva de los ciclones tropicales. Estas deducciones son gracias a la ecuación de Bernoulli perpendicular a la línea de corriente, la cual de forma sintética explicó la caída de presión hacia el centro del huracán y el aumento de presión conforme uno se aleja del centro. \\
+
+\noindent IV. Explica por qué se puede sostener una pelota de pin pon con una secadora de pelo. \\\\
+
+Por Principio de Bernoulli se establece que para un flujo inviscido y estacionario, un aumento en la velocidad del fluido ocurre simultáneamente con una disminución de la presión. Semejante \textit{parcialmente} al caso del huracán, cuando el aire de la secadora de pelo sale a alta velocidad, crea una región de baja presión alrededor de la pelota de ping pong. La mayor presión del aire ambiente circundante empuja la pelota hacia la región de menor presión, manteniéndola en su lugar en el chorro de aire. Es interesante puntualizar que estas son las bases del efecto Coandă que describe la tendencia de un flujo de fluido a seguir una superficie contigua, lo cual es de alguna forma un corolario de lo que hemos deducido con implicaciones fuertes en otros fenómenos, el aire que sale de la secadora se adhiere a la superficie de la pelota, generando una fuerza de restauración que mantiene la pelota en el centro del chorro de aire. Si la pelota se desplaza ligeramente, el flujo de aire se ajusta, creando una diferencia de presión que la empuja de nuevo al centro.
+
+\noindent V. Explica por qué se puede lanzar un chorro de agua desde una manguera de jardín a una distancia considerablemente mayor cubriendo parcialmente la abertura con el pulgar. \\
+
+Dada la ecuación de continuidad para un fluido incompresible.
+\begin{equation}
+    A_1V_1 = A_2V_2 = \dots = A_nV_n \, : \, n\in\mathbb{N}
+\end{equation}
+Vemos que al reducir el área de la abertura por cubrirla parcialmente con el pulgar, la velocidad del agua debe aumentar para mantener la continuidad del flujo; nótese que he colocado $n$ términos a propósito pues en milésimas de segundo la cobertura del pulgar al área por donde sale el fluído es cada vez mayor pero no inmediatamente cambiante, es decir que existen cambios en la velocidad con respecto al tiempo en el período que implica la existencia de aceleración quienes por imperfecciones de la naturaleza tienen cambios respecto al tiempo por lo que existen sobreaceleraciones (jerk), etc. pero estos solo son datos interesantes demás... De esto rescatamos que la velocidad final al decrecer el área es mayor que la original y por considerar cada partícula fluída parte de un tiro semiparabólico (o completamente parabólico, no importa) el rango (o alcance horizontal) siempre va a ser estrictamente mayor que con una velocidad de menor magnitud (es obvio que si el ángulo es completamente vertical el desplazamiento horizontal es cero pero consideramos el tiro parabólico ajena a la caída libre). \\
+
+\noindent VI. Explica por qué si se lanza un chorro de agua verticalmente hacia arriba, se observa que la corriente se ensancha a medida que sube, por el contrario, un chorro de agua que cae directamente hacia abajo, se vuelve más angosto. \\\\
+
+Consideremos el caso del chorro de agua ascendiendo, cuando el agua se lanza verticalmente hacia arriba, la velocidad disminuye debido a que cada partícula fluída se somete a una caída libre. Según la ecuación de continuidad, si la velocidad disminuye, el área de la sección transversal del chorro debe aumentar para conservar el flujo de masa, por lo que el chorro se ensancha a medida que sube. En tanto al chorro de agua descendiendo es un argumento análogo, el agua cae verticalmente y la gravedad acelera el flujo, de nuevo, aplicando la ecuación de continuidad, a medida que la velocidad aumenta el área de la sección transversal del chorro debe disminuir para mantener la conservación del flujo de masa y en consecuencia tenemos estos fenómenos. \\\\
+
+\noindent VII. Algunos tubos de chimenea tienen forma de T, con un travesaño en la parte superior que ayuda a aspirar los gases cuando hay una ligera brisa. Explique cómo funciona esto en términos del principio de Bernoulli. \\
+
+La sección se llama Ecuación de Bernoulli... se espera que siempre que me refiera a "la ecuación" me refiera a esta; por la ecuación de forma exactamente igual que en [IV] \textit{en un flujo un aumento en la velocidad del fluido ocurre simultáneamente con una disminución en la presión}. En el caso de la chimenea, cuando una brisa pasa por el travesaño horizontal, la velocidad del aire aumenta al pasar por encima de las aberturas del tubo en forma de T. Esta velocidad incrementada genera una región de presión más baja en las aberturas por la cual se crea una especie de "ósmosis" que extrae los gases de la chimenea.
+
+\noindent VIII. ¿Por qué es preferible que los aviones despeguen contra el viento en vez de con el viento? \\
+
+Primero es necesario saber que la sustentación que mantiene al avión volando adecuadamente requiere de cierta velocidad relativa, como las velocidades de un avión y otros factores en general que puedan sumarse son ínfimas en comparación de la velocidad de la luz podemos considerar la velocidad relativa simplemente como una suma de vectores sin operaciones adicionales, si el avión comienza su movimiento en el sentido que lo golpea el viento desde $t=0$ ya tiene cierta velocidad del viento, y cuando empiece su vuelo obtendrá esa magnitud de velocidad relativa adicional que le ayudará a su sustento en un menor tiempo,  ahora bien, de acuerdo a la ecuación el sustento se genera debido a la diferencia de presión entre la parte superior e inferior del ala. De forma detallada según el principio de Bernoulli, un flujo de aire más rápido sobre la superficie superior del ala crea una presión más baja comparada con la presión en la superficie inferior, resultando en una fuerza de sustentación hacia arriba.
+
+\noindent IX. En ocasiones, los tejados se desprenden verticalmente durante un ciclón tropical, y los edificios, a veces, explotan hacia fuera cuando los golpea un tornado. Use el principio de Bernoulli para explicar estos fenómenos. \\\\
+
+Por un lado durante un ciclón o tornado, los vientos rápidos que pasan sobre el tejado de una casa crean una zona de baja presión debido al aumento de la velocidad del aire sobre la superficie del tejado, la presión dentro de la casa permanece relativamente alta en comparación con la baja presión exterior. Esta diferencia de presión genera una fuerza neta hacia arriba en el tejado. Si esta fuerza es suficientemente grande, puede superar la resistencia del tejado provocando su desprendimiento.
+
+Por otro lado pero de manera similar, la presión interna alta en comparación con la baja presión exterior de un edificio puede causar que las paredes se expandan hacia fuera. La gran diferencia de presión puede ser suficiente para que las paredes no soporten la fuerza, resultando en que el edificio explote hacia sus laterales.
+
+\noindent X. Es peligroso situarse cerca de las vías del tren cuando pasa un tren de cercanías a gran velocidad. Explique por qué la presión atmosférica lo empujaría hacia el tren en movimiento. \\\\
+
+Ya hemos platicado que para un fluido bajo estas condiciones el aumento de velocidad conduce a una disminución en la presión. Al pasar un tren a alta velocidad, el aire en los alrededores del tren también se mueve a alta velocidad debido al arrastre del tren, se deduce que la presión en la región cercana al tren en comparación con la presión atmosférica en el área más alejada del tren es mucho menor, esto crea un gradiente de presiones que empuja a los objetos (o personas) hacia él en busca de la homogeneidad.
+
+\noindent XI. Explica por qué se produce sustentación cuando una pelota se lanza con un giro. \\\\
+
+Dado que introduciré un término que he visto sobre Ingeniería Aeronáutica y Espacial en Temas Selectos de Astronomía en el último año del bachillerato (no recuerdo haberlo visto en esta clase), definiré rapidamente el efecto Magnus, de acuerdo a Gemini "es un fenómeno físico que ocurre cuando un objeto esférico o cilíndrico gira mientras se mueve a través de un fluido, como el aire o el agua".\\
+En este caso cuando una pelota gira mientras se mueve a través del aire, la rotación afecta la velocidad del flujo de aire alrededor de la pelota. En un lado de la pelota, el giro hace que la velocidad del aire sea mayor (debido a que el movimiento del aire y la rotación de la pelota son en la misma dirección), y en el lado opuesto, la velocidad del aire es menor (debido a que el movimiento del aire y la rotación de la pelota son en direcciones opuestas). Acorde con el principio de Bernoulli, donde la velocidad del aire es mayor la presión es menor, y donde la velocidad del fluido es menor la presión es mayor. Por lo tanto, se crea una diferencia de presión en los lados opuestos de la pelota. 
+
+Ya que hemos creado las condiciones para el efecto Magnus, notamos que la diferencia de presión resultante crea una fuerza perpendicular a la dirección del movimiento de la pelota. Esta fuerza conocida como Fuerza de Sustencación, genera... \textit{sustentación}, o desviación lateral dependiendo de la orientación de la rotación de la pelota y originalmente se pensó para superficies alares, pero existe su adaptación a superficies esféricas.
+\begin{equation*}
+    \textit{Lift} = C_L\rho v^2 A
+\end{equation*}
+$C_L$ es el coeficiente de sustentación inducido por la rotación, $\rho$ es la densidad del aire (o fluido cualsea), $v$ la velocidad de la pelota y $A$ el área transversal de la pelota. Nótese que el coeficiente de sustentación es cero si la pelota no se encuentra rotando.
+
+\subsection*{FLUIDOS VISCOSOS}
+
+XII. Considera el flujo estacionario entre dos placas planas infinitas producido por el movimiento de estas. La placa superior se mueve a una velocidad Uo y la inferior a -Uo. La distancia entre las placas es h. No hay gradiente de presión y las distancia h es tan pequeña que el efecto de la gravedad es despreciable. Encuentra el perfil de velocidades u=u(y).\\\\
+
+Dadas todas las condiciones podemos utilizar la ecuación diferencial generalizada de Navier-Stokes en forma de suma, por comodidad visual en lugar de usar subíndices con el eje en cuestión $(v_x,v_y,v_z)$ usaré la notación de "Introduction to Fluid Mechanics" -Fox (pag. 215) $(u,v,w)$. \\
+\begin{align*}
+\rho \left( \frac{\partial u}{\partial t} + \frac{\partial v}{\partial t} + \frac{\partial w}{\partial t} + u(\frac{\partial u}{\partial x} + \frac{\partial v}{\partial x} + \frac{\partial w}{\partial x}) + v(\frac{\partial u}{\partial y} + \frac{\partial v}{\partial y} + \frac{\partial w}{\partial y})) + w(\frac{\partial u}{\partial z} + \frac{\partial v}{\partial z} + \frac{\partial w}{\partial z}) \right) = \\
+\rho(g_x + g_y + g_z) - (\frac{\partial p}{\partial x} + \frac{\partial p}{\partial y} + \frac{\partial p}{\partial z}) + \mu(\frac{\partial^2 u}{\partial x^2} + \frac{\partial^2 u}{\partial y^2} + \frac{\partial^2 u}{\partial z^2} + \frac{\partial^2 v}{\partial x^2} + \frac{\partial^2 v}{\partial y^2} + \frac{\partial^2 v}{\partial z^2} + \frac{\partial^2 w}{\partial x^2} + \frac{\partial^2 w}{\partial y^2} + \frac{\partial^2 w}{\partial z^2})
+\end{align*}
+
+En particular vease que la velocidad solo actua en una componente pero se desplaza respecto a las placas. La reducción de términos es increíblemente alta (y aún así esta deducción solo nos la puede dar esta ecuación diferencial parcial de segundo orden). \textit{Recordar que u representa la velocidad en el eje x y dirección de movimiento de las placas, mientras la diferencial parcial de $y$ es una distancia infinitesimal entre las placas desde el inferior}
+\begin{equation}
+    \frac{\partial^2 u}{\partial y^2} = 0
+\end{equation}
+Esto nos expresa una ecuación de $u$ en función de $y$ de la forma my + b, pues su derivada de segundo orden es la constante cero para cual sea valor de $(m,b)$. Nótese que es bastante simple de hallar el valor de $(m,b)$ pues si y=0 entonces la velocidad que actua para cualesquiera partículas fluídas es la provocada por la placa inferior, i.e. -Uo = b. Para $y=h$ es bastante intuitivo que la velocidad será la de la placa superior, por lo que.
+\begin{align*}
+u(h) &= Uo = mh + b = mh - Uo \\
+\Rightarrow \frac{2Uo}{h} &= m
+\end{align*}
+Esto implica finalmente el siguiente perfil de velocidades:
+\begin{equation*}
+    u(y) = \frac{2Uo}{h}y - Uo
+\end{equation*}
+Vease que el perfil de velocidades es muy sencillo para este caso pues es lineal, en donde si $y$ acota valores desde cero hasta $h$ irá incrementando de $-Uo \rightarrow Uo$
+
+
+\end{document}

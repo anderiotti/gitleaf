@@ -1,0 +1,301 @@
+\documentclass[12pt,a4paper]{article}
+
+% ------------------------
+% Paquetes
+% ------------------------
+\usepackage[spanish]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{geometry}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage{hyperref}
+\geometry{margin=2.5cm}
+
+\begin{document}
+
+% ------------------------
+\section*{Learning Objectives}
+\subsection*{General Objective}
+The student will apply the analysis, design, development, and implementation of transactional and analytical information systems with structured data through readings, essays, in-class exercises, and practical work, so that by the end of the course they will be capable of creating OLTP and OLAP information systems.
+
+% ------------------------
+\section*{Course Content}
+\begin{enumerate}
+    \item \textbf{Introduction to Information Systems}
+    \begin{enumerate}[label*=\arabic*.]
+        \item Concept of Information System.
+        \item Components:
+        \begin{enumerate}[label*=\arabic*.]
+            \item Users and processes.
+            \item Hardware and networks, client–server architecture.
+            \item Software.
+            \item Operating Systems.
+            \item Database Management System (DBMS).
+            \item Security, confidentiality, backup, and recovery.
+            \item Concurrency.
+            \item Database.
+            \item Integrity and consistency.
+        \end{enumerate}
+        \item Main Types of Information Systems:
+        \begin{enumerate}[label*=\arabic*.]
+            \item Characteristics of Transactional Systems.
+            \item Characteristics of Analytical Systems.
+        \end{enumerate}
+        \item Transactional Information Systems (OLTP):
+        \begin{enumerate}[label*=\arabic*.]
+            \item Concept of a transaction.
+            \item ACID properties of a transaction.
+        \end{enumerate}
+    \end{enumerate}
+    \item \textbf{Analysis, Design, and Implementation of Transactional Information Systems (OLTP)}
+    \begin{enumerate}[label*=\arabic*.]
+        \item Requirements Analysis:
+        \begin{enumerate}[label*=\arabic*.]
+            \item Conceptual design.
+            \item Entity–Relationship Model.
+            \item Practical exercises.
+        \end{enumerate}
+        \item Logical Design:
+        \begin{enumerate}[label*=\arabic*.]
+            \item Relational Model.
+            \item Normalization.
+            \item Relational algebra.
+        \end{enumerate}
+        \item Physical Design.
+        \item SQL:
+        \begin{enumerate}[label*=\arabic*.]
+            \item Data Definition Language (DDL).
+            \item Data Control Language (DCL).
+            \item Data Query Language (DQL).
+            \item SQL query exercises.
+            \item Codd's Twelve Rules.
+            \item The relational and in-memory model as the best option for transactional systems.
+        \end{enumerate}
+    \end{enumerate}
+    \item \textbf{Analysis, Design, and Implementation of Analytical Information Systems (OLAP)}
+    \begin{enumerate}[label*=\arabic*.]
+        \item Challenges and issues in Business Intelligence.
+        \item Analysis and design of the data warehouse.
+        \item Models: multidimensional, snowflake, star.
+        \item Creating a data warehouse with SQL.
+    \end{enumerate}
+    \item \textbf{ETL Process}
+    \begin{enumerate}[label*=\arabic*.]
+        \item Extraction.
+        \item Cleaning and standardization.
+        \item Transformation.
+        \item Loading.
+        \item ETL tools.
+    \end{enumerate}
+    \item \textbf{Business Intelligence Components}
+    \begin{enumerate}[label*=\arabic*.]
+        \item Descriptive and predictive analytics.
+        \item Complex SQL queries.
+        \item Data mining.
+        \item OLAP tools, dashboards, and scorecards.
+    \end{enumerate}
+\end{enumerate}
+
+% ------------------------
+\section*{Course Evaluation}
+\begin{table}[h!]
+\centering
+\begin{tabular}{@{}ll@{}}
+\toprule
+\textbf{Activity} & \textbf{Percentage} \\
+\midrule
+Midterm Exams & 50\% \\
+Participation & 10\% \\
+Practical Work (Mandatory) & 20\% \\
+Project (Mandatory) & 20\% \\
+\midrule
+\textbf{Total} & \textbf{100\%} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\noindent \textit{Note}: In order to qualify for the first final exam, it is mandatory to submit at least 80\% of the practical work and projects.
+
+% ------------------------
+\section*{Basic Bibliography}
+\begin{enumerate}
+    \item Coronel, C., \& Morris, S. (2016). \textit{Database Systems}. Cengage Learning.
+    \item Date, C. (2007). \textit{An Introduction to Database Systems}. Pearson Education.
+    \item Inmon, W. (2011). \textit{Building the Data Warehouse}. Wiley.
+    \item Kimball, R., \& Ross, M. (2013). \textit{The Data Warehouse Toolkit}. Wiley.
+    \item Lans, R. (2012). \textit{Data Virtualization for Business Intelligence Systems}. Morgan Kaufmann.
+    \item Ricardo, C., \& Urban, S. (2017). \textit{Databases Illuminated}. Jones \& Bartlett Learning.
+\end{enumerate}
+
+% ------------------------
+\section*{Resources and Tools}
+\begin{itemize}
+    \item PowerDesigner Trial: \url{https://www.powerdesigner.biz/EN/powerdesigner/powerdesigner-trial.html}
+    \item Bizagi BPMN Modeler: \url{https://www.bizagi.com/en/platform/modeler}
+    \item AltairOne Registration: \url{https://admin.altairone.com/register}
+    \item RapidMiner: \url{https://docs.rapidminer.com/latest/studio/installation}
+    \item Qlik Sense Academic Program: \url{https://www.qlik.com/us/company/academic-program}
+\end{itemize}
+
+\section{Lecture I}
+\subsection{From File Systems to Intelligent Databases: OLTP, OLAP, and Beyond}
+
+In the early days of computing, information was stored in what we now call \emph{file systems}.  
+A program had to know exactly where and how the data was written.  
+Data and code were tightly coupled: change one, and you might break the other.  
+There was no real notion of \textbf{integrity} or \textbf{consistency}, and no way to guarantee that a transaction --- a complete logical unit of work --- could succeed or fail as a whole.  
+
+This world was known as \textbf{Standalone Applications (SA)}.  
+The great leap came with \textbf{Database Systems (SBD)}, where data became independent of the code, and the database engine (the \emph{Database Management System}, or DBMS) took responsibility for enforcing structure, integrity, and transaction control.
+
+\paragraph{Three Fundamental Concepts}
+Before diving into history, let us clear up three often-confused terms:
+\begin{enumerate}
+    \item \textbf{Database (DB):} A structured collection of data, interconnected in such a way that it remains logically \emph{consistent} and \emph{integral}.
+    \item \textbf{Database Management System (DBMS):} The software responsible for storing, securing, organizing, accessing, processing, and keeping the data integral and consistent. It handles queries, security, concurrency, and recovery.
+    \item \textbf{Database System:} The complete information system where the data resides in a database, managed by a DBMS, running on an operating system, stored in hardware, and executed on CPUs, typically connected through a client–server architecture.
+\end{enumerate}
+
+\paragraph{On Integrity}
+In everyday language, ``integrity'' means wholeness or incorruptibility.  
+In databases, integrity is the property that the data \emph{represents reality faithfully} and \emph{conforms to defined rules}.  
+A database that is integral enforces that each value respects its domain, its relationships, and its meaning.  
+A field \texttt{birth\_date} containing \texttt{2050-12-01} violates temporal logic;  
+a \texttt{name} field storing ``Ballenttina'' when the person’s real name is ``Valentina'' violates semantic integrity even though it may be syntactically valid.  
+Thus, integrity goes beyond data type checks: it demands correctness in context.
+
+\subsubsection{OLTP: Online Transaction Processing}
+In the 1970s and 1980s, as organizations sought to automate daily operations, \textbf{OLTP systems} emerged.  
+They excel at:
+\begin{itemize}
+    \item Handling \emph{many users} simultaneously.
+    \item Managing \emph{a high volume of small transactions}.
+    \item Performing mostly \emph{write} and \emph{update} operations on relatively small datasets.
+\end{itemize}
+Banking systems, airline reservation platforms, and retail point-of-sale systems are classic examples.  
+With the advent of the Internet and digital communications, OLTP systems began handling \emph{semi-structured data} (e.g., XML, JSON).  
+Response times moved into the realm of milliseconds and nanoseconds.  
+Early OLTP was built with languages like \texttt{COBOL} and \texttt{C}, later enriched by \texttt{SQL}.
+
+Yet, as OLTP matured, an uncomfortable truth emerged: even the most perfectly designed database is useless if the \emph{data quality} itself is poor.
+
+\subsubsection{OLAP: Online Analytical Processing}
+By the 1990s, businesses wanted more than just daily transaction logs: they wanted to \emph{understand} the past and guide the future.  
+\textbf{OLAP systems} emerged to analyze large volumes of historical data, providing aggregated views, trend analyses, and strategic insights.  
+Unlike OLTP:
+\begin{itemize}
+    \item They have \emph{few users}, often analysts or executives.
+    \item They focus on \emph{read-only operations}.
+    \item Response times are measured in \emph{minutes or hours}.
+\end{itemize}
+This era also saw the rise of \textbf{Business Intelligence} and the development of the \textbf{ETL} process (\emph{Extract, Transform, Load}), which moves data from OLTP systems into data warehouses.  
+OLAP initially relied on \texttt{SQL} for relational querying, later expanding to multidimensional query languages like \texttt{MDX}.
+
+\subsubsection{From OLAP to Data Science}
+In the 21st century, data analysis expanded into what we now call \textbf{Data Science}, encompassing:
+\begin{itemize}
+    \item \textbf{Descriptive analytics} --- understanding the past and present.
+    \item \textbf{Predictive analytics} --- anticipating likely future scenarios.
+    \item \textbf{Prescriptive analytics} --- identifying actions today to alter tomorrow’s outcomes.
+\end{itemize}
+This shift absorbed structured, semi-structured, and unstructured data sources.  
+Data volumes grew enormously, user bases became diverse, and operations focused mainly on reading, modeling, and extracting patterns.  
+Still, one ancient problem remains unsolved: the quality of the data itself.
+
+\subsection{Integrity, Consistency, and the OLTP Design Process}
+
+When we speak of \emph{integrity} in databases, we often mean it in a loose, everyday sense:  
+``the data is correct.'' But in database theory, integrity has a sharper structure, and we usually formalize it into three distinct forms.
+
+\paragraph{Domain Integrity}  
+Each attribute in a database has a \emph{domain} --- the set of values it can validly take.  
+A column for a person’s date of birth should only contain valid dates;  
+a column for an e-mail address should follow the correct syntactic pattern.  
+Domain integrity enforces these rules at the type and format level.
+
+\paragraph{Business Rule (Value) Integrity}  
+Beyond technical types, there are the rules that arise from the meaning of the data.  
+A business might declare that no employee can have more than one active contract,  
+or that a customer’s credit limit cannot be negative.  
+These are \emph{semantic} constraints, rooted in the logic of the enterprise itself.
+
+\paragraph{Referential Integrity}  
+This is the hallmark of \textbf{relational} databases.  
+It ensures that relationships between tables remain valid:  
+a foreign key in one table must match a primary key in another,  
+or be null if the relationship allows it.  
+If you delete a customer, you must also decide what happens to their orders ---  
+do they vanish (\emph{cascade}), stay orphaned (\emph{set null}), or remain protected (\emph{restrict})?
+
+\paragraph{On Redundancy and Consistency}  
+Redundancy occurs when the same piece of information appears multiple times unnecessarily.  
+Imagine two separate databases: one for human resources, listing employees and their contact details;  
+another for customer management, also listing contact details for certain employees who are client liaisons.  
+If an employee changes their phone number, both databases must be updated ---  
+and if they are not, the result is a \emph{loss of consistency}.  
+Consistency here means that, across all datasets, the representation of reality is aligned and coherent.
+
+\subsubsection{OLTP Analysis and Design}
+
+An \textbf{OLTP transaction} is a set of insert, delete, or update operations that together form an indivisible unit.  
+Before and after the transaction, the database must remain integral and consistent.  
+Inside the transaction, the operations are executed in sequence, invisible to the outside world until the transaction is complete.
+
+\paragraph{Concurrency Control}  
+A DBMS must allow multiple users to access and modify data at the same time without corrupting it.  
+This is achieved through mechanisms such as scheduling (serializing transactions),  
+and locks (ensuring that two conflicting operations cannot occur simultaneously).  
+The DBMS enforces rules so that all users perceive the database as if their transactions were the only ones running.
+
+\paragraph{The ACID Properties}  
+Transactions are defined by four properties, captured by the mnemonic \textbf{ACID}:
+\begin{enumerate}
+    \item \textbf{Atomicity} --- All operations in a transaction are executed, or none are. There is no in-between.
+    \item \textbf{Consistency} --- The transaction takes the database from one consistent state to another.  
+    Even if the transaction fails, the system ensures that no inconsistent state is left behind.
+    \item \textbf{Isolation} --- While a transaction is running, its intermediate results are invisible to other transactions.
+    \item \textbf{Durability} --- Once a transaction is committed, its changes persist even in the face of system failures.  
+    This is achieved through logs (before and after images of the data),  
+    allowing recovery to the exact committed state.
+\end{enumerate}
+
+\subsubsection{Three Levels of OLTP Database Design}
+
+Designing an OLTP system can be viewed as working through three abstraction levels:
+
+\paragraph{1) Conceptual Modeling}  
+We begin with \emph{requirements analysis}:  
+collecting the needs of the system and identifying the entities (nouns) and relationships (verbs) involved.  
+The output is the \textbf{Entity–Relationship Diagram} (ERD), which describes the logical structure of the data without concern for implementation.
+
+\paragraph{2) Logical Modeling}  
+The ERD is transformed into a \textbf{relational model}.  
+This involves \emph{normalization}, a process that removes redundancy and ensures integrity by organizing data into well-structured tables.  
+The output is a fully normalized relational schema.
+
+\paragraph{3) Physical Modeling}  
+Finally, the logical model is adapted to the specific DBMS and hardware environment.  
+Here we decide on indexes, partitioning strategies, and storage structures,  
+always aiming to maintain integrity, consistency, and performance.  
+The output is the actual database and its elements, ready to handle live transactions.
+
+
+What is the relational and the logical model? how does the peter chen ERM differs from ER Merise
+El trabajo publicado por Codd en ACM (1970) presentaba un nuevo modelo de datos que perseguia una serie de objetivos, que se resumen en las siguientes lineas.
+I.Fisica: El modo en el que se almacenan los datos no influye en sumanipulacion logica y por tanto, los usuarios que acceden a esos datos no tienen que modificar sus programas por cambios en el almacenamiento fisico.
+I.Logica: El anadir, eliminar o modificar objetivos de la base da datos (es decir cambios en el esquema) no repercute en los programas y/o usuarios que estan consultando a subconjuntos parciales de los mismos (vistas)
+
+Details of te relational model: attribute, tuple, relation, cardinality, degree, p key, f key, data type, esquema, instance, intension.
+
+La tupla representa entidad
+La relacion representa al conjunto de entidades
+
+La intension es relacionada al esquema
+La extension se relaciona con los datos
+
+
+
+\end{document}
+

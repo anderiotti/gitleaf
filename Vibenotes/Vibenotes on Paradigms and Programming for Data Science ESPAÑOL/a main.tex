@@ -1,0 +1,100 @@
+\documentclass[12pt, openany]{book}
+
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+\usepackage{geometry}
+\geometry{a4paper, margin=1in}
+\usepackage{setspace}
+\usepackage{amsmath, amssymb, amsfonts, amsthm}
+\usepackage{graphicx}
+\usepackage{comment}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{booktabs}
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=RoyalBlue,
+    citecolor=ForestGreen,
+    urlcolor=NavyBlue,
+    pdftitle={Lectures en Paradigmas y Programación para Ciencia de Datos},
+    pdfauthor={Andres Lopez},
+    pdfpagemode=FullScreen,
+}
+
+\usepackage{minted}
+\setminted[python]{
+    frame=lines,
+    framesep=2mm,
+    baselinestretch=1.2,
+    fontsize=\small,
+    linenos
+}
+\setmintedinline{bgcolor=gray!10}
+
+\setminted[r]{
+    frame=lines,
+    framesep=2mm,
+    baselinestretch=1.2,
+    fontsize=\small,
+    linenos
+}
+
+\newcommand{\rcode}[1]{\mintinline{r}{#1}}
+
+\theoremstyle{definition}
+\newtheorem{definition}{Definición}[section]
+\theoremstyle{plain}
+\newtheorem{theorem}[definition]{Teorema}
+\newtheorem{proposition}[definition]{Proposición}
+\newtheorem{lemma}[definition]{Lema}
+\newtheorem{corollary}[definition]{Corolario}
+\theoremstyle{remark}
+\newtheorem{remark}[definition]{Observación}
+\newtheorem{example}[definition]{Ejemplo}
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\code}[1]{\mintinline{python}{#1}}
+
+\begin{document}
+
+\begin{titlepage}
+    \centering
+    \vspace*{2cm}
+    
+    {\Huge\bfseries Vibenotes sobre Paradigmas y Programación para Ciencia de Datos\par}
+    
+    
+    
+    {\Large\itshape \textit{Enfocado en python con breve ventana a R y Julia}\par}
+    \vspace{0.5cm}
+    {\Large Andres Lopez\par}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.6\linewidth]{iimas.png}
+    \label{fig:iimas-logo}
+\end{figure}
+    
+    \vspace{2.5cm}
+    
+    \vfill
+    
+    {\large Instituto de Investigaciones en Matemáticas Aplicadas y en Sistemas (IIMAS)\par}
+    
+    \vspace{1.5cm}
+
+    
+    \vspace*{2cm}
+\end{titlepage}
+
+This page was unintentionally left in blank. These vibenotes are my masterpiece for python. \\
+
+
+\tableofcontents
+
+\input{Chapter 1}
+\input{Chapter 2}
+\input{Chapter Julia}
+
+\end{document}

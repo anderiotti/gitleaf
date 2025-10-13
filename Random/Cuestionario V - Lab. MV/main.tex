@@ -1,0 +1,84 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage{pgfplots}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{mdframed}
+\usepackage{amsthm}
+\usepackage{physics}
+\usepackage{derivative}
+
+\geometry{a4paper, left=2cm, right=2cm, top=1cm, bottom=2cm}
+
+\pgfplotsset{compat=1.18}
+\begin{document}
+
+\begin{minipage}{0.7\textwidth}
+    \small \textbf{LABORATORIO DE MECÁNICA VECTORIAL}  \\
+    \small {Facultad de Ciencias, Universidad Nacional Autónoma de México} \\
+    \small {Profesor: Radamés Ricardo Reynoso Manríquez} \\
+    \small {Ayudante: Ana Laura Córdova Lara}\\
+    \small {Fecha de entrega: 14 de Marzo de 2024} \\
+    \small {Nombre completo: Andrés López González} \\
+    \small {Tarea número V}
+\end{minipage}
+\hfill
+\begin{minipage}{0.12\textwidth}
+    \includegraphics[width=\linewidth]{logo_universidad}
+\end{minipage}
+
+\section*{Cuestionario IV}
+
+PREGUNTA 1. Desarrolle el procedimiento para obtener la expresión que relaciona el período de un péndulo simple, con la longitud del mismo; aplicando la aproximación correspondiente (la solución se puede revisar 
+ en el apartado correspondiente de los libros de física). \\
+\textit{Comenzamos con la ecuación de movimiento para un péndulo simple, que está dada por la segunda ley de Newton y la ley de fuerza restauradora para un movimiento oscilatorio:}
+
+$$ \sum F = m \cdot a $$
+
+\textit{Para un péndulo simple, la única fuerza actuando es la fuerza gravitatoria, que está dada por \( F = -mg \cdot \sin(\theta) \), donde \( \theta \) es el ángulo de desplazamiento y \( g \) es la aceleración debido a la gravedad.}
+
+\textit{Utilizando la aproximación del ángulo pequeño (\( \sin(\theta) \approx \theta \) para ángulos pequeños), podemos reescribir la fuerza como \( F = -mg \cdot \theta \).}
+
+\textit{Sustituyendo esta fuerza en la ecuación de movimiento, obtenemos:}
+
+$$ -mg \cdot \theta = m \cdot a $$
+
+\textit{Dado que la aceleración tangencial en el movimiento circular es \( a = -\frac{g}{l} \cdot \theta \), donde \( l \) es la longitud del péndulo, podemos sustituirlo en la ecuación anterior:}
+
+$$ -mg \cdot \theta = -\frac{m \cdot g}{l} \cdot \theta $$
+
+\textit{Ahora, podemos cancelar las masas y los términos negativos, y obtenemos la ecuación diferencial para el movimiento del péndulo simple:}
+
+$$ \frac{d^2 \theta}{dt^2} + \frac{g}{l} \cdot \theta = 0 $$
+
+\textit{Esta ecuación diferencial tiene una solución bien conocida, que es una función sinusoidal. La solución general es de la forma:}
+
+$$ \theta(t) = \theta_0 \cdot \cos(\omega t + \phi) $$
+
+\textit{Donde \( \omega \) es la frecuencia angular y \( \phi \) es la fase inicial.}
+
+\textit{El período del péndulo \( T \) es el tiempo necesario para que el péndulo complete un ciclo completo, es decir, \( T = \frac{2\pi}{\omega} \).}
+
+\textit{Por lo tanto, el período de un péndulo simple está dado por la relación:}
+
+$$ T = 2\pi \sqrt{\frac{l}{g}} $$\\
+
+PREGUNTA 2. Defina y dé ejemplos de los siguientes tipos de péndulos: péndulo simple, péndulo físico, péndulo ideal. \\
+\textit{Existen 3 tipos de péndulos muy característicos para su estudio en la física.}\\
+- Péndulo simple: \textit{Es un punto material suspendido de un hilo inextensible y sin peso. Un ejemplo sería una bolita de metal suspendida de un hilo.} \\
+- Péndulo físico: \textit{Consiste en un cuerpo rígido suspendido que puede oscilar alrededor de un eje. Por ejemplo, un péndulo de torsión, donde el cuerpo rígido es una barra que gira alrededor de su eje.} \\
+- Péndulo ideal: \textit{Es un concepto teórico que asume un péndulo sin fricción y sin pérdida de energía, por lo que continuaría oscilando indefinidamente. Un ejemplo sería un péndulo simple en el vacío.} \\\\
+
+PREGUNTA 3. Describa el funcionamiento del péndulo de Focault. \\
+\textit{El péndulo de Foucault es un dispositivo que demostró la rotación de la Tierra. Consiste en una pesada esfera suspendida de un cable largo y que puede oscilar en cualquier dirección. Mientras oscila, su plano de oscilación parece rotar lentamente debido a la rotación de la Tierra; es capaz de oscilar desde cualquier posición.} \\\\
+
+PREGUNTA 4. Si se trata de describir el movimiento de un péndulo que se encuentra en movimiento a velocidad constante, ¿cómo se representaría el movimiento desde el sistema de referencia de un observador estático?. \\
+\textit{Si el péndulo se mueve a velocidad constante, desde el sistema de referencia de un observador estático, el movimiento del péndulo parecerá lineal y rectilíneo. Esto se debe a que, al observarlo desde un marco en el que el péndulo se mueve a velocidad constante, el movimiento oscilatorio parece reducirse a un simple movimiento de translación; además este será observado por enfrente o por detrás como la función seno/coseno y por los lados algo semejante a la cicloide.}\\\\
+
+PREGUNTA 5. Investigue el caso de un péndulo amortiguado, e indique las diferencias para su descripción matemática, en relación al péndulo simple. \\
+\textit{Un péndulo amortiguado es aquel que está sujeto a fuerzas de amortiguamiento, como la fricción del aire o la resistencia del medio en el que se encuentra. Las diferencias en su descripción matemática con respecto al péndulo simple radican en la adición de términos de amortiguamiento en la ecuación diferencial de movimiento lo que lo aterriza más a la realidad. Estos términos pueden variar dependiendo del tipo específico de amortiguamiento, pero comúnmente implican una disminución exponencial en la amplitud de las oscilaciones con el tiempo. Por lo tanto, la ecuación diferencial para un péndulo amortiguado generalmente incluirá un término de amortiguamiento que puede ser proporcional a la velocidad angular o a la velocidad lineal del péndulo.}
+
+\end{document}

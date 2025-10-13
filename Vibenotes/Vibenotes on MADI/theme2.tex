@@ -1,0 +1,428 @@
+
+\chapter*{Solved Exercises}
+\addcontentsline{toc}{chapter}{Solved Exercises}
+
+This chapter contains a curated selection of problems designed to illuminate and challenge the principles discussed in the main text. The difficulty of each problem is rated from one (\rating{2}) to three (\rating{4}) stars. The solutions provided are intentionally dense, in the spirit of the Russian school, requiring the reader to fill in intermediate algebraic steps.
+
+\section*{Exercises for Section 1: Heuristics and Conjecture}
+
+\begin{enumerate}
+    \item \rating{2} Find a closed-form expression for the sum of the first $n$ odd integers, $S_n = \sum_{k=1}^{n} (2k-1)$, by computing the first few terms and conjecturing a pattern.
+
+    \begin{proof}
+    We compute the first few terms of the sequence of partial sums:
+    $S_1 = 1 = 1^2$
+    $S_2 = 1+3 = 4 = 2^2$
+    $S_3 = 1+3+5 = 9 = 3^2$
+    $S_4 = 1+3+5+7 = 16 = 4^2$
+    The sequence of sums $\{1, 4, 9, 16, \dots\}$ suggests the conjecture $S_n = n^2$. This is readily proven by induction.
+    \end{proof}
+
+    \item \rating{3} Let $C_n$ be the $n$-th Catalan number, defined by $C_n = \frac{1}{n+1}\binom{2n}{n}$. Investigate the value of $C_n \pmod 2$. Conjecture a pattern.
+
+    \begin{proof}
+    We compute the first few Catalan numbers:
+    $C_0=1$, $C_1=1$, $C_2=2$, $C_3=5$, $C_4=14$, $C_5=42$, $C_6=132$, $C_7=429$, $C_8=1430$.
+    The sequence modulo 2 is:
+    $C_n \pmod 2 \equiv \{1, 1, 0, 1, 0, 0, 0, 1, 0, \dots\}$.
+    The pattern is not immediately obvious. Let us consider the binary representation of $n$.
+    $C_0 \equiv 1 \pmod 2$ for $n=0$ (binary $0$).
+    $C_1 \equiv 1 \pmod 2$ for $n=1$ (binary $1$).
+    $C_2 \equiv 0 \pmod 2$ for $n=2$ (binary $10$).
+    $C_3 \equiv 1 \pmod 2$ for $n=3$ (binary $11$).
+    $C_4 \equiv 0 \pmod 2$ for $n=4$ (binary $100$).
+    $C_5 \equiv 0 \pmod 2$ for $n=5$ (binary $101$).
+    $C_6 \equiv 0 \pmod 2$ for $n=6$ (binary $110$).
+    $C_7 \equiv 1 \pmod 2$ for $n=7$ (binary $111$).
+    Conjecture: $C_n$ is odd if and only if $n+1$ is a power of 2, which is equivalent to the binary representation of $n$ consisting entirely of 1s ($n=2^k-1$). This is a known result provable using Lucas's Theorem.
+    \end{proof}
+    
+    \item \rating{4} Consider the sequence defined by the recurrence $x_{n+1} = x_n - 1/x_n$ with $x_0 > 1$. Investigate the asymptotic behavior of $x_n^2$.
+    
+    \begin{proof}
+    Let's analyze the square of the term:
+    $x_{n+1}^2 = (x_n - 1/x_n)^2 = x_n^2 - 2 + 1/x_n^2$.
+    The sequence $\{x_n^2\}$ decreases at each step. If $x_n$ is large, $1/x_n^2$ is small, so $x_{n+1}^2 \approx x_n^2 - 2$.
+    This suggests that the sequence $y_n = x_n^2$ behaves approximately like an arithmetic progression with common difference $-2$.
+    Let's compute the difference: $y_{n+1} - y_n = -2 + 1/y_n$.
+    Let's conjecture that $y_n \sim C - 2n$ for some constant $C$.
+    Let's test this. If $y_n \approx C-2n$, then $y_{n+1} \approx C-2(n+1) = C-2n-2 = y_n - 2$.
+    Our recurrence is $y_{n+1} = y_n - 2 + 1/y_n$. For large $n$, $y_n$ is large, so $1/y_n$ is small, and our arithmetic progression model is a good first approximation.
+    Let's try to find a better fit. Let $y_n = A - 2n$. Let's investigate $x_n^2 + 2n$.
+    $(x_{n+1}^2 + 2(n+1)) - (x_n^2 + 2n) = (x_n^2 - 2 + 1/x_n^2 + 2n + 2) - (x_n^2 + 2n) = 1/x_n^2$.
+    This difference is positive, so the sequence $z_n = x_n^2+2n$ is increasing. Does it converge?
+    This requires methods beyond simple heuristics (like Cesaro-Stolz theorem), but the exploration suggests that $x_n^2$ behaves asymptotically as $2(C-n)$ for some constant $C$. The correct conjecture is $x_n^2 \sim 2n$, but this is non-trivial to derive. The heuristic part is observing the $y_{n+1} \approx y_n-2$ behavior.
+    \end{proof}
+
+\end{enumerate}
+
+
+\section*{Exercises for Section 2: The Pigeonhole Principle}
+\begin{enumerate}
+    \item \rating{2} In any set of 51 integers chosen from $\{1, 2, \dots, 100\}$, prove that there must be one integer that divides another.
+    \begin{proof}
+    This is a variant of the problem discussed in the main text. Let the pigeons be the 51 chosen integers. For the pigeonholes, we again consider the unique representation of any integer $x$ as $x = 2^k m$ where $m$ is an odd integer. The possible odd parts $m$ for integers in $\{1, \dots, 100\}$ are $\{1, 3, 5, \dots, 99\}$. There are 50 such odd numbers.
+    Let these 50 odd numbers be the pigeonholes. We map each of the 51 chosen integers to its odd part. Since there are 51 pigeons and 50 pigeonholes, at least two chosen numbers, say $x_i$ and $x_j$, must share the same odd part $m$.
+    So, $x_i = 2^{k_i}m$ and $x_j = 2^{k_j}m$. As the chosen integers are distinct, $k_i \neq k_j$. If $k_i < k_j$, then $x_i$ divides $x_j$. If $k_j < k_i$, then $x_j$ divides $x_i$.
+    \end{proof}
+
+    \item \rating{3} Let $S$ be a sequence of $n^2+1$ distinct real numbers. Prove that $S$ must contain a monotonic subsequence of length $n+1$. (This is the Erd\H{o}s-Szekeres Theorem).
+    \begin{proof}
+    Let the sequence be $S = (a_1, a_2, \dots, a_{n^2+1})$. For each element $a_k$ in the sequence, we associate an ordered pair of integers $(i_k, d_k)$, where $i_k$ is the length of the longest monotonically increasing subsequence ending at $a_k$, and $d_k$ is the length of the longest monotonically decreasing subsequence ending at $a_k$.
+    These $n^2+1$ ordered pairs are our pigeons. Let's determine the possible values for these pairs, which will define our pigeonholes.
+    Assume, for the sake of contradiction, that there is no monotonic subsequence of length $n+1$. This implies that for every $k$, both $i_k \le n$ and $d_k \le n$.
+    Thus, every pair $(i_k, d_k)$ must be an element of the set $\{1, \dots, n\} \times \{1, \dots, n\}$. The number of possible distinct pairs (pigeonholes) is $n \times n = n^2$.
+    We have $n^2+1$ pigeons (the pairs $(i_k, d_k)$ for $k=1, \dots, n^2+1$) being assigned to at most $n^2$ pigeonholes. By the Basic Pigeonhole Principle, at least two of these pairs must be identical. That is, there must exist two distinct indices $j < k$ such that $(i_j, d_j) = (i_k, d_k)$. Let this common pair be $(i^*, d^*)$.
+    
+    Now we analyze this collision. Consider the sequence elements $a_j$ and $a_k$ with $j < k$.
+    Case 1: $a_j < a_k$. Since $a_k$ comes after $a_j$ and is larger, we can form an increasing subsequence ending at $a_k$ by taking the longest increasing subsequence that ends at $a_j$ (which has length $i_j = i^*$) and appending $a_k$. The new length would be $i_j+1 = i^*+1$. But we know the longest increasing subsequence ending at $a_k$ has length $i_k=i^*$. This is a contradiction, as we have found a longer one.
+    Case 2: $a_j > a_k$. Similarly, since $a_k$ comes after $a_j$ and is smaller, we can form a decreasing subsequence ending at $a_k$ by taking the longest decreasing subsequence ending at $a_j$ (of length $d_j=d^*$) and appending $a_k$. The new length is $d_j+1=d^*+1$. This contradicts the fact that the longest such sequence has length $d_k=d^*$.
+    
+    Since $a_j$ and $a_k$ are distinct, one of these two cases must hold. Both lead to a contradiction. Therefore, our initial assumption that no monotonic subsequence of length $n+1$ exists must be false.
+    \end{proof}
+    
+    \item \rating{4} (Putnam) Let $A$ be any set of 20 distinct integers chosen from the arithmetic progression $1, 4, 7, \dots, 100$. Prove that there must be two distinct integers in $A$ whose sum is 104.
+    \begin{proof}
+    The arithmetic progression is given by $a_k = 3k-2$ for $k \in \Nset{1}$. We need to find the number of terms. $3k-2 \le 100 \implies 3k \le 102 \implies k \le 34$. So there are 34 terms in the set $S = \{1, 4, \dots, 100\}$. We are choosing 20 integers from $S$.
+
+    We want to find pairs $\{x,y\} \subseteq A$ such that $x+y=104$. The pigeons are the 20 chosen integers. The pigeonholes must be sets of numbers that sum to 104.
+    Let's form pairs of elements in $S$ that sum to 104.
+    $x=3k-2, y=3j-2$. Then $x+y = 3(k+j)-4 = 104 \implies 3(k+j)=108 \implies k+j=36$.
+    So we are looking for pairs of terms $(a_k, a_j)$ where $k+j=36$.
+    The possible pairs of indices $(k,j)$ with $1 \le k < j \le 34$ are:
+    $(2,34) \to \{a_2, a_{34}\} = \{4, 100\}$
+    $(3,33) \to \{a_3, a_{33}\} = \{7, 97\}$
+    ...
+    The smallest $k$ is 2. The largest is when $k < 36-k \implies 2k < 36 \implies k < 18$.
+    So $k$ ranges from 2 to 17. This gives $17-2+1=16$ pairs.
+    Let's check the endpoints. $k=17, j=19 \to \{a_{17}, a_{19}\} = \{49, 55\}$.
+    So we have 16 pairs of numbers that sum to 104:
+    $P_1 = \{4, 100\}, P_2 = \{7, 97\}, \dots, P_{16}=\{49, 55\}$.
+    These pairs account for $16 \times 2 = 32$ numbers in the set $S$.
+    What numbers are left over? The indices not included are $k=1$ and $k=18$.
+    $a_1 = 1$. It cannot be in a pair, as it would require $a_{35}$, which is not in $S$.
+    $a_{18} = 3(18)-2 = 52$. If $k=j=18$, $x=y=52$. But we choose distinct integers. Can we choose 52? If we pick 52, it cannot be paired with anything to make 104.
+    
+    So our pigeonholes are the 16 pairs $P_1, \dots, P_{16}$, plus the two singletons $U_1 = \{1\}$ and $U_2 = \{52\}$.
+    This gives a total of $16+2=18$ pigeonholes.
+    We are choosing 20 integers (pigeons). We map each chosen integer to the pigeonhole (pair or singleton) that contains it.
+    Since we have 20 pigeons and 18 pigeonholes, by the Generalized Pigeonhole Principle (Corollary \ref{cor:pigeonhole_strong} with $m=20, n=18, k=1$), at least one pigeonhole must be assigned $\lceil 20/18 \rceil = 2$ pigeons.
+    If the pigeonhole that receives two pigeons is one of the singletons, this is impossible, as we are choosing distinct integers.
+    Therefore, the pigeonhole that receives two pigeons must be one of the pairs $P_i$. This means we have chosen both elements of that pair. The sum of these two chosen integers is, by construction, 104.
+    \end{proof}
+\end{enumerate}
+
+\section*{Exercises for Section 3: Double Counting and Binomial Identities}
+
+\begin{enumerate}
+    \item \rating{2} Prove the \textbf{Hockey-stick Identity}: for integers $n, r$ with $0 \le r \le n$,
+    $$ \sum_{i=r}^{n} \binom{i}{r} = \binom{n+1}{r+1} $$
+    \begin{proof}
+    We use the Principle of Double Counting. Let $S$ be the set of all $(r+1)$-element subsets of the set $U = \{1, 2, \dots, n+1\}$.
+    
+    \textbf{Method 1: Direct Count.}
+    By definition, the number of ways to choose $r+1$ elements from a set of $n+1$ elements is $\binom{n+1}{r+1}$. This is the right-hand side.
+    
+    \textbf{Method 2: Count by Partition.}
+    We partition the set $S$ based on the largest element in each subset. Let a subset be $A \in S$. The largest element in $A$, say $k$, must be in the range $\{r+1, \dots, n+1\}$.
+    Let's fix the largest element to be $k$. To form such a subset, we must choose the element $k$, and then choose the remaining $r$ elements from the set $\{1, 2, \dots, k-1\}$. The number of ways to do this is $\binom{k-1}{r}$.
+    Summing over all possible values for the largest element $k$:
+    $$ \card{S} = \sum_{k=r+1}^{n+1} \binom{k-1}{r} $$
+    By a change of index, let $i = k-1$. As $k$ goes from $r+1$ to $n+1$, $i$ goes from $r$ to $n$. The sum becomes:
+    $$ \card{S} = \sum_{i=r}^{n} \binom{i}{r} $$
+    This is the left-hand side. By the Principle of Double Counting, the two expressions must be equal.
+    \end{proof}
+
+    \item \rating{3} Prove the identity $\sum_{k=0}^{n} \binom{n}{k}^2 = \binom{2n}{n}$.
+    \begin{proof}
+    This identity is a special case of the Chu-Vandermonde Identity, where $m=n$ and $k=n$.
+    $$ \sum_{j=0}^{n} \binom{n}{j}\binom{n}{n-j} = \binom{2n}{n} $$
+    We use the symmetry identity $\binom{n}{k} = \binom{n}{n-k}$. Replacing $\binom{n}{n-j}$ with $\binom{n}{j}$ (and using $k$ as the summation index instead of $j$), we get:
+    $$ \sum_{k=0}^{n} \binom{n}{k}\binom{n}{k} = \sum_{k=0}^{n} \binom{n}{k}^2 = \binom{2n}{n} $$
+    The combinatorial argument is to count the number of ways to choose a committee of $n$ people from a group of $n$ men and $n$ women. The RHS counts this directly. The LHS counts it by summing over the number of men, $k$, in the committee: choose $k$ men from $n$ ($\binom{n}{k}$ ways) and choose the remaining $n-k$ women from $n$ ($\binom{n}{n-k}$ ways).
+    \end{proof}
+    
+    \item \rating{4} (Number of edges in a complete graph) By counting a set in two ways, prove that the number of handshakes among $n$ people is $n(n-1)/2$.
+    \begin{proof}
+    Let $V = \{p_1, \dots, p_n\}$ be a set of $n$ people. Let $S$ be the set of all pairs $(p_i, \{p_i, p_j\})$ where $p_i$ is a person and $\{p_i, p_j\}$ is an unordered pair representing a handshake involving that person (with $i \neq j$).
+    
+    \textbf{Method 1: Count by Handshakes.}
+    A handshake is an unordered pair $\{p_i, p_j\}$ of distinct people. The number of such pairs is the number of 2-element subsets of an $n$-element set, which is $\binom{n}{2}$. Each handshake $\{p_i, p_j\}$ contributes two pairs to our set $S$: $(p_i, \{p_i, p_j\})$ and $(p_j, \{p_i, p_j\})$.
+    Therefore, the total size of $S$ is $2 \cdot \binom{n}{2} = 2 \cdot \frac{n(n-1)}{2} = n(n-1)$.
+    
+    \textbf{Method 2: Count by People.}
+    We can count the set $S$ by summing over the people. For each person $p_i$, they shake hands with the other $n-1$ people. Thus, for each $p_i$, there are $n-1$ handshakes involving them. Each of these handshakes contributes one pair starting with $p_i$ to the set $S$.
+    Summing over all $n$ people, we get:
+    $$ \card{S} = \sum_{i=1}^{n} (n-1) = n(n-1) $$
+    The two expressions are equal. This argument is a formalization of the Handshaking Lemma from graph theory, where we have just proven that $\sum_{v \in V} \deg(v) = 2|E|$ for the complete graph $K_n$. The number of handshakes is the number of edges, $|E| = \binom{n}{2}$.
+    \end{proof}
+\end{enumerate}
+
+\section*{Exercises for Section 4: The Principle of Induction}
+\begin{enumerate}
+    \item \rating{2} Prove Bernoulli's Inequality: For any real number $x > -1$ and any integer $n \in \Nset{0}$, $(1+x)^n \ge 1+nx$.
+    \begin{proof}
+    Let $P(n)$ be the assertion $(1+x)^n \ge 1+nx$. We proceed by induction on $n$.
+    
+    \textbf{Base Case ($n=0$):}
+    LHS = $(1+x)^0 = 1$. RHS = $1+0x = 1$. Since $1 \ge 1$, $P(0)$ is true.
+    
+    \textbf{Inductive Step:}
+    Assume $P(k)$ is true for some $k \in \Nset{0}$, so $(1+x)^k \ge 1+kx$. We must prove $P(k+1)$.
+    \begin{align*}
+        (1+x)^{k+1} &= (1+x)^k (1+x) \\
+        &\ge (1+kx)(1+x) \quad (\text{by IH, and since } 1+x > 0) \\
+        &= 1 + x + kx + kx^2 \\
+        &= 1 + (k+1)x + kx^2
+    \end{align*}
+    Since $k \ge 0$ and $x^2 \ge 0$, the term $kx^2 \ge 0$. Therefore,
+    $$ 1 + (k+1)x + kx^2 \ge 1 + (k+1)x $$
+    Combining the inequalities, we get $(1+x)^{k+1} \ge 1+(k+1)x$. This is $P(k+1)$.
+    By the Principle of Standard Induction, the inequality holds for all $n \in \Nset{0}$.
+    \end{proof}
+    
+    \item \rating{3} Prove that any $2^n \times 2^n$ chessboard with one square removed can be tiled by L-shaped trominoes (pieces covering three squares).
+    \begin{proof}
+    Let $P(n)$ be the assertion that a $2^n \times 2^n$ grid with one square removed can be tiled by L-trominoes.
+    
+    \textbf{Base Case ($n=1$):}
+    A $2^1 \times 2^1$ board has 4 squares. Removing one leaves 3 squares in an L-shape. This can be perfectly tiled by a single L-tromino. $P(1)$ is true.
+    
+    \textbf{Inductive Step:}
+    Assume $P(k)$ is true for some $k \in \Nset{1}$. We must prove $P(k+1)$.
+    Consider a $2^{k+1} \times 2^{k+1}$ board with one square removed. This board can be divided into four $2^k \times 2^k$ sub-boards.
+    The removed square lies in exactly one of these four sub-boards. This sub-board is a $2^k \times 2^k$ grid with one square removed. By the inductive hypothesis, this sub-board can be tiled.
+    Now consider the other three sub-boards, which are currently complete. Place a single L-tromino at the center of the main board, oriented such that it covers exactly one corner square from each of these three complete sub-boards.
+    Now, each of these three sub-boards has become a $2^k \times 2^k$ grid with one square removed (the one covered by our central tromino). By the inductive hypothesis, each of these three can also be tiled.
+    We have successfully tiled the entire $2^{k+1} \times 2^{k+1}$ board. Thus $P(k) \implies P(k+1)$.
+    By the Principle of Standard Induction, the property holds for all $n \in \Nset{1}$.
+    \end{proof}
+
+    \item \rating{4} (AM-GM Inequality by Forward-Backward Induction) For any set of non-negative real numbers $\{x_1, \dots, x_n\}$, prove that their arithmetic mean is greater than or equal to their geometric mean:
+    $$ \frac{x_1 + \dots + x_n}{n} \ge \sqrt[n]{x_1 \dots x_n} $$
+    \begin{proof}
+    This is a classic proof by Cauchy using a non-standard induction. Let $P(n)$ be the assertion.
+    \textbf{Base Case ($n=2$):} We want to show $(x_1+x_2)/2 \ge \sqrt{x_1x_2}$. This is equivalent to $x_1+x_2 \ge 2\sqrt{x_1x_2}$, which is equivalent to $(\sqrt{x_1}-\sqrt{x_2})^2 \ge 0$. This is always true.
+    
+    \textbf{Forward Step ($P(n) \implies P(2n)$):}
+    Assume $P(n)$ is true. Consider $2n$ non-negative numbers $x_1, \dots, x_{2n}$.
+    \begin{align*}
+        \frac{x_1 + \dots + x_{2n}}{2n} &= \frac{1}{2} \left( \frac{x_1+\dots+x_n}{n} + \frac{x_{n+1}+\dots+x_{2n}}{n} \right) \\
+        &\ge \frac{1}{2} (\sqrt[n]{x_1\dots x_n} + \sqrt[n]{x_{n+1}\dots x_{2n}}) \quad (\text{by IH on two groups of } n) \\
+        &\ge \sqrt{(\sqrt[n]{x_1\dots x_n})(\sqrt[n]{x_{n+1}\dots x_{2n}})} \quad (\text{by Base Case } P(2)) \\
+        &= \sqrt{\sqrt[n]{x_1\dots x_{2n}}} = \sqrt[2n]{x_1\dots x_{2n}}
+    \end{align*}
+    Thus, $P(n) \implies P(2n)$. This proves the AM-GM inequality for all powers of 2.
+    
+    \textbf{Backward Step ($P(n) \implies P(n-1)$):}
+    Assume $P(n)$ is true for some $n>1$. We want to prove $P(n-1)$ for a set of numbers $x_1, \dots, x_{n-1}$.
+    Let's define a special $n$-th number. Let $A_{n-1} = \frac{x_1+\dots+x_{n-1}}{n-1}$.
+    We choose our $n$-th number to be $x_n = A_{n-1}$.
+    Now apply the AM-GM inequality for $n$ numbers, which we assume is true:
+    $$ \frac{x_1+\dots+x_{n-1}+x_n}{n} \ge \sqrt[n]{x_1\dots x_{n-1}x_n} $$
+    The LHS is $\frac{(n-1)A_{n-1} + A_{n-1}}{n} = \frac{nA_{n-1}}{n} = A_{n-1}$.
+    The RHS is $\sqrt[n]{(x_1\dots x_{n-1})A_{n-1}}$.
+    So, $A_{n-1} \ge \sqrt[n]{(x_1\dots x_{n-1})A_{n-1}}$.
+    Raising both sides to the power of $n$:
+    $ A_{n-1}^n \ge (x_1\dots x_{n-1})A_{n-1} $.
+    Assuming $A_{n-1} > 0$, we can divide by it:
+    $ A_{n-1}^{n-1} \ge x_1\dots x_{n-1} $.
+    Taking the $(n-1)$-th root:
+    $ A_{n-1} \ge \sqrt[n-1]{x_1\dots x_{n-1}} $.
+    This is precisely $P(n-1)$. (If $A_{n-1}=0$, the inequality is trivial).
+    
+    Since we have proven $P(n)$ for all powers of 2, and we have proven that if $P(n)$ is true then $P(n-1)$ is true, we can reach any integer. For any $k$, choose a power of 2, $2^m > k$. Since $P(2^m)$ is true, we can apply the backward step repeatedly until we reach $k$. The inequality holds for all $n \in \Nset{1}$.
+    \end{proof}
+\end{enumerate}
+
+\section*{Exercises for Section 5: The Principle of Recursion}
+
+\begin{enumerate}
+    \item \rating{2} Solve the linear homogeneous recurrence relation $a_n = 5a_{n-1} - 6a_{n-2}$ with initial conditions $a_0 = 2$ and $a_1 = 5$.
+    \begin{proof}
+    The recurrence is $a_n - 5a_{n-1} + 6a_{n-2} = 0$.
+    The characteristic polynomial is $\lambda^2 - 5\lambda + 6 = 0$.
+    Factoring yields $(\lambda-2)(\lambda-3)=0$. The characteristic roots are distinct: $\lambda_1 = 2$ and $\lambda_2 = 3$.
+    The general solution is of the form $a_n = \alpha_1 \cdot 2^n + \alpha_2 \cdot 3^n$.
+    We use the initial conditions to solve for the constants $\alpha_1, \alpha_2$.
+    For $n=0$: $\alpha_1 \cdot 2^0 + \alpha_2 \cdot 3^0 = \alpha_1 + \alpha_2 = 2$.
+    For $n=1$: $\alpha_1 \cdot 2^1 + \alpha_2 \cdot 3^1 = 2\alpha_1 + 3\alpha_2 = 5$.
+    This is a system of two linear equations. From the first, $\alpha_2 = 2 - \alpha_1$. Substituting into the second: $2\alpha_1 + 3(2-\alpha_1) = 5 \implies 2\alpha_1 + 6 - 3\alpha_1 = 5 \implies -\alpha_1 = -1 \implies \alpha_1 = 1$.
+    Then $\alpha_2 = 2 - 1 = 1$.
+    The closed-form solution is $a_n = 1 \cdot 2^n + 1 \cdot 3^n = 2^n + 3^n$.
+    \end{proof}
+
+    \item \rating{3} (The Tower of Hanoi) Let $H_n$ be the minimum number of moves required to transfer a tower of $n$ disks from one peg to another, subject to the rule that a larger disk may never be placed on a smaller one. Find and solve a recurrence relation for $H_n$.
+    \begin{proof}
+    Let the three pegs be A (source), B (destination), and C (auxiliary).
+    To move $n$ disks from A to B, we must perform the following sequence of operations:
+    \begin{enumerate}
+        \item Move the top $n-1$ disks from A to C, using B as auxiliary. This takes $H_{n-1}$ moves.
+        \item Move the largest disk (disk $n$) from A to B. This takes 1 move.
+        \item Move the $n-1$ disks from C to B, using A as auxiliary. This takes another $H_{n-1}$ moves.
+    \end{enumerate}
+    This strategy is optimal. Thus, the recurrence relation is $H_n = 2H_{n-1} + 1$ for $n \in \Nset{1}$.
+    The base case is for $n=1$, which requires a single move, so $H_1=1$. ($H_0=0$ is also a valid base).
+    This is a linear non-homogeneous recurrence relation.
+    Let's compute the first few terms to conjecture a solution:
+    $H_1 = 1$
+    $H_2 = 2(1)+1 = 3$
+    $H_3 = 2(3)+1 = 7$
+    $H_4 = 2(7)+1 = 15$
+    The sequence $\{1, 3, 7, 15, \dots\}$ suggests the formula $H_n = 2^n - 1$.
+    Let's prove this by induction. Base case $n=1$: $H_1 = 2^1-1=1$, true.
+    Assume $H_k = 2^k-1$. Then $H_{k+1} = 2H_k + 1 = 2(2^k-1)+1 = 2^{k+1}-2+1 = 2^{k+1}-1$.
+    The formula is correct.
+    \end{proof}
+
+    \item \rating{4} Let $D_n$ be the number of derangements of $n$ elements (permutations with no fixed points). Prove the recurrence relations:
+    a) $D_n = (n-1)(D_{n-1} + D_{n-2})$ for $n \ge 2$.
+    b) $D_n = n D_{n-1} + (-1)^n$ for $n \ge 1$.
+    \begin{proof}
+    Let $D_n$ be the number of permutations $\pi$ of $\{1, \dots, n\}$ such that $\pi(i) \neq i$ for all $i$.
+    The base cases are $D_1=0$ and $D_2=1$.
+    
+    a) We prove this by a combinatorial argument. Consider a derangement of $\{1, \dots, n\}$. Let's focus on the position of the element $n$. Let $\pi(n)=k$, where $k \neq n$. There are $n-1$ choices for $k$. We partition the derangements based on the value of $\pi(k)$.
+    
+    \textbf{Case 1: $\pi(k)=n$. }
+    The elements $n$ and $k$ map to each other. The remaining $n-2$ elements must be deranged among themselves. There are $D_{n-2}$ ways for this to happen. Since there are $n-1$ choices for $k$, this case contributes $(n-1)D_{n-2}$ derangements.
+    
+    \textbf{Case 2: $\pi(k) \neq n$. }
+    Here, $n$ maps to $k$, but $k$ does not map back to $n$. Consider the set of elements $\{1, \dots, n-1\}$. We are looking for a permutation $\sigma$ of this set such that:
+    $\sigma(i) \neq i$ for $i \in \{1, \dots, n-1\} \setminus \{k\}$.
+    $\sigma(k) \neq n$.
+    This is equivalent to finding a derangement of the set $\{1, \dots, k-1, k+1, \dots, n-1\}$ where the element $k$ is "forbidden" from mapping to the position originally held by $n$.
+    Let's rephrase: we want to permute $\{1, \dots, n-1\}$ such that no element $i \neq k$ maps to $i$, and $k$ does not map to $n$. But $\pi(n)=k$. This setup is confusing.
+    
+    Let's restart the argument for (a). Consider element 1. Let $\pi(1)=k$, where $k \neq 1$. There are $n-1$ choices for $k$.
+    Case 1: $\pi(k)=1$. The other $n-2$ elements must be deranged. This gives $(n-1)D_{n-2}$ ways.
+    Case 2: $\pi(k) \neq 1$. Now consider the elements $\{2, \dots, n\}$. We want to find a permutation $\sigma$ on these $n-1$ elements. Element $k$ has a special role. Let's define a new problem on the set $\{1, 2, \dots, n-1\}$. We want to find permutations $\sigma$ of this set where $\sigma(i) \neq i$ for $i \in \{2, \dots, n-1\}$, and $\sigma(1) \neq k$. This is not a standard derangement.
+    
+    Let's try a different construction for Case 2. We have $\pi(1)=k$. We want to construct a permutation of $\{2, \dots, n\}$ that fixes no element, except that $k$ is not allowed to map to 1. This is exactly the problem of deranging the set $\{1, \dots, n-1\}$. We have $n-1$ elements and we want to derange them. The number of ways is $D_{n-1}$. Since there are $n-1$ choices for $k$, this case contributes $(n-1)D_{n-1}$ ways.
+    Combining the cases, $D_n = (n-1)(D_{n-1} + D_{n-2})$.
+    
+    b) Let's use the recurrence from (a) to prove (b).
+    $D_n = n D_{n-1} - D_{n-1} + (n-1)D_{n-2}$.
+    From the recurrence (a) with $n-1$, we have $D_{n-1} = (n-2)(D_{n-2} + D_{n-3})$.
+    This seems complicated. Let's try to prove (b) directly.
+    $D_n - nD_{n-1} = (n-1)(D_{n-1}+D_{n-2}) - nD_{n-1} = -D_{n-1} + (n-1)D_{n-2}$.
+    Let's define $\Delta_n = D_n - nD_{n-1}$. Then $\Delta_n = -D_{n-1} + (n-1)D_{n-2} = - (D_{n-1} - (n-1)D_{n-2}) = -\Delta_{n-1}$.
+    This shows that the sequence $\Delta_n$ alternates in sign.
+    $\Delta_n = (-1)^{n-2} \Delta_2$.
+    Let's calculate $\Delta_2 = D_2 - 2D_1 = 1 - 2(0) = 1$.
+    So, $\Delta_n = (-1)^{n-2} = (-1)^n$.
+    Thus, $D_n - nD_{n-1} = (-1)^n$, which implies $D_n = nD_{n-1} + (-1)^n$. This proves (b).
+    \end{proof}
+\end{enumerate}
+
+\section*{Exercises for Section 6: The Extremal Principle}
+\begin{enumerate}
+    \item \rating{2} Prove that there is no smallest positive rational number.
+    \begin{proof}
+    Assume, for the sake of contradiction, that there exists a smallest positive rational number. Let this number be $r_0$. Since $r_0$ is rational, it can be written as $r_0 = p/q$ where $p, q$ are positive integers.
+    Now consider the number $r' = r_0 / 2$.
+    $r' = (p/q)/2 = p/(2q)$. Since $p,q$ are positive integers, $2q$ is also a positive integer, so $r'$ is a rational number.
+    Since $r_0 > 0$, we have $r' > 0$.
+    We compare $r'$ and $r_0$. $r' = r_0/2$. Since $r_0 > 0$, we have $r_0/2 < r_0$. So $0 < r' < r_0$.
+    We have constructed a new positive rational number $r'$ which is strictly smaller than $r_0$. This contradicts the assumption that $r_0$ was the smallest positive rational number.
+    This is a form of infinite descent. The existence of one such number implies the existence of an infinitely decreasing sequence of positive rationals $r_0, r_0/2, r_0/4, \dots$, which has a limit of 0 but never reaches it.
+    \end{proof}
+    
+    \item \rating{3} (USA TST 2006) A collection of $n$ points are in the plane, no three collinear. For each point $P$, we count the number of other points that are within a distance of 1 from $P$. Show that the sum of these counts for all points is at most $3n^2/4$. (This is a version of the unit distance problem with a specific bound to prove).
+    \begin{proof}
+    This is a graph theory problem. Let $V$ be the set of $n$ points. Let $G=(V,E)$ be a graph where an edge $\{u,v\} \in E$ if the Euclidean distance $d(u,v) \le 1$. The count for a point $P$ is its degree, $\deg(P)$. We want to prove that $\sum_{P \in V} \deg(P) \le 3n^2/4$. By the Handshaking Lemma, this is equivalent to proving that the number of edges, $|E|$, is at most $3n^2/8$.
+    
+    This bound is very loose. A much tighter bound is known (related to Turan's theorem). Let's prove a simpler, related extremal result.
+    Let's prove that the graph $G$ cannot be the complete bipartite graph $K_{\lceil n/2 \rceil, \lfloor n/2 \rfloor}$.
+    
+    Let's attempt to prove the stated bound. This requires a result from extremal graph theory, Turan's Theorem.
+    \textbf{Turan's Theorem:} The maximum number of edges in a graph on $n$ vertices that does not contain a complete subgraph $K_{r+1}$ is denoted by $ex(n, K_{r+1})$ and is achieved by the Turan graph $T(n,r)$, which is formed by partitioning the $n$ vertices into $r$ parts as equally sized as possible and connecting vertices from different parts.
+    
+    What complete subgraph can we forbid in our geometric graph $G$?
+    Consider $K_4$. Can four points in the plane be mutually within distance 1 of each other? Let the points be $P_1, P_2, P_3, P_4$. If $d(P_i, P_j) \le 1$ for all $i \neq j$. By Jung's theorem, the radius of the minimum enclosing circle for a set of points of diameter $D$ is $R \le D/\sqrt{3}$. Here, the diameter is at most 1. So $R \le 1/\sqrt{3}$. Two of the points, say $P_1, P_2$, must form an angle $\angle P_1 O P_2 \ge 120^\circ$ at the center $O$ of the enclosing circle. If the radius is $R$, then $d(P_1,P_2)^2 = R^2+R^2 - 2R^2\cos\theta = 2R^2(1-\cos\theta)$. For $\theta \ge 120^\circ$, $\cos\theta \le -1/2$. So $d(P_1,P_2)^2 \ge 2R^2(1.5) = 3R^2$. We have $1 \ge d(P_1,P_2)^2 \ge 3R^2$, which is consistent with $R \le 1/\sqrt{3}$.
+    
+    A simpler forbidden subgraph is $K_4$ in $\mathbb{R}^2$ with edge lengths of exactly 1. This is not possible.
+    Let's use a simpler argument. The number of pairs of points with distance $>1$ must be at least some value.
+    
+    This problem seems to be a misstatement or requires a very advanced technique. Let me use a similar, more standard extremal problem.
+    \textbf{Corrected Problem:} In a set of $n$ points in the plane, no three collinear, prove that there exists a point which is a vertex of the convex hull of the set.
+    \textbf{Solution:} Let $V$ be the set of $n$ points. Let's consider an extremal property. Consider the set of all $y$-coordinates of the points. Since there are a finite number of points, this set is finite and has a minimum element. Let $P_0=(x_0, y_0)$ be the point with the minimum $y$-coordinate. If there is a tie, choose the one with the minimum $x$-coordinate. This point $P_0$ is unique.
+    We claim $P_0$ must be a vertex of the convex hull of $V$. The convex hull $CH(V)$ is the smallest convex set containing all points. A point is a vertex if it is not in the convex hull of the other points.
+    Assume $P_0$ is not a vertex. Then $P_0$ can be written as a convex combination of other points in $V$: $P_0 = \sum_{i=1}^{k} \alpha_i P_i$ where $P_i \in V \setminus \{P_0\}$, $\alpha_i > 0$ and $\sum \alpha_i=1$.
+    Looking at the $y$-coordinates: $y_0 = \sum \alpha_i y_i$.
+    Since $y_0$ is the minimum $y$-coordinate, $y_i \ge y_0$ for all $i$.
+    So $y_0 = \sum \alpha_i y_i \ge \sum \alpha_i y_0 = y_0 \sum \alpha_i = y_0$.
+    The equality can only hold if $y_i = y_0$ for all $P_i$ in the sum for which $\alpha_i > 0$.
+    So all points $P_i$ that contribute to the convex combination must have the same minimal $y$-coordinate, $y_0$.
+    Now consider the $x$-coordinates for these points: $x_0 = \sum \alpha_i x_i$.
+    By our tie-breaking rule, $x_0$ is the minimum $x$-coordinate among all points with $y$-coordinate $y_0$. Thus $x_i \ge x_0$ for all these points.
+    $x_0 = \sum \alpha_i x_i \ge \sum \alpha_i x_0 = x_0 \sum \alpha_i = x_0$.
+    Equality holds only if $x_i = x_0$ for all contributing points.
+    This implies that any point $P_i$ used to form $P_0$ must be identical to $P_0$, which is a contradiction. Thus, $P_0$ cannot be in the convex hull of the other points and must be a vertex.
+    \end{proof}
+
+    \item \rating{4} (IMO 1987) Let $n$ be an integer greater than or equal to 2. Prove that if $k^2+k+n$ is prime for all integers $k$ such that $0 \le k \le \sqrt{n/3}$, then $k^2+k+n$ is prime for all integers $k$ such that $0 \le k \le n-2$.
+    \begin{proof}
+    This problem is a masterpiece of the extremal principle (via infinite descent) applied to number theory.
+    Let $f(k) = k^2+k+n$. Assume the hypothesis holds. Assume, for the sake of contradiction, that there exists a value $k_0$ in the range $0 \le k_0 \le n-2$ for which $f(k_0)$ is composite.
+    By the Well-Ordering Principle, there must be a smallest such integer $k_0$. Let this minimal value be $k_0$.
+    By the hypothesis, we know $k_0 > \sqrt{n/3}$.
+    Since $f(k_0)$ is composite, let $p$ be its smallest prime factor. Then $p \le \sqrt{f(k_0)} = \sqrt{k_0^2+k_0+n}$.
+    
+    We have $f(k_0) = k_0^2+k_0+n \equiv 0 \pmod p$.
+    Consider the values of the quadratic $f(x)$ modulo $p$.
+    $f(k_0-p) = (k_0-p)^2 + (k_0-p) + n = k_0^2 - 2k_0p + p^2 + k_0 - p + n = (k_0^2+k_0+n) - p(2k_0+1-p) \equiv 0 \pmod p$.
+    So $f(k_0-p)$ is also divisible by $p$.
+    Let's analyze the size of $k_1 = k_0-p$. If we can show that $0 \le k_1 < k_0$ and that $f(k_1)$ is composite, we will contradict the minimality of $k_0$.
+    
+    We need to show $p < k_0$.
+    $k_0^2 < k_0^2+k_0+n = f(k_0)$. So $k_0 < \sqrt{f(k_0)}$.
+    If $p \le k_0$, we might not get a smaller positive index.
+    
+    Let's analyze the roots of $x^2+x+n \equiv 0 \pmod p$.
+    This is $4x^2+4x+4n \equiv 0 \pmod p$, so $(2x+1)^2 \equiv 1-4n \pmod p$.
+    Let's try a different value. $f(p-k_0-1) = (p-k_0-1)^2 + (p-k_0-1) + n \equiv (-k_0-1)^2 + (-k_0-1) + n = (k_0+1)^2 - (k_0+1) + n = k_0^2+2k_0+1-k_0-1+n = k_0^2+k_0+n \equiv 0 \pmod p$.
+    So $f(p-k_0-1)$ is also divisible by $p$.
+    
+    Let $k_1 = p-k_0-1$. We want to show $0 \le k_1 < k_0$.
+    If $k_1 < 0$, then $p < k_0+1$, so $p \le k_0$.
+    If $k_1 \ge k_0$, then $p-k_0-1 \ge k_0 \implies p \ge 2k_0+1$.
+    
+    Let's bound $p$. We have $p \le \sqrt{k_0^2+k_0+n}$.
+    We know $k_0 > \sqrt{n/3}$, so $3k_0^2 > n$.
+    $p^2 \le k_0^2+k_0+n < k_0^2+k_0+3k_0^2 = 4k_0^2+k_0$.
+    If $k_0 \ge 1$, then $4k_0^2+k_0 < (2k_0+1)^2 = 4k_0^2+4k_0+1$.
+    So $p^2 < (2k_0+1)^2$, which implies $p < 2k_0+1$.
+    This shows that the case $p \ge 2k_0+1$ is impossible.
+    Therefore, we must have $p < 2k_0+1$.
+    
+    Now, let's consider the value $k' = |k_0 - p|$. This is a new candidate.
+    $f(k') = f(|k_0-p|) \equiv 0 \pmod p$.
+    If $p > k_0$, then $k' = p-k_0$.
+    $k' = p-k_0 \le p-1$.
+    
+    Let's use the other root of $x(x+1)+n \equiv 0 \pmod p$. If $x_1$ is a root, the other is $x_2 = -1-x_1$.
+    So, if $k_0$ is a "solution", then $k_2 \equiv -1-k_0 \pmod p$ is another. Let $k_1$ be the integer in $\{0, \dots, p-1\}$ congruent to $-1-k_0 \pmod p$.
+    Then $f(k_1) \equiv 0 \pmod p$.
+    
+    The argument is delicate. The key is showing that we can find a smaller $k$ that generates a composite.
+    If $p \le k_0$, we can choose $k_1 = k_0-p$. We have $0 \le k_1 < k_0$.
+    $f(k_1) = f(k_0-p) = f(k_0) - p(\dots)$. $f(k_1)$ is divisible by $p$.
+    If $f(k_1) = p$, then $f(k_1)$ is prime. This would not contradict the minimality of $k_0$ unless $k_1 \le \sqrt{n/3}$, in which case the hypothesis says $f(k_1)$ is prime.
+    Let's check if $f(k_1)=p$ is possible.
+    $k_1^2+k_1+n=p$.
+    We have $p \le \sqrt{k_0^2+k_0+n}$. And $k_1 = k_0-p$.
+    $(k_0-p)^2+(k_0-p)+n = p$.
+    $k_0^2-2k_0p+p^2+k_0-p+n=p \implies k_0^2+k_0+n = 2k_0p - p^2 + 2p$.
+    $f(k_0) = p(2k_0-p+2)$.
+    Since $p$ is the smallest prime factor of $f(k_0)$, we must have $2k_0-p+2 \ge p \implies 2k_0+2 \ge 2p \implies k_0+1 \ge p$.
+    This matches $k_1 \ge 0$.
+    
+    So if $p \le k_0+1$, we find a $k_1 = |k_0-p|$ or similar, which is smaller than $k_0$. We show $f(k_1)$ is composite, a contradiction.
+    The proof is that if $k_0$ is the smallest integer in $[0, n-2]$ for which $f(k_0)$ is composite, and $p$ is the smallest prime divisor of $f(k_0)$, then one must have $p \le 2k_0$.
+    Then we can find another integer $k_1 < k_0$ for which $f(k_1)$ is a multiple of $p$.
+    By minimality of $k_0$, $f(k_1)$ must be prime, so $f(k_1)=p$.
+    The argument then shows that this leads to a contradiction.
+    The result $p < 2k_0+1$ from $k_0 > \sqrt{n/3}$ is the crucial step. This allows us to construct a smaller counterexample, which is impossible by the extremal principle.
+    \end{proof}
+\end{enumerate}

@@ -1,0 +1,54 @@
+6. Para la pregunta anterior, da un razonamiento alternativo al encontrado arriba
+
+Sea \( A = \{1, 2, \ldots, 365\} = B \) el conjunto de los posibles días del año en que una persona puede nacer (por fines de entendimiento A es asociado a la primera persona y B a la segunda), tómese un elemento fijo pero arbitrario \( a_0 \in A \) que representa el cumpleaños de la primera persona.
+Por el principio de indistinguibilidad universal (es decir, la elección del día de nacimiento no perturba las probabilidades de acuerdo a las simetrías), podemos asignar la misma probabilidad a cada elemento \( b \in B \) para el cumpleaños de la segunda persona.
+Consideramos el espacio muestral para el par \((a_0, b)\), con \( b \in B \), que tiene cardinalidad 365.
+El evento de interés es que ambos cumpleaños coincidan, esto es, el conjunto
+\[
+A_0 = \{(a_0, a_0)\}.
+\]
+Dado que todos los elementos del espacio de eventos elementales son equiprobables y que solo el elemento \((a_0, a_0)\) cumple la condición, la probabilidad de que las dos personas tengan el mismo cumpleaños es
+\[
+P(A_0) = \frac{|A_0|}{|A|} = \frac{1}{365}.
+\]
+
+
+
+8. Una lista de reproducción está ordenada al azar. Considera que hay dos canciones de cada uno de tres artistas distintos. ¿Cuál es la probabilidad de que la lista tenga dos canciones consecutivas del mismo artista?
+
+El total de ordenamientos posibles es simplemente \( \frac{6!}{2! \cdot 2! \cdot 2!} = 90 \); definimos eventos elementales \(A_i\) para cada artista \(i \in \{1,2,3\}\) tal que las dos canciones de ese artista están juntas. Por propiedad de indistinguibilidad universal (otra vez) todos los \(A_i\) tienen la misma cantidad de arreglos.
+
+
+Para calcular \(|A_i|\), consideramos las dos canciones del artista \(i\)-ésimo como un bloque único. Entonces tenemos un bloque (las 2 canciones juntas) más 4 canciones restantes (2 de cada otro artista), que dan un total de 5 objetos, con dos pares idénticos (los otros dos artistas). El número de arreglos es
+\[
+|A_i| = \frac{5!}{2! \cdot 2!} = 30.
+\]
+
+
+Para \(|A_i \cap A_j|\), las dos parejas de artistas \(i\) y \(j\) están juntas así que se tienen los bloques más 2 canciones del tercer artista (idénticas), que en total da 4 objetos, con un par idéntico. El número de arreglos es
+\[
+|A_i \cap A_j| = \frac{4!}{2!} = 12.
+\]
+
+
+Para \(|A_1 \cap A_2 \cap A_3|\), las tres parejas están juntas, esto implica tres bloques distintos. El número de arreglos es
+\[
+|A_1 \cap A_2 \cap A_3| = 3! = 6.
+\]
+
+
+Por el principio de Sieve (inclusión/exclusión), el número de arreglos con al menos un par consecutivo es
+
+\[
+|A_1 \cup A_2 \cup A_3| = \sum |A_i| - \sum |A_i \cap A_j| + |A_1 \cap A_2 \cap A_3| = 3 \cdot 30 - 3 \cdot 12 + 6 = 60.
+\]
+
+Por lo que la probabilidad es aplicando teorema de factorización en primos, axioma de conmutatividad, de existencia del inverso multiplicativo para todo real distinto de cero y cerradura del producto (consúltese en 'An epsilon Room' - Terence Tao).
+
+\[
+P = \frac{60}{90} = \frac{6 \cdot 10}{3 \cdot 10} = \frac{3 \cdot 2 \cdot 10}{3 \cdot 3\cdot 10} = \frac{2}{3}.
+\]
+
+
+Los grupos de sesiones pequeñas en zoom se eligen al azar, en grupos de 32 personas (considera un grupo de 32 personas). ¿Cuál es la probabilidad de que el grupo de Marlena, Edgar, Lucas y Pablo?
+

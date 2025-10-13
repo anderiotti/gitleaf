@@ -1,0 +1,114 @@
+\documentclass[12pt, openany]{book}
+
+% --- PREAMBLE ---
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{graphicx}
+\usepackage{fontawesome}
+\usepackage{amsmath, amssymb, amsfonts, amsthm}
+\usepackage{geometry}
+%\usepackage{minted}
+\geometry{a4paper, margin=1in}
+\usepackage[dvipsnames]{xcolor} % For colors like 'purple'
+\usepackage{hyperref}
+
+% --- HYPERREF SETUP ---
+\hypersetup{
+    colorlinks=true,
+    linkcolor=purple, % A dark purple
+    filecolor=magenta,      
+    urlcolor=cyan,
+    citecolor=purple,
+    pdftitle={Foundations of Measure-Theoretic Probability},
+    pdfpagemode=FullScreen,
+}
+
+
+% --- MATHEMATICAL ENVIRONMENTS DEFINITION ---
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[section]
+\theoremstyle{plain}
+\newtheorem{theorem}[definition]{Theorem}
+\newtheorem{proposition}[definition]{Proposition}
+\newtheorem{lemma}[definition]{Lemma}
+\newtheorem{corollary}[definition]{Corollary}
+\theoremstyle{remark}
+\newtheorem{remark}[definition]{Remark}
+
+\newcommand{\card}[1]{\left| #1 \right|}
+\newcommand{\Nset}[1]{\mathbb{N}_{#1}^*}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\B}{\mathcal{B}}
+\newcommand{\probP}{\mathbb{P}}
+\newcommand{\germS}{\mathfrak{S}} % Notation for a sigma-algebra
+\newcommand{\germF}{\mathfrak{F}} % Generic sigma-algebra
+
+% --- Command for the rating stars ---
+\newcommand{\rating}[1]{%
+  \ifcase#1 % Case 0 (no rating)
+  \or % Case 1 (one gray star)
+    \textcolor{gray}{\faStarO}\textcolor{gray}{\faStarO}\textcolor{gray}{\faStarO}
+  \or % Case 2 (one black star)
+    \textcolor{black}{\faStar}\textcolor{gray}{\faStarO}\textcolor{gray}{\faStarO}
+  \or % Case 3 (two black stars)
+    \textcolor{black}{\faStar}\textcolor{black}{\faStar}\textcolor{gray}{\faStarO}
+  \or % Case 4 (three black stars)
+    \textcolor{black}{\faStar}\textcolor{black}{\faStar}\textcolor{black}{\faStar}
+  \else % Default case
+  \fi
+}
+
+
+\DeclareMathOperator{\E}{\mathbf{M}} % Expectation (M for mean value)
+\DeclareMathOperator{\V}{\mathbf{D}} % Variance (D for dispersion)
+\DeclareMathOperator{\M}{\mathbf{M}} % For Expected Value (Mean value)
+\DeclareMathOperator{\D}{\mathbf{D}} % For Variance (Dispersion)
+
+
+% --- DOCUMENT ---
+\begin{document}
+
+% --- Start of Custom Title Page ---
+\begin{titlepage}
+    \centering
+    \vspace*{2cm} % Space at the top
+    
+    {\Huge\bfseries Vibenotes on Discrete Mathematics\par}
+
+    
+    
+    {\Large\itshape somehow by\par}
+    \vspace{0.5cm}
+    {\Large Andres Lopez\par}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.6\linewidth]{iimas.png}
+    \label{fig:placeholder}
+\end{figure}
+    
+    \vspace{2.5cm} % Space between title and author
+    
+    \vfill % Pushes content up and down
+    
+    {\large Institute of Applied Mathematics and Systems (IIMAS)\par}
+    
+    \vspace{1.5cm} % Space above the date
+    
+    {\large \today\par}
+    
+    \vspace*{2cm} % Space at the bottom
+\end{titlepage}
+% --- End of Title Page ---
+
+This page was unintentionally left blank, ¿chí?.\\
+{\color{black!35}
+\textit{Disclaimer:} This notes are based in the Miklós Boná, but following the class chronology.}
+
+\tableofcontents
+
+\input{theme1}
+%\input{theme2}
+
+\end{document}

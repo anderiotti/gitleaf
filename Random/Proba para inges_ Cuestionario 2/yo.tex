@@ -1,0 +1,166 @@
+\vspace{0.8cm}
+
+5. En una ciudad, el 40\%V de la población trabaja en el sector de servicios, 
+el 35\% en el sector de la salud, y el resto en otros sectores. 
+El 30\% de los trabajadores en el sector de servicios son mujeres, el 60\% 
+en el sector sanidad y el 45 \% en otros sectores. ¿Cuál es la probabilidad 
+de que un hombre elegido al azar trabaje en sanidad? 
+
+\vspace{0.5cm}
+
+Vamos a definir los eventos.
+
+$S$: ``Trabaja en servicios''
+
+$Sa$: ``Trabaja en sanidad''
+
+$O$: ``Trabaja en otros sectores''
+
+$M$: ``Es mujer''
+
+$\bar{M}$: ``Es onvre''
+
+\vspace{0.4cm}
+
+Sabemos que la proporción de la población que trabaja en cada sector es
+$$P(S)=0.40,\quad P(Sa)=0.35,\quad P(O)=0.25.$$
+
+\vspace{0.2cm}
+
+Además, las proporciones de mujeres dentro de cada sector son
+
+$$P(M\mid S)=0.30\;\Rightarrow\;P(\bar{M}\mid S)=0.70$$
+
+$$P(M\mid Sa)=0.60\;\Rightarrow\;P(\bar{M}\mid Sa)=0.40$$
+
+$$P(M\mid O)=0.45\;\Rightarrow\;P(\bar{M}\mid O)=0.55$$
+
+\vspace{0.2cm}
+
+Queremos calcular la probabilidad de que un hombre elegido al azar trabaje en sanidad, es decir
+
+$$P(Sa\mid \bar{M})=\frac{P(Sa\cap\bar{M})}{P(\bar{M})}$$
+
+$$P(Sa\cap\bar{M})=P(Sa)\,P(\bar{M}\mid Sa)=0.35\times 0.40=0.14$$
+
+\vspace{0.2cm}
+
+Por el teorema de probabilidad total
+$$P(\bar{M})=P(\bar{M}\mid S)P(S)+P(\bar{M}\mid Sa)P(Sa)+P(\bar{M}\mid O)P(O)$$
+
+$$P(\bar{M})=(0.70)(0.40)+(0.40)(0.35)+(0.55)(0.25)=0.28+0.14+0.1375=0.5575$$
+
+\vspace{0.2cm}
+
+Por lo tanto,
+$$P(Sa\mid \bar{M})=\frac{0.14}{0.5575}\approx 0.2511.$$
+
+La probabilidad de que un hombre elegido al azar trabaje en sanidad es $\boxed{25.11\%}$
+
+\QED
+
+\vspace{0.8cm}
+
+6. Un médico ha observado que el 40\% de sus pacientes fuma y de estos, 
+el 75\% son hombres. Entre los que no fuman, el 60\% son mujeres. 
+Calcula la probabilidad de que una mujer fume.
+
+\vspace{0.5cm}
+
+Vamos a definir los eventos. 
+
+$F$: ''Fuma''
+
+$\bar{F}$: ''No fuma''
+
+$M$: ''Es mujer''
+
+$H$: ''Es hombre''
+
+\vspace{0.4cm}
+
+Sabemos que la probabilidad de que el paciente fume es del 40\%, es decir
+$P(F) = 0.40,\ P(\bar{F}) = 0.60$. 
+\vspace{0.2cm}
+
+Por otro lado, la probabilidad de que el paciente sea hombre dado que fume, 
+es $P(H \mid F) = 0.75$, entonces $P(M \mid F) = 0.25$.
+\vspace{0.2cm}
+
+Además, tenemos que la probabilidad de que el paciente sea mujer, dado a que fume es$P(M \mid \bar{F}) = 0.60$, entonces $P(H \mid \bar{F}) = 0.40$
+\vspace{0.2cm}
+
+Queremos calcular entcontrar la probabilidad de que un paciente fume, dado a que es 
+mujer, es decir:
+\vspace{0.2cm}
+
+$$P(F \mid M) = \frac{P(F \cap M)}{P(M)}$$
+
+Entonces
+
+$$P(F \cap M) = P(F)\, P(M \mid F) = 0.40 \times 0.25 = 0.10$$
+
+\vspace{0.2cm}
+
+Utilizando el teorema de probabilidad total:
+
+$$P(M) = P(M \mid F)\, P(F) + P(M \mid \bar{F})\, P(\bar{F})$$
+
+$$P(M) = (0.25)(0.40) + (0.60)(0.60) = 0.10 + 0.36 = 0.46$$
+
+Por lo tanto
+\vspace{0.2cm}
+
+$$P(F \mid M) = \frac{0.10}{0.46} \approx 0.217$$
+
+La probabilidad de que un paciente mujer fume es $\boxed{21.7\%}$
+
+\QED
+
+\vspace{0.8cm}
+
+7. En una fábrica se embalan galletas, en 4 cadebas de montaje, $A_1$ 
+(saludos a la página de nombre largo), $A_2, A_3 \text{ y } A_4$. 
+El 35\% de la producción total se embala en la cadena $A_1$, 
+y el 20\%, 24\% y 21\% en $A_2$, $A_3$ y $A_4$, respectivamente. 
+Los datos indican que no se embalan correctamente un porcentaje 
+pequeño de las cajas; el 1\% de $A_1$, el 3\% de $A_2$, el 2.5\% de $A_3$ 
+y el 2\% de $A_4$. ¿Cuál es la probabilidad de que una caja elegida al azar 
+de la producción total sea defectuosa?
+
+\vspace{0.5cm}
+
+Vamos a definir los eventos.
+
+$A_1, A_2, A_3, A_4$: ``La caja se embala en la cadena $i$'', $i=1,2,3,4$.
+
+$D$: ``La caja está defectuosa''
+
+\vspace{0.4cm}
+
+Sabemos que la proporción de producción en cada cadena es
+$$P(A_1)=0.35,\quad P(A_2)=0.20,\quad P(A_3)=0.24,\quad P(A_4)=0.21$$
+
+\vspace{0.2cm}
+
+Además, la probabilidad de que una caja sea defectuosa en cada cadena es
+
+$$P(D\mid A_1)=0.01,\quad P(D\mid A_2)=0.03,\quad P(D\mid A_3)=0.025,\quad P(D\mid A_4)=0.02$$
+
+\vspace{0.2cm}
+
+Aplicando el teorema de probabilidad total, la probabilidad de que una caja elegida al azar sea defectuosa es
+
+$$P(D)=P(D\mid A_1)P(A_1)+P(D\mid A_2)P(A_2)+P(D\mid A_3)P(A_3)+P(D\mid A_4)P(A_4)$$
+
+$$P(D) = (0.01)(0.35) + (0.03)(0.20) + (0.025)(0.24) + (0.02)(0.21)$$
+
+$$P(D) = 0.0035 + 0.006 + 0.006 + 0.0042 = 0.0197.$$
+
+\vspace{0.2cm}
+
+Por lo tanto, la probabilidad de que una caja elegida al azar sea defectuosa es $\boxed{1.97\%}$.
+
+\QED
+
+\vspace{0.8cm}

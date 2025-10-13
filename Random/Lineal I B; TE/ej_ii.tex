@@ -1,0 +1,93 @@
+2. Calcule el determinante de las siguientes matrices: \\
+\begin{solution}
+(a) \text{Matriz} \( 2 \times 2 \) :
+\[
+A=\left(\begin{array}{cc}
+3 & -1 \\
+4 & 2
+\end{array}\right) .
+\]
+Para una matriz 2×2, el determinante se calcula como:
+\[
+\text{det}(A) = a_{11}a_{22} - a_{12}a_{21}
+\]
+Sustituyendo los valores:
+\[
+\text{det}(A) = (3)(2) - (-1)(4) = 6 + 4 = 10
+\]
+
+(b) \text{Matriz} \( 3 \times 3 \) :
+\[
+B=\left(\begin{array}{ccc}
+1 & 2 & 3 \\
+0 & -1 & 4 \\
+2 & 0 & 5
+\end{array}\right) .
+\]
+Utilizamos la regla de Sarrus o la expansión por menores. Aquí usaremos la expansión por la primera fila:
+\[
+\text{det}(B) = a_{11} \cdot \text{det}\begin{pmatrix} -1 & 4 \\ 0 & 5 \end{pmatrix} - a_{12} \cdot \text{det}\begin{pmatrix} 0 & 4 \\ 2 & 5 \end{pmatrix} + a_{13} \cdot \text{det}\begin{pmatrix} 0 & -1 \\ 2 & 0 \end{pmatrix}
+\]
+Calculamos los determinantes de las matrices menores:
+\[
+\text{det}\begin{pmatrix} -1 & 4 \\ 0 & 5 \end{pmatrix} = (-1)(5) - (4)(0) = -5
+\]
+\[
+\text{det}\begin{pmatrix} 0 & 4 \\ 2 & 5 \end{pmatrix} = (0)(5) - (4)(2) = -8
+\]
+\[
+\text{det}\begin{pmatrix} 0 & -1 \\ 2 & 0 \end{pmatrix} = (0)(0) - (-1)(2) = 2
+\]
+Sustituimos los valores:
+\[
+\text{det}(B) = 1(-5) - 2(-8) + 3(2) = -5 + 16 + 6 = 17
+\]
+
+
+
+(c) \text{Matriz triangular superior} \( 4 \times 4 \) :
+\[
+C=\left(\begin{array}{cccc}
+2 & 3 & 1 & 4 \\
+0 & 5 & 6 & 2 \\
+0 & 0 & -3 & 1 \\
+0 & 0 & 0 & 7
+\end{array}\right) .
+\]
+Para matrices triangulares (superiores o inferiores), el determinante es el producto de los elementos de la diagonal principal. Vease que estos elementos son 2,5,−3,7 así que ya solo calculamos el producto:
+\[
+\text{det}(C) = 2 \cdot 5 \cdot (-3) \cdot 7 = -210
+
+
+
+(d) \text{Matriz} \( 10 \times 10 \) :
+\[
+D=\left(\begin{array}{cccccccccc}
+2 & 3 & 1 & 4 & 12 & -3 & 7 & -15 & 6 & 11 \\
+0 & \sqrt{13} & 6 & 2 & 2 & -3 & 7 & -15 & 6 & \sqrt{2} \\
+-8 & 21 & -4 & 9 & -11 & \pi & 5 & 6 & 2 & 0 \\
+5 & -17 & 9 & -23 & 14 & 0 & -7 & 0 & -3 & 1 \\
+15 & -e & 11 & -4 & 18 & \pi & -7 & 0 & -3 & -1 \\
+-7 & 0 & -3 & 1 & 0 & \pi & \pi & -\pi & 1 & 1+\pi \\
+-3 & 5 & 6 & 2 & 5 & -17 & 9 & -23 & 14 & 0 \\
+2 & 3 & 1 & 4 & 5 & -17 & 9 & \pi^{2} & 14 & e \\
+-e & 21 & -4 & 13 & -1+e & 0 & -7 & 0 & -3 & 1 \\
+15 & -e & 11 & -4 & 18 & \pi & -7 & 0 & -3 & -1
+\end{array}\right) .
+\]
+Nótese que en esta matriz la quinta y décima fila son linealmente dependientes, en particular son totalmente idénticas.
+\[
+\begin{array}{cccccccccc}
+15 & -e & 11 & -4 & 18 & \pi & -7 & 0 & -3 & -1 \\
+15 & -e & 11 & -4 & 18 & \pi & -7 & 0 & -3 & -1 \\
+\end{array}
+\]
+Por lo que el rango de la matriz es menor a la dimensión del dominio, es entonces que por Teorema de la Dimensión esta matriz ya no representa a una transformación isomorfa, de hecho siempre que las filas o columnas de la matriz sean linealmente dependientes afecta el endomorfismo $f:F^{10} \rightarrow F^{10}$ y le quita la propiedad de ser ya sea monomorfo o epimorfo. Al ya no ser isomorfa entonces ya no es invertible, esto en consecuencia nos dice que el determinante de la matriz es cero (pues la única forma de ser no invertible es yéndonos a la definición de inversa de una matriz donde el único término peligroso es la inversa del determinante), así que.
+\[
+\text{det}(D) = 0
+\] \\
+
+
+
+
+\end{solution}

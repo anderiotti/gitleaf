@@ -1,0 +1,97 @@
+\documentclass[12pt, a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+\usepackage{geometry}
+\usepackage{enumitem}
+
+% Configuración de la página
+\geometry{
+    a4paper,
+    left=2.5cm,
+    right=2.5cm,
+    top=2.5cm,
+    bottom=2.5cm
+}
+
+% Estilo para la lista de reglas
+\setlist[enumerate]{font=\bfseries, label=Regla \arabic*:}
+
+\begin{document}
+
+% --- PORTADA ---
+\begin{titlepage}
+    \centering
+    \vspace*{\stretch{1}}
+    {\Huge\bfseries Las Doce Reglas de Codd para Sistemas de Bases de Datos Relacionales}
+    \vspace{1.5cm}
+    \vfill
+    {\Large\bfseries Asignatura:} \\
+    {\large Base de Datos Estructuradas}
+    \vspace{2cm}
+    \vfill
+    {\Large\bfseries Autor:} \\
+    {\large Andres Lopez Gonzalez}\\ % Reemplaza con tu nombre
+    \vspace*{\stretch{2}}
+    {\large \today}
+\end{titlepage}
+
+\newpage
+
+% --- INICIO DEL DOCUMENTO ---
+
+\section*{Introducción}
+
+A principios de la década de 1970, el Dr. Edgar F. Codd, pionero en el campo de las bases de datos, observó que muchos sistemas en el mercado se autodenominaban 'relacionales' simplemente por almacenar datos en tablas, sin adherirse a los principios fundamentales del modelo relacional, como la normalización. Para establecer un estándar claro y riguroso, Codd publicó un conjunto de 12 reglas que definen las características que un Sistema de Gestión de Bases de Datos (SGBD) debe cumplir para ser considerado verdaderamente relacional. En la práctica, la implementación de algunas de estas reglas presenta desafíos significativos, pero sirven como un ideal. La medida en que un sistema cumple con estas reglas determina su grado de fidelidad al modelo relacional.
+
+\section*{Las Reglas Fundamentales}
+A continuación, se detallan las doce reglas propuestas por Codd, las cuales garantizan la consistencia, integridad y flexibilidad de un sistema de base de datos relacional.
+
+\begin{enumerate}
+    \item \textbf{La Regla de la Información} \\
+    Toda la información en una base de datos relacional debe ser representada explícitamente y de una única manera: a través de valores almacenados en tablas. Esto implica que cualquier dato que no se encuentre contenido en una tabla se considera inexistente dentro del sistema.
+
+    \item \textbf{La Regla del Acceso Garantizado} \\
+    Cada dato individual en la base de datos debe ser lógicamente accesible mediante una combinación del nombre de la tabla, el valor de la clave primaria de la fila y el nombre de la columna. Esto asegura que no haya ambigüedad al recuperar un valor específico y subraya la obligatoriedad de definir claves primarias para todas las tablas.
+
+    \item \textbf{El Tratamiento Sistemático de Valores Nulos} \\
+    Un SGBD (Sistema Gestor de Bases de Datos) relacional debe soportar el uso de valores "nulos" para representar información desconocida o inaplicable de manera sistemática y distinta de los valores reales (como cero o una cadena vacía).
+
+    \item \textbf{Catálogo en Línea Dinámico Basado en el Modelo Relacional} \\
+    La descripción de la base de datos, conocida como metadatos o catálogo, debe estar almacenada y gestionada con la misma estructura que los datos de usuario: en tablas. Por lo tanto, el mismo lenguaje de consulta relacional (como SQL) debe poder utilizarse para acceder tanto a los datos como a los metadatos.
+
+    \item \textbf{La Regla del Sublenguaje de Datos Completo} \\
+    El sistema debe proporcionar al menos un lenguaje relacional que sea integral y soporte todas las facetas de la gestión de datos: definición de datos, manipulación de datos, restricciones de integridad, control de autorizaciones y gestión de transacciones.
+
+    \item \textbf{La Regla de Actualización de Vistas} \\
+    Todas las vistas que son teóricamente actualizables deben ser también actualizables por el sistema. Un sistema verdaderamente relacional debería poder gestionar la actualización de vistas complejas.
+
+    \item \textbf{Inserción, Actualización y Eliminación de Alto Nivel} \\
+    La capacidad del sistema para manejar datos debe operar sobre conjuntos de registros, no sobre un registro a la vez. Las operaciones de inserción, actualización y borrado deben poder aplicarse a conjuntos de filas que cumplen con una cierta condición.
+
+    \item \textbf{Independencia Física de los Datos} \\
+    Los programas de aplicación y las actividades del usuario no deben verse afectados por cambios en el nivel físico de almacenamiento. La lógica de acceso a los datos debe permanecer inalterada aunque se modifique la forma en que estos se guardan físicamente.
+
+    \item \textbf{Independencia Lógica de los Datos} \\
+    Los cambios en la estructura lógica de las tablas (como dividir una tabla) no deberían requerir modificaciones en los programas de aplicación que no utilizan directamente los campos alterados.
+
+    \item \textbf{Independencia de la Integridad} \\
+    Las restricciones de integridad (como claves primarias no nulas o integridad referencial) deben ser definibles en el lenguaje de datos y almacenarse en el catálogo, no en los programas de aplicación.
+
+    \item \textbf{Independencia de la Distribución} \\
+    El sistema debe ser capaz de operar con bases de datos distribuidas en diferentes ubicaciones físicas sin que esto afecte a los programas de aplicación, que deben interactuar con los datos como si estuvieran centralizados.
+
+    \item \textbf{La Regla de la No Subversión} \\
+    Si el sistema proporciona una interfaz de bajo nivel (acceso registro a registro), esta no debe poder ser utilizada para eludir o violar las reglas de integridad definidas en el lenguaje relacional de alto nivel.
+\end{enumerate}
+
+\begin{thebibliography}{9}
+
+\bibitem{codd70}
+Codd, E. F. (1970). A relational model of data for large shared databanks. \textit{Communications of the ACM}, \textit{13}(6), 377–387.
+
+\bibitem{date94}
+Date, C. J. (1994). \textit{An introduction to database systems}. Addison-Wesley.
+
+\end{thebibliography}
+
+\end{document}

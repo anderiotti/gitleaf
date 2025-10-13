@@ -1,0 +1,133 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage{pgfplots}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{mdframed}
+\usepackage{amsthm}
+\usepackage{physics}
+\usepackage{derivative}
+\usepackage{hyperref}
+\renewcommand{\theenumi}{\roman{enumi}}
+
+\geometry{a4paper, left=2cm, right=2cm, top=1cm, bottom=2cm}
+
+\pgfplotsset{compat=1.18}
+\begin{document}
+
+\begin{minipage}{0.7\textwidth}
+    \small \textbf{ASTROFÍSICA GENERAL}  \\
+    \small {Facultad de Ciencias, Universidad Nacional Autónoma de México} \\
+    \small {Profesor: Margarita Rosado Solis} \\
+    \small {Ayudante: Isidro Ramírez Ballinas}\\
+    \small {Fecha de entrega: 12 de Septiembre de 2024} \\
+    \small {Nombre completo: Andrés López González} \\
+    \small {Tarea número III}
+\end{minipage}
+\hfill
+\begin{minipage}{0.12\textwidth}
+    \includegraphics[width=\linewidth]{logo_universidad}
+\end{minipage}
+
+\section*{Preguntas Semana III}
+
+\subsection{Deducción de la Tercera Ley de Kepler a partir de la teoría de la gravitación}
+
+La Tercera Ley de Kepler establece que el cuadrado del período orbital (\(T\)) de un planeta es proporcional al cubo del semieje mayor de su órbita (\(a\)) alrededor del Sol:
+
+\[
+T^2 \propto a^3
+\]
+
+Para deducir esta ley a partir de la Ley de Gravitación Universal de Newton, comenzamos considerando un sistema simplificado de dos cuerpos, como un planeta que orbita al Sol en una órbita circular de radio \(r\). La fuerza gravitacional entre el planeta y el Sol está dada por:
+
+\[
+F = \frac{G M_{\odot} m}{r^2}
+\]
+
+donde \(G\) es la constante de gravitación universal, \(M_{\odot}\) es la masa del Sol, y \(m\) es la masa del planeta.
+
+Sabemos que esta fuerza gravitacional es la que proporciona la aceleración centrípeta necesaria para mantener al planeta en su órbita. La aceleración centrípeta está relacionada con la velocidad orbital (\(v\)) y el radio de la órbita (\(r\)) por la siguiente expresión:
+
+\[
+F_{\text{centrípeta}} = \frac{m v^2}{r}
+\]
+
+Igualando la fuerza gravitacional con la centrípeta:
+
+\[
+\frac{G M_{\odot} m}{r^2} = \frac{m v^2}{r}
+\]
+
+Cancelando la masa del planeta \(m\) y simplificando:
+
+\[
+v^2 = \frac{G M_{\odot}}{r}
+\]
+
+El período orbital \(T\) es el tiempo que tarda el planeta en completar una vuelta alrededor del Sol, y está relacionado con la velocidad orbital \(v\) y el radio \(r\) por:
+
+\[
+T = \frac{2 \pi r}{v}
+\]
+
+Sustituyendo la expresión para \(v\):
+
+\[
+T = \frac{2 \pi r}{\sqrt{\frac{G M_{\odot}}{r}}}
+\]
+
+\[
+T = 2 \pi \sqrt{\frac{r^3}{G M_{\odot}}}
+\]
+
+Observamos que \(T^2 \propto r^3\), lo que es la forma matemática de la Tercera Ley de Kepler. En este caso, el semieje mayor \(a\) es equivalente al radio \(r\) en una órbita circular. Esta deducción muestra cómo la ley de la gravitación de Newton y las leyes del movimiento de Kepler están profundamente conectadas.
+
+\subsection{Ciclo de Saros de los eclipses: historia y descripción}
+
+El ciclo de Saros es un período de aproximadamente 18 años, 11 días y 8 horas, después del cual se repiten los eclipses de Sol y Luna casi en las mismas condiciones. El ciclo fue conocido por las antiguas civilizaciones babilónicas y mesopotámicas, que ya habían observado la regularidad en la aparición de los eclipses. La palabra "Saros" proviene de una adaptación moderna de un término babilónico.
+
+\subsubsection{Historia}
+
+El ciclo de Saros fue estudiado profundamente por los astrónomos de la antigua Mesopotamia. Aunque no tenían una comprensión física de los eclipses, sus observaciones sistemáticas les permitieron predecir futuros eclipses con precisión. Este conocimiento fue transmitido a otras civilizaciones, incluyendo a los griegos, y más tarde los astrónomos modernos lo utilizaron como base para calcular las fechas de eclipses futuros.
+
+\subsubsection{Descripción}
+
+El ciclo de Saros se basa en la sincronización entre tres periodos astronómicos clave:
+
+\begin{itemize}
+    \item \textbf{Mes sinódico}: es el tiempo entre dos lunas nuevas consecutivas (29.53 días).
+    \item \textbf{Mes draconítico}: es el tiempo entre dos pasos consecutivos de la Luna por uno de los nodos de su órbita (27.21 días).
+    \item \textbf{Mes anomalístico}: es el tiempo que tarda la Luna en regresar al mismo punto de su órbita elíptica (27.55 días).
+\end{itemize}
+
+Después de 223 meses sinódicos, 242 meses draconíticos y 239 meses anomalísticos, la Luna y el Sol vuelven casi a la misma posición relativa en el cielo, permitiendo que ocurra un eclipse similar. Aunque el ciclo de Saros permite predecir la recurrencia de eclipses, las pequeñas variaciones acumuladas debido a la diferencia de tiempo entre estos periodos hacen que no sea perfecto, por lo que el eclipse ocurre ligeramente desplazado geográficamente cada vez.
+
+\subsection{El cuerpo negro y la ley de Planck}
+
+Un \textbf{cuerpo negro} es un objeto idealizado en física que absorbe toda la radiación electromagnética que incide sobre él, sin reflejar ni transmitir ninguna. Debido a esta característica, emite radiación térmica en un espectro continuo que depende únicamente de su temperatura. El concepto de cuerpo negro es fundamental en el estudio de la radiación térmica y ha jugado un papel crucial en el desarrollo de la teoría cuántica.
+
+A finales del siglo XIX, los físicos intentaban comprender la radiación emitida por un cuerpo negro. Sin embargo, la teoría clásica fallaba en explicar el comportamiento observado, especialmente en las frecuencias altas, donde predecía una emisión infinita de energía, un problema conocido como la \textbf{catástrofe ultravioleta}.
+
+En 1900, \textbf{Max Planck} propuso una solución revolucionaria al postular que la energía no se emitía de manera continua, sino en pequeños "cuantos" discretos de energía. Este postulado llevó a la formulación de la \textbf{Ley de Radiación de Planck}, que describe la distribución de la intensidad de la radiación emitida por un cuerpo negro en función de su temperatura y la longitud de onda (\(\lambda\)):
+
+\[
+I(\lambda, T) = \frac{2 h c^2}{\lambda^5} \cdot \frac{1}{e^{\frac{h c}{\lambda k_B T}} - 1}
+\]
+
+Donde:
+\begin{itemize}
+    \item \(I(\lambda, T)\) es la intensidad de la radiación emitida por unidad de superficie y longitud de onda.
+    \item \(h\) es la constante de Planck.
+    \item \(c\) es la velocidad de la luz en el vacío.
+    \item \(k_B\) es la constante de Boltzmann.
+    \item \(T\) es la temperatura absoluta del cuerpo negro.
+\end{itemize}
+
+Esta ley no solo resolvió el problema de la catástrofe ultravioleta, sino que también sentó las bases para el desarrollo de la física cuántica, al introducir la idea de que la energía está cuantizada.
+
+
+\end{document}

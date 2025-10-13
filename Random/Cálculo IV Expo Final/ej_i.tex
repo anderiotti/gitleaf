@@ -1,0 +1,46 @@
+\section{Ejercicio 87}
+Calcula el flujo del campo vectorial
+\[
+F(x, y, z)=\left(\frac{x}{\left(x^{2}+y^{2}+z^{2}\right)^{\frac{3}{2}}}, \frac{y}{\left(x^{2}+y^{2}+z^{2}\right)^{\frac{3}{2}}}, \frac{z}{\left(x^{2}+y^{2}+z^{2}\right)^{\frac{3}{2}}}\right)
+\]
+a través del elipsoide \( \frac{x^{2}}{e^{2}}+\frac{y^{2}}{\pi^{2}}+\frac{z^{2}}{\phi}=1 \) donde \( \phi \) es el número áureo.\\
+
+\begin{solution}
+Se siguen los siguientes pasos:\\
+
+\subsection{Paso 1: Reconocer el Campo Vectorial}
+El campo vectorial dado es:
+\[
+\mathbf{F}(x, y, z) = \frac{\mathbf{r}}{|\mathbf{r}|^{3}},
+\]
+donde \( \mathbf{r} = \mathbf{r}(x,y,z) = (x, y, z) \) y \( |\mathbf{r}| = \sqrt{x^{2} + y^{2} + z^{2}} \). \\
+
+\subsection{Paso 2: Aplicar el Teorema de la Divergencia}
+El flujo $\phi$ de $F$ a través de una superficie cerrada S se puede calcular usando el Teorema de la Divergencia gen.:
+\[
+\Phi = \iint_{S} \mathbf{F} \cdot d\mathbf{S} = \iiint_{V} \nabla \cdot \mathbf{F} \, dV,
+\]
+donde V es el volumen encerrado por S. \\
+\subsection{Paso 3: Calcular la Divergencia de F}
+Calculamos la divergencia de F:
+\[
+\nabla \cdot \mathbf{F} = \frac{\partial}{\partial x}\left(\frac{x}{(x^{2}+y^{2}+z^{2})^{\frac{3}{2}}}\right) + \frac{\partial}{\partial y}\left(\frac{y}{(x^{2}+y^{2}+z^{2})^{\frac{3}{2}}}\right) + \frac{\partial}{\partial z}\left(\frac{z}{(x^{2}+y^{2}+z^{2})^{\frac{3}{2}}}\right).
+\]
+Calculando cada término en el que llamaremos $x_i$ a una entrada arbitraria como puede ser x, y o z:
+\[
+\frac{\partial}{\partial x_i}\left(\frac{x_i}{r^{3}}\right) = \frac{1}{r^{3}} - \frac{3x_i^{2}}{r^{5}},
+\]
+donde \( r = \sqrt{x^{2} + y^{2} + z^{2}} \). \\
+Sumando los tres términos:
+\[
+\nabla \cdot \mathbf{F} = \left(\frac{1}{r^{3}} - \frac{3x^{2}}{r^{5}}\right) + \left(\frac{1}{r^{3}} - \frac{3y^{2}}{r^{5}}\right) + \left(\frac{1}{r^{3}} - \frac{3z^{2}}{r^{5}}\right) = \frac{3}{r^{3}} - \frac{3(x^{2}+y^{2}+z^{2})}{r^{5}}.
+\]
+Simplificando:
+\[
+\nabla \cdot \mathbf{F} = \frac{3}{r^{3}} - \frac{3r^{2}}{r^{5}} = 0.
+\]
+Y tenemos entonces.
+\[
+\Phi = \iint_{S} \mathbf{F} \cdot d\mathbf{S} = \iiint_{V} \nabla \cdot \mathbf{F} \, dV, = 0
+\]
+\end{solution}

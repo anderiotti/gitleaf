@@ -1,0 +1,431 @@
+\chapter{The Propagation of Light: A Wave Formalism}
+
+\section{The Differential Wave Equation: A Unified Description}
+
+In the pantheon of physics, few equations command such a wide dominion as the differential wave equation. It is the unifying principle that governs phenomena as disparate as the ripples on a pond, the vibrations of a violin string, the propagation of sound, and, most profoundly for our purposes, the flight of light itself.
+
+\begin{theorem}[The Differential Wave Equation]
+A physical disturbance, described by a scalar or vector function $\psi(\vecx, t)$, constitutes a wave if it is a solution to the linear, second-order, homogeneous partial differential equation:
+$$ \nabla^2 \psi(\vecx, t) = \frac{1}{v^2} \frac{\partial^2 \psi(\vecx, t)}{\partial t^2} : \nabla^2 \equiv \sum_{i=1}^{3} \frac{\partial^2}{\partial x_i^2} $$
+The constant $v$, with units of velocity, is a characteristic of the medium of propagation. The operator $\nabla^2$ quantifies how the value of $\psi$ at a point deviates from the average value in its immediate neighborhood. It is the spatial analogue of the second derivative.
+\end{theorem}
+
+\subsection{Mathematical Properties and Physical Interpretation}
+The austere form of the wave equation belies a deep physical intuition encoded in its mathematical structure.
+
+\begin{proposition}[Analysis of Properties]
+The wave equation's form is a direct consequence of fundamental physical principles:
+\begin{enumerate}
+    \item \textbf{Linearity and Superposition:} The equation is \textbf{linear} because $\psi$ and its derivatives appear only to the first power. This is not merely a mathematical convenience; it is the formal statement of the \textbf{Principle of Superposition}. It asserts that, in a linear medium, wave amplitudes add together, allowing waves to pass through one another unaltered. If the wave equation were nonlinear, two intersecting beams of light would scatter off each other, and the world would be an unintelligible chaos of interacting waves.
+    
+    \item \textbf{Homogeneity:} The equation is \textbf{homogeneous} (equal to zero), signifying that the vacuum or undisturbed medium ($\psi=0$) is a valid, stable state. A wave is an excitation, a deviation from this ground state.
+    
+    \item \textbf{Order and Causality:} The equation is \textbf{second-order} in time, linking the wave's dynamics to acceleration ($\partial^2 \psi / \partial t^2$). This ties wave theory to the core of classical mechanics ($F=ma$) and electromagnetism (Faraday's and Ampere's laws). For a unique solution to exist, causality demands two initial conditions: the wave's initial profile $\psi(\vecx, 0)$ and its initial velocity profile $\partial\psi(\vecx, 0)/\partial t$. One must know where the wave is and where it is going.
+\end{enumerate}
+\end{proposition}
+
+\subsection{General Solutions of the Wave Equation}
+
+\begin{theorem}[D'Alembert's General Solution in 1D]
+For a one-dimensional system, the wave equation, $\psi_{xx} = (1/v^2)\psi_{tt}$, can be elegantly solved via a coordinate transformation. The method involves changing from the stationary coordinates $(x, t)$ to a new set of "characteristic coordinates" $(\xi, \eta)$ that move along with the wave.
+
+Let us define the characteristic coordinates as:
+$$ \xi = x - vt \quad \text{and} \quad \eta = x + vt $$
+We must now express the partial derivatives with respect to $x$ and $t$ in terms of derivatives with respect to $\xi$ and $\eta$ using the chain rule.
+$$ \pdv{}{x} = \pdv{\xi}{x}\pdv{}{\xi} + \pdv{\eta}{x}\pdv{}{\eta} = 1 \cdot \pdv{}{\xi} + 1 \cdot \pdv{}{\eta} = \pdv{}{\xi} + \pdv{}{\eta} $$
+$$ \pdv{}{t} = \pdv{\xi}{t}\pdv{}{\xi} + \pdv{\eta}{t}\pdv{}{\eta} = (-v) \cdot \pdv{}{\xi} + (v) \cdot \pdv{}{\eta} = v\left(\pdv{}{\eta} - \pdv{}{\xi}\right) $$
+Now, we apply these operators a second time to find the second derivatives:
+$$ \frac{\partial^2}{\partial x^2} = \left(\pdv{}{\xi} + \pdv{}{\eta}\right)\left(\pdv{}{\xi} + \pdv{}{\eta}\right) = \frac{\partial^2}{\partial \xi^2} + 2\frac{\partial^2}{\partial \xi \partial \eta} + \frac{\partial^2}{\partial \eta^2} $$
+$$ \frac{\partial^2}{\partial t^2} = v\left(\pdv{}{\eta} - \pdv{}{\xi}\right) v\left(\pdv{}{\eta} - \pdv{}{\xi}\right) = v^2\left(\frac{\partial^2}{\partial \eta^2} - 2\frac{\partial^2}{\partial \xi \partial \eta} + \frac{\partial^2}{\partial \xi^2}\right) $$
+Substituting these expressions back into the wave equation $\psi_{xx} - (1/v^2)\psi_{tt} = 0$:
+$$ \left(\psi_{\xi\xi} + 2\psi_{\xi\eta} + \psi_{\eta\eta}\right) - \frac{1}{v^2} \left[ v^2(\psi_{\eta\eta} - 2\psi_{\xi\eta} + \psi_{\xi\xi}) \right] = 0 $$
+Distributing the terms, we find that most of them cancel out:
+$$ \psi_{\xi\xi} + 2\psi_{\xi\eta} + \psi_{\eta\eta} - \psi_{\eta\eta} + 2\psi_{\xi\eta} - \psi_{\xi\xi} = 4\psi_{\xi\eta} = 0 $$
+Thus, in the characteristic coordinate system, the wave equation transforms into the astonishingly simple form:
+$$ \frac{\partial^2 \psi}{\partial \xi \partial \eta} = 0 $$
+Integrating this twice (first with respect to $\xi$, then $\eta$) yields the general solution $\psi(\xi, \eta) = f(\xi) + g(\eta)$, where $f$ and $g$ are arbitrary functions of integration. Reverting to the original variables, we obtain the celebrated d'Alembert solution:
+$$ \psi(x, t) = f(x - vt) + g(x + vt) $$
+This result is profound. It proves that any twice-differentiable function whose argument is of the form $(x \mp vt)$ is a valid solution. The function $f(x-vt)$ represents an arbitrary but unchanging shape traveling in the $+x$ direction (progressive wave), while $g(x+vt)$ is an arbitrary shape traveling in the $-x$ direction (regressive wave).
+\end{theorem}
+
+\begin{proposition}[Separation of Variables and the Helmholtz Equation]
+An alternative path to elementary solutions is the powerful method of separation of variables. Assuming a solution of the form $\psi(\vecx, t) = X(\vecx)T(t)$, the wave equation bifurcates into two independent ordinary differential equations, linked by a separation constant, $-\omega^2$:
+\begin{enumerate}
+    \item \textbf{Temporal Equation:} $\frac{d^2T}{dt^2} + \omega^2 T = 0$. This is the canonical equation of simple harmonic motion. Its solutions are sines, cosines, and most compactly, the complex exponential $T(t) \propto e^{\pm i\omega t}$.
+    \item \textbf{Spatial Equation (Helmholtz Equation):} $\nabla^2 X + k^2 X = 0$, where $k^2 = \omega^2/v^2$. This equation governs standing wave phenomena in acoustics, electromagnetism, and quantum mechanics.
+\end{enumerate}
+The emergence of harmonic functions from this method is not an accident. It proves that sinusoidal waves are the natural, elementary "modes" of oscillation for any system described by the wave equation.
+\end{proposition}
+
+\subsection{Waveforms in Three Dimensions}
+
+\begin{definition}[Plane Waves]
+A \textbf{plane wave} is an idealized wave whose wavefronts (surfaces of constant phase) are infinite parallel planes. It is an excellent approximation for a wave observed far from its source (or a laser). The harmonic plane wave is the fundamental solution to the 3D wave equation:
+$$ \psi(\vecx, t) = A e^{i(\vecbf{k} \cdot \vecx - \omega t)} $$
+Here, the dot product $\vecbf{k} \cdot \vecx = \text{const}$ defines the family of planes perpendicular to the wave vector $\vecbf{k}$.
+\end{definition}
+
+\begin{definition}[Spherical Waves]
+A \textbf{spherical wave} emanates from an idealized point source in an isotropic medium. The wave equation in spherical coordinates yields solutions of the form:
+$$ \psi(r, t) = \frac{A_0}{r} e^{i(kr - \omega t)} $$
+The amplitude must decrease as $1/r$ because the energy of the wave, distributed over a spherical surface of area $4\pi r^2$, must be conserved. Consequently, the intensity, which is proportional to the amplitude squared, follows the inverse square law, $I \propto 1/r^2$.
+\end{definition}
+
+\subsection{Traveling Waves, Standing Waves, and Energy Transport}
+The d'Alembert solution reveals that waves fundamentally exist in two forms: those that transport energy over vast distances, and those that confine it within a region of space.
+
+\begin{definition}[Traveling Waves]
+A \textbf{traveling wave} is a solution to the wave equation that can be expressed as a function of the form $f(x \mp vt)$ or, more generally, $f(\vecbf{k} \cdot \vecx - \omega t)$. Its defining characteristic is that the profile of the wave propagates through space with a constant velocity. The most crucial physical property of a traveling wave is the \textbf{transport of energy} from one point in space to another without any net transport of the medium itself.
+\end{definition}
+
+\begin{proposition}[Energy and Irradiance of a Traveling Electromagnetic Wave]
+A traveling wave is, by definition, a mechanism for the transport of energy. For an electromagnetic wave, such as light, this energy is not mechanical but is stored in the electric ($\vecbf{E}$) and magnetic ($\vecbf{B}$) fields that constitute the wave itself. The flow of this energy is what we perceive as brightness or intensity. The derivation of these quantities is a direct consequence of Maxwell's Equations.
+
+The energy per unit volume, or \textbf{energy density}, stored in an electromagnetic field in vacuum is given by the sum of the densities stored in the electric and magnetic fields, respectively:
+$$ u_{EM} = u_E + u_B = \frac{1}{2}\epsilon_0 E^2 + \frac{1}{2\mu_0} B^2 $$
+where $\epsilon_0$ is the permittivity and $\mu_0$ is the permeability of free space. For a harmonic plane wave propagating in the x-direction, the fields are of the form:
+\begin{align*}
+    \vecbf{E}(\vecx, t) &= \vecbf{E}_0 \cos(kx - \omega t) \\
+    \vecbf{B}(\vecx, t) &= \vecbf{B}_0 \cos(kx - \omega t)
+\end{align*}
+From Maxwell's equations, it is a fundamental property of these transverse waves that the magnitudes of the fields are strictly related by $E = cB$, where $c = 1/\sqrt{\epsilon_0\mu_0}$ is the speed of light in vacuum.
+
+Using this relationship, we can express the magnetic energy density in terms of the electric field:
+$$ u_B = \frac{1}{2\mu_0} \left(\frac{E}{c}\right)^2 = \frac{1}{2\mu_0 c^2} E^2 = \frac{\epsilon_0\mu_0}{2\mu_0} E^2 = \frac{1}{2}\epsilon_0 E^2 = u_E $$
+This reveals a remarkable and profound property of electromagnetic plane waves: at every point in space and at every moment in time, the energy stored in the magnetic field is \textbf{exactly equal} to the energy stored in the electric field. This is the electromagnetic manifestation of the principle of equipartition of energy for a traveling wave.
+
+The total instantaneous energy density of the wave is therefore:
+$$ u_{EM}(x,t) = u_E + u_B = 2u_E = \epsilon_0 E^2 = \epsilon_0 E_0^2 \cos^2(kx - \omega t) $$
+This energy is not static; it is transported by the wave. The rate of energy transport per unit area is given by the \textbf{Poynting vector}, $\vecbf{S}$:
+$$ \vecbf{S} = \frac{1}{\mu_0} (\vecbf{E} \times \vecbf{B}) $$
+For a plane wave, $\vecbf{E}$ and $\vecbf{B}$ are orthogonal, so the magnitude of the Poynting vector, which represents the instantaneous intensity, is:
+$$ S = \frac{1}{\mu_0} EB = \frac{1}{\mu_0c} E^2 = \frac{\sqrt{\epsilon_0\mu_0}}{\mu_0} E^2 = \sqrt{\frac{\epsilon_0}{\mu_0}} E^2 = c\epsilon_0 E^2 = c \, u_{EM}(x,t) $$
+This elegant result shows that the rate of energy flow per unit area is simply the total energy density multiplied by the speed at which it travels, $c$.
+
+However, optical detectors (including our eyes) cannot respond to the rapid oscillations of the field, which occur on the order of $10^{14}$ Hz. The measurement we make is an average over many cycles. The physically significant quantity is therefore the time-averaged magnitude of the Poynting vector, which is called the \textbf{irradiance} ($I$).
+$$ I \equiv \langle S \rangle_T = \langle c\epsilon_0 E_0^2 \cos^2(kx - \omega t) \rangle_T $$
+The time average of the function $\cos^2(\cdot)$ over one full period is exactly $1/2$. Therefore, the irradiance is:
+$$ I = c\epsilon_0 E_0^2 \langle \cos^2(kx - \omega t) \rangle_T = \frac{1}{2}c\epsilon_0 E_0^2 $$
+This is one of the most important results in elementary optics. It establishes formally that the intensity of a light wave is constant in space for a plane wave and is proportional to the square of the amplitude of the electric field. This confirms the universal relationship $I \propto A^2$ with rigorously derived physical constants.
+\end{proposition}
+
+\begin{definition}[Standing Waves]
+A \textbf{standing wave} is not a propagating wave in the sense of energy transport; rather, it is a stationary, time-varying interference pattern. It is the result of the superposition of two traveling waves of identical frequency, amplitude, and polarization moving in opposite directions. Its wavefunction is fundamentally different from that of a traveling wave because its spatial and temporal dependencies are separable. As formally derived from the superposition $\Psi = A e^{i(kx-\omega t)} + A e^{i(-kx-\omega t)}$, the complex form is:
+$$ \Psi(x, t) = (2A\cos(kx))e^{-i\omega t} $$
+The real part, representing the physical disturbance, is $\Re(\Psi) = 2A\cos(kx)\cos(\omega t)$. This form immediately reveals that every point $x$ oscillates harmonically in time with an amplitude, $A(x) = 2A\cos(kx)$, that is uniquely determined by its position.
+\end{definition}
+
+\begin{proposition}[Energy Dynamics of a Standing Wave]
+The defining characteristic of a standing wave lies in its unique energy dynamics. Unlike a traveling wave, which transports energy, a standing wave traps energy within stationary spatial regions, perpetually transforming it between kinetic and potential forms. This can be demonstrated universally, without resort to any specific physical medium.
+
+For any system described by the wave equation, the total energy density, $\mathcal{E}$, must consist of two components: a term related to the motion or rate of change of the field (analogous to kinetic energy) and a term related to the spatial distortion or potential of the field (analogous to potential energy). These must be proportional to the squares of the first derivatives of the wavefunction:
+\begin{itemize}
+    \item \textbf{Kinetic Energy Density:} $\mathcal{K} \propto \left(\pdv{\psi}{t}\right)^2$
+    \item \textbf{Potential Energy Density:} $\mathcal{U} \propto \left(\pdv{\psi}{x}\right)^2$
+\end{itemize}
+Let the proportionality constants be $C_K$ and $C_P$, representing the capacity of the medium to store each type of energy. The wave equation itself, $\psi_{xx} = (1/v^2)\psi_{tt}$, imposes a fundamental constraint on these constants for a harmonic wave. By substituting a harmonic solution, one can show that they must be related by $C_P = v^2 C_K$. This is a universal property of the medium. For simplicity and generality, let us define a constant $C$ such that the energy densities are:
+$$ \mathcal{K}(x,t) = C\left(\pdv{\psi}{t}\right)^2 \quad \text{and} \quad \mathcal{U}(x,t) = C v^2\left(\pdv{\psi}{x}\right)^2 $$
+(For an EM wave, $C$ would be related to $\epsilon_0$; for a string, to $\mu/2$).
+
+Now, let us analyze the physical standing wave, $\Psi(x, t) = 2A\cos(kx)\cos(\omega t)$.
+The required derivatives are:
+$$ \pdv{\Psi}{t} = -2A\omega \cos(kx)\sin(\omega t) $$
+$$ \pdv{\Psi}{x} = -2Ak \sin(kx)\cos(\omega t) $$
+Substituting these into our general energy density formulas yields:
+$$ \mathcal{K}(x,t) = C(-2A\omega \cos(kx)\sin(\omega t))^2 = 4CA^2\omega^2 \cos^2(kx)\sin^2(\omega t) $$
+$$ \mathcal{U}(x,t) = C v^2(-2Ak \sin(kx)\cos(\omega t))^2 = 4Cv^2A^2k^2 \sin^2(kx)\cos^2(\omega t) $$
+Using the fundamental relation $v = \omega/k$, we see that $v^2k^2 = \omega^2$. Thus, the potential energy density becomes:
+$$ \mathcal{U}(x,t) = 4CA^2\omega^2 \sin^2(kx)\cos^2(\omega t) $$
+The total energy density at any point and time is the sum $\mathcal{E}(x,t) = \mathcal{K}(x,t) + \mathcal{U}(x,t)$:
+$$ \mathcal{E}(x,t) = 4CA^2\omega^2 \left[ \cos^2(kx)\sin^2(\omega t) + \sin^2(kx)\cos^2(\omega t) \right] $$
+This formula, derived from universal principles, reveals the beautiful and intricate dance of energy in a standing wave. At a glance, the energy appears to depend on both $x$ and $t$. However, a deeper analysis reveals a remarkable temporal and spatial separation.
+
+At times when $\omega t = m\pi$ (where $m$ is an integer), we have $\sin(\omega t)=0$ and $\cos(\omega t)=\pm 1$. At these instants, the velocity of the disturbance is zero everywhere, and the kinetic energy density vanishes. The system is momentarily at rest at its point of maximum displacement. The total energy is purely potential, stored entirely in the "stress" of the field, with a spatial distribution given by $\mathcal{E}(x) = 4CA^2\omega^2 \sin^2(kx)$.
+
+Conversely, at times when $\omega t = (m+1/2)\pi$, we have $\cos(\omega t)=0$ and $\sin(\omega t)=\pm 1$. At these instants, the system passes through its equilibrium configuration ($\Psi=0$), so its spatial distortion and thus its potential energy density are zero everywhere. The total energy is purely kinetic, stored entirely in the "motion" of the field, with a spatial distribution given by $\mathcal{E}(x) = 4CA^2\omega^2 \cos^2(kx)$.
+
+The total energy within one "loop" of the standing wave (e.g., from a node to the next node) is constant in time. Energy is not flowing along the x-axis; it is simply "sloshing" back and forth between kinetic and potential forms within each segment bounded by the nodes. The energy is maximum at the \textbf{antinodes} (where $|\cos(kx)|=1$), and it is permanently zero at the \textbf{nodes} (where $\cos(kx)=0$). A standing wave is, therefore, a resonant energy storage mode, not a mechanism for energy transport.
+\end{proposition}
+
+\section{Anatomy of Harmonic Waves}
+
+Due to Fourier's theorem, any physically realistic wave can be constructed as a superposition of harmonic waves. Therefore, a complete mastery of the properties of a single harmonic wave provides the key to understanding all wave phenomena.
+
+\subsection{The Complex Representation}
+
+\begin{definition}[Complex Wavefunction and its Physical Meaning]
+The harmonic plane wave is most powerfully represented by the complex wavefunction:
+$$ \psi(\vecx, t) = A e^{i(\vecbf{k} \cdot \vecx - \omega t + \epsilon)} $$
+The physical, measurable quantity is always the real part of this complex function, $\Re(\psi)$. The complex form is a mathematical scaffold that simplifies calculations involving phase shifts and superpositions, transforming cumbersome trigonometric identities into the simple algebra of exponents.
+\end{definition}
+
+\begin{proposition}[The Phasor (Complex Amplitude)]
+The complex constant $A = |A|e^{i\delta}$ is the \textbf{phasor} or complex amplitude. It encodes two crucial pieces of information:
+\begin{enumerate}
+    \item The magnitude $|A|$ is the real-valued \textbf{amplitude}. It specifies the maximum extent of the disturbance. The wave's \textbf{irradiance} (intensity), a measure of energy flow per unit area per unit time, is proportional to the amplitude squared, $I \propto |A|^2$.
+    \item The argument $\delta = \arg(A)$ is an intrinsic \textbf{phase constant} of the source.
+\end{enumerate}
+\end{proposition}
+
+\subsection{The Phase and its Physical Consequences}
+
+\begin{definition}[The Phase]
+The argument of the exponential, $\varphi(\vecx, t) = \vecbf{k} \cdot \vecx - \omega t + \epsilon$, is the \textbf{phase}. It is a dimensionless quantity (in radians) that specifies the exact point in the oscillation cycle for any given position and time.
+\end{definition}
+
+\begin{proposition}[Phase Velocity]
+The \textbf{phase velocity} ($v_p$) is the speed of a surface of constant phase. It is derived from the condition $d\varphi = 0$ for an observer moving with the wave.
+$$ d\varphi = \nabla\varphi \cdot d\vecx + \frac{\partial\varphi}{\partial t} dt = \vecbf{k} \cdot d\vecx - \omega dt = 0 $$
+For motion parallel to $\vecbf{k}$, this yields the speed of the wavefront: $v_p = \frac{\pdv{\varphi}{t}}{\pdv{\varphi}{x}}  = \frac{\omega}{k}$. This fundamental relation connects the temporal frequency ($\omega$) to the spatial frequency ($k$) through the propagation speed.
+\end{proposition}
+
+\subsection{Spatiotemporal Frequencies}
+
+\begin{proposition}[Spatiotemporal Periodicity of Harmonic Waves]
+A harmonic wave exhibits a dual periodicity in both time and space. These periodicities are not independent definitions but are formally extracted by imposing boundary conditions on the phase, $\varphi(\vecx, t) = \vecbf{k} \cdot \vecx - \omega t + \epsilon$, of the complex wavefunction.
+
+\subsubsection*{Temporal Periodicity}
+At a fixed position in space (let $\vecx$ be constant), the wavefunction evolves harmonically solely in time, described by $\psi(t) \propto e^{-i\omega t}$. The fundamental condition for periodicity is that after a time interval $T$, the wave must return to the same state. In the language of phase, this means the phase must change by an integer multiple of $2\pi$. The minimum such time interval, the \textbf{period} ($T$), corresponds to a phase change of exactly $2\pi$:
+$$ |\varphi(\vecx, t+T) - \varphi(\vecx, t)| = |(\vecbf{k} \cdot \vecx - \omega(t+T) + \epsilon) - (\vecbf{k} \cdot \vecx - \omega t + \epsilon)| = |-\omega T| = \omega T $$
+Setting this phase change equal to $2\pi$ yields the relationship $\omega T = 2\pi$. This single condition rigorously defines all temporal characteristics:
+\begin{itemize}
+    \item \textbf{Angular Frequency ($\omega$):} Formally, it is the magnitude of the rate of change of phase with time, $\omega = |-\partial\varphi/\partial t|$. It represents the wave's temporal frequency in radians per unit time [rad/s]. From the periodicity condition, it is fundamentally related to the period by $\omega = 2\pi/T$.
+    \item \textbf{Period ($T$):} The duration of one complete oscillation, derived as $T = 2\pi/\omega$.
+    \item \textbf{Frequency ($\nu$):} The number of oscillations per unit time, defined as the inverse of the period, $\nu = 1/T = \omega/2\pi$ [Hz].
+\end{itemize}
+
+\subsubsection*{Spatial Periodicity}
+Similarly, at a frozen instant in time (let $t$ be constant), the wavefunction displays a repeating pattern in space, described by $\psi(\vecx) \propto e^{i\vecbf{k} \cdot \vecx}$. The spatial period, or \textbf{wavelength} ($\lambda$), is the minimum distance along the direction of propagation over which the wave's shape repeats. This corresponds to the distance required for the phase to change by exactly $2\pi$.
+Let's consider two points separated by a distance $\lambda$ along the direction of propagation, $\hat{\vecbf{k}}$. Their positions are $\vecx$ and $\vecx + \lambda\hat{\vecbf{k}}$. The phase difference is:
+$$ |\varphi(\vecx + \lambda\hat{\vecbf{k}}, t) - \varphi(\vecx, t)| = |(\vecbf{k} \cdot (\vecx + \lambda\hat{\vecbf{k}}) - \omega t + \epsilon) - (\vecbf{k} \cdot \vecx - \omega t + \epsilon)| = |\vecbf{k} \cdot (\lambda\hat{\vecbf{k}})| $$
+Since $\vecbf{k} = k\hat{\vecbf{k}}$, this simplifies to $|k\lambda(\hat{\vecbf{k}}\cdot\hat{\vecbf{k}})| = k\lambda$. Setting this phase change to $2\pi$ gives the condition $k\lambda = 2\pi$. This defines all spatial characteristics:
+\begin{itemize}
+    \item \textbf{Wavelength ($\lambda$):} The spatial period of the wave, derived from the fundamental condition as $\lambda = 2\pi/k$.
+    \item \textbf{Wave Vector ($\vecbf{k}$):} The vector that defines both the direction of propagation and the spatial frequency of the wave.
+     \item \textbf{Wave Number ($k$):} The magnitude of the wave vector, $k=|\vecbf{k}|$. Formally, it is the magnitude of the spatial rate of change of phase, $k = |\nabla\varphi|$. It represents the spatial frequency in radians per unit length [rad/m].
+\end{itemize}
+\end{proposition}
+
+\section{Superposition of Waves}
+
+\subsection{Superposition of Waves with the Same Frequency}
+
+\begin{theorem}[Interference]
+The superposition of two waves $\psi_1 = A_1 e^{i\varphi_1}$ and $\psi_2 = A_2 e^{i\varphi_2}$ of the same frequency results in a new wave $\Psi = \psi_1 + \psi_2$ whose intensity is not simply the sum of the individual intensities. The resulting irradiance is:
+$$ I = |\Psi|^2 = |\psi_1 + \psi_2|^2 = (\psi_1 + \psi_2)(\psi_1^* + \psi_2^*) = I_1 + I_2 + \psi_1\psi_2^* + \psi_1^*\psi_2 $$
+$$ I = I_1 + I_2 + 2\Re(\psi_1\psi_2^*) = I_1 + I_2 + 2\sqrt{I_1 I_2}\cos(\Delta\varphi) $$
+where $\Delta\varphi = \varphi_1 - \varphi_2$ is the phase difference.
+\begin{itemize}
+    \item \textbf{Constructive Interference:} $\Delta\varphi = 2m\pi$. $I_{max} = (\sqrt{I_1}+\sqrt{I_2})^2$.
+    \item \textbf{Destructive Interference:} $\Delta\varphi = (2m+1)\pi$. $I_{min} = (\sqrt{I_1}-\sqrt{I_2})^2$.
+\end{itemize}
+\end{theorem}
+
+\begin{definition}[Standing Waves]
+A \textbf{standing wave} is a quintessential interference pattern formed by two waves of equal amplitude and frequency traveling in opposite directions.
+$$ \Psi(x,t) = A e^{i(kx-\omega t)} + A e^{i(-kx-\omega t)} = A e^{-i\omega t}(e^{ikx} + e^{-ikx}) = (2A\cos(kx))e^{-i\omega t} $$
+The spatial and temporal dependencies have separated. The term $2A\cos(kx)$ is a position-dependent amplitude.
+\begin{itemize}
+    \item \textbf{Nodes:} Points of permanent zero amplitude where $\cos(kx)=0$.
+    \item \textbf{Antinodes:} Points of permanent maximum amplitude where $|\cos(kx)|=1$.
+\end{itemize}
+No energy is transported in a pure standing wave; it is "trapped" in oscillation between the nodes.
+\end{definition}
+
+\subsection{Superposition of Waves with Different Frequencies}
+
+\begin{proposition}[Beats]
+The superposition of two waves with slightly different frequencies ($\omega_1 \approx \omega_2$) creates a phenomenon of \textbf{beats}. The resulting wave can be expressed as:
+$$ \Psi(t) \approx \left[ 2A \cos(\omega_{mod}t) \right] \cos(\bar{\omega}t) $$
+where $\bar{\omega} = (\omega_1+\omega_2)/2$ is the fast carrier frequency and $\omega_{mod} = (\omega_1-\omega_2)/2$ is the slow modulation frequency. The ear or eye perceives a single wave at the average frequency whose intensity waxes and wanes at the beat frequency $\nu_{beat} = |\nu_1 - \nu_2|$.
+\end{proposition}
+
+\begin{definition}[Wave Packets and Group Velocity]
+A physically realistic wave cannot be an infinite harmonic train; it must be localized in space, forming a \textbf{wave packet}. Such a packet is formed by the superposition of a continuous spectrum of harmonic waves with frequencies centered around a value $\omega_0$. The velocity of this packet, which is the velocity of energy and information transfer, is the \textbf{group velocity}:
+$$ v_g \equiv \frac{d\omega}{dk} $$
+In a non-dispersive medium, $v_g = v_p$. However, in a dispersive medium where the refractive index $n(\omega)$ is not constant, $v_g \neq v_p$.
+\end{definition}
+
+\section{The Superposition of Waves}
+
+The Principle of Superposition is the gateway to the most fascinating phenomena in optics. While the single harmonic wave is the fundamental building block, it is in their collective behavior—their superposition—that the rich tapestry of interference, diffraction, and wave modulation emerges.
+
+\subsection{Harmonic and Anharmonic Waves}
+
+\begin{definition}[Harmonic vs. Anharmonic Waves]
+A wave is strictly defined as \textbf{harmonic} if and only if its profile is described by a single sinusoidal function (e.g., $A\cos(\omega t + \phi)$). Such a wave possesses a single, sharply defined frequency.
+Any periodic wave that is not purely sinusoidal is, by definition, \textbf{anharmonic}. A square wave or a sawtooth wave are classic examples.
+
+\begin{theorem}[Fourier's Theorem]
+Fourier's theorem provides the mathematical foundation for understanding anharmonic waves. Its profound physical implication is that any periodic wave is equivalent to a discrete superposition of pure harmonic waves. From a mathematical standpoint, this is an application of vector projection in an infinite-dimensional function space.
+
+Let us consider the space of square-integrable periodic functions with period $T$, $L^2([-T/2, T/2])$. This space is a vector space. We can define an inner product on this space as:
+$$ \langle f(t), g(t) \rangle \equiv \frac{2}{T} \int_{-T/2}^{T/2} f(t)g(t) \,dt $$
+The set of functions $\mathcal{B} = \{1, \cos(n\omega_0 t), \sin(n\omega_0 t) \}_{n=1}^\infty$, where $\omega_0 = 2\pi/T$, forms an \textbf{orthogonal basis} for this space. The orthogonality relations are proven by direct integration:
+\begin{align*}
+    \langle \cos(n\omega_0 t), \cos(m\omega_0 t) \rangle &= \delta_{nm} \\
+    \langle \sin(n\omega_0 t), \sin(m\omega_0 t) \rangle &= \delta_{nm} \quad (n, m \neq 0) \\
+    \langle \cos(n\omega_0 t), \sin(m\omega_0 t) \rangle &= 0 \quad \forall n, m
+\end{align*}
+The squared norm of the basis vectors is mostly unity, with one exception: $\langle 1, 1 \rangle = (2/T)\int_{-T/2}^{T/2} 1 \,dt = 2$.
+
+Any function $f(t)$ in this space can be expressed as a linear combination of these basis vectors. This is analogous to writing a vector $\vec{v}$ as a sum of its components along an orthonormal basis, $\vec{v} = \sum c_i \hat{e}_i$, where the coefficient $c_i$ is found by the projection $c_i = \vec{v} \cdot \hat{e}_i$.
+Here, the expansion is the Fourier series:
+$$ f(t) = \frac{A_0}{2} \cdot 1 + \sum_{n=1}^{\infty} \left( A_n \cos(n\omega_0 t) + B_n \sin(n\omega_0 t) \right) $$
+To find the coefficients ($A_n, B_n$), we project our function $f(t)$ onto each basis vector using the inner product.
+
+\textbf{Derivation of $A_0$:}
+We project $f(t)$ onto the constant basis vector '1':
+$$ \langle f(t), 1 \rangle = \left\langle \frac{A_0}{2} + \sum (\dots), 1 \right\rangle $$
+By linearity, and because '1' is orthogonal to all sines and cosines over the interval, all inner products in the sum become zero. We are left with:
+$$ \langle f(t), 1 \rangle = \frac{A_0}{2} \langle 1, 1 \rangle = \frac{A_0}{2} \cdot 2 = A_0 $$
+Therefore, the coefficient $A_0$ is simply the projection of $f(t)$ onto the constant basis function:
+$$ A_0 = \langle f(t), 1 \rangle = \frac{2}{T} \int_{-T/2}^{T/2} f(t) \,dt $$
+The term $A_0/2$ in the series represents the average value (or DC offset) of the function. The factor of $1/2$ is present to make the formula for $A_n$ general for all $n \ge 0$, a choice of mathematical elegance.
+
+\textbf{Derivation of $A_n$ (for $n \ge 1$):}
+We project $f(t)$ onto the basis vector $\cos(m\omega_0 t)$:
+$$ \langle f(t), \cos(m\omega_0 t) \rangle = \left\langle \frac{A_0}{2} + \sum_{n=1}^\infty (A_n \cos(n\omega_0 t) + B_n \sin(n\omega_0 t)), \cos(m\omega_0 t) \right\rangle $$
+Due to orthogonality, the only term that survives the inner product is the one where $n=m$:
+$$ \langle f(t), \cos(m\omega_0 t) \rangle = A_m \langle \cos(m\omega_0 t), \cos(m\omega_0 t) \rangle = A_m \cdot 1 $$
+Thus, the coefficient $A_n$ is the projection of $f(t)$ onto the corresponding cosine basis function:
+$$ A_n = \frac{2}{T} \int_{-T/2}^{T/2} f(t)\cos(n\omega_0 t) \,dt $$
+
+\textbf{Derivation of $B_n$ (for $n \ge 1$):}
+Similarly, projecting $f(t)$ onto $\sin(m\omega_0 t)$ isolates the coefficient $B_m$:
+$$ B_n = \frac{2}{T} \int_{-T/2}^{T/2} f(t)\sin(n\omega_0 t) \,dt $$
+In summary, Fourier's theorem is a profound statement that any complex, anharmonic wave is physically equivalent to the sum of a (possibly infinite) series of pure harmonic waves. The coefficients of this series are precisely the projections of the original wave onto the orthogonal basis of sinusoids.
+\end{theorem}
+
+\subsection{Superposition of Harmonic Waves}
+We now consider the superposition of two harmonic waves, $\psi_1$ and $\psi_2$. The nature of the resultant wave, $\Psi = \psi_1 + \psi_2$, depends critically on the relationship between their frequencies.
+
+\subsubsection{Case 1: Superposition of Waves with the Same Frequency}
+
+\begin{theorem}[Interference of Co-frequency Waves]
+The superposition of two or more harmonic waves of the \textbf{same frequency} always produces another harmonic wave of that same frequency.
+Let $\psi_1 = A_1 e^{i(\vecbf{k}_1 \cdot \vecx - \omega t)}$ and $\psi_2 = A_2 e^{i(\vecbf{k}_2 \cdot \vecx - \omega t + \delta)}$. The resultant wave is:
+$$ \Psi = \psi_1 + \psi_2 = \left( A_1 e^{i\vecbf{k}_1 \cdot \vecx} + A_2 e^{i(\vecbf{k}_2 \cdot \vecx + \delta)} \right) e^{-i\omega t} $$
+This can be written as $\Psi = A_R(\vecx)e^{-i\omega t}$, where $A_R(\vecx) = A_1 e^{i\vecbf{k}_1 \cdot \vecx} + A_2 e^{i(\vecbf{k}_2 \cdot \vecx + \delta)}$ is a position-dependent complex amplitude. The resultant wave $\Psi$ is still harmonic with frequency $\omega$.
+\end{theorem}
+
+\begin{proposition}[Resultant Amplitude and Energy Redistribution]
+The intensity of the resultant wave is $I = |A_R|^2$. This is the formal basis of interference.
+$$ I = |A_1 e^{i\vecbf{k}_1 \cdot \vecx} + A_2 e^{i(\vecbf{k}_2 \cdot \vecx + \delta)}|^2 = A_1^2 + A_2^2 + 2A_1 A_2 \cos(\Delta\varphi(\vecx)) $$
+where $\Delta\varphi(\vecx) = (\vecbf{k}_1 - \vecbf{k}_2)\cdot\vecx - \delta$ is the phase difference.
+The energy of the resulting wave is not simply the sum of the initial energies. Instead, the interference term $2A_1 A_2 \cos(\Delta\varphi)$ describes a \textbf{redistribution of energy}. Energy is taken from regions of destructive interference (where the cosine is negative) and moved to regions of constructive interference (where the cosine is positive). The total energy over a large enough volume is conserved, but its spatial distribution is radically altered.
+\end{proposition}
+
+\subsubsection{Case 2: Superposition of Waves with Different Frequencies}
+
+\begin{theorem}
+The superposition of two harmonic waves of \textbf{different frequencies} ($\omega_1 \neq \omega_2$) always produces a wave that is \textbf{anharmonic}.
+Consider, at a fixed point $x=0$, two waves $\psi_1 = A_1 e^{-i\omega_1 t}$ and $\psi_2 = A_2 e^{-i\omega_2 t}$. The resultant wave is:
+$$ \Psi(t) = A_1 e^{-i\omega_1 t} + A_2 e^{-i\omega_2 t} $$
+This function is not of the form $A_R e^{-i\omega t}$ for some constant $\omega$. It is a periodic, but fundamentally anharmonic, oscillation.
+\end{theorem}
+
+\begin{proposition}[Beats, Carrier Waves, and Envelopes]
+A special, highly important case occurs when the frequencies are very close, $\omega_1 \approx \omega_2$. This gives rise to the phenomenon of \textbf{beats}. Let $\omega_1 = \bar{\omega} + \Delta\omega$ and $\omega_2 = \bar{\omega} - \Delta\omega$, where $\bar{\omega}$ is the average frequency and $\Delta\omega$ is half the difference. For equal amplitudes:
+$$ \Psi(t) = A(e^{-i(\bar{\omega}+\Delta\omega)t} + e^{-i(\bar{\omega}-\Delta\omega)t}) = A e^{-i\bar{\omega}t}(e^{-i\Delta\omega t} + e^{i\Delta\omega t}) $$
+$$ \Psi(t) = \underbrace{[2A \cos(\Delta\omega t)]}_{\text{Envelope, } A_{env}(t)} \underbrace{e^{-i\bar{\omega}t}}_{\text{Carrier}} $$
+This describes a wave with two distinct features:
+\begin{enumerate}
+    \item \textbf{The Carrier Wave:} A rapid harmonic oscillation at the average frequency, $\bar{\omega}$.
+    \item \textbf{The Envelope Wave:} A slowly varying amplitude, $A_{env}(t) = 2A\cos(\Delta\omega t)$, which modulates the carrier.
+\end{enumerate}
+The intensity heard or seen is $I \propto |A_{env}(t)|^2 = 4A^2\cos^2(\Delta\omega t)$. This intensity oscillates with a frequency of $2\Delta\omega$, known as the beat frequency. This phenomenon is the foundation for wave packets and the distinction between phase and group velocity. The energy is transported in "packets" that travel at the group velocity, which is the velocity of the envelope.
+\end{proposition}
+
+\section{Physical Properties of Waves in Media}
+
+\subsection{Energy, Power, and Irradiance}
+A wave is, fundamentally, a mechanism for transporting energy and momentum.
+\begin{definition}[Irradiance]
+For an electromagnetic wave, the rate of energy flow per unit area is given by the Poynting vector, $\vecbf{S} = \frac{1}{\mu_0}(\vecbf{E} \times \vecbf{B})$. The \textbf{irradiance} ($I$) is the time-average of the magnitude of $\vecbf{S}$. For a harmonic plane wave in vacuum, it is:
+$$ I = \langle |\vecbf{S}| \rangle = \frac{1}{2}c\epsilon_0 E_0^2 $$
+This confirms the crucial result that the energy carried by a wave is proportional to the square of its amplitude.
+\end{definition}
+
+\subsection{Interaction with Matter}
+
+\begin{definition}[Dispersion]
+\textbf{Dispersion} is the phenomenon in which the phase velocity of a wave is a function of its frequency, $v_p(\omega)$. This arises because the refractive index of a material, $n$, is itself a function of frequency, $n(\omega)$. The function $\omega(k)$ is the \textbf{dispersion relation}.
+$$ v_g = \frac{d\omega}{dk} = \frac{d(k v_p)}{dk} = v_p + k\frac{dv_p}{dk} $$
+This shows that group velocity differs from phase velocity whenever phase velocity depends on frequency/wavenumber. This frequency dependence is responsible for the separation of colors by a prism.
+\end{definition}
+
+\begin{definition}[Absorption]
+No material is perfectly transparent. \textbf{Absorption} describes the loss of energy as a wave propagates through a medium. This is modeled by allowing the wave number or refractive index to be a complex quantity, $\tilde{k} = k + i\kappa$. The wavefunction acquires an exponentially decaying term:
+$$ \psi(x,t) = A e^{-\kappa x} e^{i(kx - \omega t)} $$
+The intensity follows the Beer-Lambert Law, $I(x) = I_0 e^{-\alpha x}$, where $\alpha = 2\kappa$ is the absorption coefficient.
+\end{definition}
+
+\subsection{Polarization (for Transverse Waves)}
+
+\begin{definition}[Polarization States]
+For transverse waves like light, the direction of the oscillation of the $\vecbf{E}$-field in the plane perpendicular to $\vecbf{k}$ is its \textbf{polarization}.
+\begin{itemize}
+    \item \textbf{Linear Polarization:} The $\vecbf{E}$-field oscillates along a fixed line.
+    \item \textbf{Circular Polarization:} The $\vecbf{E}$-field vector rotates in a circle. This occurs when the x and y components of the field have equal amplitude but are $90^\circ$ out of phase.
+    \item \textbf{Elliptical Polarization:} The most general case. The $\vecbf{E}$-field vector traces an ellipse.
+\end{itemize}
+The mathematical description of polarization is elegantly handled by Jones calculus, where the polarization state is represented by a two-component complex vector (a Jones vector).
+\end{definition}
+
+\section{The Superposition of N Harmonic Waves: From Incoherence to Interference}
+
+The Principle of Superposition finds its most powerful expression when we consider the collective effect of not two, but N individual wave sources. This analysis reveals the profound distinction between everyday, incoherent light and the highly structured, coherent light of a laser. The core of the matter lies in how the phases of the constituent waves are related.
+
+\begin{theorem}[Superposition of N Harmonic Waves]
+Consider N sources, each emitting a harmonic wave of the same frequency $\omega$ and amplitude $E_0$. At a given point in space, the electric field of the n-th wave is described by its phasor $\tilde{E}_n = E_0 e^{i\varepsilon_n}$, where $\varepsilon_n$ is its phase. The total electric field is the vector sum of these individual phasors:
+$$ \tilde{E}_T = \sum_{n=1}^{N} \tilde{E}_n = E_0 \sum_{n=1}^{N} e^{i\varepsilon_n} $$
+The observable quantity, the irradiance $I$, is proportional to the time-average of the squared magnitude of this total field, $I \propto \langle |E_T|^2 \rangle$.
+$$ I \propto \left\langle \left| E_0 \sum_{n=1}^{N} e^{i\varepsilon_n} \right|^2 \right\rangle = E_0^2 \left\langle \left( \sum_{n=1}^{N} e^{i\varepsilon_n} \right) \left( \sum_{m=1}^{N} e^{-i\varepsilon_m} \right) \right\rangle $$
+Expanding this product of sums yields two types of terms:
+$$ I \propto E_0^2 \left\langle \sum_{n=1}^{N} |e^{i\varepsilon_n}|^2 + \sum_{n \neq m}^{N} e^{i(\varepsilon_n - \varepsilon_m)} \right\rangle $$
+The first sum involves terms where $n=m$, resulting in $|e^{i\varepsilon_n}|^2 = 1$. This sum simply counts the number of sources, N. The second, double summation contains all the cross-terms, known as the \textbf{interference terms}.
+$$ I \propto E_0^2 \left\langle N + \sum_{n \neq m}^{N} e^{i(\varepsilon_n - \varepsilon_m)} \right\rangle $$
+The physical outcome depends entirely on the behavior of the phases $\varepsilon_n$ within the time-averaging window.
+\end{theorem}
+
+\subsection{Case 1: Incoherent Superposition (e.g., Thermal Light)}
+
+\begin{definition}[Incoherence]
+Sources are defined as \textbf{incoherent} if the phase of each emitter, $\varepsilon_n(t)$, fluctuates randomly and independently over time scales much shorter than the observation time. This is characteristic of light from conventional sources like the sun, flames, or incandescent bulbs, where light is produced by countless independent atomic emissions.
+\end{definition}
+
+\begin{proposition}[Intensity of N Incoherent Sources]
+For incoherent sources, the phase difference $(\varepsilon_n - \varepsilon_m)$ for any pair of distinct sources ($n \neq m$) is a rapidly and randomly fluctuating variable. Over any realistic measurement time, the complex exponential $e^{i(\varepsilon_n(t) - \varepsilon_m(t))}$ will average to zero, as its real part ($\cos(\dots)$) and imaginary part ($\sin(\dots)$) will sample all values between -1 and 1 with equal probability.
+$$ \left\langle e^{i(\varepsilon_n - \varepsilon_m)} \right\rangle = 0 \quad \text{for } n \neq m $$
+Consequently, the entire double summation of interference terms vanishes. The only terms that survive the time-average are the $N$ diagonal terms. The resulting irradiance is therefore:
+$$ I_{incoherent} \propto E_0^2 \langle N + 0 \rangle = N E_0^2 $$
+Letting $I_1 = E_0^2$ be the intensity of a single source, we arrive at the fundamental rule for incoherent light:
+$$ I_{incoherent} = N I_1 $$
+For incoherent sources, the total intensity is simply the sum of the individual intensities. The energy contributions of the sources add up linearly. This is our everyday experience: turning on a second, identical lamp in a room makes the room twice as bright.
+\end{proposition}
+
+\subsection{Case 2: Coherent Superposition (e.g., Laser Light)}
+
+\begin{definition}[Coherence]
+Sources are defined as \textbf{coherent} if their phase differences, $(\varepsilon_n - \varepsilon_m)$, remain constant in time. This is the idealized situation for phenomena like the interference from a double-slit illuminated by a plane wave, or the light emitted by different parts of a laser beam. In the simplest case of perfect coherence, all phases are identical: $\varepsilon_1 = \varepsilon_2 = \dots = \varepsilon_N$.
+\end{definition}
+
+\begin{proposition}[Intensity of N Coherent Sources]
+When all phases are locked together, the interference terms do not average to zero. In the case of perfect phase-locking ($\varepsilon_n = \varepsilon_m$ for all n, m), the phase difference is zero, and $e^{i(\varepsilon_n - \varepsilon_m)} = e^{i0} = 1$.
+The total field phasor becomes a simple sum:
+$$ \tilde{E}_T = E_0 \sum_{n=1}^{N} e^{i\varepsilon_1} = N E_0 e^{i\varepsilon_1} $$
+The magnitude of the total field is simply $N$ times the magnitude of a single field. The resulting irradiance is proportional to the square of this magnitude:
+$$ I_{coherent} \propto |E_T|^2 = |N E_0 e^{i\varepsilon_1}|^2 = N^2 E_0^2 $$
+Again, letting $I_1 = E_0^2$, we find the extraordinary result for coherent light:
+$$ I_{coherent} = N^2 I_1 $$
+For coherent sources, the total intensity scales with the \textbf{square} of the number of emitters. This is because the \textbf{amplitudes} add first, and only then is the total squared to find the intensity. The $N^2$ dependence is the hallmark of constructive interference and explains the immense intensity of lasers, which are, in essence, vast collections of atoms emitting photons in a highly coherent manner. Two identical, coherent laser beams overlapping in phase will produce an intensity four times that of a single beam, not two.
+\end{proposition}
+
+\begin{remark}[The General Case and Contrast]
+The expression $I \propto N + \sum_{n \neq m} \cos(\varepsilon_n - \varepsilon_m)$ is the general formula for interference. The incoherence and perfect coherence cases are the two idealized extremes. Most real-world scenarios fall somewhere in between, in the domain of \textbf{partial coherence}. The "visibility" or contrast of the interference fringes is a direct measure of the degree of coherence between the sources.
+\end{remark}
+
+%====================================================================
+% FIN DEL BLOQUE
+%====================================================================

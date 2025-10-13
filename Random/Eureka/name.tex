@@ -1,0 +1,108 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage{pgfplots}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{mdframed}
+\usepackage{amsthm}
+\usepackage{physics}
+\usepackage{derivative}
+\usepackage{hyperref}
+\usepackage{wrapfig}
+\renewcommand{\theenumi}{\roman{enumi}}
+
+\geometry{a4paper, left=2cm, right=2cm, top=1cm, bottom=2cm}
+
+\pgfplotsset{compat=1.18}
+\begin{document}
+
+\begin{minipage}{0.7\textwidth}
+    \small \textbf{LABORATORIO DE FENOMENOS COLECTIVOS}  \\
+    \small {Facultad de Ciencias, Universidad Nacional Autónoma de México} \\
+    \small {Profesor: Eduardo Morales Gamboa} \\
+    \small {Fecha de entrega: 24 de Octubre del 2024} \\
+    \small {Nombre completo: Andrés López González} \\
+    \small {Eureka}
+\end{minipage}
+\hfill
+\begin{minipage}{0.12\textwidth}
+    \includegraphics[width=\linewidth]{logo_universidad}
+\end{minipage}
+
+\begin{document}
+
+\section*{Análisis de la Fuerza de Empuje y la Lectura en la Báscula}
+
+
+
+\subsubsection*{Problema}
+En este experimento, se coloca un recipiente con agua bidestilada sobre una báscula previamente reseteada a cero con el recipiente vacío. Luego, se introduce un trozo de plastilina suspendido de un alambre dentro del agua, sin que toque ni el fondo ni las paredes del recipiente. A partir de esto, analizaremos lo que ocurre con la lectura de la báscula en varias situaciones.
+
+\subsubsection*{1. ¿Por qué el aumento registrado es igual al volumen de la plastilina?}
+
+Cuando la plastilina es introducida en el agua, esta desplaza una cantidad de agua equivalente a su volumen, de acuerdo con el \textbf{principio de Arquímedes}. Dicho principio establece que el empuje que el fluido ejerce sobre un objeto sumergido es igual al peso del fluido desplazado.
+
+La fricción ejercida por el agua desplazada sobre las paredes del recipiente se transfiere al sistema completo (el recipiente sobre la báscula). La lectura de la báscula aumenta precisamente en el peso del agua desplazada, que es igual a:
+
+\[
+\Delta W = \rho_{\text{agua}} \cdot V_{\text{plastilina}} \cdot g
+\]
+
+Donde:
+\begin{itemize}
+    \item \( \Delta W \) es el aumento en la lectura de la báscula.
+    \item \( \rho_{\text{agua}} \) es la densidad del agua (1 g/cm³).
+    \item \( V_{\text{plastilina}} \) es el volumen de la plastilina.
+    \item \( g \) es la aceleración gravitacional.
+\end{itemize}
+
+Dado que la densidad del agua es de 1 g/cm³, y \( g \approx 9.8 \, \text{m/s}^2 \), el peso del agua desplazada es numéricamente igual al volumen de la plastilina en unidades de cm³. Por lo tanto, el aumento en la lectura de la báscula es igual al volumen de la plastilina en cm³.
+
+\subsubsection*{2. ¿Cómo hacer que la lectura sea numéricamente igual a la densidad del líquido?}
+
+Para que la lectura de la báscula sea numéricamente igual a la densidad del líquido en el vaso, salvo un factor de 10, se sigue el siguiente procedimiento:
+
+\begin{itemize}
+    \item Se introduce un objeto (como la plastilina) cuyo volumen \( V \) sea conocido.
+    \item La lectura de la báscula \( \Delta W \) será el peso del agua desplazada, que es:
+    \[
+    \Delta W = \rho_{\text{líquido}} \cdot V \cdot g
+    \]
+    \item La densidad del líquido se puede expresar como:
+    \[
+    \rho_{\text{líquido}} = \frac{\Delta W}{V \cdot g}
+    \]
+    \item Si usamos un volumen estándar de \( 100 \, \text{cm}^3 \) para el objeto, el cambio en la lectura \( \Delta W \) será aproximadamente igual a la densidad del líquido multiplicada por un factor de 10, ya que:
+    \[
+    \rho_{\text{líquido}} \propto \frac{\Delta W}{V}
+    \]
+\end{itemize}
+
+\subsubsection*{3. ¿Qué ocurre si la plastilina se deja reposar en el fondo del vaso?}
+
+Si la plastilina se deja reposando en el fondo del vaso, la báscula registrará el peso completo de la plastilina más el peso del agua en el vaso. Esto ocurre porque, al reposar en el fondo, la plastilina ya no está suspendida por el alambre, por lo que su peso completo se transfiere a la báscula.
+
+La lectura total en la báscula será:
+
+\[
+W_{\text{total}} = W_{\text{agua}} + W_{\text{plastilina}}
+\]
+
+Esto se debe a que, al reposar en el fondo, toda la fuerza ejercida por la plastilina se transfiere al sistema, en lugar de estar compensada parcialmente por el empuje cuando estaba suspendida.
+
+\subsubsection*{4. ¿Qué indica la báscula si se usa un objeto que flota?}
+
+Si en lugar de la plastilina se usa un objeto que flota, la báscula registrará el peso total del objeto, aunque solo una fracción de su volumen esté sumergido. De acuerdo con el \textbf{principio de Arquímedes}, el peso del agua desplazada es igual al peso del objeto que flota.
+
+La lectura de la báscula será igual al peso del objeto que flota:
+
+\[
+\Delta W = W_{\text{objeto flotante}}
+\]
+
+El empuje hacia arriba que actúa sobre el objeto flotante es igual al peso del agua desplazada, que, en este caso, es igual al peso del objeto. La báscula, entonces, registra este peso completo, no el volumen del agua desplazada.
+
+\end{document}

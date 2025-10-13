@@ -1,0 +1,435 @@
+\chapter{Fundamental Algorithms of Supervised Learning}
+\label{chap:supervised_algorithms}
+
+Having established the theoretical framework of classification—the what and the why—we now transition to the operational core of machine learning: the algorithms themselves. This chapter explores the "how": the specific, step-by-step procedures that a machine can follow to learn a decision boundary from data. We will dissect three foundational algorithms of supervised learning, each representing a distinct and influential philosophy for solving the classification problem.
+
+First, we will examine the \textbf{Perceptron}, a beautiful and historically significant model inspired by the architecture of a biological neuron. It introduces the core concepts of iterative learning and error correction. Second, we will develop \textbf{Logistic Regression}, a powerful model that reframes classification not as a hard decision, but as a problem of inferring probabilities, grounding our approach in the rigorous language of statistics. Finally, we will explore the elegant geometry of \textbf{Support Vector Machines (SVM)}, an optimization-based algorithm that seeks the most robust possible separation between classes by maximizing a "margin" of safety.
+
+Through these three pillars, we will build a deep intuition for the different ways a decision function can be learned, laying the groundwork for the more complex models that dominate the modern landscape.
+
+\section{The Perceptron: A Bio-Inspired Model}
+\label{sec:perceptron}
+The story of modern machine learning arguably begins with an attempt to mathematically model the single most powerful learning machine known: the human brain. The Perceptron is the archetypal example of this bio-inspired approach, a simple yet powerful algorithm that laid the groundwork for the development of neural networks.
+
+\subsection*{Historical and Biological Context: The McCulloch-Pitts Neuron}
+The intellectual precursor to the Perceptron was the work of Warren McCulloch and Walter Pitts in 1943. They proposed a simplified mathematical model of a biological neuron, known as a threshold logic unit. Their model abstracted the complex biochemistry of a neuron into a simple computational device:
+\begin{itemize}
+    \item A neuron receives multiple input signals (from the dendrites).
+    \item These signals are aggregated in the cell body.
+    \item If the total aggregated signal exceeds a certain internal threshold, the neuron "fires," sending a single, uniform output signal down its axon.
+\end{itemize}
+The McCulloch-Pitts neuron was a static model; it could compute logical functions like AND, OR, and NOT, but it could not learn. It was a description of a circuit, not a learning machine.
+
+\subsection*{Frank Rosenblatt's Perceptron: The First Learning Algorithm}
+The critical breakthrough came in 1957 when psychologist Frank Rosenblatt introduced the \textbf{Perceptron}. He took the static McCulloch-Pitts model and endowed it with a crucial missing piece: a simple, elegant rule for learning. Rosenblatt's Perceptron was not just a model of a neuron, but an algorithm that could automatically adjust its own parameters based on experience, thereby learning to classify patterns. This was the first algorithm that we would recognize today as a true machine learning model.
+
+\subsection*{Architecture of the Model}
+The architecture of a single Perceptron unit is a direct formalization of the McCulloch-Pitts neuron.
+
+\subsubsection*{Inputs, Weights, and the Net Input Function}
+A Perceptron considers an object represented by a feature vector $x \in \mathbb{R}^n$. Each feature $x_j$ is an input to the neuron. The key insight is that not all inputs are equally important. The model assigns a \textbf{weight}, $w_j$, to each feature, representing its synaptic strength or importance in the decision-making process.
+
+The neuron computes a \textbf{net input}, denoted by $z$, which is simply the weighted sum of all the input features:
+$$ z = w_1 x_1 + w_2 x_2 + \dots + w_n x_n $$
+This is a linear combination of the features. Using vector notation, this can be expressed more concisely as a dot product:
+$$ z = w^T x $$
+where $w$ and $x$ are column vectors. This net input $z$ represents the total signal arriving at the neuron's "cell body."
+
+\subsubsection*{The Bias Term ($w_0$)}
+The equation $z = w^T x$ defines a hyperplane that must pass through the origin of the feature space. To give the model more flexibility, we introduce a \textbf{bias} term, $w_0$. The net input function becomes:
+$$ z = w_0 x_0 + w_1 x_1 + \dots + w_n x_n = \sum_{i=0}^{n} w_i x_i = w^T x $$
+where we have augmented our feature vector $x$ by prepending a constant value $x_0 = 1$. The bias weight $w_0$ effectively acts as an intercept term, allowing the decision hyperplane to shift away from the origin.
+
+\subsubsection*{The Activation Function: Heaviside Step Function}
+Once the net input $z$ is calculated, it is passed through a non-linear \textbf{activation function}, $g(z)$, which determines the neuron's final output. The original Perceptron uses a simple \textbf{Heaviside step function}, which acts as a threshold:
+$$ \hat{y} = g(z) = \begin{cases} 
+      1 & \text{if } z \ge 0 \\
+      -1 & \text{if } z < 0 
+   \end{cases} $$
+This function models the "firing" of the neuron. If the weighted sum of inputs is greater than or equal to the threshold (which is implicitly incorporated into the bias term), the neuron outputs a class label of 1. Otherwise, it outputs -1. The combination of the linear net input and the step activation function creates a linear classifier.
+
+\subsection*{The Perceptron Learning Algorithm}
+The genius of Rosenblatt's model lies in its learning rule. It is an error-driven, online algorithm that adjusts the weights iteratively. The core principle is remarkably simple: if the model's prediction for a training sample is correct, the weights are left unchanged. If the prediction is incorrect, the weights are adjusted to move the decision boundary in a direction that makes the prediction more likely to be correct in the future.
+
+\subsubsection*{Hyperparameters: The Levers of Learning}
+The learning process is controlled by two key \textbf{hyperparameters}, which are set by the practitioner before training begins:
+\begin{itemize}
+    \item \textbf{Epochs (\textit{epochs} or \textit{n\_iter})}: An epoch is defined as one complete pass through all the training samples in the dataset. The algorithm typically needs to see the data multiple times to converge on a good solution, so the number of epochs is a critical parameter. Too few epochs, and the model may not have learned enough (underfitting); too many may not be necessary if the model has already converged.
+    \item \textbf{The Learning Rate ($\eta$)}: This is perhaps the most important hyperparameter in many machine learning algorithms. It is a small positive scalar (typically between 0.0 and 1.0) that controls the magnitude of the weight adjustments. It can be thought of as the "step size" the algorithm takes as it searches for the optimal weight configuration. A very small $\eta$ will result in tiny weight updates and a slow, cautious convergence. A very large $\eta$ will cause large, drastic weight updates, which can cause the algorithm to "overshoot" the optimal solution and oscillate wildly, potentially failing to converge at all.
+\end{itemize}
+
+\subsubsection*{The Weight Update Rule}
+The learning process can be summarized as follows:
+\begin{enumerate}
+    \item Initialize the weights $w$ to small random numbers or to zero.
+    \item For each training sample $x^{(i)}$ with its true label $y^{(i)}$:
+    \begin{enumerate}
+        \item Calculate the predicted output $\hat{y}^{(i)}$ using the step function.
+        \item Calculate the weight update for each weight $w_j$:
+        $$ \Delta w_j = \eta(y^{(i)} - \hat{y}^{(i)})x_j^{(i)} $$
+    \end{enumerate}
+    \item Update all weights simultaneously: $w_j \leftarrow w_j + \Delta w_j$.
+    \item Repeat step 2 for a specified number of epochs, or until the algorithm converges.
+\end{enumerate}
+
+The intuition behind the update rule is powerful. The term $(y^{(i)} - \hat{y}^{(i)})$ is the error.
+\begin{itemize}
+    \item If the prediction is correct, $y^{(i)} = \hat{y}^{(i)}$, the error is 0, and the weights do not change.
+    \item If the model predicts -1 for a sample that is actually +1, the error is $(1 - (-1)) = 2$. The update becomes $\Delta w_j = 2\eta x_j^{(i)}$. The weight vector $w$ is pushed \textit{in the direction} of the feature vector $x^{(i)}$, making a future dot product $w^T x^{(i)}$ larger and thus more likely to be positive.
+    \item If the model predicts +1 for a sample that is actually -1, the error is $(-1 - 1)) = -2$. The update becomes $\Delta w_j = -2\eta x_j^{(i)}$. The weight vector $w$ is pushed in the \textit{opposite direction} of $x^{(i)}$, making the dot product smaller and more likely to be negative.
+\end{itemize}
+
+\subsection*{Limitations and Extensions}
+The Perceptron is a beautiful and foundational algorithm, but it has a severe limitation. Rosenblatt himself proved that the learning rule is guaranteed to converge and find a separating hyperplane, but \textit{only if the two classes are linearly separable}. If the data cannot be perfectly separated by a straight line, the Perceptron algorithm will never converge; the weights will continue to be updated indefinitely as it fruitlessly tries to correct misclassifications. This limitation, famously highlighted by Marvin Minsky and Seymour Papert in their 1969 book \textit{Perceptrons}, led to a significant decline in neural network research, an era known as the first "AI winter."
+
+For multi-class classification problems, the binary Perceptron can be adapted using the \textbf{One-versus-All (OvA)} technique. For a problem with $K$ classes, $K$ separate Perceptron classifiers are trained. The $k$-th classifier is trained to distinguish class $\alpha_k$ (as the "positive" class) from all other classes combined (as the "negative" class).
+
+\section{Logistic Regression: Classification via Probability}
+\label{sec:logistic_regression}
+The Perceptron's weaknesses—its failure to converge on non-separable datasets and its output of "hard," unconfident predictions—motivated the development of more robust classifiers. \textbf{Logistic Regression} is a quintessential example. Despite its name, it is a classification algorithm, not a regression one. It overcomes the Perceptron's limitations by reframing the problem in probabilistic terms. Instead of asking "Is this sample class 1 or -1?", it asks, "What is the probability that this sample belongs to class 1?".
+
+\subsection*{Mathematical Foundation: From Linearity to Probability}
+The core challenge is to connect the linear net input function, $z = w^T x$, which is unbounded and can range from $-\infty$ to $+\infty$, to a probability, which must be constrained between 0 and 1. This is achieved through a series of elegant mathematical transformations.
+
+\begin{enumerate}
+    \item \textbf{The Odds Ratio}: We start by considering the probability of the positive class, $p = P(y=1|x)$. We can express this in terms of the \textbf{odds ratio}, which is the probability of the event happening divided by the probability of it not happening. The odds can range from 0 to $\infty$.
+    $$ \text{odds} = \frac{p}{1-p} $$
+    \item \textbf{The Logit Function}: To map this to the full range of real numbers, we take the natural logarithm of the odds. This transformation is known as the \textbf{logit function}.
+    $$ \text{logit}(p) = \log\left(\frac{p}{1-p}\right) $$
+    The logit function takes a probability $p \in (0, 1)$ and maps it to a value in $(-\infty, \infty)$.
+    \item \textbf{Connecting to the Linear Model}: Now that we have a function that spans the entire real number line, we can hypothesize that the log-odds are a linear function of our input features:
+    $$ \text{logit}(p(y=1|x)) = w_0 x_0 + w_1 x_1 + \dots + w_n x_n = w^T x $$
+\end{enumerate}
+
+\subsection*{The Sigmoid Function: The Inverse of the Logit}
+Our goal is to find the probability $p$. To do this, we must solve the above equation for $p$. This requires finding the inverse of the logit function. The result is the celebrated \textbf{logistic sigmoid function}, denoted by $\phi(z)$:
+$$ \phi(z) = \frac{1}{1 + e^{-z}} $$
+where $z = w^T x$. The sigmoid function takes any real-valued input $z$ and squashes it to a value between 0 and 1, making it a perfect function to model a probability. The output of the logistic regression model is $\hat{p} = \phi(w^T x)$.
+
+\begin{remark}[Comparing Sigmoid and Heaviside Activation Functions]
+The transition from the Perceptron's Heaviside step function to Logistic Regression's sigmoid function is a pivotal moment in the history of machine learning.
+\begin{itemize}
+    \item The \textbf{Heaviside function} is a "hard" classifier. Its output is a discrete label, and its derivative is zero almost everywhere, making it unsuitable for the gradient-based optimization methods that underpin modern machine learning.
+    \item The \textbf{sigmoid function} is a "soft" classifier. Its output is a continuous probability, which provides a measure of confidence. Critically, it is smooth and differentiable everywhere. This differentiability allows us to define a continuous cost function (like the log-loss) and use powerful optimization algorithms like Gradient Descent to find the optimal weight vector $w$ that minimizes this cost. This moves us from the Perceptron's simple error-correcting rule to a more principled framework of function optimization.
+\end{itemize}
+\end{remark}
+
+\section{Support Vector Machines (SVM)}
+\label{sec:svm}
+Our third fundamental algorithm, the \textbf{Support Vector Machine (SVM)}, approaches the classification problem from yet another perspective: optimal geometric separation. While the Perceptron is content to find \textit{any} separating hyperplane and Logistic Regression models probabilities, the SVM seeks to find the \textit{one best} hyperplane—the one that maximizes the distance to the nearest data points of any class.
+
+\subsection*{The Principle of Maximum Margin}
+For a linearly separable dataset, there can be an infinite number of hyperplanes that perfectly separate the two classes. The SVM is built on the intuition that the most robust and generalizable separator will be the one that is as far as possible from the data points of both classes. This distance is called the \textbf{margin}. The SVM's objective is to find the hyperplane that maximizes this margin.
+
+\begin{itemize}
+    \item \textbf{The Margin}: The margin is the "street" or gap between the two classes, defined by two parallel hyperplanes. The decision boundary is the hyperplane that lies in the middle of this street.
+    \item \textbf{Support Vectors}: The data points from each class that lie exactly on the edge of the margin are called the \textbf{support vectors}. These are the most critical data points in the dataset, as they are the only ones that define the position and orientation of the optimal hyperplane. All other data points could be removed without changing the solution.
+    \item \textbf{Hard vs. Soft Margin}: The original formulation, known as the \textbf{hard-margin SVM}, requires that all data points are perfectly classified and lie outside the margin. This is often impossible in real-world, noisy datasets. The \textbf{soft-margin SVM} formulation is more practical. It introduces "slack variables" that allow a certain number of points to be misclassified or to fall within the margin, with an associated penalty. This makes the algorithm robust to outliers and applicable to non-linearly separable data.
+\end{itemize}
+
+\subsection*{Handling Non-Linearity: The Kernel Trick}
+The true power of SVMs is revealed when dealing with datasets that are not linearly separable. The SVM can create highly non-linear decision boundaries using a mathematical sleight-of-hand known as the \textbf{kernel trick}.
+
+\subsubsection*{Mathematical Motivation: The Power of Higher Dimensions}
+Imagine a dataset where one class of points forms a circle inside a ring of points from another class. No straight line can separate them in two dimensions. However, if we could project this 2D data into a third dimension—for example, by defining a new feature $z = x_1^2 + x_2^2$—the data would become linearly separable by a simple plane.
+
+\subsubsection*{The Conceptual "Trick"}
+The problem with this approach is that explicitly projecting data into very high-dimensional spaces can be computationally intractable. The mathematical formulation of the SVM (specifically, its dual formulation) has a remarkable property: all its calculations depend only on the \textbf{dot products} between pairs of feature vectors, $x^{(i)T} x^{(j)}$.
+
+The kernel trick leverages this. A \textbf{kernel} is a function, $K(x^{(i)}, x^{(j)})$, that computes the dot product of two vectors as if they had been projected into a higher-dimensional space, $\phi(x^{(i)})^T \phi(x^{(j)})$, but \textit{without ever actually performing the projection} $\phi$. It is a computational shortcut that allows us to operate in an implicitly high-dimensional feature space at a much lower cost.
+
+\subsubsection*{Common Kernel Functions}
+The choice of kernel determines the shape of the decision boundary.
+\begin{itemize}
+    \item \textbf{Linear Kernel}: $K(x_i, x_j) = x_i^T x_j$. This is the default case, resulting in a linear classifier.
+    \item \textbf{Polynomial Kernel}: $K(x_i, x_j) = (\gamma x_i^T x_j + r)^d$. This creates polynomial decision boundaries.
+    \item \textbf{Radial Basis Function (RBF) Kernel}: $K(x_i, x_j) = \exp(-\gamma \|x_i - x_j\|^2)$. This is a very popular and powerful kernel that can create complex, localized decision boundaries. It maps the features into an infinite-dimensional space.
+\end{itemize}
+
+Finally, while SVMs were designed for classification (Support Vector Classification, or SVC), the core idea of finding a hyperplane that is defined by a subset of the data can be adapted for regression problems (Support Vector Regression, or SVR). In SVR, the goal is to find a hyperplane that fits the data such that as many points as possible lie \textit{within} the margin "street," while minimizing errors for points that fall outside it.
+
+%placeholder
+\section{Linear Regression: Predicting Continuous Values}
+\label{sec:linear_regression}
+While our focus has thus far been on classification—the prediction of discrete class labels—an equally important task in supervised learning is \textbf{regression}: the prediction of continuous numerical values. The foundational algorithm for this task is Linear Regression. It serves as an entry point into regression modeling and provides the mathematical basis for many more advanced techniques.
+
+The objective of linear regression is to model the relationship between a set of independent features, $X$, and a continuous dependent target variable, $y$. The model assumes this relationship is linear. For a single feature $x_1$, this is the familiar equation of a line:
+$$ \hat{y} = w_0 + w_1 x_1 $$
+For a multi-dimensional feature vector $x \in \mathbb{R}^n$, the model is a hyperplane:
+$$ \hat{y} = \sum_{i=0}^{n} w_i x_i =: w^T x $$
+where, as before, we augment the feature vector $x$ with $x_0 = 1$ to incorporate the bias (intercept) term $w_0$ into the weight vector $w$. The learning process consists of finding the optimal weight vector $w$ that makes the model's predictions $\hat{y}$ as close as possible to the true target values $y$.
+
+\subsection*{Solving Linear Regression: Ordinary Least Squares (OLS)}
+The most common method for finding the optimal weights is \textbf{Ordinary Least Squares (OLS)}. The principle is to find the line (or hyperplane) that minimizes the sum of the squared differences between the predicted values and the actual values. This difference, $y^{(i)} - \hat{y}^{(i)}$, is called the residual. The function we seek to minimize is the Sum of Squared Residuals (SSR), often called the cost function $J(w)$:
+$$ J(w) = \sum_{i=1}^{m} (y^{(i)} - \hat{y}^{(i)})^2 $$
+where $m$ is the number of training samples.
+
+\subsubsection*{The Analytical Solution: The Normal Equations}
+For linear regression, this cost function is convex, meaning it has a single global minimum. This allows us to find the optimal weights analytically using calculus and linear algebra. Let $X$ be the $m \times (n+1)$ design matrix, where each row is a training sample $x^{(i)T}$, and let $y$ be the $m \times 1$ vector of true target values. The cost function in matrix notation is:
+$$ J(w) = (y - Xw)^T (y - Xw) $$
+To find the minimum, we take the gradient of $J(w)$ with respect to $w$ and set it to zero:
+$$ \nabla_w J(w) = 0 $$
+Expanding the cost function and computing the gradient yields:
+$$ \nabla_w (y^T y - 2y^T Xw + w^T X^T Xw) = -2X^T y + 2X^T Xw = 0 $$
+Solving for the weight vector $w$, we arrive at the \textbf{Normal Equations}:
+$$ X^T Xw = X^T y $$
+$$ \hat{w} = (X^T X)^{-1} X^T y $$
+This provides a direct, closed-form solution for the optimal weights. However, it requires the computation of the matrix inverse $(X^T X)^{-1}$, which is computationally expensive (approximately $O(n^3)$) and numerically unstable if the matrix is singular or ill-conditioned.
+
+\subsubsection*{The Iterative Solution: (Batch) Gradient Descent}
+For large datasets or ill-conditioned problems, an iterative optimization approach like \textbf{Gradient Descent} is preferred. As discussed previously, Gradient Descent starts with an initial guess for the weights and iteratively adjusts them in the direction opposite to the gradient of the cost function. The update rule for each weight $w_j$ is:
+$$ w_j \leftarrow w_j - \eta \frac{\partial J(w)}{\partial w_j} $$
+The partial derivative of the OLS cost function with respect to a single weight $w_j$ is:
+$$ \frac{\partial J(w)}{\partial w_j} = -2 \sum_{i=1}^{m} (y^{(i)} - \hat{y}^{(i)}) x_j^{(i)} $$
+This iterative process continues until the algorithm converges to the minimum of the cost function.
+
+\begin{mdframed}[
+    frametitle={Key Distinction: Perceptron Rule vs. Gradient Descent (SGD) on OLS},
+    roundcorner=5pt,
+    linecolor=blue!50!black,
+    frametitlerule=true,
+    backgroundcolor=blue!5!white
+]
+\textbf{The core difference lies in the source of the error term, $\mathbf{(y^{(i)} - \hat{y}^{(i)})}$, and the mathematical justification for the update.}
+
+\vspace{0.5em}
+
+\begin{itemize}
+    \item[$\mathbf{1.}$] \textbf{Origin and Loss Function:}
+    The SGD rule for Linear Regression (OLS) is a true \textbf{Gradient Descent} step because the update is derived directly from the negative gradient of the differentiable, convex Squared Loss Function: $J(\mathbf{w}) = \frac{1}{2}(y - \hat{y})^2$.
+
+    \item[$\mathbf{2.}$] \textbf{The Error Term:}
+    The Perceptron learning rule is a \textbf{heuristic update} proportional to the classification error.
+    \begin{itemize}
+        \item \textbf{SGD (OLS) Error:} The error term, $\mathbf{(y^{(i)} - \hat{y}^{(i)})}$, is a \textbf{continuous real number} representing the difference between the actual target and the model's \textit{linear output}.
+        \item \textbf{Perceptron Error:} The error term, $\mathbf{(y^{(i)} - \hat{y}_{\text{pred}}^{(i)})}$, is a \textbf{discrete value} (e.g., $0, \pm 2$) that only triggers an update when a sample is \textit{misclassified}.
+    \end{itemize}
+
+    \textit{Although the update formulas share the same structure ($\mathbf{w} \leftarrow \mathbf{w} + \eta \cdot \text{Error} \cdot \mathbf{x}$), the Perceptron's dependence on a non-differentiable activation function (step function) means its rule is a specific classification algorithm, not the standard application of Gradient Descent to the Squared Loss function.}
+\end{itemize}
+\end{mdframed}
+
+
+\subsection*{Regularization: Combating Overfitting and Multicollinearity}
+In practice, standard linear regression can suffer from two major issues:
+\begin{itemize}
+    \item \textbf{Overfitting}: If the model has many features (high dimensionality), it may learn the training data too well, capturing noise instead of the underlying trend. This leads to large weight values and poor performance on new data.
+    \item \textbf{Multicollinearity}: If features are highly correlated, the matrix $X^T X$ becomes ill-conditioned or singular, making the OLS solution unstable or impossible to compute.
+\end{itemize}
+\textbf{Regularization} is a technique used to address these problems by adding a penalty term to the cost function. This penalty discourages the model from assigning excessively large values to the weights.
+
+\subsubsection*{Ridge Regression (L2 Regularization)}
+Ridge Regression adds a penalty proportional to the square of the magnitude of the weight coefficients (the L2 norm). The cost function becomes:
+$$ J_{Ridge}(w) = \sum_{i=1}^{m} (y^{(i)} - \hat{y}^{(i)})^2 + \alpha \sum_{j=1}^{n} w_j^2 = \text{MSE}(w) + \alpha \|w\|_2^2 $$
+The hyperparameter $\alpha \ge 0$ controls the strength of the regularization. A larger $\alpha$ forces the weights to be smaller, reducing model complexity. Ridge is effective at handling multicollinearity and preventing overfitting.
+
+\subsubsection*{Lasso Regression (L1 Regularization)}
+Lasso (Least Absolute Shrinkage and Selection Operator) Regression adds a penalty proportional to the absolute value of the weight coefficients (the L1 norm):
+$$ J_{Lasso}(w) = \sum_{i=1}^{m} (y^{(i)} - \hat{y}^{(i)})^2 + \alpha \sum_{j=1}^{n} |w_j| = \text{MSE}(w) + \alpha \|w\|_1 $$
+The L1 penalty has a crucial property: it can shrink some weight coefficients to be exactly zero. This means Lasso can perform automatic \textbf{feature selection}, effectively removing irrelevant features from the model.
+
+\subsubsection*{Elastic Net}
+Elastic Net is a compromise between Ridge and Lasso. It adds both the L1 and L2 penalties to the cost function, controlled by a mixing parameter. It combines the feature selection property of Lasso with the stability of Ridge, especially in cases with highly correlated features. The cost function becomes:
+
+$$
+J_{\text{ElasticNet}}(w) = \sum_{i=1}^{m} (y^{(i)} - \hat{y}^{(i)})^2 + \alpha \rho \sum_{j=1}^{n} |w_j| + \alpha (1-\rho) \sum_{j=1}^{n} w_j^2 + \alpha \rho \|w\|_1 + \alpha (1-\rho) \|w\|_2^2
+$$
+
+\section{K-Nearest Neighbors (KNN)}
+\label{sec:knn}
+The K-Nearest Neighbors (KNN) algorithm is fundamentally different from the models we have discussed so far. It is an \textbf{instance-based}, or \textbf{lazy learning}, algorithm. This means it does not learn an explicit decision function from the training data. Instead, it memorizes the entire training dataset.
+
+The classification of a new, unseen data point is performed by:
+\begin{enumerate}
+    \item Calculating the distance from the new point to every single point in the training dataset.
+    \item Identifying the top $K$ nearest training points (the "neighbors").
+    \item Assigning the class label to the new point based on a majority vote among its $K$ neighbors.
+\end{enumerate}
+
+\subsection*{Key Components and Considerations}
+\begin{itemize}
+    \item \textbf{The Hyperparameter $K$}: The choice of $K$ is critical. A small $K$ (e.g., $K=1$) makes the model highly sensitive to noise and outliers. A large $K$ makes the decision boundary smoother but can misclassify points in regions where the class distributions overlap.
+    \item \textbf{Distance Metrics}: The definition of "closeness" is determined by a distance metric. The most common is the \textbf{Euclidean distance}. However, other metrics like the \textbf{Manhattan distance} (L1 norm) or \textbf{Minkowski distance} (generalized L-p norm) can also be used, depending on the nature of the feature space.
+    \item \textbf{The Curse of Dimensionality}: KNN's performance degrades significantly as the number of features (dimensions) increases. In high-dimensional spaces, the concept of "distance" becomes less meaningful; the distance to the nearest neighbor can become comparable to the distance to the furthest neighbor. This makes it difficult to find a meaningful local neighborhood, a phenomenon known as the curse of dimensionality. Feature scaling is also crucial for KNN, as features with larger scales can dominate the distance calculation.
+\end{itemize}
+
+\section{Naive Bayes Classifiers}
+\label{sec:naive_bayes}
+Naive Bayes classifiers are a family of simple, yet surprisingly powerful, probabilistic classifiers based on applying Bayes' theorem. Their core strength lies in their computational efficiency and strong performance, particularly in domains like text classification.
+
+The model calculates the posterior probability $P(\alpha_k | X)$ for each class and chooses the one with the highest probability. As we saw in the previous chapter, this is equivalent to maximizing the product of the likelihood and the prior:
+$$ \hat{y} = \arg\max_{k \in \{1, \dots, K\}} P(X | \alpha_k) P(\alpha_k) $$
+The challenge is modeling the likelihood $P(X | \alpha_k) = P(x_1, x_2, \dots, x_n | \alpha_k)$.
+
+\subsection*{The "Naive" Assumption of Conditional Independence}
+Modeling the full joint probability of all features is intractable. The Naive Bayes classifier makes a bold and simplifying assumption: that all features are \textbf{conditionally independent} given the class.
+$$ P(x_1, x_2, \dots, x_n | \alpha_k) = P(x_1 | \alpha_k) \cdot P(x_2 | \alpha_k) \cdots P(x_n | \alpha_k) = \prod_{j=1}^{n} P(x_j | \alpha_k) $$
+This assumption is "naive" because features in the real world are rarely truly independent. However, this simplification dramatically reduces the problem to just estimating the individual conditional probabilities $P(x_j | \alpha_k)$ for each feature, which is computationally feasible. The final decision rule becomes:
+$$ \hat{y} = \arg\max_{k \in \{1, \dots, K\}} P(\alpha_k) \prod_{j=1}^{n} P(x_j | \alpha_k) $$
+
+\subsection*{Multinomial Naive Bayes for Text Classification}
+The Multinomial Naive Bayes variant is particularly effective for text classification (e.g., spam detection). In this context, a document is represented by a feature vector where each feature $x_j$ is the frequency (count) of the $j$-th word in the vocabulary. The likelihood $P(x_j | \alpha_k)$ is then modeled as the probability of observing word $j$ in a document of class $\alpha_k$, estimated from the frequencies in the training data.
+
+\section{Decision Trees}
+\label{sec:decision_trees}
+Decision Trees are non-parametric supervised learning models that are highly intuitive and interpretable. They learn to classify data by creating a model that predicts the value of a target variable by learning simple decision rules inferred from the data features.
+
+The model is represented as a tree structure, where:
+\begin{itemize}
+    \item Each \textbf{internal node} represents a "test" on a feature (e.g., "Is petal length <= 2.45cm?").
+    \item Each \textbf{branch} represents the outcome of the test.
+    \item Each \textbf{leaf node} represents a class label (the decision).
+\end{itemize}
+To classify a new sample, one starts at the root of the tree and traverses down the branches based on the outcomes of the tests until a leaf node is reached.
+
+\subsection*{Building a Tree: Recursive Partitioning}
+The core of a decision tree algorithm is how it learns the optimal sequence of questions to ask. The process, known as \textbf{recursive partitioning}, works by greedily selecting the feature and threshold that will "best" split the data at each node. The goal is to make the resulting child nodes as "pure" as possible, meaning they contain predominantly samples from a single class.
+
+\subsection*{Criteria for Measuring Impurity}
+To find the "best" split, we need a mathematical function that measures the impurity or disorder of a set of samples at a node. The three common criteria are:
+\begin{enumerate}
+    \item \textbf{Entropy}: A concept from information theory. For a set of samples $S$, the entropy is defined as:
+    $$ H(S) = -\sum_{k=1}^{K} p_k \log_2(p_k) $$
+    where $p_k$ is the proportion of samples belonging to class $\alpha_k$. Entropy is maximized (maximum disorder) when the classes are perfectly mixed ($p_k = 1/K$) and is zero (perfect purity) when all samples belong to a single class. The algorithm chooses the split that results in the highest \textbf{Information Gain}, which is the reduction in entropy after the split. This is the basis of the \textbf{ID3} algorithm.
+    
+    \item \textbf{Gini Impurity}: Measures the probability of misclassifying a randomly chosen element if it were randomly labeled according to the distribution of labels in the subset.
+    $$ G(S) = \sum_{k=1}^{K} p_k (1 - p_k) = 1 - \sum_{k=1}^{K} p_k^2 $$
+    Like entropy, it is zero for a pure node and maximized for a mixed node. The \textbf{CART} (Classification and Regression Trees) algorithm uses Gini impurity.
+\end{enumerate}
+The algorithm recursively applies this splitting process until a stopping criterion is met, such as a maximum tree depth or a minimum number of samples per leaf.
+
+\chapter*{Unsupervised Learning: Discovering Structure in Unlabeled Data}
+\label{chap:unsupervised_learning}
+
+Thus far, our journey through machine learning has been guided by a clear objective: to learn a mapping from a set of features $X$ to a known, predefined target label $y$. This paradigm, known as \textbf{supervised learning}, is akin to a student learning with an answer key. The presence of true labels allows the algorithm to measure its error and systematically correct itself.
+
+We now pivot to a fundamentally different and often more challenging paradigm: \textbf{unsupervised learning}. In this setting, we are given only the feature data $X$, without any corresponding labels. The goal is no longer to predict a target, but to discover the inherent structure, patterns, and relationships hidden within the data itself. This is akin to a biologist discovering a new taxonomy of species by observing their characteristics in the wild, without any prior classification system.
+
+The most fundamental task in unsupervised learning is \textbf{clustering}, the objective of which is to group data points such that items within a group are more similar to each other than to those in other groups. This chapter explores four canonical clustering algorithms, each representing a different philosophical answer to the question, "What defines a cluster?" We will begin with the centroid-based approach of K-Means, move to the nested structures of Hierarchical Clustering, explore the probabilistic framework of Gaussian Mixture Models, and conclude with the density-based method of DBSCAN, which is capable of discovering clusters of arbitrary shape.
+
+\section{K-Means Clustering: A Centroid-Based Approach}
+\label{sec:kmeans}
+K-Means is the archetypal partitioning algorithm and arguably the most famous clustering algorithm. Its goal is to partition a dataset into a pre-specified number, $K$, of distinct, non-overlapping clusters. The core idea is to represent each cluster by its center, or mean, which is called the \textbf{centroid}.
+
+\subsection*{The Objective Function: Minimizing Within-Cluster Inertia}
+K-Means is an optimization problem. It seeks to find the set of centroids and the assignment of points to those centroids that minimizes the \textbf{Within-Cluster Sum of Squares (WCSS)}, also known as cluster \textbf{inertia}. This is the sum of the squared Euclidean distances between each data point and the centroid of its assigned cluster. Formally, the objective function $J$ is:
+$$ J = \sum_{k=1}^{K} \sum_{x^{(i)} \in C_k} \|x^{(i)} - \mu_k\|^2 $$
+where $K$ is the number of clusters, $C_k$ is the set of all points belonging to cluster $k$, and $\mu_k$ is the centroid of cluster $k$. Minimizing this objective function corresponds to finding the most compact, spherical clusters possible.
+
+\subsection*{The Algorithm: An Expectation-Maximization Framework}
+Finding the global minimum of the WCSS is an NP-hard problem. K-Means therefore uses an iterative, heuristic approach that converges to a local minimum. This algorithm is a classic example of a generalized \textbf{Expectation-Maximization (EM)} procedure, which involves two repeating steps:
+
+\begin{enumerate}
+    \item \textbf{Initialization}: Randomly select $K$ data points from the dataset to serve as the initial centroids $\mu_1, \mu_2, \dots, \mu_K$.
+    
+    \item \textbf{Expectation Step (Assignment Step)}: For each data point $x^{(i)}$, calculate its distance to every centroid $\mu_k$. Assign the data point to the cluster of the closest centroid.
+    $$ C_k \leftarrow \{ x^{(i)} : \|x^{(i)} - \mu_k\|^2 \le \|x^{(i)} - \mu_j\|^2 \quad \forall j, 1 \le j \le K \} $$
+    
+    \item \textbf{Maximization Step (Update Step)}: For each cluster $k$, recalculate its centroid $\mu_k$ to be the mean of all data points currently assigned to that cluster.
+    $$ \mu_k \leftarrow \frac{1}{|C_k|} \sum_{x^{(i)} \in C_k} x^{(i)} $$
+    
+    \item \textbf{Convergence Check}: Repeat the Expectation and Maximization steps until the cluster assignments no longer change, or until a maximum number of iterations is reached.
+\end{enumerate}
+
+\subsection*{Computational Details and Challenges}
+\begin{itemize}
+    \item \textbf{Initialization Sensitivity}: The final clustering result is sensitive to the initial random placement of the centroids. A poor initialization can lead to convergence in a suboptimal local minimum. To mitigate this, a common practice is to run the algorithm multiple times with different random initializations and choose the result with the lowest WCSS. A more advanced initialization technique, called \textbf{k-means++}, is designed to pick initial centroids that are distant from each other, which generally leads to better and more consistent results.
+    
+    \item \textbf{Choosing the Number of Clusters ($K$)}: The greatest practical challenge of K-Means is that the number of clusters, $K$, is a hyperparameter that must be specified in advance. A common heuristic for choosing an appropriate $K$ is the \textbf{Elbow Method}. This involves running the K-Means algorithm for a range of $K$ values (e.g., from 1 to 10) and plotting the WCSS for each. The WCSS will always decrease as $K$ increases. The "elbow" of the curve—the point where the rate of decrease sharply flattens—is often a good indicator of the optimal number of clusters.
+\end{itemize}
+
+\subsection*{Limitations}
+K-Means is fast and simple, but it operates on a strict set of assumptions which limit its applicability:
+\begin{enumerate}
+    \item It assumes that clusters are convex and isotropic (spherical). It fails to identify clusters with more complex, non-spherical shapes.
+    \item It assumes that all clusters have a similar size and density.
+    \item It is highly sensitive to outliers, which can significantly skew the position of the centroids.
+\end{enumerate}
+
+\section{Hierarchical Clustering: Building a Tree of Clusters}
+\label{sec:hierarchical_clustering}
+Hierarchical clustering offers a more nuanced view of the data's structure. Instead of producing a single, flat partition of the data, it creates a nested hierarchy of clusters. This hierarchy can be visualized as a tree-like diagram called a \textbf{dendrogram}, which is often as informative as the clustering itself.
+
+\subsection*{Agglomerative vs. Divisive Approaches}
+There are two main strategies for hierarchical clustering:
+\begin{itemize}
+    \item \textbf{Agglomerative (Bottom-Up)}: This is the more common approach. It starts by treating each data point as its own individual cluster. Then, at each step, it iteratively merges the two "closest" clusters until only a single cluster (containing all the data) remains.
+    \item \textbf{Divisive (Top-Down)}: This approach works in the opposite direction. It starts with all data points in a single cluster and, at each step, recursively splits a cluster into two until each point is in its own cluster.
+\end{itemize}
+We will focus on the agglomerative method.
+
+\subsection*{The Linkage Criterion: Defining Cluster "Closeness"}
+The core of the agglomerative algorithm is the definition of "closeness" between two clusters. This is determined by the \textbf{linkage criterion}. The choice of linkage criterion profoundly affects the final structure of the dendrogram.
+\begin{itemize}
+    \item \textbf{Single Linkage}: The distance between two clusters is defined as the distance between the \textit{closest} pair of points across the two clusters. This method can result in long, "chained" clusters and is sensitive to noise.
+    \item \textbf{Complete Linkage}: The distance between two clusters is the distance between the \textit{farthest} pair of points. This approach tends to produce more compact, spherical clusters.
+    \item \textbf{Average Linkage}: The distance is the average of the distances between all pairs of points across the two clusters. It is a compromise between single and complete linkage.
+    \item \textbf{Ward's Linkage}: This is a variance-minimizing approach. At each step, it merges the two clusters that result in the minimum increase in the total within-cluster variance. Ward's linkage is often the preferred method as it tends to create well-balanced and compact clusters.
+\end{itemize}
+
+\subsection*{The Dendrogram}
+The result of a hierarchical clustering algorithm is best understood through its dendrogram. The y-axis of the dendrogram represents the distance (or dissimilarity) at which clusters were merged. The leaves of the tree are the individual data points. By "cutting" the dendrogram at a certain height, one can obtain a flat partition of any desired number of clusters. This is a key advantage over K-Means, as it allows the user to explore partitions with different numbers of clusters without re-running the algorithm.
+
+\section{Gaussian Mixture Models (GMM): A Probabilistic Approach}
+\label{sec:gmm}
+K-Means makes a "hard" assignment of each point to a single cluster. Gaussian Mixture Models (GMM) provide a more flexible and powerful, model-based alternative. A GMM assumes that the data is generated from a mixture of a finite number of Gaussian distributions with unknown parameters.
+
+\subsection*{The Mathematical Model}
+Instead of assigning a point to a cluster, a GMM computes the probability of that point belonging to each of the clusters. The model's probability density for a data point $x$ is a weighted sum of $K$ Gaussian components:
+$$ p(x | \theta) = \sum_{k=1}^{K} \pi_k \mathcal{N}(x | \mu_k, \Sigma_k) $$
+where $\theta = \{\pi_k, \mu_k, \Sigma_k\}_{k=1}^K$ represents the full set of model parameters:
+\begin{itemize}
+    \item $\pi_k$: The \textbf{mixing coefficient}, or weight, of the $k$-th Gaussian component. It represents the prior probability that a randomly selected data point was generated by this component. The mixing coefficients must sum to one: $\sum_{k=1}^K \pi_k = 1$.
+    \item $\mu_k$: The mean vector of the $k$-th Gaussian component.
+    \item $\Sigma_k$: The covariance matrix of the $k$-th Gaussian component.
+\end{itemize}
+This framework is far more flexible than K-Means. Because each component has its own covariance matrix, a GMM can model clusters that are elliptical and have different orientations and sizes.
+
+\subsection*{Learning with the Expectation-Maximization (EM) Algorithm}
+The parameters of the GMM are estimated using the Expectation-Maximization (EM) algorithm, which is perfectly suited for models with latent (hidden) variables. In this case, the latent variable is the cluster identity of each data point.
+\begin{enumerate}
+    \item \textbf{Initialization}: Initialize the parameters $\pi_k, \mu_k, \Sigma_k$, often by first running a quick K-Means algorithm.
+    \item \textbf{E-Step (Expectation)}: For each data point $x^{(i)}$, calculate the posterior probability, or "responsibility," that the $k$-th Gaussian component was responsible for generating it. This is a "soft assignment" computed using Bayes' rule:
+    $$ r_{ik} = P(\text{cluster}=k | x^{(i)}, \theta) = \frac{\pi_k \mathcal{N}(x^{(i)} | \mu_k, \Sigma_k)}{\sum_{j=1}^{K} \pi_j \mathcal{N}(x^{(i)} | \mu_j, \Sigma_j)} $$
+    \item \textbf{M-Step (Maximization)}: Use the computed responsibilities $r_{ik}$ as soft weights to update the model parameters via maximum likelihood estimation. For each component $k$:
+    \begin{align*}
+        \mu_k^{\text{new}} &= \frac{\sum_{i=1}^{m} r_{ik} x^{(i)}}{\sum_{i=1}^{m} r_{ik}} \\
+        \Sigma_k^{\text{new}} &= \frac{\sum_{i=1}^{m} r_{ik} (x^{(i)} - \mu_k^{\text{new}})(x^{(i)} - \mu_k^{\text{new}})^T}{\sum_{i=1}^{m} r_{ik}} \\
+        \pi_k^{\text{new}} &= \frac{\sum_{i=1}^{m} r_{ik}}{m}
+    \end{align*}
+    \item \textbf{Convergence Check}: Repeat the E and M steps until the log-likelihood of the data converges.
+\end{enumerate}
+
+\section{DBSCAN: A Density-Based Approach}
+\label{sec:dbscan}
+The clustering methods discussed so far—K-Means and Hierarchical Clustering—are fundamentally based on distance and struggle with clusters of non-spherical shapes. \textbf{DBSCAN (Density-Based Spatial Clustering of Applications with Noise)} takes a completely different and powerful approach. It defines clusters as continuous regions of high point density, separated by regions of low density.
+
+\subsection*{Core Concepts and Terminology}
+DBSCAN's behavior is governed by two intuitive hyperparameters that define the notion of "density":
+\begin{itemize}
+    \item \textbf{Epsilon ($\epsilon$)}: A distance value that specifies the radius of the neighborhood to consider around each data point.
+    \item \textbf{Minimum Points (\texttt{MinPts})}: The minimum number of data points required to be within a point's $\epsilon$-neighborhood for that region to be considered "dense."
+\end{itemize}
+Based on these parameters, every point in the dataset is classified into one of three types:
+\begin{itemize}
+    \item A \textbf{Core Point} is a point that has at least \texttt{MinPts} other points (including itself) within its $\epsilon$-neighborhood. These are the hearts of a cluster.
+    \item A \textbf{Border Point} is a point that is not a core point itself, but falls within the $\epsilon$-neighborhood of a core point. These are the edges of a cluster.
+    \item A \textbf{Noise Point} (or outlier) is a point that is neither a core point nor a border point.
+\end{itemize}
+
+\subsection*{The DBSCAN Algorithm}
+The algorithm connects core points that are neighbors to form clusters.
+\begin{enumerate}
+    \item Pick an arbitrary, unvisited data point.
+    \item Determine if it is a core point by counting its neighbors within a radius of $\epsilon$.
+    \item If it is a core point, a new cluster is formed. This cluster is expanded by recursively finding all "density-reachable" points—that is, all core points in its neighborhood, and all the border points associated with them.
+    \item If the starting point is not a core point, it is temporarily marked as noise. It may later be found to be a border point of another cluster.
+    \item Repeat the process until all points have been visited and assigned to a cluster or marked as noise.
+\end{enumerate}
+
+\subsection*{Advantages of DBSCAN}
+DBSCAN offers two major advantages over centroid-based methods:
+\begin{enumerate}
+    \item \textbf{No Need to Specify the Number of Clusters}: The algorithm automatically determines the number of clusters based on the data's density structure.
+    \item \textbf{Discovery of Arbitrarily Shaped Clusters}: Because it connects points based on local density, DBSCAN can successfully identify clusters of complex, non-spherical shapes, such as concentric circles or serpentine patterns, where K-Means would fail completely. Furthermore, its ability to explicitly identify and label noise points is a powerful feature for real-world data analysis.
+\end{enumerate}

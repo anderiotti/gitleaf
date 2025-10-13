@@ -1,0 +1,353 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage{pgfplots}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage[thmmarks, amsmath, thref]{ntheorem}
+\usepackage{mdframed}
+\usepackage{amsthm}
+\usepackage{physics}
+\usepackage{proof}
+\usepackage{derivative}
+\usepackage{comment}
+\usepackage{hyperref}
+\usepackage{wrapfig}
+\usepackage{amsthm}
+\usepackage{xcolor}
+\renewcommand{\theenumi}{\roman{enumi}}
+
+\theoremstyle{nonumberplain}
+\theoremheaderfont{\itshape}
+\theorembodyfont{\upshape}
+\theoremseparator{.}
+\theoremsymbol{\ensuremath{\square}}
+\theoremsymbol{\ensuremath{\blacksquare}}
+\newtheorem{solution}{Solution}
+\theoremseparator{. }
+\theoremsymbol{\mbox{\texttt{;o)}}}
+
+\pgfplotsset{compat=1.18}
+\begin{document}
+
+\section*{Transformada de Laplace.}
+\subsection*{Introducción.}
+En el estudio de las matemáticas aplicadas, la resolución de ecuaciones diferenciales juega un papel central en la modelación de fenómenos que evolucionan en el tiempo. Entre las herramientas más poderosas desarrolladas para abordar estos problemas se encuentra la transformada de Laplace, una técnica que permite convertir ecuaciones diferenciales en ecuaciones algebraicas más sencillas de resolver. La transformada de Laplace fue introducida por el matemático francés Pierre-Simon Laplace en el siglo XVIII y, desde entonces, ha demostrado ser fundamental tanto en la teoría como en la práctica de las ciencias exactas e ingenierías.
+La esencia de la transformada de Laplace radica en tomar una función definida en el dominio del tiempo y transformarla a un nuevo dominio complejo (el dominio de la frecuencia compleja), donde el análisis y la manipulación de las ecuaciones resultan mucho más directos. Este cambio de perspectiva facilita enormemente la resolución de ecuaciones diferenciales ordinarias, especialmente aquellas con condiciones iniciales, ya que la transformada de Laplace incorpora automáticamente estas condiciones en el proceso de transformación. Además, su uso es particularmente eficiente en la resolución de sistemas lineales y en el análisis de circuitos eléctricos, sistemas mecánicos y, como veremos, en modelos financieros y actuariales.
+En el campo de la actuaría, las ecuaciones diferenciales aparecen frecuentemente en el modelado de reservas, en el cálculo de primas de seguros, en la evaluación de productos financieros derivados y en el análisis de riesgos. Por ejemplo, la evolución del valor esperado de una reserva matemática o el comportamiento de ciertos fondos de pensiones pueden describirse mediante ecuaciones diferenciales. En estos contextos, la transformada de Laplace proporciona un método sistemático y elegante para encontrar soluciones explícitas o analizar el comportamiento de estos modelos, permitiendo a los actuarios tomar decisiones mejor fundamentadas y desarrollar modelos más robustos.
+A lo largo de este proyecto se presentará la teoría fundamental de la transformada de Laplace, se explicarán sus propiedades más relevantes y se ilustrará su utilidad en la resolución de ecuaciones diferenciales. Además, se proporcionará un ejemplo concreto aplicado a un problema de interés actuarial, mostrando paso a paso cómo la transformada de Laplace puede ser empleada en la práctica profesional del actuario.
+
+
+\subsection{Definición formal de la transformada de Laplace}
+
+Definición:  
+Sea \( f: [0, \infty) \to \mathbb{R} \) (o \(\mathbb{C}\)) una función de crecimiento a lo sumo exponencial, es decir, existen constantes \( M > 0 \), \( a \in \mathbb{R} \), tal que \( |f(t)| \leq M e^{a t} \) para todo \( t \geq 0 \).  
+La transformada de Laplace de \( f \) se define como la función \( F: \{s \in \mathbb{C}: \Re(s) > a\} \to \mathbb{C} \) dada por:
+\[
+\mathcal{L}\{f\}(s) = F(s) = \int_{0}^{\infty} e^{-s t} f(t)\, dt
+\]
+siempre que la integral converja.
+
+Observaciones. \\
+- El parámetro \( s \) es, en general, complejo: \( s = \sigma + i \omega \). Esto no debería intimidarnos pues en el plano complejo existe también la noción de primitiva. \\
+- La condición de crecimiento garantiza la convergencia absoluta de la integral para \( \Re(s) > a \).
+
+Demostración de convergencia. \\  
+Supongamos que \( |f(t)| \leq M e^{a t} \). Para \( \Re(s) = \sigma > a \):
+\[
+|e^{-s t} f(t)| \leq |f(t)| |e^{-s t}| = |f(t)| e^{-\sigma t} \leq M e^{a t} e^{-\sigma t} = M e^{-(\sigma - a)t}
+\]
+La integral
+\[
+\int_0^{\infty} M e^{-(\sigma - a)t} dt = \frac{M}{\sigma - a}
+\]
+es finita si \( \sigma > a \), lo que concluye la demostración de convergencia.
+
+
+\subsection{Propiedades básicas de la transformada de Laplace}
+
+ a) Linealidad
+
+Teorema (Linealidad):  
+Si \( f \) y \( g \) son funciones para las que existe la transformada de Laplace, y \( \alpha, \beta \in \mathbb{C} \), entonces
+\[
+\mathcal{L}\{\alpha f + \beta g\}(s) = \alpha \mathcal{L}\{f\}(s) + \beta \mathcal{L}\{g\}(s)
+\]
+
+Demostración:  
+\[
+\begin{align}
+\mathcal{L}\{\alpha f + \beta g\}(s) &= \int_{0}^{\infty} e^{-s t} [\alpha f(t) + \beta g(t)] dt \\
+&= \alpha \int_{0}^{\infty} e^{-s t} f(t) dt + \beta \int_{0}^{\infty} e^{-s t} g(t) dt \\
+&= \alpha \mathcal{L}\{f\}(s) + \beta \mathcal{L}\{g\}(s)
+\end{align}
+\]
+
+
+
+ b) Propiedad de traslación (desplazamiento en el dominio \( t \))
+
+Teorema (Traslación en el tiempo):  
+Sea \( a \in \mathbb{R} \), entonces
+\[
+\mathcal{L}\{e^{a t} f(t)\}(s) = F(s - a)
+\]
+donde \( F(s) = \mathcal{L}\{f\}(s) \).
+
+Demostración:
+\[
+\begin{align}
+\mathcal{L}\{e^{a t} f(t)\}(s) &= \int_0^{\infty} e^{-s t} e^{a t} f(t) dt \\
+&= \int_0^{\infty} e^{-(s - a) t} f(t) dt \\
+&= F(s - a)
+\end{align}
+\]
+
+
+
+ c) Transformada de la derivada
+
+Teorema (Derivada de \( f \)):
+Si \( f \) es continua y \( f' \) es de crecimiento a lo sumo exponencial, entonces
+\[
+\mathcal{L}\{f'(t)\}(s) = s \mathcal{L}\{f(t)\}(s) - f(0)
+\]
+
+Demostración:
+\[
+\begin{align}
+\mathcal{L}\{f'(t)\}(s) &= \int_{0}^{\infty} e^{-s t} f'(t) dt \\
+&= \left[ e^{-s t} f(t) \right]_{0}^{\infty} + s \int_{0}^{\infty} e^{-s t} f(t) dt \\
+\end{align}
+\]
+El primer término se evalúa como sigue:  \\
+- Cuando \( t \to \infty \), si \( f(t) \) crece a lo sumo como \( e^{a t} \) con \( s > a \), se tiene \( e^{-s t} f(t) \to 0 \).\\
+- Cuando \( t = 0 \), se obtiene \( e^{0} f(0) = f(0) \).
+
+Por lo tanto,
+\[
+\mathcal{L}\{f'(t)\}(s) = 0 - f(0) + s \int_{0}^{\infty} e^{-s t} f(t) dt = s \mathcal{L}\{f(t)\}(s) - f(0)
+\]
+
+Asímismo puede observarse que podemos iterar esta propiedad como sigue...
+
+\[
+\mathcal{L}\{y''(t)\} = \mathcal{L}\{(y'(t))'\}
+\]
+\[
+= s \mathcal{L}\{y'(t)\} - y'(0)
+\]
+
+Sustituyendo \(\mathcal{L}\{y'(t)\}\):
+\[
+= s [s Y(s) - y_0] - y_1
+\]
+\[
+= s^2 Y(s) - s y_0 - y_1
+\]
+
+Esta propiedad en particular es excesivamente fuerte, pues por inducción eventualmente se puede llegar a que,
+\[
+\mathcal{L}\{y^{(n)}(t)\} = s^n Y(s) - s^{n-1} y_0 - s^{n-2} y_1 - \cdots - s y_{n-2} - y_{n-1}
+\]
+teniendo así una forma muy sólida de resolver ecuaciones lineales de muy alto orden que en principio parecían imposibles.
+
+\subsection{Relación con ecuaciones diferenciales ordinarias (EDO)}
+
+La principal utilidad de la transformada de Laplace en el contexto de EDOs es la resolución algebraica de ecuaciones diferenciales lineales con condiciones iniciales.
+
+Veamos un ejemplo general en donde apliquemos las propiedades aprendidas, consideremos la ecuación diferencial lineal de segundo orden:
+\[
+y''(t) + a y'(t) + b y(t) = f(t), \quad y(0) = y_0, \quad y'(0) = y_1
+\]
+
+Aplicamos la transformada de Laplace a ambos lados:
+
+\[
+\mathcal{L}\{y''(t)\} + a \mathcal{L}\{y'(t)\} + b \mathcal{L}\{y(t)\} = \mathcal{L}\{f(t)\}
+\]
+
+Usando las propiedades previas:
+\[
+\mathcal{L}\{y''(t)\} = s^2 Y(s) - s y_0 - y_1
+\]
+\[
+\mathcal{L}\{y'(t)\} = s Y(s) - y_0
+\]
+\[
+\mathcal{L}\{y(t)\} = Y(s)
+\]
+donde \( Y(s) = \mathcal{L}\{y(t)\}(s) \).
+
+Sustituyendo:
+\[
+[s^2 Y(s) - s y_0 - y_1] + a [s Y(s) - y_0] + b Y(s) = \mathcal{L}\{f(t)\}
+\]
+Agrupando términos:
+\[
+\left[ s^2 + a s + b \right] Y(s) - [s y_0 + y_1 + a y_0] = \mathcal{L}\{f(t)\}
+\]
+\[
+\left[ s^2 + a s + b \right] Y(s) = \mathcal{L}\{f(t)\} + [s y_0 + y_1 + a y_0]
+\]
+\[
+Y(s) = \frac{ \mathcal{L}\{f(t)\} + [s y_0 + y_1 + a y_0] }{ s^2 + a s + b }
+\]
+
+Observación:  
+La solución \( y(t) \) se obtiene finalmente aplicando lo que conocemos como la transformada inversa de Laplace (¿Qué es esto?)
+\[
+y(t) = \mathcal{L}^{-1}\{ Y(s) \}(t)
+\]
+
+\subsection{Transformada inversa de Laplace (una mirada rápida)}
+La transformada inversa de Laplace es el proceso matemático que permite recuperar una función original \( f(t) \) a partir de su transformada de Laplace \( F(s) \). Formalmente, si
+\[
+F(s) = \mathcal{L}\left\{f(t)\right\} = \int_{0}^{\infty} e^{-st} f(t) dt
+\]
+la transformada inversa se representa como:
+\[
+f(t) = \mathcal{L}^{-1}\left\{F(s)\right\}
+\]
+
+La definición matemática más precisa de la transformada inversa de Laplace utiliza una integral de contorno en el plano complejo, conocida como la Integral de Bromwich:
+\[
+f(t) = \frac{1}{2\pi i} \int_{c-i\infty}^{c+i\infty} e^{st} F(s) ds
+\]
+de donde: \\
+- \( i \) es la unidad imaginaria, \\
+- \( c \) es una constante real mayor que la parte real de todas las singularidades (polos) de \( F(s) \). \\
+
+Esta integral se calcula a lo largo de una línea vertical en el plano complejo, lo que conecta la transformada inversa con el análisis complejo. Parecería que esto se introduce así arbitrariamente, pero la transformada de Laplace y su inversa se fundamentan en el análisis complejo porque muchas funciones \( F(s) \) tienen polos, ceros y otras singularidades en el plano complejo. La integral de Bromwich y el uso de residuos (teorema de los residuos de Cauchy) permiten evaluar explícitamente la transformada inversa, especialmente cuando las funciones son racionales o involucran exponenciales, senos, cosenos, etc. Dado que estos temas conciernen a variable compleja ii, este bloque es mas divulgativo que puramente teorico.
+
+\subsection{Resolución de ecuaciones diferenciales ordinarias.}
+
+En la sección 0.3, nos topamos con que cuando resolvemos una ecuación diferencial usando la transformada de Laplace, normalmente obtenemos una expresión para \( Y(s) \) (la transformada de la solución). Esto pasa en general, para encontrar la solución en el dominio del tiempo, es necesario aplicar la transformada inversa:
+\[
+y(t) = \mathcal{L}^{-1}\left\{Y(s)\right\}
+\]
+
+Esto puede lograrse: \\
+- Por tablas: Usando tablas de pares de funciones y sus transformadas inversas, vease debajo de este listado la tabla con las transformadas inversas más usadas.\\
+- Por descomposición en fracciones parciales: Cuando no es posible reconocer que funcion tenemos por tablas, se resuelve reescribiendo expresiones como sumas de términos simples cuyas inversas ya son conocidas por estas tablas.\\
+- Por el método de residuos: Aplicando el análisis complejo para funciones complicadas o que simplemente nos gustaria no descomponer en fracciones parciales.\\
+
+\[
+\begin{array}{|c|c|}
+\hline
+\text{Forma en el dominio de Laplace} & \text{Transformada inversa en el dominio del tiempo} \\
+\hline
+\frac{1}{s} & 1 \\[0.5em]
+\frac{1}{s^2} & t \\[0.5em]
+\frac{1}{s+a} & e^{-a t} \\[0.5em]
+\frac{1}{(s+a)^2} & t e^{-a t} \\[0.5em]
+\frac{s}{(s+a)^2} & e^{-a t} - t e^{-a t} \\[0.5em]
+\frac{1}{s^n} & \frac{t^{n-1}}{(n-1)!} \\[0.5em]
+\frac{s}{s^2 + \omega^2} & \cos(\omega t) \\[0.5em]
+\frac{\omega}{s^2 + \omega^2} & \sin(\omega t) \\[0.5em]
+\frac{s+a}{(s+a)^2 + \omega^2} & e^{-a t} \cos(\omega t) \\[0.5em]
+\frac{\omega}{(s+a)^2 + \omega^2} & e^{-a t} \sin(\omega t) \\[0.5em]
+\hline
+\end{array}
+\]
+
+
+Asignemos valores para por fín tener una función explícita $y(t)$, sea $f(t)=0$, a=2$ y $b=1$
+
+Como \( f(t) = 0 \), \(\mathcal{L}\{f(t)\} = 0\):
+
+\[
+Y(s) = \frac{ s y_0 + y_1 + a y_0 }{ s^2 + a s + b }
+\]
+
+Sustituimos \( a = 2 \) y \( b = 1 \):
+
+\[
+Y(s) = \frac{ s y_0 + y_1 + 2 y_0 }{ s^2 + 2s + 1 }
+\]
+
+\[
+Y(s) = \frac{ (s + 2) y_0 + y_1 }{ (s + 1)^2 }
+\]
+
+Ahora, obtenemos \( y(t) \) aplicando la transformada inversa de Laplace. 
+
+Sabemos que:
+
+\[
+\mathcal{L}^{-1} \left\{ \frac{1}{(s+1)^2} \right\} = t e^{-t}
+\]
+\[
+\mathcal{L}^{-1} \left\{ \frac{1}{s+1} \right\} = e^{-t}
+\]
+
+Descomponemos el numerador:
+
+\[
+(s + 2) y_0 + y_1 = y_0 s + (2 y_0 + y_1)
+\]
+
+Entonces:
+
+\[
+Y(s) = \frac{y_0 s}{(s+1)^2} + \frac{2y_0 + y_1}{(s+1)^2}
+\]
+
+\[
+= y_0 \frac{s}{(s+1)^2} + (2y_0 + y_1) \frac{1}{(s+1)^2}
+\]
+
+Para \(\frac{s}{(s+1)^2}\), usamos que:
+
+\[
+\frac{s}{(s+1)^2} = \frac{(s+1)-1}{(s+1)^2} = \frac{1}{s+1} - \frac{1}{(s+1)^2}
+\]
+
+Entonces,
+
+\[
+Y(s) = y_0 \left[ \frac{1}{s+1} - \frac{1}{(s+1)^2} \right] + (2y_0 + y_1) \frac{1}{(s+1)^2}
+\]
+
+\[
+= y_0 \frac{1}{s+1} + (2y_0 + y_1 - y_0) \frac{1}{(s+1)^2}
+\]
+
+\[
+= y_0 \frac{1}{s+1} + (y_0 + y_1) \frac{1}{(s+1)^2}
+\]
+
+Aplicando la inversa de Laplace:
+
+\[
+y(t) = y_0 e^{-t} + (y_0 + y_1) t e^{-t}
+\]
+
+Este es el resultado final, pues $y_0, y_1$ son cualquier número real fijo pero arbitrario que asignemos como condiciones iniciales.
+
+\subsection{Ventajas de la transformada de Laplace frente a métodos clásicos}
+
+La transformada de Laplace ofrece varias ventajas significativas que la hacen preferible en muchos casos frente a métodos tradicionales como la integración directa o el método de coeficientes indeterminados. En primer lugar, como ya se ha visto permite la incorporación directa de las condiciones iniciales dentro del proceso algebraico, eliminando la necesidad de resolver sistemas adicionales o de determinar constantes de integración. Además, facilita el manejo de funciones discontinuas, tales como funciones escalón (Heaviside) o impulsos (delta de Dirac), que resultan complejas de tratar con métodos clásicos, pero que la transformada de Laplace incorpora de manera natural a través de propiedades específicas. Otra ventaja importante es la reducción de la resolución de la ecuación diferencial a un problema algebraico más simple, lo cual disminuye la complejidad y el riesgo de cometer errores. Finalmente, esta técnica es versátil y puede aplicarse eficientemente a ecuaciones diferenciales de orden superior y a sistemas de ecuaciones, sin que ello implique un aumento considerable en la dificultad, a diferencia de lo que ocurre con algunos métodos clásicos.
+
+\subsection*{Conclusion}
+La transformada de Laplace sirve como una herramienta matemática poderosa y versátil, capaz de simplificar problemas complejos en el análisis de sistemas dinámicos, ecuaciones diferenciales y procesos físicos. Su capacidad para convertir derivadas en operaciones algebraicas no solo facilita la resolución de ecuaciones diferenciales lineales con condiciones iniciales, sino que también extiende su utilidad a sistemas de mayor orden y funciones discontinuas, como el escalón unitario y la delta de Dirac, que resultan engorrosas con métodos tradicionales.
+
+Además, la estrecha relación entre la transformada de Laplace y el análisis complejo, evidenciada en la integral de Bromwich y el cálculo de residuos, subraya su profundidad teórica, permitiendo abordar problemas que van más allá de las soluciones elementales. La técnica de descomposición en fracciones parciales y el uso de tablas de transformadas inversas ofrecen un enfoque sistemático para recuperar soluciones en el dominio del tiempo, haciendo que el método sea accesible tanto en aplicaciones prácticas como en desarrollos teóricos avanzados.
+
+En esencia, la transformada de Laplace no solo unifica y generaliza métodos clásicos de resolución de ecuaciones diferenciales, sino que también abre nuevas perspectivas en el estudio de sistemas lineales, teoría de control y procesamiento de señales. Su simplicidad matemática y eficacia computacional la convierten en la favorita para muchos, demostrando que a veces, la clave para resolver problemas complicados reside en cambiar de perspectiva, en este caso, del dominio del tiempo al dominio de la frecuencia. \\\\
+
+\begin{thebibliography}{9}
+\bibitem{ross2015} 
+Ross, S. M. (2015). \textit{Ecuaciones diferenciales} (3ra ed.). Reverté.
+
+\bibitem{zill2017}
+Zill, D. G. (2017). \textit{Ecuaciones diferenciales con aplicaciones de modelado} (11ra ed.). Cengage Learning.
+
+\bibitem{boyce2021}
+Boyce, W. E., DiPrima, R. C. \& Meade, D. B. (2021). \textit{Ecuaciones diferenciales y problemas con valores en la frontera} (11ra ed.). Limusa Wiley.
+\end{thebibliography}
+
+\end{document}
+

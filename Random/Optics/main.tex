@@ -1,0 +1,92 @@
+\documentclass[12pt, openany]{book}
+
+% --- PREAMBLE ---
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{graphicx}
+\usepackage{amsmath, amssymb, amsfonts, amsthm}
+\usepackage{geometry}
+\usepackage{stix}
+\geometry{a4paper, margin=1in}
+\usepackage[dvipsnames]{xcolor} % For colors like 'purple'
+\usepackage{hyperref}
+
+% --- HYPERREF SETUP ---
+\hypersetup{
+    colorlinks=true,
+    linkcolor=purple,
+    filecolor=magenta,      
+    urlcolor=cyan,
+    citecolor=purple,
+    pdftitle={Notes on Physical Optics},
+    pdfpagemode=FullScreen,
+}
+
+
+% --- MATHEMATICAL ENVIRONMENTS DEFINITION ---
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[section]
+\theoremstyle{plain}
+\newtheorem{theorem}[definition]{Theorem}
+\newtheorem{proposition}[definition]{Proposition}
+\newtheorem{lemma}[definition]{Lemma}
+\newtheorem{corollary}[definition]{Corollary}
+\theoremstyle{remark}
+\newtheorem{remark}[definition]{Remark}
+
+% --- CUSTOM COMMANDS FOR PHYSICS ---
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\pdv}[2]{\frac{\partial #1}{\partial #2}} % Partial derivative
+\newcommand{\ddv}[2]{\frac{d #1}{d #2}} % Total derivative
+\newcommand{\vecbf}[1]{\mathbf{#1}} % Bold vector
+\newcommand{\vecx}{\mathbb{x}}
+
+\geometry{a4paper, margin=1in}
+
+\begin{document}
+
+% --- Start of Custom Title Page ---
+\begin{titlepage}
+    \centering
+    \vspace*{2cm} % Space at the top
+    
+    {\Huge\bfseries Vibenotes on Geometrical Optics\par}
+    
+    \vspace{1cm}
+    
+    {\Large\itshape 1st Partial Exam\par}
+
+    \begin{figure}[h]
+        \centering
+        \includegraphics[width=0.15\linewidth]{ciencias.png}
+        \label{fig:placeholder}
+    \end{figure}
+    \vspace{0.5cm}
+
+    \begin{figure}[h]
+        \centering
+        \includegraphics[width=0.85\linewidth]{optics.png}
+        \caption{I have no fucking idea what this is but it looks cool as hell}
+        \label{fig:placeholder}
+    \end{figure} % Space between title and author
+    
+    
+    {\large Based on "Geometrical Optics" by Hecht\par} \\
+    \textit{By Andrés López}\\
+    
+    \vspace*{2cm} % Space at the bottom
+\end{titlepage}
+% --- End of Title Page ---
+
+\newpage
+
+This page is unintentionally left in blank.
+\newpage
+
+\tableofcontents
+
+%\input{main_en first par}
+\input{physic optics}
+
+\end{document}

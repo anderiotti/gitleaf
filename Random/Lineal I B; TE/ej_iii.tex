@@ -1,0 +1,139 @@
+4. Considera el siguiente sistema de ecuaciones.
+\[
+\begin{array}{l}
+x+y+k z=1 \\
+x+k y+z=1 \\
+k x+y+z=-2
+\end{array}
+\]
+
+\begin{solution}
+Meciona para qué valores de \( k \), si hay alguno, el sistema tiene \\
+(a) ninguna solución. \\
+(b) una solución. \\
+(c) un numero infinito de soluciones. \\
+
+El sistema puede escribirse en forma matricial \( A \mathbf{x} = \mathbf{b} \), donde:
+\[
+A = \begin{pmatrix}
+1 & 1 & k \\
+1 & k & 1 \\
+k & 1 & 1
+\end{pmatrix}, \quad
+\mathbf{x} = \begin{pmatrix}
+x \\
+y \\
+z
+\end{pmatrix}, \quad
+\mathbf{b} = \begin{pmatrix}
+1 \\
+1 \\
+-2
+\end{pmatrix}
+\]
+El determinante de A nos ayudará a determinar la unicidad de la solución mediante Teorema de Rouché-Frobenius.
+\[
+\det(A) = \begin{vmatrix}
+1 & 1 & k \\
+1 & k & 1 \\
+k & 1 & 1
+\end{vmatrix}
+\]
+Calculamos el determinante usando la regla de Sarrus o la expansión por cofactores:
+\[
+\det(A) = 1 \cdot (k \cdot 1 - 1 \cdot 1) - 1 \cdot (1 \cdot 1 - k \cdot 1) + k \cdot (1 \cdot 1 - k \cdot k)
+\]
+\[
+\det(A) = 1 \cdot (k - 1) - 1 \cdot (1 - k) + k \cdot (1 - k^2)
+\]
+\[
+\det(A) = (k - 1) - (1 - k) + k (1 - k^2)
+\]
+\[
+\det(A) = k - 1 - 1 + k + k - k^3
+\]
+\[
+\det(A) = 3k - 2 - k^3
+\]
+\[
+\det(A) = -k^3 + 3k - 2
+\]
+Simplificando:
+\[
+\det(A) = -k^3 + 3k - 2
+\]
+Nótese que...\\
+Si \( \det(A) \neq 0 \): El sistema tiene una única solución. \\
+Si \( \det(A) = 0 \): El sistema puede ser: \\
+Si es consistente e indeterminado tiene infinitas soluciones; si es inconsistente implica que no tiene solución. Primero, encontremos los valores de k que hacen que \( \det(A) = 0 \):
+\[
+-k^3 + 3k - 2 = 0 \quad \Rightarrow \quad k^3 - 3k + 2 = 0
+\]
+Buscamos las raíces de la ecuación cúbica \( k^3 - 3k + 2 = 0 \). \\
+Véase que es factorizable como $ k^3 - 3k + 2 = (k - 1)^2 (k + 2) $. Por lo tanto, las soluciones son:
+\[
+k = 1 \quad (\text{de multiplicidad 2}), \quad k = -2
+\]
+Veamos cuidadosamente los siguientes casos: \\
+Caso 1: \( \det(A) \neq 0 \) \\
+Es decir, cuando \( k \neq 1 \) y \( k \neq -2 \). \\
+Conclusión: El sistema tiene una única solución. \\
+
+
+Caso 2: \( \det(A) = 0 \), es decir, \( k = 1 \) o \( k = -2 \). \\
+Analizamos cada valor:
+
+
+Para $k=1$: \\
+Sustituimos $k=1$ en el sistema:
+\[
+     \begin{cases}
+     x + y + z = 1 \\
+     x + y + z = 1 \\
+     x + y + z = -2
+     \end{cases}
+     \]
+Observamos que las dos primeras ecuaciones son iguales, pero la tercera es inconsistente \( 1 \neq -2 \). \\
+Conclusión: No hay solución (sistema inconsistente). \\
+
+
+Para \( k = -2 \):
+Sustituimos $k=−2$ en el sistema:
+\[
+     \begin{cases}
+     x + y - 2z = 1 \\
+     x - 2y + z = 1 \\
+     -2x + y + z = -2
+     \end{cases}
+     \]Resolvemos el sistema:
+Resolvemos el sistema:
+\begin{enumerate}
+    \item De la primera ecuación: x=1−y+2z.
+    \item Sustituimos x en la segunda y tercera ecuación:
+    \item Segunda ecuación:
+\[
+          (1 - y + 2z) - 2y + z = 1 \quad \Rightarrow \quad 1 - 3y + 3z = 1 \quad \Rightarrow \quad -3y + 3z = 0 \quad \Rightarrow \quad y = z
+          \]
+
+
+    \item Tercera ecuación:
+\[
+          -2(1 - y + 2z) + y + z = -2 \quad \Rightarrow \quad -2 + 2y - 4z + y + z = -2
+          \]
+\[
+          3y - 3z = 0 \quad \Rightarrow \quad y = z
+          \]
+    \item De \( y = z \) y sustituyendo en \( x = 1 - y + 2z \):
+\[
+        x = 1 - z + 2z = 1 + z
+        \]
+\end{enumerate}
+Conclusión: Hay infinitas soluciones parametrizadas por z, de forma elegante este espacio afín es como sigue.
+\[
+\begin{pmatrix} x \\ y \\ z \end{pmatrix} = \begin{pmatrix} 1 + t \\ t \\ t \end{pmatrix} \; : \; t\in\mathbb{R}  = \begin{pmatrix} 1 \\ 0 \\ 0 \end{pmatrix} + span \Bigg\{ \begin{pmatrix} 1 \\ 1 \\ 1 \end{pmatrix} \Bigg\}
+\]
+$\therefore$ De forma condensada. \\
+(a) Ninguna solución: Para $k=1$. \\
+(b) Una única solución: Para cualsea $k\in \mathbb{R}\setminus\{-2,1\}$ \\
+(c) Un número infinito de soluciones: Para $k=−2$.
+\end{solution}

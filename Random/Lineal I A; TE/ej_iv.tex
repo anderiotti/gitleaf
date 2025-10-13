@@ -1,0 +1,94 @@
+4. ( 1 pt ) Determine si el siguiente sistema de ecuaciones lineales en \( F=\mathbb{Z}_{2} \), tiene o no solución. De tener solución exhiba el conjunto solución mostrando y justificando cada paso.
+\[
+\begin{aligned}
+x_{1}+x_{2}+x_{3}+x_{4} & =1 \\
+x_{1}+x_{2}+x_{3} & =0 \\
+x_{3}+x_{4} & =1
+\end{aligned}
+\] \\
+
+\begin{solution}
+Para resolver este sistema de ecuaciones lineales en el campo \( F = \mathbb{Z}_2 \), seguiremos los siguientes pasos:
+
+Escribir el sistema de ecuaciones en forma de matriz aumentada.
+Aplicar operaciones elementales de fila para llevar la matriz a su forma escalonada reducida.
+Analizar la solución del sistema en base a la matriz en su forma escalonada reducida.
+
+Primero, escribimos el sistema de ecuaciones en forma de matriz aumentada:
+\[
+\begin{bmatrix}
+1 & 1 & 1 & 1 & \vert & 1 \\
+1 & 1 & 1 & 0 & \vert & 0 \\
+0 & 0 & 1 & 1 & \vert & 1 \\
+\end{bmatrix}
+\]
+Ahora, aplicamos operaciones elementales de fila para encontrar la forma escalonada reducida de la matriz.
+
+Restamos la fila 2 de la fila 1:
+
+\[
+\begin{bmatrix}
+0 & 0 & 0 & 1 & \vert & 1 \\
+1 & 1 & 1 & 0 & \vert & 0 \\
+0 & 0 & 1 & 1 & \vert & 1 \\
+\end{bmatrix}
+\]
+
+Intercambiamos la fila 1 con la fila 3:
+
+\[
+\begin{bmatrix}
+0 & 0 & 1 & 1 & \vert & 1 \\
+1 & 1 & 1 & 0 & \vert & 0 \\
+0 & 0 & 0 & 1 & \vert & 1 \\
+\end{bmatrix}
+\]
+
+Restamos la fila 1 de la fila 2:
+
+\[
+\begin{bmatrix}
+0 & 0 & 1 & 1 & \vert & 1 \\
+1 & 1 & 0 & 1 & \vert & 1 \\
+0 & 0 & 0 & 1 & \vert & 1 \\
+\end{bmatrix}
+\]
+
+Restamos la fila 3 de la fila 2:
+
+\[
+\begin{bmatrix}
+0 & 0 & 1 & 1 & \vert & 1 \\
+1 & 1 & 0 & 0 & \vert & 0 \\
+0 & 0 & 0 & 1 & \vert & 1 \\
+\end{bmatrix}
+\]
+Ahora la matriz está en forma escalonada reducida. Esto nos da el siguiente sistema de ecuaciones:
+\[
+\begin{aligned}
+x_3 + x_4 &= 1 \\
+x_1 + x_2 &= 0 \\
+x_4 &= 1 \\
+\end{aligned}
+\]
+De la tercera ecuación, $x_4=1$.
+Sustituyendo $x_4=1$ en la primera ecuación:
+\[
+x_3 + 1 = 1 \implies x_3 = 0
+\]
+Sustituyendo $x_1+x_2=0$:
+Podemos elegir $x_1=t$ y $x_2=t$, donde $ t \in \mathbb{Z}_2 $, pues cuales sea dos elementos iguales de este campo al sumarse dan cero.
+Por lo tanto, el conjunto solución es:
+\[
+\begin{aligned}
+x_1 &= t \\
+x_2 &= t \\
+x_3 &= 0 \\
+x_4 &= 1 \\
+\end{aligned}
+\]
+donde $ t \in \mathbb{Z}_2 $. Este sistema tiene solución y el conjunto solución depende de t, explícitamente las soluciones son.
+\[
+\left\{\, (0,\ 0,\ 0,\ 1),\ \ (1,\ 1,\ 0,\ 1) \,\right\}
+\]
+\end{solution}

@@ -1,0 +1,44 @@
+\documentclass{article}
+\usepackage{graphicx} % Required for inserting images
+
+
+\begin{document}
+
+II. Si un objeto está a una distancia \( 2f \) de un espejo cóncavo con foco \( f \), ¿cuál es la posición de su imagen?  
+  
+La posición de la imagen en un espejo cóncavo se determina usando la ecuación del espejo esférico:
+
+\[
+\frac{1}{f} = \frac{1}{s} + \frac{1}{s_i}
+\]
+
+Dado que el objeto está a \( s = 2f \), sustituimos en la ecuaciómn:  
+
+\[
+\frac{1}{f} = \frac{1}{2f} + \frac{1}{s_i}
+\]
+
+Despejando \( s_i \):  
+
+\[
+\frac{1}{s_i} = \frac{1}{f} - \frac{1}{2f} = \frac{2}{2f} - \frac{1}{2f} = \frac{1}{2f}
+\]
+
+\[
+s_i = 2f
+\]
+
+La imagen se forma en \( s_i = 2f \), es decir, a la misma distancia que el objeto. Además, la imagen es real, invertida y de igual tamaño que el objeto. (con la fórmula de Newton que no vimos en el pdf de lab esto queda directo pues $x_0x_i=f^2 =x_0f=(s_i-f)f \Rightarrow s_i=f+f=2f$)
+
+III. ¿Qué implicación tiene la aproximación paraxial en el montaje de un experimento?  
+ 
+La aproximación paraxial se basa en considerar únicamente los rayos que forman un ángulo pequeño con el eje óptico y que están cerca de este. Esto implica que se pueden usar las aproximaciones físicas misteriosas Tayloríficas (McLaurin) \( \sin \theta \approx \theta \) y \( \tan \theta \approx \theta \) para simplificar los cálculos de trayectorias de los rayos.  
+
+En un experimento de óptica, la aproximación paraxial tiene las siguientes implicaciones:  
+1. Reducción de aberraciones: Al trabajar con rayos cercanos al eje óptico, se desprecian las aberraciones esféricas y otras distorsiones ópticas. Además es especialmente conveniente para obtener triágulos "rectángulos" semejantes y formular teoría geométrica  
+2. Uso de fórmulas simplificadas: Permite aplicar las ecuaciones de los espejos y lentes delgadas sin correcciones complejas.  
+3. Precisión en la formación de imágenes: Dentro del régimen paraxial, los resultados obtenidos son suficientemente precisos para muchos experimentos ópticos sin necesidad de recurrir a óptica geométrica avanzada o trazado exacto de rayos.  
+
+La aproximación paraxial permite simplificar los cálculos ópticos, minimizar aberraciones y mejorar la precisión en la formación de imágenes en experimentos ópticos.
+
+\end{document}

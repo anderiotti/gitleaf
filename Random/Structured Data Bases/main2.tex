@@ -1,0 +1,113 @@
+\documentclass[12pt,a4paper]{article}
+
+% ------------------------
+% PACKAGES
+% ------------------------
+\usepackage[english]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{geometry}
+\usepackage{amsmath, amssymb} % For mathematical notations if needed
+\usepackage{hyperref}
+
+\geometry{letterpaper, margin=1in}
+
+% ------------------------
+% HYPERLINK SETUP
+% ------------------------
+\hypersetup{
+    colorlinks=true,
+    linkcolor=black,
+    urlcolor=blue,
+}
+
+% ------------------------
+% DOCUMENT
+% ------------------------
+\begin{document}
+
+\title{Chapter 1 \\ \large An Introduction to Information Systems}
+\author{}
+\date{}
+\maketitle
+
+\section{The Primitive World and the Problem of Truth}
+
+Before we can appreciate the elegance of a modern database system, we must first visit a more primitive world: the world of \emph{file systems}. Imagine you are tasked with writing a program to manage a small library in this era. You create a file, perhaps `books.txt`. You decide on a structure: each line will contain a book's ID, title, author, and status (e.g., "ON\_SHELF" or "CHECKED\_OUT"), separated by commas.
+
+Immediately, problems arise. What happens if a title itself contains a comma? Your program breaks. You change the separator. What happens if you need to find all books by a single author? You must write code to read the entire file, line by line, searching for a match---a terribly inefficient process.
+
+But the most dangerous problem is one of truth. Suppose your program crashes halfway through updating a book's status. The file is left in a corrupted, intermediate state. There is no guardian of the data's integrity; there is only your code. The data and the logic to interpret it are hopelessly entangled. In this world, every application programmer must be a master of all trades: they must manage storage, enforce data rules, handle simultaneous access, and ensure recovery from failure. The system is brittle, chaotic, and cannot guarantee its own correctness.
+
+This chaos demanded a new abstraction: a system that would separate the data from the application and take on the solemn responsibility of being the guardian of truth. This is the origin of the \textbf{Database Management System (DBMS)}.
+
+\section{The Grand Abstraction: The Database System}
+
+A modern Information System is built upon a simple, powerful idea: let the application programmer focus on the application's logic, and delegate the complexities of data management to a specialized, trustworthy entity. We can dissect this new world into three fundamental concepts:
+
+\begin{enumerate}
+    \item \textbf{The Database (DB):} This is not merely a collection of files, but a structured, logical, and self-consistent model of some aspect of reality. It is a universe of facts and the rules that govern them.
+    
+    \item \textbf{The Database Management System (DBMS):} This is the software that acts as the gatekeeper to the database. It is the engine that understands the structure, enforces the rules, and provides a language for applications to interact with the data without needing to know about the underlying physical storage. It shields the application from the messy details of files and memory.
+    
+    \item \textbf{The Information System:} This is the complete ecosystem---the hardware that runs the processes, the operating system that manages the hardware, the network that connects everything, the DBMS that guards the data, and the applications and users who interact with it all.
+\end{enumerate}
+
+To make this abstraction real, we require a set of physical and logical components working in concert. At the lowest level, we need \textbf{Hardware} (servers, storage disks) and an \textbf{Operating System} (e.g., Linux) to manage it. We need a \textbf{Network} to allow communication, typically organized in a \textbf{client-server architecture}, where a central, powerful server hosts the DBMS and many clients (user applications) make requests to it. Above this, the \textbf{Software}---the DBMS and the applications---brings the system to life, driven by the needs of its \textbf{Users} and the logic of its \textbf{Business Processes}.
+
+\section{The Guardian of Truth: Integrity and Consistency}
+
+The most profound duty of a DBMS is to maintain the \textbf{integrity} of the database. Integrity means the data is a faithful representation of the reality it models. This is not a vague notion; it has precise forms:
+
+\begin{itemize}
+    \item \textbf{Domain Integrity:} An attribute can only hold values from a permitted set, its domain. An `age` cannot be negative; a `grade` cannot be 'Z'. This is the most basic check on reality.
+    
+    \item \textbf{Entity Integrity:} Every entity, or record, in the database must be uniquely identifiable. We cannot have two identical books that are indistinguishable. This is enforced by a \textbf{primary key}, an attribute (or set of attributes) whose value must be unique for each record.
+    
+    \item \textbf{Referential Integrity:} This governs the relationships between entities. If a book record says it was borrowed by `Patron_ID_123`, then a patron with that ID must actually exist in the patrons table. This is enforced by \textbf{foreign keys}, which link tables together and ensure that no relationship points to a nonexistent entity.
+\end{itemize}
+
+When all these rules are enforced, the database is said to be in a state of \textbf{consistency}. It is a world without internal contradictions.
+
+\section{The Two Faces of Data: OLTP and OLAP}
+
+As organizations began to rely on these systems, a fundamental schism appeared, born from two distinct needs. On one hand, they needed systems to \emph{run the business}; on the other, they needed systems to \emph{observe the business}.
+
+\paragraph{Online Transaction Processing (OLTP).} These are the systems that run the business. They are the digital heartbeat of an organization, capturing every sale, every booking, every update as it happens. They are characterized by:
+\begin{itemize}
+    \item A high volume of small, simple transactions (e.g., sell one item, update one address).
+    \item Many concurrent users.
+    \item A focus on writing and modifying current data.
+    \item An absolute demand for speed, availability, and consistency.
+\end{itemize}
+Think of an ATM, a point-of-sale terminal, or a flight reservation system. These are OLTP systems.
+
+\paragraph{Online Analytical Processing (OLAP).} These are the systems that observe the business. Their purpose is not to record new events, but to analyze the vast history of past events to discover patterns, trends, and insights. They are characterized by:
+\begin{itemize}
+    \item A low volume of complex, long-running queries (e.g., "What was the total sales of every product in the northern region for the last five years, grouped by quarter?").
+    \item Few users (analysts, executives).
+    \item A focus on reading and aggregating historical data.
+    \item A demand for powerful analytical capabilities over speed.
+\end{itemize}
+Think of a business intelligence dashboard or a financial forecasting model. These are OLAP systems. For the remainder of this chapter, we will focus on the bedrock of the operational world: the OLTP transaction.
+
+\section{The Heartbeat of Business: The Transaction}
+
+What is a transaction? It is a pact with the database, a promise to perform a sequence of operations that constitutes a single, logical unit of work. A bank transfer is the classic example: it is composed of two operations, a withdrawal from one account and a deposit into another. For the transaction to be meaningful, both must succeed, or neither must.
+
+To operate in a world rife with hardware failures, software bugs, and simultaneous users, any trustworthy transactional system must make four sacred vows. These are known as the \textbf{ACID} properties.
+
+\begin{enumerate}
+    \item \textbf{Atomicity (All or Nothing):} The transaction is an indivisible, atomic unit. The system guarantees that either all operations within the transaction are completed successfully, or none of them are. If the power fails during our bank transfer, the database will not be left in a state where the money has been withdrawn but not yet deposited. The entire transaction is rolled back, as if it never happened.
+
+    \item \textbf{Consistency (The Rules Are Kept):} A transaction must transition the database from one valid state to another. It cannot violate the defined integrity rules. Our bank transfer cannot create money out of thin air, nor can it leave an account with a negative balance if the business rules forbid it. The DBMS is the ultimate enforcer of these laws.
+    
+    \item \textbf{Isolation (The Illusion of Solitude):} The system must handle many transactions at once (\textbf{concurrency}). However, each transaction must execute as if it were the only one running in the entire system. Its intermediate, unfinished work must be invisible to all other transactions. Without isolation, two concurrent transfers from the same account could interfere, corrupting the final balance. The DBMS uses sophisticated locking mechanisms to create this crucial illusion.
+
+    \item \textbf{Durability (What is Written, Stays Written):} Once a transaction has been successfully committed, its changes are permanent. They must survive any subsequent system failure, be it a crash of the software or a loss of power. The DBMS ensures this by writing the results of the transaction to a persistent log before confirming its success. This log allows the system to recover and restore all committed changes after a catastrophe.
+\end{enumerate}
+
+These four properties---Atomicity, Consistency, Isolation, and Durability---are not merely technical features. They are the fundamental pillars upon which the reliability and truthfulness of modern information systems are built.
+
+\end{document}

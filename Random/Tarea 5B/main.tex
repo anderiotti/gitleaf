@@ -1,0 +1,307 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage{pgfplots}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{mdframed}
+\usepackage{amsthm}
+\usepackage{tikz}
+\usepackage{multicol}
+\usepackage[dvipsnames]{xcolor}
+
+\geometry{a4paper, left=2cm, right=2cm, top=1cm, bottom=2cm}
+
+\pgfplotsset{compat=1.18}
+\begin{document}
+
+
+\section*{Problema 1 (1.5P)}
+Supón que usando una lámpara de Hg se obtiene la siguiente \textcolor{orange}{ ecuación }\textcolor{black} que caracteriza un \textcolor{teal}{ prisma }\textcolor{black}:  
+\[
+\lambda(\delta) = -0.1242 \delta^3 + 28.422 \delta^2 - 2175.1 \delta + 56066
+\]  
+
+Obtén las \textcolor{brown}{ longitudes }\textcolor{black} de las líneas observadas, mediante un espectrómetro, de una lámpara de elemento desconocido cuyos \textcolor{olive}{ ángulo }\textcolor{black}s de desviación son \(\delta\): \([65.467^\circ,\ 68.40^\circ\ \text{y}\ 69.73^\circ]\). Además, calcula la propagación de la \textcolor{red}{ incertidumbre }\textcolor{black} nominal de las \textcolor{brown}{ longitudes }\textcolor{black} asumiendo que la \textcolor{red}{ incertidumbre }\textcolor{black} absoluta del \textcolor{olive}{ ángulo }\textcolor{black} de desviación es \(\Delta\delta = \SI{0.15}{\degree}\). \\
+
+Dada la \textcolor{orange}{ ecuación }\textcolor{black}:
+
+\[
+\lambda(\delta) = -0.1242 \delta^3 + 28.422 \delta^2 - 2175.1 \delta + 56066
+\]
+
+y los \textcolor{olive}{ ángulo }\textcolor{black}s de desviación medidos:
+
+\[
+\delta = \{65.467^\circ, 68.40^\circ, 69.73^\circ\}
+\]
+
+sustituimos cada valor en la \textcolor{orange}{ ecuación }\textcolor{black} para obtener la \textcolor{brown}{ longitud de onda }\textcolor{black} correspondiente...\\
+Para \(\delta_1 = 65.467^\circ\):
+
+\[
+\lambda(65.467) = -0.1242 (65.467)^3 + 28.422 (65.467)^2 - 2175.1 (65.467) + 56066 = 1089.4 \text{ nm}
+\]
+
+Para \(\delta_2 = 68.40^\circ\):
+
+\[
+\lambda(68.40) = -0.1242 (68.40)^3 + 28.422 (68.40)^2 - 2175.1 (68.40) + 56066 = 1769.5 \text{ nm}
+\]
+
+
+Para \(\delta_3 = 69.73^\circ\):
+
+\[
+\lambda(69.73) = -0.1242 (69.73)^3 + 28.422 (69.73)^2 - 2175.1 (69.73) + 56066 = 2459.0 \text{ nm}
+\]
+
+Dado que la \textcolor{red}{ incertidumbre }\textcolor{black} en el \textcolor{olive}{ ángulo }\textcolor{black} de desviación es:
+
+\[
+\Delta \delta = 0.15^\circ
+\]
+
+usamos la propagación de errores considerando la derivada de \(\lambda(\delta)\):
+
+\[
+\Delta \lambda = \left| \frac{d\lambda}{d\delta} \right| \Delta \delta
+\]
+
+Calculamos la derivada de la \textcolor{orange}{ ecuación }\textcolor{black} de \(\lambda(\delta)\):
+
+\[
+\frac{d\lambda}{d\delta} = -3(0.1242) \delta^2 + 2(28.422) \delta - 2175.1 = -0.3726 \delta^2 + 56.844 \delta - 2175.1
+\]
+
+Evaluamos para cada \(\delta\)...\\
+
+Para \(\delta_1 = 65.467^\circ\):
+
+\[
+\frac{d\lambda}{d\delta} = -0.3726 (65.467)^2 + 56.844 (65.467) - 2175.1 = -48.3
+\]
+
+\[
+\Delta \lambda_1 = | -48.3 | \times 0.15 = 7.2 \text{ nm}
+\]
+
+Para \(\delta_2 = 68.40^\circ\):
+
+\[
+\frac{d\lambda}{d\delta} = -0.3726 (68.40)^2 + 56.844 (68.40) - 2175.1 = -30.0
+\]
+
+\[
+\Delta \lambda_2 = | -30.0 | \times 0.15 = 4.5 \text{ nm}
+\]
+
+Para \(\delta_3 = 69.73^\circ\):
+
+\[
+\frac{d\lambda}{d\delta} = -0.3726 (69.73)^2 + 56.844 (69.73) - 2175.1 = -19.0
+\
+
+\[
+\Delta \lambda_3 = | -19.0 | \times 0.15 = 2.85 \text{ nm}
+\]
+
+Se obtiene que las \textcolor{brown}{ longitudes }\textcolor{black} con \textcolor{red}{ incertidumbres }\textcolor{black} son como sigue.
+
+\[
+\lambda_1 = 1089.4 \pm 7.2 \text{ nm}, \qquad \lambda_2 = 1769.5 \pm 4.5 \text{ nm},  \qquad \lambda_3 = 2459.0 \pm 2.85 \text{ nm}
+\]
+
+\section*{Problema 2 (1.5P)}
+Un \textcolor{teal}{ prisma }\textcolor{black} de \textcolor{cyan}{ vidrio }\textcolor{black} con un \textcolor{olive}{ ángulo }\textcolor{black} de \textcolor{purple}{ ápice }\textcolor{black} de \({60.0^{\circ}}\) tiene un índice de \textcolor{blue}{ refracción }\textcolor{black} de \(n = 1.5\) para una cierta \textcolor{brown}{ longitud de onda }\textcolor{black}.  \\
+\textbf{a)} Si el \textcolor{olive}{ ángulo }\textcolor{black} de incidencia en la primera superficie es \(\theta_{11} = \SI{48.59}{\degree}\), mostrar que la \textcolor{violet}{ luz }\textcolor{black} pasará simétricamente a través del \textcolor{teal}{ prisma }\textcolor{black}.  \\
+\textbf{b)} Encontrar el \textcolor{olive}{ ángulo }\textcolor{black} de desviación (\(\delta\)) para \(\theta_{11} = \SI{35.6}{\degree}\) y \(\theta_{11} = \SI{51.7}{\degree}\).
+
+Cuando la \textcolor{violet}{ luz }\textcolor{black} atraviesa un \textcolor{teal}{ prisma }\textcolor{black} de manera simétrica, el \textcolor{olive}{ ángulo }\textcolor{black} de incidencia en la segunda cara es igual al \textcolor{olive}{ ángulo }\textcolor{black} de \textcolor{blue}{ refracción }\textcolor{black} en la primera cara:
+
+\[
+\theta_{I1} = \theta_{I2}
+\]
+
+y el \textcolor{olive}{ ángulo }\textcolor{black} de \textcolor{blue}{ refracción }\textcolor{black} en la primera superficie (\(\theta_{R1}\)) es igual al \textcolor{olive}{ ángulo }\textcolor{black} de \textcolor{blue}{ refracción }\textcolor{black} en la segunda superficie (\(\theta_{R2}\)):
+
+\[
+\theta_{R1} = \theta_{R2}
+\]
+
+Además, existe la relación entre el \textcolor{olive}{ ángulo }\textcolor{black} de \textcolor{blue}{ refracción }\textcolor{black} y el \textcolor{olive}{ ángulo }\textcolor{black} de \textcolor{purple}{ ápice }\textcolor{black}:
+
+\[
+\theta_{R1} + \theta_{R2} = A
+\]
+
+Aplicamos la \textcolor{blue}{ Ley de Snell }\textcolor{black} en la primera interfaz:
+
+\[
+n_{\text{\text{\textcolor{NavyBlue}{ aire}\textcolor{black}}}} \sin \theta_{I1} = n_{\text{\textcolor{cyan}{ vidrio }\textcolor{black}}} \sin \theta_{R1}
+\]
+
+Dado que \( n_{\text{\text{\textcolor{NavyBlue}{ aire }\textcolor{black}}}} = 1.0 \) y \( n_{\text{\textcolor{cyan}{ vidrio }\textcolor{black}}} = 1.5 \), sustituimos \( \theta_{I1} = 48.59^\circ \):
+
+\[
+1.0 \cdot \sin 48.59^\circ = 1.5 \cdot \sin \theta_{R1}
+\]
+
+\[
+\sin \theta_{R1} = \frac{\sin 48.59^\circ}{1.5}
+\]
+
+\[
+\sin \theta_{R1} = \frac{0.752} {1.5} = 0.501
+\]
+
+\[
+\theta_{R1} = \arcsin(0.501) = 30.0^\circ
+\]
+
+Como el \textcolor{teal}{ prisma }\textcolor{black} es simétrico:
+
+\[
+\theta_{R1} + \theta_{R2} = A
+\]
+
+\[
+30.0^\circ + \theta_{R2} = 60.0^\circ
+\]
+
+\[
+\theta_{R2} = 30.0^\circ
+\]
+
+Ahora, aplicamos nuevamente la \textcolor{blue}{ Ley de Snell }\textcolor{black} en la segunda superficie para hallar \( \theta_{I2} \):
+
+\[
+n_{\text{\textcolor{cyan}{ vidrio }\textcolor{black}}} \sin \theta_{R2} = n_{\text{\text{\textcolor{NavyBlue}{ aire}\textcolor{black}}}} \sin \theta_{I2}
+\]
+
+\[
+1.5 \sin 30.0^\circ = 1.0 \sin \theta_{I2}
+\]
+
+\[
+1.5 \times 0.5 = \sin \theta_{I2}
+\]
+
+\[
+\sin \theta_{I2} = 0.75
+\]
+
+\[
+\theta_{I2} = \arcsin(0.75) = 48.59^\circ
+\]
+
+Dado que \( \theta_{I2} = \theta_{I1} \), hemos demostrado que la \textcolor{violet}{ luz }\textcolor{black} pasa simétricamente a través del \textcolor{teal}{ prisma }\textcolor{black}. \\
+
+(b) El \textcolor{olive}{ ángulo }\textcolor{black} de desviación total \( \delta \) de un rayo de \textcolor{violet}{ luz }\textcolor{black} que pasa a través de un \textcolor{teal}{ prisma }\textcolor{black} se define como:
+
+\[
+\delta = (\theta_{I1} + \theta_{I2}) - A
+\]
+
+Para cada valor de \( \theta_{I1} \), determinaremos \( \theta_{R1} \), luego \( \theta_{R2} \), y finalmente \( \theta_{I2} \) para obtener \( \delta \).
+
+Caso 1: \( \theta_{I1} = 35.6^\circ \), primero hallamos \( \theta_{R1} \) con la \textcolor{blue}{ Ley de Snell }\textcolor{black}
+
+\[
+\sin \theta_{R1} = \frac{\sin 35.6^\circ}{1.5}
+\]
+
+\[
+= \frac{0.582}{1.5} = 0.388
+\]
+
+\[
+\theta_{R1} = \arcsin(0.388) = 22.8^\circ
+\]
+
+Hallamos \( \theta_{R2} \) con la relación \( \theta_{R1} + \theta_{R2} = A \)
+
+\[
+22.8^\circ + \theta_{R2} = 60.0^\circ
+\]
+
+\[
+\theta_{R2} = 37.2^\circ
+\]
+
+Hallamos \( \theta_{I2} \) con la \textcolor{blue}{ Ley de Snell }\textcolor{black}  
+
+\[
+\sin \theta_{I2} = 1.5 \sin 37.2^\circ
+\]
+
+\[
+= 1.5 \times 0.605 = 0.908
+\]
+
+\[
+\theta_{I2} = \arcsin(0.908) = 65.0^\circ
+\]
+
+Finalmente hallamos \( \delta \)  
+
+\[
+\delta = (\theta_{I1} + \theta_{I2}) - A
+\]
+
+\[
+\delta = (35.6^\circ + 65.0^\circ) - 60.0^\circ
+\]
+
+\[
+\delta = 40.6^\circ
+\]
+
+Caso 2: \( \theta_{I1} = 51.7^\circ \), análogamente primero hallamos \( \theta_{R1} \)  
+
+\[
+\sin \theta_{R1} = \frac{\sin 51.7^\circ}{1.5}
+\]
+
+\[
+= \frac{0.786}{1.5} = 0.524
+\]
+
+\[
+\theta_{R1} = \arcsin(0.524) = 31.6^\circ
+\]
+
+Hallamos \( \theta_{R2} \)  
+
+\[
+\theta_{R2} = 60.0^\circ - 31.6^\circ = 28.4^\circ
+\]
+
+Hallamos \( \theta_{I2} \)  
+
+\[
+\sin \theta_{I2} = 1.5 \sin 28.4^\circ
+\]
+
+\[
+= 1.5 \times 0.475 = 0.713
+\]
+
+\[
+\theta_{I2} = \arcsin(0.713) = 45.6^\circ
+\]
+
+Final y últimamente hallamos \( \delta \)  
+
+\[
+\delta = (51.7^\circ + 45.6^\circ) - 60.0^\circ
+\]
+
+\[
+\delta = 37.3^\circ
+\]
+    
+
+\end{document}

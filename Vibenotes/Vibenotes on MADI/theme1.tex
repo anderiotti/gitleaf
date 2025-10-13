@@ -1,0 +1,854 @@
+\chapter{Combinatorial Foundations}
+\addcontentsline{toc}{chapter}{Combinatorial Foundations}
+
+\section{The Heuristic of Exploration and Conjecture}
+\addcontentsline{toc}{section}{The Heuristic of Exploration and Conjecture}
+
+Mathematical practice is not algorithmic application but an act of discovery. Before the edifice of formal proof is erected, its foundations must be laid through intuition and the observation of structure. This chapter is dedicated to the fundamental heuristic of discrete mathematics: the search for patterns. This exploratory strategy, historically a manual endeavor, is now amplified by computational power, allowing empirical validation—a cornerstone of data science—to serve as a catalyst for rigorous conjecture, the genesis of pure mathematics.
+
+\subsection{Patterns in Numerical Sequences}
+
+Number sequences are archetypal objects wherein structure may be either manifest or deeply concealed. They provide the ideal testing ground for our heuristic.
+
+\begin{definition}[Fibonacci Sequence]
+The \textbf{Fibonacci sequence} $\{F_n\}_{n \in \Nset{0}}$ is the sequence of integers defined by the linear recurrence relation of the second order:
+$$F_n = F_{n-1} + F_{n-2}, \quad \forall n \in \Nset{2}$$
+with canonical initial conditions $F_0 = 0$ and $F_1 = 1$.
+\end{definition}
+
+An elementary computation yields the initial terms: $0, 1, 1, 2, 3, 5, 8, 13, 21, \dots$. This sequence can be generated programmatically.
+
+\begin{minted}{python}
+def fibonacci(limit: int):
+    """Generates Fibonacci numbers up to F_limit."""
+    a, b = 0, 1
+    for _ in range(limit + 1):
+        yield a
+        a, b = b, a + b
+
+# Computational verification
+print(f"The first 10 Fibonacci numbers: {list(fibonacci(9))}")
+\end{minted}
+
+A deeper structure emerges under the lens of modular arithmetic. Consider the sequence $\{F_n \pmod{3}\}_{n \in \Nset{0}}$.
+
+\begin{minted}{python}
+def fibonacci_mod(limit: int, m: int):
+    """Generates Fibonacci numbers modulo m."""
+    a, b = 0, 1
+    for _ in range(limit + 1):
+        yield a
+        a, b = b, (a + b) % m
+
+# Computational verification for m=3
+F_mod_3 = list(fibonacci_mod(20, 3))
+print(f"Sequence F_n mod 3: {F_mod_3}")
+\end{minted}
+
+Direct computation provides:
+$$ \{0, 1, 1, 2, 0, 2, 2, 1, 0, 1, 1, 2, \dots\} $$
+Visual inspection reveals a repeating block of terms: $(0, 1, 1, 2, 0, 2, 2, 1)$. The state of the sequence is determined by a pair of consecutive terms. Observe that $(F_8 \pmod 3, F_9 \pmod 3) = (0, 1)$, which is identical to the initial state $(F_0 \pmod 3, F_1 \pmod 3)$. Since the recurrence relation is deterministic, the sequence of residues must henceforth be a replica of the initial segment. This is not coincidence, but a necessary consequence of the finiteness of the state space $(\mathbb{Z}/3\mathbb{Z})^2$. This empirical result leads to a precise conjecture.
+
+\begin{proposition}[Conjecture: Periodicity of Fibonacci mod 3]
+The sequence $\{F_n \pmod{3}\}_{n \in \Nset{0}}$ is periodic with period 8. This period is known as the \textbf{Pisano Period} $\pi(3)$. Formally, for all $n \in \Nset{0}$:
+$$F_{n+8} \equiv F_n \pmod{3}$$
+\end{proposition}
+
+\subsection{Patterns in Combinatorial Structures}
+
+The Pascal Triangle is a numerical array that elegantly encapsulates the properties of the binomial coefficients $\binom{n}{k}$.
+
+\subsubsection{Row Sums}
+
+Let $S_n$ be the sum of the entries in the $n$-th row of the triangle, for $n \in \Nset{0}$:
+$$ S_n := \sum_{k=0}^{n} \binom{n}{k} $$
+The initial sequence of sums $\{S_n\}_{n \in \Nset{0}}$ is $\{1, 2, 4, 8, 16, \dots\}$.
+
+\begin{minted}{python}
+import math
+
+def pascal_row_sum(n: int) -> int:
+    """Computes the sum of the n-th row of Pascal's Triangle."""
+    return sum(math.comb(n, k) for k in range(n + 1))
+
+# Computational verification
+S_values = [pascal_row_sum(n) for n in range(8)]
+print(f"First 8 row sums of Pascal's Triangle: {S_values}")
+\end{minted}
+
+The empirical evidence is overwhelming.
+
+\begin{proposition}[Conjecture: Row Sum Identity]
+For any integer $n \in \Nset{0}$, the sum of the entries in the $n$-th row is $2^n$.
+$$ \sum_{k=0}^{n} \binom{n}{k} = 2^n $$
+\end{proposition}
+\begin{remark}
+This identity is a trivial consequence of the Binomial Theorem, $(x+y)^n = \sum_{k=0}^n \binom{n}{k}x^{n-k}y^k$, upon setting $x=y=1$. The heuristic principle, however, is to discover the identity from evidence prior to its formal proof.
+\end{remark}
+
+This established pattern transforms computationally intensive problems into trivial calculations. Consider the problem of finding the minimal $n \in \Nset{0}$ such that $S_n > 10^6$. The pattern reduces this to solving the inequality $2^n > 10^6$. A logarithmic transformation yields $n > \frac{6 \ln 10}{\ln 2} \approx 19.93$. As $n$ must be an integer, the solution is $n=20$. This exemplifies how structural insight yields profound gains in algorithmic efficiency.
+
+\subsubsection{Skipped Sums}
+
+The power of the heuristic is revealed in problems where the pattern is not immediate. For an integer $n \in \Nset{0}$, consider the sums of entries in the $n$-th row, with indices congruent to $j$ modulo 3. Let $j \in \{0, 1, 2\}$. We define the family of sums:
+$$ S_{n,j} := \sum_{\substack{0 \le k \le n \\ k \equiv j \pmod 3}} \binom{n}{k} $$
+The problem is to find a closed-form expression for $S_{n,0}$. A direct computation of the sequence $\{S_{n,0}\}_{n \in \Nset{0}}$ does not yield an obvious pattern.
+
+\begin{minted}{python}
+import math
+
+def pascal_skipped_sum(n: int, j: int, m: int) -> int:
+    """Computes S_{n,j} for modulus m."""
+    return sum(math.comb(n, k) for k in range(j, n + 1, m))
+
+# Computational exploration of S_{n,0}
+S_n_0 = [pascal_skipped_sum(n, 0, 3) for n in range(12)]
+print(f"Sequence S_n_0 for n=0..11: {S_n_0}")
+\end{minted}
+
+The heuristic lesson is critical: when an object of study is intractable in isolation, one must analyze the dynamics of the system to which it belongs. The quantities $S_{n,0}, S_{n,1}, S_{n,2}$ are coupled. Their sum is known: $\sum_{j=0}^2 S_{n,j} = S_n = 2^n$. The path to a solution lies not in analyzing the sequence $\{S_{n,0}\}_{n \in \Nset{0}}$ alone, but in establishing a system of recurrence relations connecting the vector $(S_{n+1,0}, S_{n+1,1}, S_{n+1,2})$ to $(S_{n,0}, S_{n,1}, S_{n,2})$ via the fundamental identity $\binom{n+1}{k} = \binom{n}{k-1} + \binom{n}{k}$.
+
+This approach elevates the problem from a search for a sequence to the analysis of a linear dynamical system. The formal solution, to be developed later, requires methods from linear algebra and complex analysis, specifically the use of roots of unity. It is a testament to how superficial observation must give way to a deeper structural analysis to uncover the underlying mathematical elegance.
+
+\section{The Pigeonhole Principle}
+\addcontentsline{toc}{section}{The Pigeonhole Principle}
+
+The Pigeonhole Principle, or Dirichlet's box principle, is a fundamental theorem of combinatorics. In its essence, it is a simple statement about cardinality, yet its applications are profound and far-reaching, providing a powerful method of proof in virtually every branch of mathematics. The principle's strength lies in its abstraction: by correctly identifying the "objects" (pigeons) and the "containers" (pigeonholes), one can often establish non-trivial existence results with astonishing ease. Formally, the principle is a statement about the properties of functions between sets of differing cardinalities. We shall explore its three canonical forms: the basic, the generalized, and the infinite.
+
+\subsection{The Basic Principle}
+
+The most elementary formulation is a direct consequence of the definition of an injective function between finite sets. It guarantees that if a set of objects is larger than the set of containers to which they are assigned, at least one container must be multiply occupied.
+
+\begin{theorem}[Pigeonhole Principle, Basic Form]\label{thm:pigeonhole_basic}
+Let $A$ and $B$ be non-empty finite sets with cardinalities $\card{A} = m$ and $\card{B} = n$, respectively. If $m > n$, then for any function $f: A \to B$, there exist distinct elements $a_1, a_2 \in A$ such that $f(a_1) = f(a_2)$. That is, no function from $A$ to $B$ can be injective.
+\end{theorem}
+\begin{proof}
+Assume, for the sake of contradiction (\textit{reductio ad absurdum}), that there exists a function $f: A \to B$ which is injective. By the definition of injectivity, for every element $b$ in the codomain $B$, its preimage $f^{-1}(\{b\}) = \{a \in A : f(a)=b\}$ contains at most one element, i.e., $\forall b \in B, \card{f^{-1}(\{b\})} \le 1$.
+
+The collection of all such preimages, $\{f^{-1}(\{b\})\}_{b \in B}$, forms a partition of the domain $A$. Consequently, the cardinality of $A$ is the sum of the cardinalities of the preimages:
+$$ m = \card{A} = \card{\bigcup_{b \in B} f^{-1}(\{b\})} = \sum_{b \in B} \card{f^{-1}(\{b\})} $$
+Applying our assumption, we obtain the inequality:
+$$ \sum_{b \in B} \card{f^{-1}(\{b\})} \le \sum_{b \in B} 1 = n \cdot 1 = n $$
+This leads to the conclusion that $m \le n$, which is a direct contradiction of the hypothesis $m > n$. Therefore, our initial assumption must be false, and no such injective function can exist.
+\end{proof}
+
+The true art of this principle lies in its application, where the "containers" are often not physical boxes but abstract classes of equivalence, such as residue classes in modular arithmetic.
+
+\begin{proposition}\label{prop:ones_and_zeros_multiple}
+For any integer $n \in \Nset{1}$, there exists a multiple of $n$ whose decimal representation consists solely of the digits 1 and 0.
+\end{proposition}
+\begin{proof}
+Let $n$ be a fixed integer. Consider the set of $n+1$ integers $A = \{a_k\}_{k=1}^{n+1}$ where $a_k$ is the integer formed by $k$ consecutive digits 1.
+$$ a_k = \sum_{i=0}^{k-1} 10^i $$
+Let the set of containers be the set of congruence classes modulo $n$, $B = \mathbb{Z}/n\mathbb{Z} = \{0, 1, \dots, n-1\}$, which has cardinality $n$. Define the function $f: A \to B$ by $f(a_k) = a_k \pmod n$.
+
+Since we have $n+1$ objects and $n$ containers, by Theorem 2.1, $f$ cannot be injective. Thus, there exist distinct indices $i, j \in \{1, \dots, n+1\}$, which we may assume are s.t. $j > i$, for which $f(a_j) = f(a_i)$. This implies:
+$$ a_j \equiv a_i \pmod n \implies a_j - a_i \equiv 0 \pmod n $$
+The number $a_j - a_i$ is a multiple of $n$. Its structure is:
+$$ a_j - a_i = \underbrace{11\dots1}_{j \text{ times}} - \underbrace{11\dots1}_{i \text{ times}} = \underbrace{11\dots1}_{j-i \text{ times}}\underbrace{00\dots0}_{i \text{ times}} = \left(\sum_{l=0}^{j-i-1} 10^l\right) \cdot 10^i $$
+This number is composed entirely of 1s and 0s and is divisible by $n$. The proposition is proven.
+\end{proof}
+
+\begin{proposition}
+If $n$ kings are placed on a $2 \times (2n-2)$ chessboard, for $n \in \Nset{2}$, there must exist two kings that are on mutually attacking squares.
+\end{proposition}
+\begin{proof}
+A king on square $(r,c)$ attacks all squares $(r',c')$ where $\max(|r-r'|, |c-c'|) = 1$. We partition the $2 \times (2n-2)$ board into $2n-2$ columns. Consider pairing column $j$ with column $j+1$ for $j=1,3,5,\dots,2n-3$. This creates $n-1$ disjoint rectangular blocks of size $2 \times 2$.
+Let these $n-1$ blocks be the pigeonholes. The pigeons are the $n$ kings. Let $f$ be the function that maps each king to the $2 \times 2$ block it occupies. Since there are $n$ kings and $n-1$ blocks, by Theorem \ref{thm:pigeonhole_basic}, at least one block must contain two or more kings.
+Any two distinct squares within a $2 \times 2$ block are mutually attacking for a king. Therefore, any two kings placed in the same $2 \times 2$ block will attack each other. The proposition is proven.
+\end{proof}
+
+\subsection{The Generalized Principle}
+
+The Basic Principle guarantees a collision of size at least two. The Generalized Principle provides a quantitative lower bound on the size of the most crowded container. Its most abstract form is expressed using the ceiling function.
+
+\begin{theorem}[Pigeonhole Principle, Generalized Form]\label{thm:pigeonhole_generalized}
+Let $f: A \to B$ be a function between non-empty finite sets with $\card{A} = m$ and $\card{B} = n$. Then there exists at least one element $b \in B$ such that its preimage has cardinality at least $\lceil m/n \rceil$.
+$$ \exists b \in B \quad \text{s.t.} \quad \card{f^{-1}(\{b\})} \ge \left\lceil \frac{m}{n} \right\rceil $$
+\end{theorem}
+\begin{proof}
+Assume, for the sake of contradiction, that for all $b \in B$, we have $\card{f^{-1}(\{b\})} < \lceil m/n \rceil$. Since cardinalities are integers, this is equivalent to the strict inequality being converted to $\card{f^{-1}(\{b\})} \le \lceil m/n \rceil - 1$. Summing the cardinalities of the preimages, which partition $A$:
+$$ m = \card{A} = \sum_{b \in B} \card{f^{-1}(\{b\})} \le \sum_{b \in B} \left( \left\lceil \frac{m}{n} \right\rceil - 1 \right) = n \left( \left\lceil \frac{m}{n} \right\rceil - 1 \right) $$
+We invoke the fundamental property of the ceiling function: $\forall x \in \mathbb{R}, \lceil x \rceil - 1 < x$. Let $x = m/n$. Then $\lceil m/n \rceil - 1 < m/n$. Multiplying by $n$ (since $n \in \Nset{1}$, $n>0$) preserves the inequality:
+$$ n \left( \left\lceil \frac{m}{n} \right\rceil - 1 \right) < n \left(\frac{m}{n}\right) = m $$
+Combining our results gives $m < m$, a patent contradiction. Thus, our initial assumption must be false.
+\end{proof}
+
+From this theorem, we derive a highly practical corollary, which is often what is meant by the "strong form" of the principle.
+
+\begin{corollary}\label{cor:pigeonhole_strong}
+If $m = kn+r$ objects are placed into $n$ containers, where $k \in \Nset{0}$, $n \in \Nset{1}$, and $r \in \{1, \dots, n\}$, then at least one container must hold at least $k+1$ objects.
+\end{corollary}
+\begin{proof}
+This is a direct application of Theorem \ref{thm:pigeonhole_generalized}. The number of objects is $m = kn+r$. The guaranteed minimum number of objects in some container is $\lceil m/n \rceil$. We compute the value:
+$$ \left\lceil \frac{m}{n} \right\rceil = \left\lceil \frac{kn+r}{n} \right\rceil = \left\lceil k + \frac{r}{n} \right\rceil $$
+Given the constraints on $r$ and $n$, we have $0 < r/n \le 1$. The ceiling of a number $k$ plus a value in $(0, 1]$ is precisely $k+1$. Thus, at least one container must hold $\ge k+1$ objects.
+\end{proof}
+
+\begin{proposition}
+Show that in any placement of 5 knights on a $3 \times 3$ chessboard, at least 3 must be on squares of the same color.
+\end{proposition}
+\begin{proof}
+The pigeons are the 5 knights. The standard chessboard coloring partitions the 9 squares into two color sets: black and white. These two sets will serve as our pigeonholes, so $n=2$. We wish to guarantee that at least 3 knights land on a square of the same color. This means we are seeking a lower bound of $k+1=3$, which implies $k=2$.
+Using Corollary \ref{cor:pigeonhole_strong}, the number of knights required to guarantee this is $m = kn+1 = 2(2)+1 = 5$. Since exactly 5 knights are placed, the condition is met. Therefore, at least one color must contain at least 3 knights.
+\end{proof}
+
+\begin{proposition}
+Let $S$ be a set of 6 points within a $3 \times 4$ rectangle. Prove that there must exist two points in $S$ whose distance is at most $\sqrt{5}$.
+\end{proposition}
+\begin{proof}
+The pigeons are the 6 points in $S$. To define the pigeonholes, we partition the $3 \times 4$ rectangle into 5 disjoint regions as shown in the figure .
+Let these 5 regions be the pigeonholes ($n=5$). Since there are $m=6$ points, by Theorem \ref{thm:pigeonhole_basic}, at least one region must contain two or more points. We must now find the maximum possible distance between any two points that can be placed in the same region. By inspecting the 5 regions, the largest "diameter" is found in the rectangular regions of size $2 \times 1$. The maximal distance within such a rectangle is the length of its diagonal, which is $\sqrt{2^2 + 1^2} = \sqrt{5}$.
+Since two points must lie in the same region, their distance cannot exceed the maximum possible distance within that region. Therefore, there must exist two points with distance at most $\sqrt{5}$.
+\end{proof}
+
+\subsection{The Infinite Principle}
+
+The principle's final generalization extends to the realm of transfinite arithmetic, where it becomes a foundational result in set theory and a precursor to the more general Ramsey's Theorem.
+
+\begin{lemma}[Axiom on Finite Unions]\label{lemma:finite_union}
+Let $\{S_i\}_{i \in I}$ be a family of finite sets. If the index set $I$ is finite, then the union $\bigcup_{i \in I} S_i$ is a finite set. We assume this axiomatically.
+\end{lemma}
+
+\begin{theorem}[Pigeonhole Principle, Infinite Form]\label{thm:pigeonhole_infinite}
+Let $A$ be a set of infinite cardinality and let $B$ be a non-empty finite set. For any function $f: A \to B$, there must exist at least one element $b \in B$ whose preimage, $f^{-1}(\{b\})$, is an infinite set.
+\end{theorem}
+\begin{proof}
+We proceed by contradiction. Assume the thesis is false, i.e., assume that for every element $b \in B$, its corresponding preimage $f^{-1}(\{b\})$ is a finite set.
+
+The domain $A$ is precisely the disjoint union of these preimages, as every element of $A$ must map to exactly one element of $B$:
+$$ A = \bigcup_{b \in B} f^{-1}(\{b\}) $$
+We are given that the index set for this union, $B$, is finite. The expression above therefore represents $A$ as a finite union of sets, each of which is assumed to be finite under our working assumption.
+
+By Lemma \ref{lemma:finite_union}, this implies that $A$ must be a finite set. This, however, is a direct contradiction of the hypothesis that $A$ is a set of infinite cardinality. The contradiction arises from our initial assumption, which must therefore be false. We are forced to conclude that there exists at least one $b \in B$ for which $f^{-1}(\{b\})$ is an infinite set.
+\end{proof}
+
+This principle is often used to demonstrate the existence of infinite structures with specific properties.
+
+\begin{remark}[Normality of $\pi$]
+A real number $x$ is said to be normal in base $b$ if, for every positive integer $k$, every possible string of $k$ digits appears in the base-$b$ expansion of $x$ with asymptotic frequency $b^{-k}$. It is a famous and longstanding conjecture that $\pi$ is normal in base 10. If this were true, it would be a sublime illustration of the Infinite Principle. Let $A$ be the infinite set of starting positions of digit strings in $\pi$'s decimal expansion. Let $B$ be the finite set of all possible digit strings of length $k$ (e.g., for $k=3$, $B = \{'000', '001', \dots, '999'\}$), so $\card{B} = 10^k$. The function $f: A \to B$ maps a position to the $k$-digit string starting there. Normality implies that no string appears only a finite number of times. Thus, for every $s \in B$, the preimage $f^{-1}(\{s\})$ must be an infinite set, a much stronger condition than that guaranteed by Theorem \ref{thm:pigeonhole_infinite}.
+\end{remark}
+
+\begin{proposition}[Ant Problem Termination]
+An ant is placed on each vertex of a regular $n$-gon. At time $t=0$, each ant begins to move along an edge to an adjacent vertex at unit speed. When two ants meet mid-edge, they elastically collide and reverse direction. When an ant reaches a vertex, it reverses direction. The process of mid-edge collisions must terminate.
+\end{proposition}
+\begin{proof}
+The crucial insight is to recognize that the ants are indistinguishable with respect to their dynamics. A collision between two ants is kinematically equivalent to them passing through each other without changing identity. Let us adopt this "ghost model". In this model, each ant moves continuously in its initial direction (clockwise or counter-clockwise) at unit speed.
+After a finite time $T$ (equal to the time it takes to traverse one edge), every ant that started at a vertex $v_i$ will have arrived at an adjacent vertex $v_{i \pm 1}$. The set of ant positions is restored to the set of vertices. The state of the system, defined as the set of occupied positions, is therefore periodic.
+Now, let's return to the original model with collisions. The set of positions occupied by ants at any time $t$ is identical in both the ghost model and the collision model. Since the set of positions in the ghost model is periodic, it only ever occupies a finite number of configurations. The process of collisions merely permutes which ant occupies which position. As the system of positions is periodic, the number and type of collisions must also be periodic and thus cannot continue indefinitely in a non-repeating fashion.
+A more rigorous argument uses infinite descent, which is the contrapositive of the well-ordering of the natural numbers. One can construct a potential function (a quantity that maps system states to non-negative integers) that strictly decreases at each unique type of collision. Since there are a finite number of states, there are a finite number of collision types. If collisions were to occur forever, this would imply an infinite strictly decreasing sequence of non-negative integers, which is impossible. The link to the infinite pigeonhole principle is conceptual: an infinite sequence of events (collisions) mapped to a finite set of states (or state-transitions) must lead to repetition, which the potential function forbids.
+\end{proof}
+
+\section{The Principle of Double Counting and Binomial Identities}
+\addcontentsline{toc}{section}{The Principle of Double Counting and Binomial Identities}
+
+The Principle of Double Counting, also known as proving an identity by telling a "combinatorial story", is again trivial but powerful. The fundamental idea is deceptively simple: if one wishes to prove an identity of the form $A=B$, it suffices to find a single finite set $S$ and demonstrate that its cardinality can be computed in two distinct ways, one leading to the expression $A$ and the other to the expression $B$. Since both expressions count the same set, they must be equal. This method prioritizes combinatorial intuition and structural understanding over rote algebraic manipulation.
+
+\begin{theorem}[The Principle of Double Counting]
+Let $S$ be a non-empty finite set. If two distinct counting procedures yield the expressions $E_1$ and $E_2$ for the cardinality of $S$, then the identity $E_1 = E_2$ must hold. Formally, if $f: S \to \mathbb{N}_0$ and $g: S \to \mathbb{N}_0$ are two different methods of enumerating $S$, leading to $|S| = f(S)$ and $|S| = g(S)$, then $f(S) = g(S)$.
+\end{theorem}
+
+\subsection{Fundamental Identities via Double Counting}
+
+We begin by establishing the methodology with a classic, didactic example.
+
+\begin{proposition}[Sum of the First $n$ Integers]
+For any integer $n \in \Nset{1}$, the sum of the first $n$ positive integers is given by:
+$$ \sum_{k=1}^{n} k = \frac{n(n+1)}{2} $$
+\end{proposition}
+\begin{proof}
+Consider the set $S$ of all ordered pairs $(i, j)$ of integers such that $1 \le i < j \le n+1$. We shall compute $\card{S}$ in two ways.
+
+\textbf{Method 1 (Summing over the second element):} We can count the pairs by fixing the value of the second element, $j$. The value of $j$ can range from $2$ to $n+1$. For any fixed $j$, the first element $i$ can be any integer from $1$ to $j-1$. Thus, for each $j$, there are $j-1$ possible pairs. Summing over all possible values of $j$:
+$$ \card{S} = \sum_{j=2}^{n+1} (j-1) = \sum_{k=1}^{n} k \quad (\text{letting } k=j-1) $$
+
+\textbf{Method 2 (Direct combinatorial selection):} The set $S$ is, by definition, the set of all 2-element subsets of the set $\{1, 2, \dots, n+1\}$. The number of ways to choose 2 distinct elements from a set of $n+1$ elements is given by the binomial coefficient $\binom{n+1}{2}$.
+$$ \card{S} = \binom{n+1}{2} = \frac{(n+1)!}{2!(n+1-2)!} = \frac{(n+1)!}{2!(n-1)!} = \frac{(n+1)n}{2} $$
+By the Principle of Double Counting, the two expressions for $\card{S}$ must be equal. Therefore,
+$$ \sum_{k=1}^{n} k = \frac{n(n+1)}{2} $$
+\end{proof}
+
+This approach allows us to derive the fundamental formula for binomial coefficients from their combinatorial definition, grounding the algebraic form in its intrinsic meaning.
+
+\begin{definition}[Binomial Coefficient]
+For integers $n, k \in \Nset{0}$, the \textbf{binomial coefficient}, denoted $\binom{n}{k}$, is defined as the number of distinct $k$-element subsets that can be chosen from an $n$-element set.
+\end{definition}
+
+\begin{theorem}[Factorial Formula for Binomial Coefficients]
+For integers $n, k$ such that $0 \le k \le n$, the binomial coefficient is given by the formula:
+$$ \binom{n}{k} = \frac{n!}{k!(n-k)!} $$
+\end{theorem}
+\begin{proof}
+Let $U$ be a set with $\card{U}=n$. Consider the set $S$ of all ordered $k$-tuples of distinct elements from $U$. Such an object is also known as a $k$-permutation of $n$. We will count $\card{S}$ in two ways.
+
+\textbf{Method 1 (Sequential Selection):} We construct an ordered $k$-tuple by choosing its elements one by one without replacement.
+The first element can be chosen in $n$ ways.
+The second element can be chosen in $n-1$ ways.
+...
+The $k$-th element can be chosen in $n-(k-1) = n-k+1$ ways.
+By the multiplicative principle, the total number of such ordered tuples is:
+$$ \card{S} = n(n-1)\cdots(n-k+1) = \frac{n!}{(n-k)!} $$
+
+\textbf{Method 2 (Subset Selection then Ordering):} We can construct an ordered $k$-tuple by a two-stage process.
+First, choose an unordered $k$-element subset from the $n$ elements of $U$. By Definition 3.2, there are $\binom{n}{k}$ ways to do this.
+Second, for each chosen subset of $k$ elements, arrange these $k$ elements into an ordered sequence. There are $k!$ ways to permute $k$ distinct elements.
+By the multiplicative principle, the total number of ordered tuples is:
+$$ \card{S} = \binom{n}{k} \cdot k! $$
+Equating the two expressions for $\card{S}$ yields:
+$$ \binom{n}{k} \cdot k! = \frac{n!}{(n-k)!} $$
+Dividing by $k!$ (which is non-zero for $k \ge 0$) gives the desired result.
+\end{proof}
+
+\subsection{Pascal's Identity and its Implications}
+
+One of the most fundamental recurrence relations in combinatorics is Pascal's identity, which forms the generative rule for Pascal's Triangle.
+
+\begin{theorem}[Pascal's Identity]\label{thm:pascals_identity}
+For integers $n, k$ with $0 \le k \le n$, the following identity holds:
+$$ \binom{n+1}{k+1} = \binom{n}{k} + \binom{n}{k+1} $$
+\end{theorem}
+
+We provide two proofs: one combinatorial, which reveals the identity's structural origin, and one algebraic, which confirms it via manipulation.
+
+\begin{proof}[Combinatorial Proof]
+Let $U = \{x_1, x_2, \dots, x_n, x_{n+1}\}$ be a set with $n+1$ elements. The left-hand side, $\binom{n+1}{k+1}$, counts the number of $(k+1)$-element subsets of $U$. We can partition this collection of subsets into two disjoint classes based on whether they contain a distinguished element, say $x_{n+1}$.
+
+\textbf{Case 1: The subset contains $x_{n+1}$.}
+To form such a subset, we must include $x_{n+1}$ and then choose the remaining $k$ elements from the other $n$ elements in $U$. The number of ways to do this is $\binom{n}{k}$.
+
+\textbf{Case 2: The subset does not contain $x_{n+1}$.}
+To form such a subset, we must choose all $k+1$ elements from the other $n$ elements in $U$. The number of ways to do this is $\binom{n}{k+1}$.
+
+Since these two cases are disjoint and cover all possibilities, the sum principle implies that the total number of $(k+1)$-element subsets is the sum of the counts from each case. Thus,
+$$ \binom{n+1}{k+1} = \binom{n}{k} + \binom{n}{k+1} $$
+\end{proof}
+
+\begin{proof}[Algebraic Proof]
+We start with the right-hand side and manipulate it using the factorial formula (Theorem 3.3).
+\begin{align*}
+\binom{n}{k} + \binom{n}{k+1} &= \frac{n!}{k!(n-k)!} + \frac{n!}{(k+1)!(n-k-1)!} \\
+&= \frac{n!(k+1)}{k!(k+1)(n-k)!} + \frac{n!(n-k)}{(k+1)!(n-k-1)!(n-k)} \\
+&= \frac{n!(k+1)}{(k+1)!(n-k)!} + \frac{n!(n-k)}{(k+1)!(n-k)!} \\
+&= \frac{n!((k+1) + (n-k))}{(k+1)!(n-k)!} \\
+&= \frac{n!(n+1)}{(k+1)!(n-k)!} \\
+&= \frac{(n+1)!}{(k+1)!((n+1)-(k+1))!} \\
+&= \binom{n+1}{k+1}
+\end{align*}
+This confirms the identity.
+\end{proof}
+
+The true power of double counting is revealed in proving more complex identities, which may be algebraically cumbersome but combinatorially transparent.
+
+\begin{theorem}[Chu-Vandermonde Identity]
+For non-negative integers $m, n, k$, the following identity holds:
+$$\sum_{j=0}^{k} \binom{m}{j}\binom{n}{k-j} = \binom{m+n}{k}$$
+\end{theorem}
+\begin{proof}
+The proof is founded upon the Principle of Double Counting. Consider two disjoint finite sets, $A$ and $B$, with cardinalities $\card{A}=m$ and $\card{B}=n$. Let $S$ be the set of all subsets of $A \cup B$ that have cardinality $k$. The objective is to enumerate $\card{S}$ via two distinct procedures.
+
+\textbf{Procedure 1: Direct Count.}
+As $A \cap B = \emptyset$, the cardinality of the union is $\card{A \cup B} = \card{A} + \card{B} = m+n$. By the combinatorial definition of the binomial coefficient, the total number of $k$-element subsets that can be formed from an $(m+n)$-element set is:
+$$\card{S} = \binom{m+n}{k}$$
+This expression constitutes the right-hand side of the identity.
+
+\textbf{Procedure 2: Count by Partition.}
+We can classify any subset $C \in S$ based on its intersection with the set $A$. Let $j = \card{C \cap A}$ be the number of elements that $C$ draws from $A$. Evidently, the integer $j$ must satisfy $0 \le j \le k$.
+
+For a fixed value of $j$, the construction of a subset $C$ decomposes into two independent selections:
+\begin{enumerate}
+    \item A subset of $j$ elements must be chosen from the set $A$. The number of ways to perform this selection is $\binom{m}{j}$.
+    \item The remaining $k-j$ elements must be chosen from the set $B$. The number of ways to perform this selection is $\binom{n}{k-j}$.
+\end{enumerate}
+By the multiplicative principle, the number of subsets $C \in S$ such that $\card{C \cap A} = j$ is the product $\binom{m}{j}\binom{n}{k-j}$.
+
+To obtain the total cardinality of $S$, we apply the additive principle by summing over all possible values of $j$:
+$$\card{S} = \sum_{j=0}^{k} \binom{m}{j}\binom{n}{k-j}$$
+This expression constitutes the left-hand side of the identity. (Note that if $j>m$ or $k-j>n$, the binomial coefficients are zero by convention, so the summation correctly captures all non-trivial contributions).
+
+Having counted the same set $S$ in two logically sound ways, the resulting expressions must be identical. The identity is thus proven.
+\end{proof}
+
+\section{The Principle of Induction}
+\addcontentsline{toc}{section}{The Principle of Induction}
+
+The Principle of Mathematical Induction is not merely a proof technique, but a fundamental axiom that defines the structure of the set of natural numbers, $\mathbb{N}$. It is the formal mechanism that allows us to extend a property from a finite set of initial cases to an infinite sequence. Its logical validity is rooted in the Peano axioms, specifically the axiom of induction, which asserts that any subset of $\mathbb{N}$ that contains the successor of each of its elements must contain all elements succeeding its starting point.
+
+\begin{theorem}[Peano's Axiom of Induction]
+Let $S$ be a subset of the natural numbers, $S \subseteq \mathbb{N}_0$. If $S$ satisfies the two following conditions:
+\begin{enumerate}
+    \item $0 \in S$ (the base element is in $S$).
+    \item $\forall n \in S$, its successor $n+1$ is also in $S$ (the set is closed under succession).
+\end{enumerate}
+Then $S = \mathbb{N}_0$.
+\end{theorem}
+
+From this axiom, we derive the various forms of the principle of induction used in mathematical proofs.
+
+\subsection{Standard Induction}
+
+The most common form, often called "weak" or "standard" induction, provides the logical framework for proving that a proposition $P(n)$ holds for all natural numbers from a starting point $n_0$.
+
+\begin{theorem}[Principle of Standard Induction]\label{thm:standard_induction}
+Let $P(n)$ be a predicate defined for all integers $n \in \Nset{n_0}$. If the following two statements are true:
+\begin{enumerate}
+    \item \textbf{Base Case:} $P(n_0)$ is true.
+    \item \textbf{Inductive Step:} For any integer $k \in \Nset{n_0}$, the implication $P(k) \implies P(k+1)$ is true.
+\end{enumerate}
+Then the predicate $P(n)$ is true for all integers $n \in \Nset{n_0}$.
+\end{theorem}
+\begin{proof}
+Let $S = \{ n \in \Nset{n_0} : P(n) \text{ is true} \}$. By (1), $n_0 \in S$. By (2), if $k \in S$, then $k+1 \in S$. By the Axiom of Induction (appropriately shifted to start at $n_0$), it follows that $S = \Nset{n_0}$.
+\end{proof}
+
+\begin{proposition}
+For any integer $n \in \Nset{1}$, the following identity holds:
+$$ \sum_{i=1}^{n} \frac{1}{i(i+1)} = \frac{n}{n+1} $$
+\end{proposition}
+\begin{proof}
+Let $P(n)$ be the assertion $\sum_{i=1}^{n} \frac{1}{i(i+1)} = \frac{n}{n+1}$. We proceed by induction on $n$.
+
+\textbf{Base Case ($n=1$):}
+The left-hand side (LHS) is $\sum_{i=1}^{1} \frac{1}{i(i+1)} = \frac{1}{1(2)} = \frac{1}{2}$.
+The right-hand side (RHS) is $\frac{1}{1+1} = \frac{1}{2}$.
+Since LHS = RHS, $P(1)$ is true.
+
+\textbf{Inductive Step:}
+Assume that for some integer $k \in \Nset{1}$, $P(k)$ is true. This is the inductive hypothesis (IH):
+$$ \text{(IH): } \sum_{i=1}^{k} \frac{1}{i(i+1)} = \frac{k}{k+1} $$
+We must show that $P(k+1)$ is true, i.e., that $\sum_{i=1}^{k+1} \frac{1}{i(i+1)} = \frac{k+1}{k+2}$.
+We start with the LHS of $P(k+1)$ and decompose it to apply the IH:
+\begin{align*}
+\sum_{i=1}^{k+1} \frac{1}{i(i+1)} &= \left( \sum_{i=1}^{k} \frac{1}{i(i+1)} \right) + \frac{1}{(k+1)(k+2)} \\
+&= \frac{k}{k+1} + \frac{1}{(k+1)(k+2)} \quad (\text{by IH}) \\
+&= \frac{k(k+2) + 1}{(k+1)(k+2)} \\
+&= \frac{k^2 + 2k + 1}{(k+1)(k+2)} \\
+&= \frac{(k+1)^2}{(k+1)(k+2)} \\
+&= \frac{k+1}{k+2}
+\end{align*}
+This is the RHS of $P(k+1)$. Thus, we have shown that $P(k) \implies P(k+1)$.
+By the Principle of Standard Induction, $P(n)$ is true for all $n \in \Nset{1}$.
+\end{proof}
+
+\subsection{Complete Induction}
+
+A more powerful variant of the principle strengthens the inductive hypothesis. Instead of assuming the truth of the predicate only for the immediate predecessor, we assume it for all preceding values. This is known as complete, or strong, induction.
+
+\begin{theorem}[Principle of Complete Induction]\label{thm:complete_induction}
+Let $P(n)$ be a predicate defined for all integers $n \in \Nset{n_0}$. If the following two statements are true:
+\begin{enumerate}
+    \item \textbf{Base Case:} $P(n_0)$ is true.
+    \item \textbf{Inductive Step:} For any integer $k \in \Nset{n_0}$, the implication $(\forall j \in \{n_0, \dots, k\}, P(j)) \implies P(k+1)$ is true.
+\end{enumerate}
+Then the predicate $P(n)$ is true for all integers $n \in \Nset{n_0}$.
+\end{theorem}
+\begin{remark}[Equivalence of Principles]
+The principles of standard and complete induction are logically equivalent. It is trivial that if a proof succeeds with standard induction, it also succeeds with complete induction (as the hypothesis is stronger). To show the other direction, assume the Principle of Standard Induction. Let $P(n)$ be a predicate satisfying the hypotheses of complete induction. Define a new predicate $Q(n)$ as "P(j) is true for all $j \in \{n_0, \dots, n\}$". One can then use standard induction on $Q(n)$ to prove that $Q(n)$ is true for all $n \in \Nset{n_0}$, which implies that $P(n)$ is true for all $n \in \Nset{n_0}$.
+\end{remark}
+
+Complete induction is indispensable when the state of a system at step $n+1$ depends on states from arbitrarily far back in its history. A beautiful example is Zeckendorf's theorem, which partitions integers into Fibonacci numbers.
+
+\begin{theorem}[Zeckendorf's Theorem]
+Every integer $n \in \Nset{1}$ can be represented uniquely as a sum of non-consecutive Fibonacci numbers from the sequence $\{F_2, F_3, \dots\}$.
+\end{theorem}
+\begin{proof}[Proof of Existence by Complete Induction]
+Let $P(n)$ be the assertion that "$n$ can be written as a sum of non-consecutive Fibonacci numbers".
+
+\textbf{Base Case ($n=1$):} $1 = F_2$. The representation consists of a single Fibonacci number, so the non-consecutive condition is vacuously satisfied. $P(1)$ is true.
+
+\textbf{Inductive Step:}
+Let $k \in \Nset{1}$. Assume, as our inductive hypothesis (IH), that $P(j)$ is true for all integers $j$ such that $1 \le j \le k$. We want to prove $P(k+1)$.
+
+Consider the integer $k+1$. Let $F_m$ be the largest Fibonacci number such that $F_m \le k+1$.
+If $F_m = k+1$, then we have found a representation for $k+1$, and we are done.
+If $F_m < k+1$, consider the integer $d = (k+1) - F_m$. Since $F_m > 0$, we have $d < k+1$, so $1 \le d \le k$. By the IH, $d$ has a Zeckendorf representation:
+$$ d = F_{i_1} + F_{i_2} + \dots + F_{i_r} $$
+where no two $F_{i_j}$ are consecutive. Thus, we can write $k+1$ as:
+$$ k+1 = F_m + F_{i_1} + F_{i_2} + \dots + F_{i_r} $$
+This is a valid representation provided it contains no consecutive Fibonacci numbers. We must show that $F_m$ is not consecutive to any of the $F_{i_j}$, which means we must show that $m > i_1+1$ (since $F_{i_1}$ is the largest Fibonacci number in the sum for $d$).
+
+We prove this by contradiction. Assume $m \le i_1+1$. Since $F_{i_1}$ is the largest component of $d$, $F_{i_1} \le d$.
+$$ d = (k+1) - F_m < F_{m+1} - F_m = F_{m-1} $$
+So we have $F_{i_1} \le d < F_{m-1}$. This implies $i_1 < m-1$. This contradicts our assumption that $m \le i_1+1$. Therefore, the assumption must be false, so $m > i_1+1$. The representation for $k+1$ is valid.
+
+By the Principle of Complete Induction, every positive integer has such a representation. (The proof of uniqueness is a separate argument, also relying on Fibonacci properties).
+\end{proof}
+
+\subsection{Induction with an Extended Base}
+
+When a recurrence relation depends on more than one preceding term, the inductive step must be anchored on a base that is wide enough to support it. This is not a new principle, but an adaptation of the standard inductive argument.
+
+Let us return to the periodicity of the Fibonacci sequence modulo $m$, which we conjectured in Section 1.1. We now possess the formal apparatus to prove it.
+
+\begin{theorem}[Pisano Periodicity for $m=3$]\label{thm:pisano_3}
+The Fibonacci sequence modulo 3, $\{F_n \pmod 3\}_{n \in \Nset{0}}$, is periodic with period 8. That is, $\forall n \in \Nset{0}, F_{n+8} \equiv F_n \pmod 3$.
+\end{theorem}
+\begin{proof}
+Let $G_n = F_n \pmod 3$. The sequence is defined by $G_n \equiv (G_{n-1} + G_{n-2}) \pmod 3$ for $n \in \Nset{2}$, with $G_0=0, G_1=1$.
+Let $P(n)$ be the predicate $G_{n+8} = G_n$. The recurrence for $G_{n+2}$ depends on $G_{n+1}$ and $G_n$. Thus, our inductive step will require assuming the predicate holds for two consecutive values.
+
+\textbf{Base Cases:} We must verify the predicate for $n=0$ and $n=1$ to establish a firm base for the induction.
+By direct computation (from Section 1.1), the sequence begins: $0, 1, 1, 2, 0, 2, 2, 1, 0, 1, \dots$
+For $n=0$: $G_{0+8} = G_8 = 0$. $G_0 = 0$. So $P(0)$ is true.
+For $n=1$: $G_{1+8} = G_9 = 1$. $G_1 = 1$. So $P(1)$ is true.
+
+\textbf{Inductive Step:}
+Let $k \in \Nset{0}$. Assume as our inductive hypothesis (IH) that $P(j)$ is true for all $j \in \{0, \dots, k+1\}$. Specifically, we assume $P(k)$ and $P(k+1)$ are true:
+$$ \text{(IH): } G_{k+8} = G_k \quad \text{and} \quad G_{k+1+8} = G_{k+1} $$
+We must show that $P(k+2)$ is true, i.e., $G_{k+2+8} = G_{k+2}$.
+We use the recurrence relation for the term $G_{k+10}$:
+\begin{align*}
+    G_{k+10} = G_{(k+2)+8} &\equiv G_{k+9} + G_{k+8} \pmod 3 \\
+    &\equiv G_{(k+1)+8} + G_{k+8} \pmod 3 \\
+    &\equiv G_{k+1} + G_k \pmod 3 \quad (\text{by IH}) \\
+    &\equiv G_{k+2} \pmod 3
+\end{align*}
+Thus, we have shown that $(P(k) \wedge P(k+1)) \implies P(k+2)$.
+By the Principle of Induction (adapted for a two-term recurrence), $P(n)$ holds for all $n \in \Nset{0}$.
+\end{proof}
+\begin{remark}[Existence of Pisano Periods]
+The argument above can be generalized. For any modulus $m \in \Nset{2}$, consider the sequence of ordered pairs $S_n = (F_n \pmod m, F_{n+1} \pmod m)$. Each pair belongs to the finite set $(\mathbb{Z}/m\mathbb{Z})^2$, which has cardinality $m^2$. By the Pigeonhole Principle, this sequence of pairs must repeat. That is, there must exist indices $i < j$ such that $S_i = S_j$. If $S_i = (a, b)$, then the sequence of pairs is periodic from this point on. If we can show that the first time a repetition occurs, it must be a repetition of $S_0 = (0,1)$, then the entire sequence is periodic. This can indeed be shown using the invertibility of the Fibonacci recurrence, proving the existence of a Pisano period $\pi(m)$ for any integer modulus $m$.
+\end{remark}
+
+\section{The Principle of Recursion}
+\addcontentsline{toc}{section}{The Principle of Recursion}
+
+Recursion is one of the most profound and transversal concepts in mathematics and computer science. It is the principle of defining an object or solving a problem in terms of itself. In a formal sense, a recursive definition specifies an object by providing a set of base cases and a rule that reduces all other cases toward the base cases. This self-referential structure is the source of both immense descriptive power and, at times, bewildering complexity. We will explore recursion not just as an algorithmic technique, but as a fundamental principle for defining sequences, solving combinatorial problems, and understanding the dynamics of systems.
+
+
+\section{The Principle of Recursion}
+\addcontentsline{toc}{section}{The Principle of Recursion}
+
+Recursion is one of the most profound and transversal concepts in mathematics and computer science. It is the principle of defining an object or solving a problem in terms of itself. In a formal sense, a recursive definition specifies an object by providing a set of base cases and a rule that reduces all other cases toward the base cases. This self-referential structure is the source of both immense descriptive power and, at times, bewildering complexity. We will explore recursion not just as an algorithmic technique, but as a fundamental principle for defining sequences, solving combinatorial problems, and understanding the dynamics of systems.
+
+\subsection{Recursive Sequences and Dynamical Systems}
+
+At its most fundamental level, a sequence is a function from the natural numbers to a set. A recursive definition provides a method for computing the value of this function at an integer $n$ based on its values at smaller integers.
+
+\begin{definition}[Recursive Sequence]
+Let $X$ be a set (the state space) and let $k \in \Nset{1}$. A function $f: X^k \to X$ is called a recurrence function of order $k$. A \textbf{sequence} $\{a_n\}_{n \in \Nset{0}}$ with values in $X$ is said to be \textbf{defined recursively} if there exists a set of $k$ initial values $(a_0, a_1, \dots, a_{k-1}) \in X^k$ and a recurrence function $f$ such that for all $n \in \Nset{k}$:
+$$ a_n = f(a_{n-1}, a_{n-2}, \dots, a_{n-k}) $$
+\end{definition}
+
+In the language of dynamical systems, the tuple $(a_{n-1}, \dots, a_{n-k})$ represents the state of the system at step $n-1$. The function $f$ is the evolution rule, and the sequence $\{a_n\}$ is the orbit of the initial state under the action of $f$.
+
+\begin{remark}[Trivial vs. Complex Dynamics]
+The structural complexity of the recurrence function $f$ dictates the behavior of the sequence.
+\begin{enumerate}
+    \item \textbf{Simple Dynamics:} Let there be $X = \mathbb{R}$, $k=1$, and $f(x) = 2x$. With initial condition $a_0 = c$, the recurrence $a_n = 2a_{n-1}$ generates the sequence $a_n = c \cdot 2^n$. The behavior is simple exponential growth, and a closed-form solution is trivial to obtain.
+    \item \textbf{Complex Dynamics:} Let there be again $X=\mathbb{R}$, $k=1$, but with the non-linear recurrence function $f(x) = rx(1-x)$, where $r$ is a parameter. The recurrence relation is the famous \textbf{logistic map}:
+    $$ a_{n+1} = r a_n (1-a_n) $$
+    Despite its algebraic simplicity, the long-term behavior of this sequence is extraordinarily sensitive to the parameter $r$. For certain values of $r$, the sequence converges to a fixed point. For other values, it converges to a periodic cycle. As $r$ increases further, it exhibits a sequence of period-doubling bifurcations, ultimately leading to deterministic chaos for $r \approx 3.57$ and beyond. This demonstrates that even a simple, first-order, non-linear recurrence can generate behavior of profound complexity, precluding a simple closed-form solution. This sensitivity to initial conditions is a hallmark of chaotic systems.
+\end{enumerate}
+\end{remark}
+
+\subsection{Recurrence Relations in Enumeration}
+
+One of the most powerful applications of recursion is in solving combinatorial counting problems. The method consists of expressing the solution to a problem of size $n$, say $C(n)$, in terms of solutions to smaller instances of the same problem.
+
+\begin{proposition}
+Let $a_n$ be the number of binary strings of length $n$ that do not contain the substring "101". Find a recurrence relation for $a_n$.
+\end{proposition}
+\begin{proof}
+Let $S_n$ be the set of valid binary strings of length $n$, so $a_n = \card{S_n}$. A direct enumeration is difficult. Instead, we classify the valid strings based on their suffix, which allows us to construct longer valid strings from shorter ones. This suggests a state-based approach. Let us define several counting sequences:
+\begin{itemize}
+    \item Let $a_n$ be the total count of valid strings of length $n$.
+    \item Let $a_n^{(0)}$ be the count of valid strings of length $n$ ending in 0.
+    \item Let $a_n^{(1)}$ be the count of valid strings of length $n$ ending in 1.
+    \item Let $a_n^{(10)}$ be the count of valid strings of length $n$ ending in 10.
+\end{itemize}
+Clearly, $a_n = a_n^{(0)} + a_n^{(1)}$. We can construct valid strings of length $n$ by appending a bit to a valid string of length $n-1$.
+
+\begin{enumerate}
+    \item To form a valid string of length $n$ ending in 0, we can take any valid string of length $n-1$ and append a 0. This operation never creates the forbidden "101" pattern. Thus:
+    $$ a_n^{(0)} = a_{n-1}^{(0)} + a_{n-1}^{(1)} = a_{n-1} $$
+    \item To form a valid string of length $n$ ending in 1, we can take any valid string of length $n-1$ and append a 1. However, we must exclude those strings of length $n-1$ that end in "10", because appending a "1" would create "101". Thus:
+    $$ a_n^{(1)} = a_{n-1} - a_{n-1}^{(10)} $$
+\end{enumerate}
+This gives us a system of recurrences, but we need an expression for $a_{n-1}^{(10)}$. A valid string of length $n-1$ ending in "10" must have been formed by appending a "0" to a valid string of length $n-2$ ending in "1". Thus:
+$$ a_{n-1}^{(10)} = a_{n-2}^{(1)} $$
+Now we can construct a single recurrence for $a_n$.
+\begin{align*}
+a_n &= a_n^{(0)} + a_n^{(1)} \\
+&= a_{n-1} + (a_{n-1} - a_{n-1}^{(10)}) \\
+&= 2a_{n-1} - a_{n-2}^{(1)}
+\end{align*}
+We still need to eliminate $a_{n-2}^{(1)}$. From our system, we know $a_{n-2}^{(1)} = a_{n-2} - a_{n-2}^{(0)}$. And we also know $a_{n-2}^{(0)} = a_{n-3}$. So, $a_{n-2}^{(1)} = a_{n-2} - a_{n-3}$. Substituting this back:
+$$ a_n = 2a_{n-1} - (a_{n-2} - a_{n-3}) = 2a_{n-1} - a_{n-2} + a_{n-3} $$
+This is a linear homogeneous recurrence relation of order 3. We must find the initial conditions.
+$n=1$: "0", "1". $a_1=2$.
+$n=2$: "00", "01", "10", "11". $a_2=4$.
+$n=3$: "000", "001", "010", "011", "110", "111", "100". The string "101" is forbidden. $a_3=7$.
+Let's check our recurrence: $a_3 = 2a_2 - a_1 + a_0$. We need $a_0$. An empty string (length 0) is valid. So $a_0 = 1$.
+$a_3 = 2(4) - 2 + 1 = 7$. The recurrence and initial conditions are correct.
+\end{proof}
+
+\subsection{Linear Homogeneous Recurrence Relations}
+
+The previous example falls into a particularly important class of recurrences that are amenable to a general solution due to their underlying linear structure.
+
+\begin{definition}[Linear Homogeneous Recurrence with Constant Coefficients]
+A sequence $\{a_n\}$ satisfies a \textbf{linear homogeneous recurrence relation of order $k$} if for all $n \ge k$:
+\begin{equation}\label{eq:linear_hom_rec}
+a_n = \sum_{i=1}^{k} c_i a_{n-i}
+\end{equation}
+where $c_i$ are constants in a field $\mathbb{F}$ (typically $\mathbb{R}$ or $\mathbb{C}$) and $c_k \neq 0$.
+\end{definition}
+
+The set of all sequences satisfying such a relation forms a vector space. The key to solving the recurrence is to find a basis for this space.
+
+\begin{theorem}
+The set $V$ of all sequences $\{a_n\}_{n \in \Nset{0}}$ over a field $\mathbb{F}$ that satisfy the recurrence relation \eqref{eq:linear_hom_rec} is a vector subspace of the space of all sequences over $\mathbb{F}$. The dimension of this subspace is $k$.
+\end{theorem}
+\begin{proof}[Sketch of Proof]
+Closure under vector addition and scalar multiplication is trivial to verify. To show the dimension is $k$, one can demonstrate that the mapping $L: V \to \mathbb{F}^k$ defined by $L(\{a_n\}) = (a_0, a_1, \dots, a_{k-1})$ is a linear isomorphism. Any sequence in $V$ is uniquely determined by its first $k$ terms, which serve as its coordinates in the standard basis of $\mathbb{F}^k$.
+\end{proof}
+
+This theorem implies that if we can find $k$ linearly independent solution sequences, any solution can be expressed as a linear combination of them. We seek solutions of the form $a_n = \lambda^n$ for some $\lambda \in \mathbb{C}$. Substituting into \eqref{eq:linear_hom_rec}:
+$$ \lambda^n = \sum_{i=1}^{k} c_i \lambda^{n-i} $$
+Assuming $\lambda \neq 0$, we can divide by $\lambda^{n-k}$:
+$$ \lambda^k = \sum_{i=1}^{k} c_i \lambda^{k-i} $$
+This motivates the following definition.
+
+\begin{definition}[Characteristic Polynomial]
+The \textbf{characteristic polynomial} of the recurrence relation \eqref{eq:linear_hom_rec} is the polynomial
+\begin{equation}\label{eq:char_poly}
+p(\lambda) = \lambda^k - \sum_{i=1}^{k} c_i \lambda^{k-i} = 0
+\end{equation}
+Its roots are called the characteristic roots.
+\end{definition}
+
+\begin{theorem}[General Solution with Distinct Roots]
+If the characteristic polynomial $p(\lambda)$ in \eqref{eq:char_poly} has $k$ distinct roots $\lambda_1, \dots, \lambda_k$, then the general solution to the recurrence is
+$$ a_n = \sum_{i=1}^{k} \alpha_i \lambda_i^n $$
+where the coefficients $\alpha_i$ are constants determined by the initial conditions.
+\end{theorem}
+\begin{proof}
+The $k$ sequences $\{\lambda_i^n\}_{n \in \Nset{0}}$ for $i=1, \dots, k$ are solutions. One can show they are linearly independent by examining their associated Vandermonde matrix for the first $k$ terms, which is non-singular if and only if the $\lambda_i$ are distinct. Since they form a set of $k$ linearly independent solutions, they form a basis for the $k$-dimensional solution space $V$.
+\end{proof}
+
+\begin{corollary}[Binet's Formula for Fibonacci Numbers]
+The $n$-th Fibonacci number $F_n$ is given by:
+$$ F_n = \frac{\phi^n - \psi^n}{\sqrt{5}} \quad \text{where} \quad \phi = \frac{1+\sqrt{5}}{2}, \psi = \frac{1-\sqrt{5}}{2} $$
+\end{corollary}
+\textit{Pre-note: The constant $\psi \approx -0.618$ is often referred as the \textbf{golden ratio conjugate}, arising as the second root of the characteristic polynomial as you will see $\lambda^2 - \lambda - 1 = 0$ associated with the Fibonacci recurrence. The algebraic necessity of this conjugate root motivates a deeper question of generalization: Do analogous fundamental constants exist for higher-order recurrence relations? Specifically, for the third-order sequence defined by $a_{n+3} = a_{n+2} + a_{n+1} + a_n$, does there exist a set of three constants with properties analogous to those of $\varphi$ and $\psi$?}
+\begin{proof}
+The Fibonacci sequence is defined by $F_n = F_{n-1} + F_{n-2}$, with $F_0=0, F_1=1$. Its characteristic polynomial is $\lambda^2 - \lambda - 1 = 0$. The roots are $\phi$ and $\psi$. Since they are distinct, the general solution is $F_n = \alpha_1 \phi^n + \alpha_2 \psi^n$. We solve for $\alpha_1, \alpha_2$ using the initial conditions:
+\begin{align*}
+    n=0: & \quad \alpha_1 + \alpha_2 = 0 \implies \alpha_2 = -\alpha_1 \\
+    n=1: & \quad \alpha_1 \phi + \alpha_2 \psi = 1
+\end{align*}
+Solving yields $\alpha_1 (\phi - \psi) = \alpha_1 \sqrt{5} = 1$, so $\alpha_1 = 1/\sqrt{5}$ and $\alpha_2 = -1/\sqrt{5}$. Substituting these back yields Binet's formula.
+\end{proof}
+
+\begin{remark}[On Higher-Order Generalizations]
+The question posed previously is answered in the affirmative. The sequence $a_{n+3} = a_{n+2} + a_{n+1} + a_n$ is the well-studied \textbf{Tribonacci sequence}, whose asymptotic behavior is governed by a real root known as the Tribonacci constant.
+
+A mind inclined towards generalization will immediately question if this structure persists. That is, for the family of $n$-step Fibonacci sequences, defined by the linear homogeneous recurrence relation $F_k^{(n)} = \sum_{i=1}^n F_{k-i}^{(n)}$, does each sequence possess a dominant real root $\varphi_n$? Indeed, such a root exists for each $n$. These constants form a monotonic sequence with a remarkable limit related to the golden ratio itself:
+$$ \lim_{n\to\infty} \varphi_n = \varphi $$
+Even the infinite-order recurrence, where a term is the sum of all preceding terms (the so-called "Infinacci" sequence), has been investigated. While a full exploration of these constants is beyond the scope of this text, it serves as a compelling example of the deep, unifying structures that arise from elementary combinatorial questions.
+\end{remark}
+
+\begin{remark}[The Case of Repeated Roots]
+If a characteristic root $\lambda_0$ has algebraic multiplicity $m$, it can be proven that it contributes $m$ linearly independent solutions to the basis of the solution space. These solutions are of the form $\{n^j \lambda_0^n\}_{j=0}^{m-1}$. The general solution is then a linear combination of all such basis sequences derived from all roots.
+\end{remark}
+
+\begin{remark}[Non-Homogeneous Systems and Affine Spaces]
+Consider the \textit{non-homogeneous} linear recurrence $a_n - \sum_{i=1}^{k} c_i a_{n-i} = g(n)$, where $g(n)$ is some function of $n$. The set of solutions to this equation no longer forms a vector space (e.g., it does not contain the zero sequence unless $g(n)$ is identically zero). However, it possesses a related geometric structure. If $\{p_n\}$ is any particular solution to the non-homogeneous equation, and $V_H$ is the $k$-dimensional vector space of solutions to the corresponding homogeneous equation (where $g(n)=0$), then the set of all solutions to the non-homogeneous equation is the \textbf{affine space} (or vector space coset) $S = \{p_n\} + V_H = \{ \{p_n + h_n\} : \{h_n\} \in V_H \}$. The reader is invited to consider: does the isomorphism $L: V_H \to \mathbb{F}^k$ which maps a homogeneous solution to its initial conditions induce a natural geometric structure on the mapping from the affine space $S$ to $\mathbb{F}^k$? What is the geometric interpretation of this mapping?
+\end{remark}
+
+\    $$ a_n^{(0)} = a_{n-1}^{(0)} + a_{n-1}^{(1)} = a_{n-1} $$
+    \item To form a valid string of length $n$ ending in 1, we can take any valid string of length $n-1$ and append a 1. However, we must exclude those strings of length $n-1$ that end in "10", because appending a "1" would create "101". Thus:
+    $$ a_n^{(1)} = a_{n-1} - a_{n-1}^{(10)} $$
+\end{enumerate}
+This gives us a system of recurrences, but we need an expression for $a_{n-1}^{(10)}$. A valid string of length $n-1$ ending in "10" must have been formed by appending a "0" to a valid string of length $n-2$ ending in "1". Thus:
+$$ a_{n-1}^{(10)} = a_{n-2}^{(1)} $$
+Now we can construct a single recurrence for $a_n$.
+\begin{align*}
+a_n &= a_n^{(0)} + a_n^{(1)} \\
+&= a_{n-1} + (a_{n-1} - a_{n-1}^{(10)}) \\
+&= 2a_{n-1} - a_{n-2}^{(1)}
+\end{align*}
+We still need to eliminate $a_{n-2}^{(1)}$. From our system, we know $a_{n-2}^{(1)} = a_{n-2} - a_{n-2}^{(0)}$. And we also know $a_{n-2}^{(0)} = a_{n-3}$. So, $a_{n-2}^{(1)} = a_{n-2} - a_{n-3}$. Substituting this back:
+$$ a_n = 2a_{n-1} - (a_{n-2} - a_{n-3}) = 2a_{n-1} - a_{n-2} + a_{n-3} $$
+This is a linear homogeneous recurrence relation of order 3. We must find the initial conditions.
+$n=1$: "0", "1". $a_1=2$.
+$n=2$: "00", "01", "10", "11". $a_2=4$.
+$n=3$: "000", "001", "010", "011", "110", "111", "100". The string "101" is forbidden. $a_3=7$.
+Let's check our recurrence: $a_3 = 2a_2 - a_1 + a_0$. We need $a_0$. An empty string (length 0) is valid. So $a_0 = 1$.
+$a_3 = 2(4) - 2 + 1 = 7$. The recurrence and initial conditions are correct.
+\end{proof}
+
+\subsection{Linear Homogeneous Recurrence Relations}
+
+The previous example falls into a particularly important class of recurrences that are amenable to a general solution due to their underlying linear structure.
+
+\begin{definition}[Linear Homogeneous Recurrence with Constant Coefficients]
+A sequence $\{a_n\}$ satisfies a \textbf{linear homogeneous recurrence relation of order $k$} if for all $n \ge k$:
+\begin{equation}\label{eq:linear_hom_rec}
+a_n - \sum_{i=1}^{k} c_i a_{n-i} = 0
+\end{equation}
+where $c_i$ are constants in a field $\mathbb{F}$ (typically $\mathbb{R}$ or $\mathbb{C}$) and $c_k \neq 0$.
+\end{definition}
+
+The set of all sequences satisfying such a relation forms a vector space. The key to solving the recurrence is to find a basis for this space.
+
+\begin{theorem}
+The set $V$ of all sequences $\{a_n\}_{n \in \Nset{0}}$ over a field $\mathbb{F}$ that satisfy the recurrence relation \eqref{eq:linear_hom_rec} is a vector subspace of the space of all sequences over $\mathbb{F}$. The dimension of this subspace is $k$.
+\end{theorem}
+\begin{proof}[Sketch of Proof]
+Closure under vector addition and scalar multiplication is trivial to verify. To show the dimension is $k$, one can demonstrate that the mapping $L: V \to \mathbb{F}^k$ defined by $L(\{a_n\}) = (a_0, a_1, \dots, a_{k-1})$ is a linear isomorphism. Any sequence in $V$ is uniquely determined by its first $k$ terms, which serve as its coordinates in the standard basis of $\mathbb{F}^k$.
+\end{proof}
+
+This theorem implies that if we can find $k$ linearly independent solution sequences, any solution can be expressed as a linear combination of them. We seek solutions of the form $a_n = \lambda^n$ for some $\lambda \in \mathbb{C}$. Substituting into \eqref{eq:linear_hom_rec}:
+$$ \lambda^n - \sum_{i=1}^{k} c_i \lambda^{n-i} = 0 $$
+Assuming $\lambda \neq 0$, we can divide by $\lambda^{n-k}$:
+$$ \lambda^k - \sum_{i=1}^{k} c_i \lambda^{k-i} = 0 $$
+This motivates the following definition.
+
+\begin{definition}[Characteristic Polynomial]
+The \textbf{characteristic polynomial} of the recurrence relation \eqref{eq:linear_hom_rec} is the polynomial
+\begin{equation}\label{eq:char_poly}
+p(\lambda) = \lambda^k - \sum_{i=1}^{k} c_i \lambda^{k-i} = 0
+\end{equation}
+Its roots are called the characteristic roots.
+\end{definition}
+
+\begin{theorem}[General Solution with Distinct Roots]
+If the characteristic polynomial $p(\lambda)$ in \eqref{eq:char_poly} has $k$ distinct roots $\lambda_1, \dots, \lambda_k$, then the general solution to the recurrence is
+$$ a_n = \sum_{i=1}^{k} \alpha_i \lambda_i^n $$
+where the coefficients $\alpha_i$ are constants determined by the initial conditions.
+\end{Torem}
+\begin{proof}
+The $k$ sequences $\{\lambda_i^n\}_{n \in \Nset{0}}$ for $i=1, \dots, k$ are solutions. One can show they are linearly independent by examining their associated Vandermonde matrix for the first $k$ terms, which is non-singular if and only if the $\lambda_i$ are distinct. Since they form a set of $k$ linearly independent solutions, they form a basis for the $k$-dimensional solution space $V$.
+\end{proof}
+
+\begin{corollary}[Binet's Formula for Fibonacci Numbers]
+The $n$-th Fibonacci number $F_n$ is given by:
+$$ F_n = \frac{\phi^n - \psi^n}{\sqrt{5}} \quad \text{where} \quad \phi = \frac{1+\sqrt{5}}{2}, \psi = \frac{1-\sqrt{5}}{2} $$
+\end{corollary}
+\begin{proof}
+The Fibonacci sequence is defined by $F_n = F_{n-1} + F_{n-2}$, with $F_0=0, F_1=1$. Its characteristic polynomial is $\lambda^2 - \lambda - 1 = 0$. The roots are $\phi$ and $\psi$. Since they are distinct, the general solution is $F_n = \alpha_1 \phi^n + \alpha_2 \psi^n$. We solve for $\alpha_1, \alpha_2$ using the initial conditions:
+\begin{align*}
+    n=0: & \quad \alpha_1 + \alpha_2 = 0 \implies \alpha_2 = -\alpha_1 \\
+    n=1: & \quad \alpha_1 \phi + \alpha_2 \psi = 1
+\end{align*}
+Solving yields $\alpha_1 (\phi - \psi) = \alpha_1 \sqrt{5} = 1$, so $\alpha_1 = 1/\sqrt{5}$ and $\alpha_2 = -1/\sqrt{5}$. Substituting these back yields Binet's formula.
+\end{proof}
+
+\begin{remark}[The Case of Repeated Roots]
+If a characteristic root $\lambda_0$ has algebraic multiplicity $m$, it can be proven that it contributes $m$ linearly independent solutions to the basis of the solution space. These solutions are of the form $\{n^j \lambda_0^n\}_{j=0}^{m-1}$. The general solution is then a linear combination of all such basis sequences derived from all roots.
+\end{remark}
+
+\begin{remark}[Non-Homogeneous Systems and Affine Spaces]
+Consider the \textit{non homogeneous} linear recurrence $a_n - \sum_{i=1}^{k} c_i a_{n-i} = g(n)$, where $g(n)$ is some function of $n$. The set of solutions to this equation no longer forms a vector space (e.g., it does not contain the zero sequence unless $g(n)$ is identically zero). However, it possesses a related geometric structure. If $\{p_n\}$ is any particular solution to the non-homogeneous equation, and $V_H$ is the $k$-dimensional vector space of solutions to the corresponding homogeneous equation (where $g(n)=0$), then the set of all solutions to the non-homogeneous equation is the \textbf{affine space} (or vector space coset) $S = \{p_n\} + V_H = \{ \{p_n + h_n\} : \{h_n\} \in V_H \}$. The reader is invited to consider: does the isomorphism $L: V_H \to \mathbb{F}^k$ which maps a homogeneous solution to its initial conditions induce a natural geometric structure on the mapping from the affine space $S$ to $\mathbb{F}^k$? What is the geometric interpretation of this mapping?
+\end{remark}
+
+\section{The Extremal Principle}
+\addcontentsline{toc}{section}{The Extremal Principle}
+
+The Extremal Principle is a proof technique of profound elegance and power, distinguished by its non-constructive yet definitive nature. It is the application of order theory to existence problems. The principle's logical foundation is the assertion that every non-empty set of non-negative integers has a least element. This seemingly simple axiom, when applied to a carefully chosen parameter of a problem, allows one to prove the existence of an "extremal object" — a maximum, minimum, best, or worst case — whose properties can then be analyzed to yield a conclusion. The method bifurcates into two canonical forms: a constructive variant that uses the existence of a minimal element, and a destructive variant, the celebrated method of infinite descent, which uses the impossibility of an infinitely decreasing sequence of non-negative integers.
+
+\begin{lemma}[The Well-Ordering Principle]\label{lemma:well_ordering}
+Let $S$ be a non-empty subset of the non-negative integers, $S \subseteq \mathbb{N}_0$. Then there exists an element $s_0 \in S$ such that for all $s \in S$, $s_0 \le s$. That is, every non-empty set of non-negative integers has a least element.
+\end{lemma}
+
+\subsection{The Constructive Method: Argument by Minimality}
+
+The constructive application of the Extremal Principle is a method to prove the existence of an object with a desired property $P$. The logical structure of the proof is as follows:
+\begin{enumerate}
+    \item Consider the set $\mathcal{C}$ of all possible configurations or objects relevant to the problem.
+    \item Define a function (a "variant" or "potential function") $v: \mathcal{C} \to \mathbb{N}_0$ that quantifies some property of each configuration with a non-negative integer.
+    \item By the Well-Ordering Principle (Lemma \ref{lemma:well_ordering}), there must exist a configuration $C_{min} \in \mathcal{C}$ for which the value $v(C_{min})$ is minimal.
+    \item Prove, typically by contradiction, that this minimal configuration $C_{min}$ must possess the desired property $P$. The argument usually shows that if $C_{min}$ did \textit{not} have property $P$, one could construct another configuration $C'$ with $v(C') < v(C_{min})$, which would contradict the minimality of $C_{min}$.
+\end{enumerate}
+
+\begin{proposition}[Stability of a Partitioned System]
+Let $V$ be a finite set. Let the set of all 2-element subsets of $V$, denoted $\binom{V}{2}$, be partitioned into two disjoint sets, $F$ ("friendly pairs") and $E$ ("enemy pairs"). Consider a process where, at each discrete time step, an element $v \in V$ is removed if the number of enemy pairs containing $v$ is strictly greater than the number of friendly pairs containing $v$. Prove that this process must terminate in a finite number of steps.
+\end{proposition}
+\begin{proof}
+Let $V_t$ be the set of elements present at time step $t$, with $V_0 = V$. The set of configurations is the power set of $V$. We must define an integer-valued function on these configurations that strictly decreases with each step.
+
+Let the potential function for a configuration $V_t$ be $v(V_t) = \card{E \cap \binom{V_t}{2}}$, i.e., the number of enemy pairs among the elements currently present. This is a non-negative integer.
+
+Suppose at step $t$, an element $p \in V_t$ is removed, so that $V_{t+1} = V_t \setminus \{p\}$. The condition for removal is that $\card{\{\{p,x\} \in E \mid x \in V_t \setminus \{p\}\}} > \card{\{\{p,x\} \in F \mid x \in V_t \setminus \{p\}\}}$. Let this number of enemy pairs involving $p$ be $e_p$.
+
+The set of enemy pairs in the new configuration $V_{t+1}$ is precisely the set of enemy pairs in $V_t$ minus those that involved the removed element $p$. The number of such pairs is $e_p$. Thus, the potential function changes as:
+$$ v(V_{t+1}) = v(V_t) - e_p $$
+For the sequence of potential values to be strictly decreasing, we require $e_p > 0$. The condition for removal is $e_p > f_p$, where $f_p$ is the number of friends of $p$. Since $f_p \ge 0$, the condition implies $e_p \ge 1$.
+Therefore, whenever an element is removed, the value of our potential function $v(V_t)$ strictly decreases by a positive integer.
+
+We have thus constructed a sequence $v(V_0), v(V_1), v(V_2), \dots$ which is a strictly decreasing sequence of non-negative integers. By the Well-Ordering Principle, such a sequence must be finite. Consequently, the process of removing elements must terminate.
+\end{proof}
+
+\begin{proposition}[Existence of a Simple Polygon]
+Any finite set of $n \ge 3$ points in the plane in general position (no three collinear) can have its points connected to form a simple (non-self-intersecting) closed polygonal chain.
+\end{proposition}
+\begin{proof}
+Let $V$ be the set of $n$ points. A closed polygonal chain passing through each point is defined by a cyclic permutation of the points in $V$. Let $\mathcal{C}$ be the set of all such $(n-1)!/2$ distinct chains.
+For each chain $C \in \mathcal{C}$, define its total length $L(C)$ as the sum of the Euclidean lengths of its $n$ constituent line segments. The set of all possible lengths, $\{L(C) : C \in \mathcal{C}\}$, is a finite, non-empty set of positive real numbers. Therefore, a chain with a minimum possible total length must exist. Let this extremal object be $C_{min}$.
+
+We claim that $C_{min}$ cannot be self-intersecting.
+Assume, for the sake of contradiction, that $C_{min}$ does self-intersect. This implies there exist two non-adjacent segments in the chain, say $(A,B)$ and $(C,D)$, that cross at some interior point. Let the chain be ordered such that it contains the paths $A \to B$ and $C \to D$.
+
+We can construct a new chain, $C'$, by removing the segments $(A,B)$ and $(C,D)$ and introducing the segments $(A,C)$ and $(B,D)$. This reverses the path between $B$ and $C$, creating a new valid chain that visits all points.
+The length of this new chain is $L(C') = L(C_{min}) - (\ell(A,B) + \ell(C,D)) + (\ell(A,C) + \ell(B,D))$, where $\ell(X,Y)$ denotes the Euclidean distance.
+The four points $A, B, C, D$ form a convex quadrilateral (as the segments connecting them cross). A fundamental geometric property, derived from the triangle inequality, is that the sum of the lengths of the diagonals of a convex quadrilateral is strictly greater than the sum of the lengths of any pair of opposite sides. Here, $(A,B)$ and $(C,D)$ can be seen as diagonals of the quadrilateral $ACBD$. Let the intersection point be $X$. By the triangle inequality on $\triangle AXC$ and $\triangle BXD$:
+$\ell(A,C) < \ell(A,X) + \ell(X,C)$
+$\ell(B,D) < \ell(B,X) + \ell(X,D)$
+Summing these gives:
+$\ell(A,C) + \ell(B,D) < (\ell(A,X)+\ell(X,B)) + (\ell(C,X)+\ell(X,D)) = \ell(A,B) + \ell(C,D)$.
+
+This implies $L(C') < L(C_{min})$. This contradicts the defining property of $C_{min}$ as the chain of minimal length.
+Therefore, the chain of minimal length cannot self-intersect. The existence of such a minimal chain guarantees the existence of a simple closed polygon.
+\end{proof}
+
+\subsection{The Destructive Method: Infinite Descent}
+
+The destructive variant of the extremal principle is the contrapositive of the Well-Ordering Principle. It is a powerful method for proving that a certain object or configuration cannot exist. The method, known as Fermat's Method of Infinite Descent, has the following structure:
+\begin{enumerate}
+    \item To prove a proposition $P$, assume its negation, $\neg P$.
+    \item Show that the existence of any object satisfying $\neg P$ and characterized by a positive integer parameter allows the construction of a "smaller" object, also satisfying $\neg P$, characterized by a strictly smaller positive integer parameter.
+    \item This construction implies the existence of an infinite, strictly decreasing sequence of positive integers.
+    \item Since such a sequence cannot exist by the Well-Ordering Principle, the initial assumption $\neg P$ must be false. Therefore, $P$ must be true.
+\end{enumerate}
+
+\begin{theorem}
+The number $\sqrt{2}$ is irrational.
+\end{theorem}
+\begin{proof}
+Assume, for the sake of contradiction, that $\sqrt{2}$ is rational. Then the set $S = \{ b \in \Nset{1} \mid \exists a \in \Nset{1}, \sqrt{2} = a/b \}$ is non-empty. By the Well-Ordering Principle, $S$ must contain a least element, $b_0$. Let this minimal representation be $\sqrt{2} = a_0/b_0$.
+
+This implies $a_0^2 = 2b_0^2$. Thus $a_0^2$ is an even integer, which implies $a_0$ itself must be even. Let $a_0 = 2a_1$ for some integer $a_1 \in \Nset{1}$.
+Substituting this into the equation yields:
+$(2a_1)^2 = 2b_0^2 \implies 4a_1^2 = 2b_0^2 \implies 2a_1^2 = b_0^2$.
+This implies $b_0^2$ is even, so $b_0$ must also be even. Let $b_0 = 2b_1$ for some integer $b_1 \in \Nset{1}$.
+
+We have now constructed a new representation for $\sqrt{2}$:
+$$ \sqrt{2} = \frac{a_0}{b_0} = \frac{2a_1}{2b_1} = \frac{a_1}{b_1} $$
+Since $b_0$ is a positive integer, $b_1 = b_0/2$ is also a positive integer, and crucially, $0 < b_1 < b_0$.
+The existence of the denominator $b_0 \in S$ has led to the construction of a new, smaller denominator $b_1 \in S$. This contradicts the assumption that $b_0$ was the least element in $S$.
+The contradiction arose from the assumption that the set $S$ was non-empty. Therefore, $S$ must be empty, which means no such representation exists. $\sqrt{2}$ is irrational.
+\end{proof}
+
+\begin{theorem}[Sylvester-Gallai Theorem]
+Given a finite set of points in the Euclidean plane, not all of which are collinear, there exists a line that passes through exactly two of the points.
+\end{theorem}
+\begin{proof}
+Let $V$ be the given finite set of points. Assume, for the sake of contradiction, that the points are not all collinear, but that every line passing through any two distinct points of $V$ also passes through at least a third point of $V$.
+
+Let $\mathcal{L}$ be the set of all lines determined by pairs of points in $V$. Consider the set $\mathcal{P}$ of all pairs $(P, l)$ where $P \in V$ and $l \in \mathcal{L}$ are such that $P \notin l$. Since the points of $V$ are not all collinear, the set $\mathcal{P}$ is non-empty.
+For each pair $(P,l) \in \mathcal{P}$, let $d(P,l)$ denote the positive perpendicular distance from point $P$ to line $l$. The set of all such distances, $\{d(P,l) \mid (P,l) \in \mathcal{P}\}$, is a finite, non-empty set of positive real numbers. Therefore, there must exist a pair $(P_0, l_0)$ for which this distance is minimal.
+
+By our working assumption, the line $l_0$ must contain at least three points from $V$. Let these points be $A, B, C$. Let $H$ be the foot of the perpendicular from $P_0$ to the line $l_0$, so $d(P_0,l_0) = \ell(P_0, H)$.
+Of the points $A,B,C$ on $l_0$, by the pigeonhole principle, at least two must lie on the same closed side of $H$. Without loss of generality, let $B$ and $C$ be on the same side of $H$, and let $B$ lie on the segment $HC$ (i.e., $B$ is between $H$ and $C$, or $B=H$).
+
+Now, consider the line $l_1$ determined by the points $P_0$ and $C$. We will show that the distance from point $B$ to line $l_1$, denoted $d(B, l_1)$, is strictly smaller than $d(P_0, l_0)$, which will contradict the minimality of our chosen pair.
+Let $\theta$ be the angle $\angle HCP_0$. In the right-angled triangle $\triangle HCP_0$, we have $\ell(P_0, H) = \ell(P_0, C) \sin\theta$.
+The distance from $B$ to the line $l_1 = P_0C$ is given by $d(B,l_1) = \ell(B,C) \sin\theta$.
+Since $B$ is not C and lies on the segment $HC$, we have $\ell(B,C) < \ell(H,C)$.
+In the right-angled triangle $\triangle HCP_0$, the hypotenuse $\ell(P_0,C)$ is strictly longer than the side $\ell(H,C)$.
+Combining these inequalities: $\ell(B,C) < \ell(H,C) < \ell(P_0,C)$.
+Therefore,
+$$ d(B,l_1) = \ell(B,C) \sin\theta < \ell(P_0,C) \sin\theta = \ell(P_0, H) = d(P_0, l_0) $$
+We have found a new pair $(B, l_1) \in \mathcal{P}$ with a strictly smaller positive distance, which contradicts the minimality of $(P_0, l_0)$. The assumption must be false. Therefore, there must exist a line containing exactly two points.
+\end{proof}

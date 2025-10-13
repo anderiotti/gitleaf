@@ -1,0 +1,194 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage{pgfplots}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage[thmmarks, amsmath, thref]{ntheorem}
+\usepackage{mdframed}
+\usepackage{amsthm}
+\usepackage{physics}
+\usepackage{proof}
+\usepackage{derivative}
+\usepackage{hyperref}
+\usepackage{wrapfig}
+\usepackage{amsthm}
+\usepackage{xcolor}
+\renewcommand{\theenumi}{\roman{enumi}}
+
+\theoremstyle{nonumberplain}
+\theoremheaderfont{\itshape}
+\theorembodyfont{\upshape}
+\theoremseparator{.}
+\theoremsymbol{\ensuremath{\square}}
+\theoremsymbol{\ensuremath{\blacksquare}}
+\newtheorem{solution}{Solution}
+\theoremseparator{. ---}
+\theoremsymbol{\mbox{\texttt{;o)}}}
+
+\pgfplotsset{compat=1.18}
+\begin{document}
+
+1. Si \( f:[a, b] \subset \mathbb{R} \rightarrow \mathbb{R} \) es clase \( C^{1} \); definimos la longitud de la gráfica de \( f \) en \( [a, b] \) como la longitud de la trayectoria \( t \mapsto(t, f(t)) \) con \( t \in[a, b] \). \\
+(a) Pruebe que la longitud de la gráfica de \( f \) en \( |a, b| \) es
+\[
+\int_{a}^{b}\left(1+\left(\frac{\mathrm{d} f}{\mathrm{~d} x}\right)^{2}\right)^{\frac{1}{2}} \mathrm{~d} x
+\]
+
+
+Dividimos el intervalo \([a, b]\) en \( n \) subintervalos mediante una partición,
+\[
+a = x_0 < x_1 < \cdots < x_n = b
+\]
+Aproximamos la gráfica por la poligonal que une los puntos
+\[
+P_k = (x_k, f(x_k)), \quad k = 0, 1, \ldots, n
+\]
+La longitud de esta poligonal es:
+\[
+L_n = \sum_{k=1}^n \left\| P_k - P_{k-1} \right\| = \sum_{k=1}^n \sqrt{(x_k - x_{k-1})^2 + [f(x_k) - f(x_{k-1})]^2}
+\]
+Sacamos factor común \((x_k - x_{k-1})^2\):
+\[
+L_n = \sum_{k=1}^n (x_k - x_{k-1}) \sqrt{1 + \left( \frac{f(x_k) - f(x_{k-1})}{x_k - x_{k-1}} \right)^2 }
+\]
+Observamos que el cociente \(\frac{f(x_k) - f(x_{k-1})}{x_k - x_{k-1}}\) es el incremento medio de \(f\) en \([x_{k-1}, x_k]\), que por el Teorema del Valor Medio existe un punto \( \xi_k \in (x_{k-1}, x_k) \) tal que
+\[
+\frac{f(x_k) - f(x_{k-1})}{x_k - x_{k-1}} = f'(\xi_k)
+\]
+Así,
+\[
+L_n = \sum_{k=1}^n (x_k - x_{k-1}) \sqrt{1 + [f'(\xi_k)]^2 }
+\]
+Cuando el tamaño máximo de los subintervalos \( \max_k (x_k - x_{k-1}) \to 0 \), la suma anterior es una suma de Riemann para la función \( F(x) = \sqrt{1 + [f'(x)]^2} \) en \([a, b]\). Por la continuidad de \(f'\) (por ser de clase \(C^1\)), \(F\) es continua y la suma converge a la integral definida:
+\[
+L = \lim_{n \to \infty} L_n = \int_a^b \sqrt{1 + [f'(x)]^2} \, dx = \int_a^b \sqrt{1 + \left(\frac{df}{dx}\right)^2} \, dx
+\]
+
+
+(b) Encontrar la longitud de la gráfica de \( y=\ln (x) \) desde \( x=1 \) hasta \( x=2 \). \\
+
+Observamos la raíz \(\sqrt{x^2 + 1}\). Esto sugiere una sustitución trigonométrica:
+\[
+x = \tan\theta, \quad \theta \in \left[ \arctan 1, \arctan 2 \right]
+\]
+Entonces:
+\[
+dx = \sec^2\theta\, d\theta
+\]
+\[
+\sqrt{x^2 + 1} = \sqrt{\tan^2\theta + 1} = \sqrt{\sec^2\theta} = \sec\theta
+\]
+Los límites cambian como sigue...\\
+
+Cuando \(x=1\), \(\theta_1 = \arctan 1 = \frac{\\pi}{4}\)\\
+Cuando \(x=2\), \(\theta_2 = \arctan 2\)\\
+
+Reescribimos la integral:
+\[
+I = \int_{\theta_1}^{\theta_2} \frac{\sec\theta}{\tan\theta} \cdot \sec^2\theta\, d\theta
+\]
+Recordemos que:
+\[
+\tan\theta = \frac{\sin\theta}{\cos\theta}, \quad \sec\theta = \frac{1}{\cos\theta}
+\]
+Por tanto:
+\[
+\frac{\sec\theta}{\tan\theta} = \frac{1/\cos\theta}{\sin\theta/\cos\theta} = \frac{1}{\sin\theta}
+\]
+Así que:
+\[
+I = \int_{\theta_1}^{\theta_2} \frac{1}{\sin\theta} \cdot \sec^2\theta\, d\theta = \int_{\theta_1}^{\theta_2} \frac{1}{\sin\theta} \cdot \frac{1}{\cos^2\theta} d\theta = \int_{\theta_1}^{\theta_2} \frac{1}{\sin\theta\cos^2\theta} d\theta
+\]
+
+Obsérvese que:
+\[
+\frac{1}{\sin\theta \cos^2\theta} = \frac{1}{\cos^2\theta} \cdot \frac{1}{\sin\theta} = \sec^2\theta \csc\theta
+\]
+Vamos a integrar \(\sec^2\theta \csc\theta\):
+
+Sea \(u = \csc\theta\), \(dv = \sec^2\theta d\theta\):
+\[
+u = \csc\theta \implies du = -\csc\theta \cot\theta d\theta
+\]
+\[
+dv = \sec^2\theta d\theta \implies v = \tan\theta
+\]
+Por integración por partes:
+\[
+\int u\, dv = uv - \int v\, du
+\]
+\[
+I = \csc\theta \tan\theta - \int \tan\theta \left(-\csc\theta \cot\theta\right) d\theta
+\]
+\[
+= \csc\theta \tan\theta + \int \tan\theta \csc\theta \cot\theta d\theta
+\]
+Ahora, simplificamos \(\tan\theta \csc\theta \cot\theta\):
+\[
+\tan\theta = \frac{\sin\theta}{\cos\theta}
+\]
+\[
+\csc\theta = \frac{1}{\sin\theta}
+\]
+\[
+\cot\theta = \frac{\cos\theta}{\sin\theta}
+\]
+Por tanto:
+\[
+\tan\theta \csc\theta \cot\theta = \frac{\sin\theta}{\cos\theta} \cdot \frac{1}{\sin\theta} \cdot \frac{\cos\theta}{\sin\theta} = \frac{1}{\cos\theta} \cdot \frac{\cos\theta}{\sin\theta} = \frac{1}{\sin\theta}
+\]
+Así que:
+\[
+I = \csc\theta \tan\theta + \int \frac{1}{\sin\theta} d\theta
+\]
+\[
+= \csc\theta \tan\theta + \int \csc\theta d\theta
+\]
+Recordemos que:
+\[
+\int \csc\theta d\theta = \ln \left| \tan\left(\frac{\theta}{2}\right) \right| + C
+\]
+
+4. Reescribiendo la integral
+Por lo tanto:
+\[
+I = \csc\theta \tan\theta + \ln \left| \tan\left(\frac{\theta}{2}\right) \right| + C
+\]
+Ahora, necesitamos volver a la variable original \(x\):
+
+\(x = \tan\theta \implies \theta = \arctan x\)\\
+\(\tan\theta = x\)\\
+\(\sin\theta = \frac{x}{\sqrt{x^2 + 1}}\)\\
+\(\cos\theta = \frac{1}{\sqrt{x^2 + 1}}\)\\
+\(\csc\theta = \frac{1}{\sin\theta} = \frac{\sqrt{x^2 + 1}}{x}\)\\
+
+Entonces:
+\[
+\csc\theta \tan\theta = \left(\frac{\sqrt{x^2+1}}{x}\right) \cdot x = \sqrt{x^2+1}
+\]
+Queda por expresar \(\tan\left( \frac{\theta}{2} \right)\) en términos de \(x\), para ello sabemos que si \(x = \tan\theta\), entonces
+\[
+\tan\left(\frac{\theta}{2}\right) = \frac{x}{1 + \sqrt{x^2+1}}
+\]
+Esta es una identidad trigonométrica estándar, por lo tanto:
+\[
+I = \sqrt{x^2+1} + \ln \left| \frac{x}{1+\sqrt{x^2+1}} \right| + C
+\]
+
+Recordemos que
+\[
+I = \int_{1}^{2} \frac{\sqrt{x^2+1}}{x} dx = \left[ \sqrt{x^2+1} + \ln \left( \frac{x}{1+\sqrt{x^2+1}} \right) \right]_{x=1}^{x=2}
+\]
+
+Así que el resultado es:
+\[
+I = \left[ \sqrt{5} + \ln \left( \frac{2}{1+\sqrt{5}} \right) \right] - \left[ \sqrt{2} + \ln \left( \frac{1}{1+\sqrt{2}} \right) \right] \approx 1.22201
+\]
+
+\end{document}
+
+
+

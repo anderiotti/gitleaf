@@ -1,0 +1,969 @@
+\documentclass[12pt, openany]{book}
+
+% --- PREAMBLE ---
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{graphicx}
+\usepackage{amsmath, amssymb, amsfonts, amsthm}
+\usepackage{geometry}
+\geometry{a4paper, margin=1in}
+\usepackage[dvipsnames]{xcolor} % For colors like 'purple'
+\usepackage{hyperref}
+
+% --- HYPERREF SETUP ---
+\hypersetup{
+    colorlinks=true,
+    linkcolor=purple, % A dark purple
+    filecolor=magenta,      
+    urlcolor=cyan,
+    citecolor=purple,
+    pdftitle={Foundations of Measure-Theoretic Probability},
+    pdfpagemode=FullScreen,
+}
+
+
+% --- MATHEMATICAL ENVIRONMENTS DEFINITION ---
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[section]
+\theoremstyle{plain}
+\newtheorem{theorem}[definition]{Theorem}
+\newtheorem{proposition}[definition]{Proposition}
+\newtheorem{lemma}[definition]{Lemma}
+\newtheorem{corollary}[definition]{Corollary}
+\theoremstyle{remark}
+\newtheorem{remark}[definition]{Remark}
+
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\B}{\mathcal{B}}
+\newcommand{\probP}{\mathbb{P}}
+\newcommand{\germS}{\mathfrak{S}} % Notation for a sigma-algebra
+\newcommand{\germF}{\mathfrak{F}} % Generic sigma-algebra
+
+\DeclareMathOperator{\E}{\mathbf{M}} % Expectation (M for mean value)
+\DeclareMathOperator{\V}{\mathbf{D}} % Variance (D for dispersion)
+\DeclareMathOperator{\M}{\mathbf{M}} % For Expected Value (Mean value)
+\DeclareMathOperator{\D}{\mathbf{D}} % For Variance (Dispersion)
+
+
+% --- DOCUMENT ---
+\begin{document}
+
+% --- Start of Custom Title Page ---
+\begin{titlepage}
+    \centering
+    \vspace*{2cm} % Space at the top
+    
+    {\Huge\bfseries Vibequickreview on Probability Theory for Several Variables\par}
+
+    
+    
+    {\Large\itshape somehow by\par}
+    \vspace{0.5cm}
+    {\Large Andres Lopez\par}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.6\linewidth]{iimas.png}
+    \label{fig:placeholder}
+\end{figure}
+    
+    \vspace{2.5cm} % Space between title and author
+    
+    \vfill % Pushes content up and down
+    
+    {\large Institute of Investigations on Applied Mathematics and Systems (IIMAS)\par}
+    
+    \vspace{1.5cm} % Space above the date
+    
+    {\large \today\par}
+    
+    \vspace*{2cm} % Space at the bottom
+\end{titlepage}
+% --- End of Title Page ---
+
+This page was unintentionally left blank, this class sometimes is kinda funny.\\
+{\color{black!35}
+\textit{Disclaimer:} For the sake of brevity and to maintain focus, the proofs have been omitted from this text. The reader should note, however, that the proofs for this particular topic are quite straightforward. For a complete treatment and a comprehensive understanding, the reader is encouraged to consult A.V. Skorokhod's Introduction to the Theory of Random Processes, the foundational text upon which these notes are based.}
+
+\tableofcontents
+
+\chapter*{(A Very) Brief Glimpse into Measure Theory}
+\addcontentsline{toc}{chapter}{Introduction: Foundations of Measure Theory}
+
+\section*{Measurable Spaces and Measures}
+
+The theory begins with the formalization of a collection of subsets upon which it is possible to define a measure.
+
+\begin{definition}[$\sigma$-Algebra]
+Let $\Omega$ be a set. A collection $\germS \subseteq \mathcal{P}(\Omega)$ of subsets of $\Omega$ is a \textbf{$\sigma$-algebra} if:
+\begin{enumerate}
+    \item $\Omega \in \germS$.
+    \item $A \in \germS \implies A^c \in \germS$.
+    \item $\{A_n\}_{n \in \N} \subseteq \germS \implies \bigcup_{n=1}^{\infty} A_n \in \germS$.
+\end{enumerate}
+The pair $(\Omega, \germS)$ is called a \textbf{measurable space}. The elements of $\germS$ are called \textbf{measurable sets}.
+\end{definition}
+
+\begin{definition}[Measure]
+Given a measurable space $(\Omega, \germS)$, a function $\mu: \germS \to [0, \infty]$ is a \textbf{measure} if:
+\begin{enumerate}
+    \item $\mu(\emptyset) = 0$.
+    \item \textbf{($\sigma$-additivity)} For any countable collection $\{A_n\}_{n \in \N} \subseteq \germS$ of pairwise disjoint sets, it holds that
+    $$\mu\left(\bigcup_{n=1}^{\infty} A_n\right) = \sum_{n=1}^{\infty} \mu(A_n)$$
+\end{enumerate}
+The triplet $(\Omega, \germS, \mu)$ is called a \textbf{measure space}.
+\end{definition}
+
+\begin{proposition}[Fundamental Properties of a Measure]
+Every measure $\mu$ on $(\Omega, \germS)$ satisfies:
+\begin{enumerate}
+    \item \textbf{(Monotonicity)} If $A, B \in \germS$ and $A \subseteq B$, then $\mu(A) \le \mu(B)$.
+    \item \textbf{($\sigma$-subadditivity)} For any countable collection $\{A_n\}_{n \in \N} \subseteq \germS$,
+    $$\mu\left(\bigcup_{n=1}^{\infty} A_n\right) \le \sum_{n=1}^{\infty} \mu(A_n)$$
+    \item \textbf{(Continuity from below)} If $\{A_n\}_{n \in \N} \subseteq \germS$ is an increasing sequence of sets ($A_n \subseteq A_{n+1}$), then $\mu(\bigcup_{n=1}^{\infty} A_n) = \lim_{n \to \infty} \mu(A_n)$.
+    \item \textbf{(Continuity from above)} If $\{A_n\}_{n \in \N} \subseteq \germS$ is a decreasing sequence of sets ($A_n \supseteq A_{n+1}$) and $\mu(A_1) < \infty$, then $\mu(\bigcap_{n=1}^{\infty} A_n) = \lim_{n \to \infty} \mu(A_n)$.
+\end{enumerate}
+\end{proposition}
+
+\section*{Fundamental Construction Results}
+
+The construction of non-trivial measures is the cornerstone of the theory. It is guaranteed by the following fundamental result, which we only state here.
+
+\begin{theorem}[Carathéodory's Extension Theorem]
+Let $\mathcal{A}$ be an algebra of subsets of $\Omega$. Let $\mu_0: \mathcal{A} \to [0, \infty]$ be a $\sigma$-additive pre-measure on $\mathcal{A}$. Then, there exists a measure $\mu$ on the $\sigma$-algebra generated by $\mathcal{A}$, $\sigma(\mathcal{A})$, such that the restriction of $\mu$ to $\mathcal{A}$ coincides with $\mu_0$. If $\mu_0$ is $\sigma$-finite, this extension is unique.
+\end{theorem}
+
+\begin{corollary}[Existence of the Lebesgue Measure]
+There exists a unique measure $\lambda$ defined on the Borel $\sigma$-algebra $\B(\R)$—the $\sigma$-algebra generated by the open intervals of $\R$—that satisfies $\lambda((a, b]) = b-a$ for every half-open interval $(a, b] \subset \R$. This measure is called the \textbf{Lebesgue measure}.
+\end{corollary}
+
+\section*{Measurable Functions}
+
+The bridge between measure spaces is established through functions that preserve the measurable structure.
+
+\begin{definition}[Measurable Function]
+Let $(\Omega_1, \germS_1)$ and $(\Omega_2, \germS_2)$ be two measurable spaces. A function $f: \Omega_1 \to \Omega_2$ is said to be \textbf{$(\germS_1, \germS_2)$-measurable} if for every $B \in \germS_2$, its preimage $f^{-1}(B) \in \germS_1$.
+When the target space is $(\R, \B(\R))$, a measurable function is called a \textbf{Borel-measurable function}.
+\end{definition}
+
+\section*{The Particular Case of Probability}
+
+Probability theory emerges as a specialization of measure theory, where the total "size" of the space is normalized to unity.
+
+\begin{definition}[Probability Space]
+A measure space $(\Omega, \germS, \mu)$ is called a \textbf{probability space}, and denoted $(\Omega, \germS, \probP)$, if the measure $\mu$ is a \textbf{probability measure}, that is, if it satisfies $\probP(\Omega) = 1$.
+\end{definition}
+
+\begin{remark}
+A probability space is a finite measure space. Consequently, the entire abstract machinery of measure theory, including the properties of monotonicity, $\sigma$-subadditivity, and continuity (both from above and below, as the finiteness of the total measure guarantees the condition for continuity from above) applies directly to the probability measure $\probP$. In the subsequent chapters, we will exploit this structural inheritance without further justification. A \textbf{random variable} will be nothing more than a measurable function defined on the space $(\Omega, \germS)$.
+\end{remark}
+
+\chapter{Probability Theory of a Single Variable}
+
+\section{Probability Spaces}
+
+\subsection{Sample Spaces and Events}
+
+The basis of probability theory is the triplet $(\Omega, \germF, \probP)$. The first component, $\Omega$, is the space of elementary outcomes. The events, however, are not just any subset of $\Omega$, but those belonging to a family with specific closure properties.
+
+\begin{definition}[Boolean Algebra and $\sigma$-algebra]
+Let $\Omega$ be a space of elementary outcomes. A family $\germF_0$ of subsets of $\Omega$ is called a \textbf{Boolean algebra} if:
+\begin{enumerate}
+    \item $\Omega \in \germF_0$.
+    \item If $A, B \in \germF_0$, then $A \cup B \in \germF_0$ and $A \setminus B \in \germF_0$.
+\end{enumerate}
+A Boolean algebra $\germF$ is called a \textbf{Boolean $\sigma$-algebra} (or simply $\sigma$-algebra) if for any sequence $\{A_n\}_{n \in \N} \subseteq \germF$, it holds that $\bigcup_{n=1}^{\infty} A_n \in \germF$.
+\end{definition}
+
+\begin{remark}
+The pair $(\Omega, \germF)$, where $\germF$ is a $\sigma$-algebra of subsets of $\Omega$, constitutes a \textbf{measurable space}. The elements $A \in \germF$ are the \textbf{events}.
+\end{remark}
+
+\subsection{Axioms of Probability}
+
+\begin{definition}[Probability]
+A \textbf{probability} is a numerical function $\probP(A)$ defined for every $A$ in a $\sigma$-algebra $\germF$ that satisfies the following axioms:
+\begin{enumerate}
+    \item \textbf{(Non-negativity)} $\probP(A) \ge 0$ for all $A \in \germF$.
+    \item \textbf{(Normalization)} $\probP(\Omega) = 1$.
+    \item \textbf{(Countable additivity)} If $\{A_n\}_{n \in \N}$ is a collection of pairwise disjoint events in $\germF$, then
+    $$ \probP\left( \bigcup_{n=1}^{\infty} A_n \right) = \sum_{n=1}^{\infty} \probP(A_n) $$
+\end{enumerate}
+The triplet $(\Omega, \germF, \probP)$ is called a \textbf{probability space}.
+\end{definition}
+
+\begin{definition}[Equiprobability in Finite Spaces]
+Let a sample space $\Omega$ have finite cardinality $|\Omega| = K$. The space is said to be \textbf{equiprobable} if the probability measure $\probP$ assigns an \textit{identical mass} to each elementary outcome $\omega \in \Omega$. The point probability law $p(\omega) = \probP(\{\omega\})$ is therefore constant:
+$$ p(\omega) = \frac{1}{K}, \quad \forall \omega \in \Omega $$
+In such a case, the probability of any event $A \subseteq \Omega$ reduces to the ratio of cardinalities:
+$$ \probP(A) = \sum_{\omega \in A} \frac{1}{K} = \frac{|A|}{|\Omega|} $$
+\end{definition}
+
+\begin{proposition}[Fundamental Consequences of the Axioms]
+From the three axioms of Kolmogorov, several foundational properties of the probability measure $\probP$ can be derived. Let $A, B$ be events in $\germF$.
+\begin{enumerate}
+    \item $\probP(\emptyset) = 0$.
+    \item $\probP(A^c) = 1 - \probP(A)$.
+    \item \textbf{(Monotonicity)} If $A \subseteq B$, then $\probP(A) \le \probP(B)$.
+    \item $\probP(A \cup B) = \probP(A) + \probP(B) - \probP(A \cap B)$.
+\end{enumerate}
+\end{proposition}
+
+\begin{theorem}[The Principle of Inclusion-Exclusion (Poincaré's Formula)]
+The formula for the probability of a union of two events can be generalized to any finite collection of $n$ events $\{A_i\}_{i=1}^n \subset \germF$. The probability of their union is given by the sum of the probabilities of the individual events, minus the sum of the probabilities of all pairwise intersections, plus the sum of the probabilities of all three-way intersections, and so on, with alternating signs.
+$$ \probP\left(\bigcup_{i=1}^n A_i\right) = \sum_{i=1}^n \probP(A_i) - \sum_{1 \le i < j \le n} \probP(A_i \cap A_j) + \sum_{1 \le i < j < k \le n} \probP(A_i \cap A_j \cap A_k) - \dots + (-1)^{n-1} \probP\left(\bigcap_{i=1}^n A_i\right) $$
+This can be written more compactly as:
+$$ \probP\left(\bigcup_{i=1}^n A_i\right) = \sum_{k=1}^n (-1)^{k-1} \sum_{1 \le i_1 < \dots < i_k \le n} \probP(A_{i_1} \cap \dots \cap A_{i_k}) $$
+This theorem is a cornerstone of combinatorial probability.
+\end{theorem}
+\begin{proof}
+The proof proceeds by induction. The base case $n=2$ is established in the preceding proposition. Assume the formula holds for any collection of $n-1$ events. Let $B = \bigcup_{i=1}^{n-1} A_i$. Then:
+\begin{align*}
+    \probP\left(\bigcup_{i=1}^n A_i\right) = \probP(B \cup A_n) &= \probP(B) + \probP(A_n) - \probP(B \cap A_n) \\
+    &= \probP\left(\bigcup_{i=1}^{n-1} A_i\right) + \probP(A_n) - \probP\left(\bigcup_{i=1}^{n-1} (A_i \cap A_n)\right)
+\end{align*}
+Applying the inductive hypothesis to both unions (one of $n-1$ events, the other of $n-1$ intersections) and carefully collecting the terms yields the formula for $n$ events.
+\end{proof}
+
+\section{Conditional Probability and Independence}
+
+\subsection{Definitions}
+
+\begin{definition}[Independence]
+The events $A_1, A_2, \dots, A_n$ are called \textbf{independent in the aggregate} if for any subcollection of indices $k_1, \dots, k_m$, the following relation is satisfied:
+$$ \probP\left(\bigcap_{j=1}^{m} A_{k_j}\right) = \prod_{j=1}^{m} \probP(A_{k_j}) $$
+\end{definition}
+
+\begin{definition}[Conditional Probability]
+The \textbf{conditional probability} of the event $A$ under the condition $B$, where it is assumed that the conditioning event has non-zero measure, i.e., $\probP(B) > 0$, is the quantity:
+$$ \probP(A|B) = \frac{\probP(A \cap B)}{\probP(B)} $$
+The expression $\probP(A|B)$ is read as "the probability of A given B". This definition is the foundation of the \textbf{multiplication rule}, whose generalized form for a finite intersection of events $A_1, \dots, A_n$ (assuming $\probP(\bigcap_{k=1}^{n-1} A_k) > 0$) is:
+
+$$ \probP\left(\bigcap_{k=1}^{n} A_k\right) = \prod_{k=1}^{n} \probP\left(A_k \middle| \bigcap_{j=1}^{k-1} A_j\right) $$
+
+Or in a slightly more explicit form
+
+$$ \probP\left(\bigcap_{k=1}^{n} A_k\right) = \probP(A_1) \probP(A_2|A_1) \probP(A_3|A_1 \cap A_2) \cdots \probP(A_n|\bigcap_{k=1}^{n-1} A_k) $$
+\end{definition}
+
+\begin{remark}[Independence, Disjointness, and Correlation]
+It is crucial not to confuse stochastic \textbf{independence} with the \textbf{disjointness} of events. In fact, two disjoint events $A$ and $B$ with $\probP(A)>0, \probP(B)>0$ are necessarily \textit{dependent}. The occurrence of one ($A$) implies the non-occurrence of the other ($B$), since $A \cap B = \emptyset$, so that $\probP(B|A) = 0 \neq \probP(B)$. Independence suggests that the occurrence of an event provides no information about the other.
+
+This concept is generalized for random variables $\xi, \eta$ through the \textbf{covariance}, $\mathrm{Cov}(\xi, \eta)$, which measures their linear dependence. A fundamental result, which we will explore in detail in future chapters, is that if two random variables are independent, their covariance is zero. The converse, however, is false in general: zero covariance does not imply independence. The notable exception is for jointly normal random variables, for which the equivalence does hold, a result of profound importance in the theory of stochastic processes.
+\end{remark}
+
+\subsection{Bayes' Theorem}
+
+The so-called Bayes' Theorem is a direct consequence of the definition of conditional probability. Skorokhod defines it as a result of the \textbf{formula of total probability}.
+
+\begin{theorem}[Formula of Total Probability]
+Let $\{B_k\}_{k=1}^n$ be a complete partition of the space $\Omega$ into disjoint events (i.e., $\bigcup B_k = \Omega$, $B_i \cap B_j = \emptyset$ for $i \neq j$). Then, for any event $A$,
+$$ \probP(A) = \sum_{k=1}^n \probP(B_k)\probP(A|B_k) $$
+\end{theorem}
+
+\begin{corollary}[Bayes' Formula]
+Under the same conditions, if $\probP(A) > 0$, the conditional probability of $B_k$ given $A$ is:
+$$ \probP(B_k|A) = \frac{\probP(B_k)\probP(A|B_k)}{\sum_{j=1}^n \probP(B_j)\probP(A|B_j)} $$
+\end{corollary}
+
+\section{Random Variables}
+
+\begin{definition}[Random Variable]
+An arbitrary finite (mod $\probP$) real $\germF$-measurable function, $\xi(\omega)$, is called a \textbf{random variable}. Two random variables $\xi$ and $\eta$ are considered equal if they are equivalent, that is, $\xi = \eta \; (mod \; \probP)$ if $\probP\{\xi \neq \eta\}$ is not identically zero.
+
+In other words, a function $\xi: \Omega \to \R$ is a random variable if for any set $B$ in the Borel $\sigma$-algebra $\B$ of the real line, the set $\{\omega: \xi(\omega) \in B\}$ belongs to the $\sigma$-algebra $\germF$ of the underlying probability space.
+\end{definition}
+
+\begin{definition}[Cumulative Distribution Function (CDF)]
+For each random variable $\xi$, a function $F(x)$ of a real argument $x$, known as the \textbf{distribution function} of the random variable $\xi$, is uniquely defined by the equality:
+$$ F(x) = \probP\{\xi < x\} $$
+\end{definition}
+
+\begin{proposition}[Properties of the Distribution Function]
+The distribution function $F(x)$ of a random variable $\xi$ is non-negative, non-decreasing, and left-continuous; furthermore, $F(-\infty) = 0$ and $F(+\infty) = 1$.
+\end{proposition}
+\textit{Writer's note: Although often referred to simply as the \emph{Distribution Function}, I prefer to use its full name. Firstly, there is no ambiguity in the abbreviation \emph{CDF} (it is clear we are not discussing drugs or food here). Furthermore, the property just studied makes the term \emph{cumulative} quite natural: the function progressively incorporates increasingly probable events until it reaches the final convergence, where the probability of everything possible occurring is the maximum, one.}
+
+\begin{remark}
+The choice of $\probP\{\xi < x\}$ (left-continuity) instead of $\probP\{\xi \le x\}$ (right-continuity) is a convention. Both uniquely define the probability measure on $(\R, \B)$, but it is crucial to be consistent.
+\end{remark}
+
+\begin{definition}[Joint Distribution Function]
+Analogously, if $(\xi_1, \dots, \xi_n)$ is an n-tuple of random variables, the function of $n$ real variables
+$$ F_{\xi_1, \dots, \xi_n}(x_1, \dots, x_n) = \probP\{\xi_1 < x_1, \dots, \xi_n < x_n \} $$
+is called the \textbf{joint distribution function} of the variables $\xi_1, \dots, \xi_n$. This function is uniquely defined in n-dimensional Euclidean space $\R^n$, is non-decreasing, and is left-continuous with respect to each variable.
+\end{definition}
+
+\begin{proposition}[Fundamental Examples of Measurable Functions] \\
+\begin{itemize}
+\textit{ }
+    \item \textbf{Constant Functions.} Let $c \in \R$. The function $\xi(\omega) = c$ for all $\omega \in \Omega$ is a random variable. Its preimage $ \xi^{-1}(B) $ is $\Omega$ if $c \in B$ and $\emptyset$ if $c \notin B$. Both sets belong to any $\sigma$-algebra $\germF$.
+    \item \textbf{Indicator Functions.} Given an event $A \in \germF$, the indicator function $\mathbf{\chi}_A(\omega)$ is a random variable. Its preimage $\mathbf{\chi}_A^{-1}(B)$ can be $\emptyset, A, A^c$, or $\Omega$, all of which are elements of $\germF$ by definition.
+    \item \textbf{Non-Measurable Functions.} If one considers a set $C \notin \germF$, the indicator function $\mathbf{\chi}_C(\omega)$ is \textbf{not} a random variable, because the preimage of $\{1\}$, which is $C$, does not belong to $\germF$.
+\end{itemize}
+\end{proposition}
+
+\begin{lemma}
+Let $(\Omega, \germF, \probP)$ be a probability space, and $\xi: \Omega \to \R$ a random variable. The triplet $(\R, \B, \probP_\xi)$, where $\probP_\xi(B) = \probP(\xi^{-1}(B))$, is a probability space.
+\end{lemma}
+
+\subsection{Functions of Random Variables}
+A central problem in probability theory is to determine the distribution of a new random variable that is itself a function of another. Let $\xi: (\Omega, \germF) \to (\R, \B)$ be a random variable and $g: (\R, \B) \to (\R, \B)$ be a Borel-measurable function. The composition $\eta = g(\xi) = g \circ \xi$ is also a random variable, as the preimage of any Borel set $B$ under $\eta$ is $\eta^{-1}(B) = \xi^{-1}(g^{-1}(B))$, which is an element of $\germF$ since $g^{-1}(B) \in \B$ and $\xi$ is a random variable. The fundamental task is to find the law of $\eta$, i.e., its cumulative distribution function $F_\eta(y)$.
+
+\begin{theorem}[The Method of Distribution Functions]
+The most general and powerful method for determining the law of $\eta=g(\xi)$ is by direct computation of its cumulative distribution function. For any $y \in \R$, the CDF is defined as:
+$$ F_\eta(y) = \probP\{\eta \le y\} = \probP\{g(\xi) \le y\} $$
+The problem is thus reduced to finding the set of real numbers $x$ for which $g(x) \le y$, which we denote $B_y = \{x \in \R : g(x) \le y\}$. The CDF is then given by the probability of $\xi$ taking a value in this set:
+$$ F_\eta(y) = \probP\{\xi \in B_y\} = \int_{B_y} dF_\xi(x) $$
+If $F_\xi$ is absolutely continuous with density $p_\xi(x)$, then the probability density function of $\eta$, $p_\eta(y)$, can be found by differentiation, $p_\eta(y) = \ddv{F_\eta(y)}{y}$, provided the derivative exists.
+\end{theorem}
+
+\begin{proposition}[The Transformation Theorem for Monotonic Functions]
+In the specific but common case where $\xi$ is an absolutely continuous random variable and the function $g$ is strictly monotonic and differentiable on the support of $\xi$, a direct formula for the density of $\eta=g(\xi)$ can be derived. Let the support of $\xi$ be $S_\xi$.
+The inverse function $g^{-1}: g(S_\xi) \to S_\xi$ exists. From the method of distribution functions:
+$$ F_\eta(y) = \probP\{g(\xi) \le y\} $$
+If $g$ is strictly increasing, this is equivalent to $\probP\{\xi \le g^{-1}(y)\} = F_\xi(g^{-1}(y))$.
+If $g$ is strictly decreasing, this is equivalent to $\probP\{\xi \ge g^{-1}(y)\} = 1 - F_\xi(g^{-1}(y))$.
+
+Differentiating with respect to $y$ using the chain rule yields the probability density function of $\eta$:
+$$ p_\eta(y) = \ddv{}{y} F_\xi(g^{-1}(y)) = p_\xi(g^{-1}(y)) \cdot \ddv{}{y}g^{-1}(y) \quad (\text{for g increasing}) $$
+$$ p_\eta(y) = \ddv{}{y} (1 - F_\xi(g^{-1}(y))) = -p_\xi(g^{-1}(y)) \cdot \ddv{}{y}g^{-1}(y) \quad (\text{for g decreasing}) $$
+Since the derivative of the inverse function is positive for g increasing and negative for g decreasing, both cases can be unified into a single, powerful formula using the absolute value of the Jacobian of the transformation:
+$$ p_\eta(y) = p_\xi(g^{-1}(y)) \left| \ddv{}{y}g^{-1}(y) \right| $$
+\end{proposition}
+
+\begin{proposition}[Transformations of Discrete Random Variables]
+If $\xi$ is a discrete random variable with probability mass function $p_\xi(x_k)$, the probability mass function of $\eta=g(\xi)$, denoted $p_\eta(y_j)$, is found by identifying all the points in the support of $\xi$ that are mapped by $g$ to the same point $y_j$. The probability of $\eta$ taking the value $y_j$ is the sum of the probabilities of all such precursor events:
+$$ p_\eta(y_j) = \probP\{\eta = y_j\} = \probP\{g(\xi) = y_j\} = \sum_{x_k : g(x_k)=y_j} p_\xi(x_k) $$
+\end{proposition}
+
+\subsection{Expected Value and Variance}
+The expected value is defined through the Lebesgue-Stieltjes integral with respect to the measure induced by the distribution function.
+
+\begin{definition}[Expected Value (Mean Value)]
+The \textbf{expected value} (or mean value) of a random variable $\xi$, denoted by $\E\xi$, is the integral of the function $x$ with respect to the measure $dF(x)$, where $F(x)$ is the distribution function of $\xi$:
+$$ \E\xi = \int_{-\infty}^{\infty} x \,dF(x) $$
+It is assumed that the integral $\int |x|\, dF(x)$ is finite. This condition is essential for two complementary reasons:
+
+\begin{itemize}
+  \item \emph{Mathematical justification.} The Lebesgue-Stieltjes integral only defines a real number if the integrable function is absolutely integrable. The requirement $\int |x|\,dF(x) < \infty$ precisely guarantees the existence of the expected value as a finite quantity, preventing the definition from leading to $+\infty$ or indeterminate expressions.
+  \item \emph{Probabilistic intuition.} The expected value is interpreted as the \emph{weighted average} of all possible values of $\xi$. If the extreme values of the variable have tails that are too heavy (probabilities that decay too slowly), the "average" is dominated by those values and ceases to be representative or even to converge. The finiteness of the integral ensures that the contribution of large-magnitude events remains controllable, so that the expectation effectively describes a central tendency.
+\end{itemize}
+\end{definition}
+
+\begin{proposition}[Fundamental Properties of Expected Value]
+Let $\xi, \eta$ be random variables and $a,b,c \in \R$ be constants.
+\begin{enumerate}
+    \item \textbf{(Linearity)} $\M(a\xi + b\eta + c) = a\M\xi + b\M\eta + c$.
+    \item \textbf{(Monotonicity)} If $\xi \ge \eta$ almost surely, then $\M\xi \ge \M\eta$.
+    \item \textbf{(Jensen's Inequality)} If $g$ is a convex function, then $g(\M\xi) \le \M[g(\xi)]$.
+    \item \textbf{(Independence)} If $\xi$ and $\eta$ are independent, then $\M(\xi\eta) = (\M\xi)(\M\eta)$, provided that $\M|\xi|$ and $\M|\eta|$ are finite.
+\end{enumerate}
+\end{proposition}
+
+\begin{definition}[Fair Game]
+A game is considered \textbf{fair} if the expected value of the net gain or loss is zero.
+\end{definition}
+
+\begin{theorem}[Law of the Unconscious Statistician (LOTUS)]
+Let $(\Omega, \germF, \probP)$ be a probability space, and let $\xi: \Omega \to \R$ be a random variable. Let $g: (\R, \B) \to (\R, \B)$ be a Borel-measurable function. Then the composition $\eta = g(\xi)$ is also a random variable, and its expected value, provided it exists, is given by:
+$$ \E[\eta] = \E[g(\xi)] = \int_{\Omega} g(\xi(\omega)) \,d\probP(\omega) = \int_{-\infty}^{\infty} g(x) \,dF_\xi(x) $$
+This theorem is monumental. It states that the expected value of a transformation of $\xi$ can be computed by integrating the transformation function $g(x)$ against the measure induced by $\xi$ itself, $dF_\xi(x)$. This obviates the need to find the distribution function of $\eta$, $F_\eta(y)$.
+\end{theorem}
+
+\begin{proof}
+The proof is a classic example of the standard machinery of measure theory, constructed in three stages. We aim to show that for any Borel-measurable function $g$, the identity $\int_{\Omega} g(\xi) \,d\probP = \int_{\R} g \,d\probP_\xi$ holds, where $\probP_\xi$ is the probability measure induced by $\xi$ on the real line.
+
+\begin{enumerate}
+    \item \textbf{Stage 1: Indicator Functions.} Let $g$ be an indicator function of a Borel set $B \in \B$, i.e., $g(x) = \mathbf{\chi}_B(x)$. The left-hand side (LHS) is:
+    $$ \int_{\Omega} \mathbf{\chi}_B(\xi(\omega)) \,d\probP(\omega) = \int_{\{\omega : \xi(\omega) \in B\}} 1 \,d\probP(\omega) = \probP(\{\omega : \xi(\omega) \in B\}) $$
+    The right-hand side (RHS) is, by definition of the induced measure $\probP_\xi$:
+    $$ \int_{\R} \mathbf{\chi}_B(x) \,d\probP_\xi(x) = \probP_\xi(B) = \probP(\xi^{-1}(B)) = \probP(\{\omega : \xi(\omega) \in B\}) $$
+    The identity holds for indicator functions. By the linearity of the integral, it immediately extends to all \textbf{simple functions} (finite linear combinations of indicator functions).
+
+    \item \textbf{Stage 2: Non-negative Measurable Functions.} Any non-negative measurable function $g$ can be expressed as the pointwise limit of a monotonically increasing sequence of simple functions, $\{g_n\}$. By the \textbf{Monotone Convergence Theorem}, we have:
+    $$ \E[g(\xi)] = \E[\lim_{n\to\infty} g_n(\xi)] = \lim_{n\to\infty} \E[g_n(\xi)] $$
+    Since the identity holds for each simple function $g_n$, we have:
+    $$ \lim_{n\to\infty} \int_{\Omega} g_n(\xi) \,d\probP = \lim_{n\to\infty} \int_{\R} g_n \,d\probP_\xi = \int_{\R} \lim_{n\to\infty} g_n \,d\probP_\xi = \int_{\R} g \,d\probP_\xi $$
+    The identity holds for all non-negative measurable functions.
+
+    \item \textbf{Stage 3: General Measurable Functions.} Any general measurable function $g$ can be decomposed into its positive and negative parts, $g = g^+ - g^-$, where both $g^+$ and $g^-$ are non-negative measurable functions. Assuming the expectation exists (i.e., $\E|g(\xi)| < \infty$), we can apply the result from Stage 2 to both parts:
+    $$ \E[g(\xi)] = \E[g^+(\xi) - g^-(\xi)] = \E[g^+(\xi)] - \E[g^-(\xi)] = \int_{\R} g^+ \,d\probP_\xi - \int_{\R} g^- \,d\probP_\xi = \int_{\R} g \,d\probP_\xi $$
+\end{enumerate}
+The theorem is thus proven in its full measure-theoretic generality.
+\end{proof}
+
+\begin{corollary}[Practical Formulations of LOTUS]
+The abstract Lebesgue-Stieltjes integral $\int g(x) \,dF_\xi(x)$ takes on more familiar forms for discrete and continuous random variables.
+\begin{itemize}
+    \item \textbf{If $\xi$ is a discrete random variable} with support $S=\{x_k\}$ and probability mass function $p_k = \probP\{\xi=x_k\}$, the measure $dF_\xi(x)$ is a sum of point masses. The integral thus becomes a sum over the support:
+    $$ \E[g(\xi)] = \sum_{x_k \in S} g(x_k) p_k $$
+    \item \textbf{If $\xi$ is an absolutely continuous random variable} with probability density function $p_\xi(x)$, then the measure $dF_\xi(x)$ is equivalent to $p_\xi(x)dx$. The integral becomes a standard Riemann (or Lebesgue) integral:
+    $$ \E[g(\xi)] = \int_{-\infty}^{\infty} g(x) p_\xi(x) \,dx $$
+\end{itemize}
+These two results are the forms of the theorem most frequently used in practice, and they are the reason for its name: one can "unconsciously" use the probability mass or density function of $\xi$ directly, without thinking about the distribution of $g(\xi)$.
+\end{corollary}
+
+\begin{definition}[Variance (Dispersion)]
+The \textbf{variance} (or dispersion) of a random variable $\xi$, denoted $\V\xi$, is the expected value of the square of the deviation of $\xi$ from its expected value:
+$$ \V\xi = \E(\xi - \E\xi)^2 = \int_{-\infty}^{\infty} (x - \E\xi)^2 \,dF(x) $$
+The variance is also known as the second central moment.
+\end{definition}
+
+\begin{definition}[Moments]
+The \textbf{$k$-th moment} of a random variable $\xi$ is the quantity $\M[\xi^k]$. The \textbf{$k$-th central moment} is $\M[(\xi - \M\xi)^k]$, provided that these expected values exist.
+\end{definition}
+
+\begin{definition}[$L^2$ Space]
+The family of random variables defined on $(\Omega, \germF, \probP)$ with a finite second moment,
+$$ L^2(\Omega, \germF, \probP) = \{\xi : \M[\xi^2] < \infty \} $$
+forms a vector space with the inner product $\langle \xi, \eta \rangle = \M(\xi\eta)$. This inner product induces the norm $\|\xi\|_2 = \sqrt{\M[\xi^2]}$ and the distance $d(\xi, \eta) = \|\xi - \eta\|_2$.
+\end{definition}
+
+\begin{remark}
+The expected value $\M\xi$ is the constant $c$ that best approximates the random variable $\xi$ in the sense that it minimizes the distance in $L^2$, that is, $c = \M\xi$ is the solution to the problem of minimizing $\M[(\xi-c)^2]$.
+\end{remark}
+
+% Fragment on the properties of Variance
+\begin{proposition}[Properties of Variance]
+Let $\xi \in L^2$ and $a,c \in \R$.
+\begin{enumerate}
+    \item $\D\xi \ge 0$. Furthermore, $\D\xi = 0$ if and only if $\xi = \M\xi$ almost surely.
+    \item $\D(a\xi + c) = a^2 \D\xi$.
+\end{enumerate}
+\end{proposition}
+
+\subsection{Quantile and Generating Functions}
+
+In the analysis of a random variable, certain integral transforms of its distribution function reveal fundamental properties. The most important of these is the characteristic function, which always exists and uniquely determines the distribution.
+
+\begin{definition}[Characteristic Function]
+The \textbf{characteristic function} of a random variable $\xi$ (or of its distribution function $F(x)$) is the function $\phi(t)$ defined for all $t \in \R$ by:
+$$ \phi(t) = \E e^{it\xi} = \int_{-\infty}^{\infty} e^{itx} \,dF(x) $$
+\end{definition}
+
+Another transform of interest, although of less general applicability, is the moment generating function.
+
+\begin{definition}[Moment Generating Function]
+The \textbf{moment generating function} (MGF) of a random variable $\xi$ is the function $M(t)$ defined by:
+$$ M(t) = \E e^{t\xi} = \int_{-\infty}^{\infty} e^{tx} \,dF(x) $$
+for all $t \in \R$ for which the integral converges absolutely. Unlike the characteristic function, the existence of the MGF is not guaranteed; it requires that $\E e^{t\xi} < \infty$ in a neighborhood of $t=0$.
+\end{definition}
+
+\begin{definition}[PGF]
+Given a discrete random variable $\xi$ with support in the non-negative integers, its \textbf{probability generating function} (PGF) is the power series:
+$$ G_\xi(s) = \M[s^\xi] = \sum_{k=0}^\infty \probP\{\xi=k\}s^k $$
+for all $s \in \R$ where the series converges absolutely (at least for $|s| \le 1$).
+\end{definition}
+
+\begin{proposition}
+The PGF allows for the calculation of factorial moments:
+$$ \M[\xi(\xi-1)\cdots(\xi-k+1)] = G_\xi^{(k)}(1) $$
+where $G_\xi^{(k)}(s)$ is the $k$-th derivative of $G_\xi(s)$.
+\end{proposition}
+
+% Fragment on additional properties of the MGF
+\begin{theorem}[Uniqueness and Convergence of the MGF]
+Let $M_\xi(t) = \M[e^{t\xi}]$ be the MGF of $\xi$.
+\begin{itemize}
+    \item \textbf{(Uniqueness)} If $M_\xi(t)$ exists in a neighborhood of $t=0$, it uniquely characterizes the distribution of $\xi$.
+    \item \textbf{(Continuity)} The pointwise convergence of a sequence of MGFs, $M_{\xi_n}(t) \to M_\xi(t)$ for all $t$ in a neighborhood of zero, implies the convergence in distribution of the random variables, $\xi_n \xrightarrow{d} \xi$.
+\end{itemize}
+\end{theorem}
+
+\subsection{Simulation: The Inverse Transform Method}
+
+While the distribution function $F(x)$ characterizes the law of a random variable, its generalized inverse, the quantile function, provides a fundamental bridge between theory and the construction of realizations of said variable.
+
+\begin{definition}[Quantile Function]
+Let $\xi$ be a random variable with distribution function $F(x) = \probP\{\xi \le x\}$. The \textbf{quantile function} of $\xi$ is the generalized inverse of $F$, defined for $u \in (0,1)$ as:
+$$ F^{-1}(u) := \inf\{x \in \R : F(x) \ge u\} $$
+\end{definition}
+
+For this section, we adopt the modern convention of the right-continuous distribution function, $F(x) = \probP\{\xi \le x\}$, as it is the standard upon which the following theorem is formulated.
+
+This construct is not merely theoretical; it is the basis of the most fundamental simulation method.
+
+\begin{theorem}[Inverse Transform Simulation]
+Let $F$ be a distribution function and $F^{-1}$ its associated quantile function. If $U$ is a random variable whose distribution is the Lebesgue measure on the interval $(0,1)$ (the standard uniform distribution), then the random variable $\xi$ defined by the transformation $\xi := F^{-1}(U)$ has $F$ as its distribution function.
+\end{theorem}
+
+\vspace{1em}
+The validity of the theorem is based on the equivalence between the events $\{\xi \le x\}$ and $\{U \le F(x)\}$. Let $\xi = F^{-1}(U)$. The distribution function of $\xi$ is, by definition:
+$$ \probP\{\xi \le x\} = \probP\{F^{-1}(U) \le x\} $$
+The definition of the quantile function as the generalized inverse, $F^{-1}(u) := \inf\{y : F(y) \ge u\}$, establishes the fundamental equivalence: $F^{-1}(u) \le x \iff u \le F(x)$ for all $u \in (0,1)$. Consequently, the events are identical:
+$$ \{F^{-1}(U) \le x\} = \{U \le F(x)\} $$
+Since the law of $U$ is the uniform measure on $(0,1)$, for any value $y = F(x) \in [0,1]$, it holds that $\probP\{U \le y\} = y$. By substitution, we obtain:
+$$ \probP\{U \le F(x)\} = F(x) $$
+Combining the results, we conclude that $\probP\{\xi \le x\} = F(x)$, thus demonstrating that the constructed random variable $\xi$ possesses the desired distribution function $F$.
+
+\subsection{Acceptance-Rejection Sampling}
+
+While the Inverse Transform method is elegant, it requires an analytically tractable quantile function. For more general cases, a probabilistic algorithm known as Acceptance-Rejection Sampling provides a method for generating realizations from a target law by using a simpler proposal distribution.
+
+\begin{proposition}[Bounded Case with Uniform Envelope]
+Let $f$ be a probability density function whose support is contained within a finite interval $[a,b]$, and suppose there exists a constant $M$ such that $0 \le f(x) \le M$ for all $x \in [a,b]$. Let $X$ be a random variable with a uniform law on $[a,b]$, and let $Y$ be a random variable with a uniform law on $[0,M]$, with $X$ and $Y$ being independent.
+
+The random variable $\xi$, defined as the value of $X$ conditioned on the acceptance event $A = \{Y \le f(X)\}$, follows the law described by the density $f$.
+\end{proposition}
+\begin{proof}
+We wish to show that the cumulative distribution function of the accepted variable $\xi$ is $F(c) = \int_a^c f(x)\,dx$. By definition of conditional probability,
+$$ \probP\{\xi \le c\} = \probP\{X \le c | A\} = \frac{\probP(\{X \le c\} \cap A)}{\probP(A)} $$
+The joint law of $(X,Y)$ is the uniform measure on the rectangle $[a,b] \times [0,M]$. The probability of the acceptance event $A$ is the ratio of the area under the curve of $f(x)$ to the total area of the rectangle:
+$$ \probP(A) = \frac{\text{Area}(\{(x,y) : y \le f(x)\})}{\text{Area}([a,b]\times[0,M])} = \frac{\int_a^b f(x)\,dx}{M(b-a)} = \frac{1}{M(b-a)} $$
+The event in the numerator, $\{X \le c\} \cap A$, corresponds to the set of points where $a \le X \le c$ and $Y \le f(X)$. Its probability is:
+$$ \probP(\{X \le c\} \cap A) = \frac{\int_a^c f(x)\,dx}{M(b-a)} = \frac{F(c)}{M(b-a)} $$
+Substituting these results into the conditional probability formula yields:
+$$ \probP\{\xi \le c\} = \frac{F(c) / [M(b-a)]}{1 / [M(b-a)]} = F(c) $$
+Thus, the law of the accepted variable is indeed given by $F(x)$, which demonstrates the validity of the method.
+\end{proof}
+
+\begin{proposition}[General Case with Proposal Density]
+Let $f$ be a target probability density and let $g$ be a proposal density from which it is feasible to sample. If there exists a constant $M \ge 1$ such that $f(x) \le M g(x)$ for all $x$, then the random variable $\xi$ generated by the following procedure has density $f$:
+\begin{enumerate}
+    \item Generate a realization $y$ from a random variable $Y$ with density $g$.
+    \item Generate a realization $u$ from a random variable $U$ with a uniform law on $[0,1]$.
+    \item If $u \le \frac{f(y)}{M g(y)}$, accept and set $\xi = y$. Otherwise, reject and repeat the procedure.
+\end{enumerate}
+\end{proposition}
+\begin{proof}
+Let $A$ be the event of acceptance. The probability of acceptance is obtained by integrating over all possible outcomes of $Y$:
+$$ \probP(A) = \int_{-\infty}^{\infty} \probP(A | Y=y) g(y) \,dy = \int_{-\infty}^{\infty} \frac{f(y)}{M g(y)} g(y) \,dy = \frac{1}{M} \int_{-\infty}^{\infty} f(y) \,dy = \frac{1}{M} $$
+The distribution function of the accepted variable $\xi$ is $F_{\xi}(c) = \probP\{Y \le c | A\}$. The numerator is:
+\begin{align*}
+\probP(\{Y \le c\} \cap A) &= \int_{-\infty}^{c} \probP(A | Y=y) g(y) \,dy \\
+&= \int_{-\infty}^{c} \frac{f(y)}{M g(y)} g(y) \,dy = \frac{1}{M} \int_{-\infty}^{c} f(y) \,dy = \frac{F(c)}{M}
+\end{align*}
+Therefore, the conditional probability is:
+$$ F_{\xi}(c) = \frac{\probP(\{Y \le c\} \cap A)}{\probP(A)} = \frac{F(c)/M}{1/M} = F(c) $$
+The resulting variable $\xi$ has the target distribution function $F$.
+\end{proof}
+
+\section{Discrete Variables}
+
+\subsection{Probability and Distribution Functions}
+A random variable is of a discrete type if its probability law is concentrated entirely on a countable set of points.
+
+\begin{definition}[Discrete Type Distribution]
+A random variable $\xi$ is said to be of \textbf{discrete type} if its probability law, $\probP_\xi$, is a purely atomic measure on $(\R, \B)$. That is, if there exists a countable set $S = \{x_k\}_{k \in I} \subset \R$, the support of the measure, such that $\probP_\xi(S) = 1$.
+
+The law is uniquely determined by the jump probabilities $p_k := \probP\{\xi = x_k\}$, which satisfy $\sum_{k \in I} p_k = 1$. The distribution function $F(x)$ is then defined as the sum of the jump probabilities over all points of the support that precede $x$:
+$$ F(x) = \sum_{k \in I \,:\, x_k < x} p_k $$
+It is a \textbf{piecewise constant function} (p.c.), with discontinuities of magnitude $p_k$ at the points $x_k$. The probability measure $\probP\{\xi = x_k\}=p_k$ defines the \textbf{probability mass function}.
+\end{definition}
+
+\subsection{Canonical Discrete Laws}
+
+\begin{definition}[Bernoulli Trial and Law]
+A \textbf{Bernoulli trial} is an elementary random experiment whose outcome space is \textit{dichotomous}, canonically designated as 'success' and 'failure'.
+
+A random variable $\zeta$ follows a \textbf{Bernoulli law} with parameter $p \in [0,1]$ if its probability law is concentrated on the points $\{0, 1\}$ in the following way:
+$$ \probP\{\zeta=1\} = p \quad \text{and} \quad \probP\{\zeta=0\} = 1-p $$
+Such a variable models the outcome of a single Bernoulli trial.
+\end{definition}
+
+\begin{definition}[Binomial Distribution]
+A random variable $\xi$ has a \textbf{binomial distribution} with parameters $(n, p)$, where $n \in \mathbb{N}$ and (evidently) $p \in [0,1]$, if its support is the set $\{0, 1, \dots, n\}$ and its probability law is defined by:
+$$ \probP\{\xi=k\} = \binom{n}{k} p^k (1-p)^{n-k}, \quad k \in \{0, 1, \dots, n\} $$
+This is the law of a random variable $\xi$ that is defined as the sum of $n$ independent and identically distributed (i.i.d.) random variables following a Bernoulli law with parameter $p$; the quantity $\probP\{\xi=k\}$ represents the probability of observing exactly $k$ 'successes' in a sequence of $n$ independent Bernoulli trials, where the probability of an individual success is $p$.
+\end{definition}
+
+\begin{definition}[Poisson Distribution]
+A random variable $\xi$ has a \textbf{Poisson distribution} with parameter $\lambda > 0$ if its support is the set of non-negative integers $\{0, 1, 2, \dots\}$ and its law is:
+$$ \probP\{\xi=k\} = \frac{\lambda^k}{k!} e^{-\lambda}, \quad k \in \{0, 1, 2, \dots\} $$
+The Poisson law emerges as the limit of the binomial distribution $B(n,p)$ when the number of trials $n \to \infty$ and the probability of success $p \to 0$ in such a way that the product $\lambda = np$ remains constant (Poisson Limit Theorem).
+
+\vspace{1em}
+The quantity $\probP\{\xi=k\}$ represents the probability of observing $k$ occurrences of an event in a fixed interval of time or space, if said events occur with a constant mean rate and independently of the time elapsed since the last occurrence. It is often called the \textbf{law of rare events}.
+\end{definition}
+
+\begin{definition}[Negative Binomial Distribution]
+Another result from the binomial, a random variable $\xi$ follows a \textbf{Negative Binomial law} with parameters $(r, p)$, where $r \in \mathbb{N}$ and $p \in (0,1)$, if its support is the set $\{r, r+1, \dots\}$ and its probability law is:
+$$ \probP\{\xi=k\} = \binom{k-1}{r-1} p^r (1-p)^{k-r}, \quad k \in \{r, r+1, \dots\} $$
+Formally, this law models the total number of i.i.d. Bernoulli trials required to achieve the $r$-th success. The Geometric law is the particular case for $r=1$.
+\end{definition}
+
+% Fragment on the Geometric Law and its property
+\begin{definition}[Geometric Law]
+The \textbf{Geometric law} with parameter $p \in (0,1)$ models the number of i.i.d. Bernoulli trials until the occurrence of the first success. Its probability law, with support in $\mathbb{N}=\{1, 2, \dots\}$, is:
+$$ \probP\{\xi=k\} = p(1-p)^{k-1}, \quad k \in \mathbb{N} $$
+\end{definition}
+
+\begin{proposition}[Memoryless Property of the Geometric Law]
+The Geometric law is the unique discrete distribution that satisfies the \textbf{memoryless property}:
+$$ \probP\{\xi > n+m | \xi > n\} = \probP\{\xi > m\} \quad \forall n, m \in \N $$
+The proof is direct:
+$$ \frac{\probP\{\xi > n+m\}}{\probP\{\xi > n\}} = \frac{(1-p)^{n+m}}{(1-p)^n} = (1-p)^m = \probP\{\xi > m\} $$
+\end{proposition}
+
+% Fragment on the Hypergeometric Law
+\begin{definition}[Hypergeometric Distribution]
+The \textbf{Hypergeometric law} describes the number of successes in $n$ draws \textbf{without replacement} from a finite population of $N$ elements, of which $K$ are successes. Its law is:
+$$ \probP\{\xi=k\} = \frac{\binom{K}{k} \binom{N-K}{n-k}}{\binom{N}{n}} $$
+where $k$ varies in the range of possible values. Unlike the Binomial, the trials are not independent.
+\end{definition}
+
+\section{Continuous Variables}
+
+\subsection{Density and Distribution Functions}
+
+\begin{definition}[Absolutely Continuous Distribution]
+A distribution function $F(x)$ is called \textbf{absolutely continuous} if there exists a non-negative function $p(x)$, the \textbf{probability density}, such that for all $x \in \R$:
+$$ F(x) = \int_{-\infty}^{x} p(y) \,dy $$
+The density $p(x)$ is the Radon-Nikodym derivative of the probability measure with respect to the Lebesgue measure, satisfies $p(x) = F'(x)  \; (\text{a.e.})$ and $\int_{\mathbb{R}} p(y) \,dy = 1$.
+\end{definition}
+
+\subsection{Fundamental Absolutely Continuous Laws}
+
+\begin{definition}[Normal (Gaussian) Distribution]
+A random variable $\xi$ has a \textbf{normal distribution} with parameters $(a, \sigma^2)$, where $a = \M\xi$ and $\sigma^2 = \textbf{D} \xi > 0$, if its law is absolutely continuous with probability density function given by:
+$$ p(x) = \frac{1}{\sqrt{2\pi \D\xi}} \exp\left\{-\frac{(x-\M\xi)^2}{2\D\xi}\right\} $$
+\end{definition}
+
+\begin{definition}[Exponential Distribution]
+A random variable $\xi$ follows an \textbf{exponential distribution} with parameter $\lambda > 0$ if its law is absolutely continuous with support on $[0, \infty)$ and density:
+$$ p(x) = \lambda e^{-\lambda x}, \quad x \ge 0 $$
+This law models the waiting time between events in a homogeneous Poisson process. It is a particular case of the Gamma distribution.
+\end{definition}
+
+\begin{proposition}[Memoryless Property of the Exponential Law]
+The Exponential law is the unique continuous distribution that satisfies the \textbf{memoryless property}:
+$$ \probP\{\xi > t+s | \xi > s\} = \probP\{\xi > t\} \quad \forall t, s \ge 0 $$
+The proof is trivially analogous to the discrete case:
+$$ \frac{\probP\{\xi > t+s\}}{\probP\{\xi > s\}} = \frac{e^{-\lambda(t+s)}}{e^{-\lambda s}} = e^{-\lambda t} = \probP\{\xi > t\} $$
+\end{proposition}
+
+\begin{definition}[Weibull Distribution]
+The \textbf{Weibull distribution} with shape parameter $k>0$ and scale parameter $\lambda>0$ is an absolutely continuous law on $(0, \infty)$ defined by the density:
+$$ p(x) = \frac{k}{\lambda}\left(\frac{x}{\lambda}\right)^{k-1} \exp\left\{-\left(\frac{x}{\lambda}\right)^k\right\}, \quad x > 0 $$
+It generalizes the Exponential distribution (which corresponds to the case $k=1$) and is fundamental in survival analysis for modeling failure rates.
+\end{definition}
+
+\begin{definition}[Gamma Distribution]
+The \textbf{Gamma distribution} with shape parameter $\alpha > 0$ and rate parameter $\beta > 0$ is an absolutely continuous law on $(0, \infty)$ defined by the density:
+$$ p(x) = \frac{\beta^\alpha}{\Gamma(\alpha)} x^{\alpha-1} e^{-\beta x}, \quad x > 0 $$
+where $\Gamma(\alpha)$ is the Euler Gamma function. It models the waiting time until the $\alpha$-th occurrence in a Poisson process.
+\end{definition}
+
+\begin{remark}[Construction and Analogy]
+In the specific case where the shape parameter is an integer, $\alpha = n \in \mathbb{N}$, a random variable following the Gamma law, $\text{Gamma}(n, \beta)$, has the same distribution as the sum of $n$ independent and identically distributed random variables, each following an Exponential law with rate $\beta$.
+
+Furthermore, the Gamma distribution can be understood as the continuous-time analogue of the Negative Binomial distribution. Whereas the Negative Binomial law models the number of discrete Bernoulli trials required to achieve a fixed number of successes, the Gamma law models the continuous waiting time required to observe a fixed number of events in a homogeneous Poisson process.
+\end{remark}
+
+\begin{definition}[Beta Distribution]
+The \textbf{Beta distribution} with shape parameters $\alpha > 0$ and $\beta > 0$ is an absolutely continuous law with support on the interval $(0,1)$, defined by the density:
+$$ p(x) = \frac{x^{\alpha-1}(1-x)^{\beta-1}}{B(\alpha, \beta)}, \quad x \in (0,1) $$
+where $B(\alpha, \beta) = \frac{\Gamma(\alpha)\Gamma(\beta)}{\Gamma(\alpha+\beta)}$ is the Euler Beta function.
+\end{definition}
+
+\subsection{Other Distributions}
+
+\begin{definition}[Multivariate Normal Distribution]
+A random vector $\boldsymbol{\xi} = (\xi_1, \dots, \xi_n)$ in $\R^n$ follows a \textbf{multivariate normal distribution} (non-degenerate) if its law is absolutely continuous with respect to the Lebesgue measure in $\R^n$. The law is parameterized by its mean vector $\mathbf{a} = \M\boldsymbol{\xi} \in \R^n$ and its \textbf{covariance matrix} $\mathbf{B}$, which is symmetric and positive definite.
+
+Its probability density function is:
+$$ p(\mathbf{x}) = \frac{1}{\sqrt{(2\pi)^n \det(\mathbf{B})}} \exp\left\{-\frac{1}{2} (\mathbf{x}-\M\boldsymbol{\xi})^T \mathbf{B}^{-1} (\mathbf{x}-\M\boldsymbol{\xi})\right\} $$
+where $\mathbf{x} \in \R^n$, $\det(\mathbf{B})$ is the determinant of the covariance matrix and $\mathbf{B}^{-1}$ is its inverse.
+\end{definition}
+
+\begin{definition}[Chi-squared Distribution]
+A random variable $\xi$ follows a \textbf{Chi-squared law} with $k \in \mathbb{N}$ degrees of freedom, denoted $\chi^2_k$, if its law is that of the sum of the squares of $k$ independent standard normal random variables. It is a particular case of the Gamma distribution, with $\alpha=k/2$ and $\beta=1/2$, whose density is:
+$$ p(x) = \frac{1}{2^{k/2}\Gamma(k/2)} x^{\frac{k}{2}-1} e^{-x/2}, \quad x > 0 $$
+\end{definition}
+
+\begin{definition}[Pareto Distribution]
+The \textbf{Pareto distribution} (Type I) with scale parameter $x_m > 0$ and shape parameter $\alpha > 0$ is an absolutely continuous law on $[x_m, \infty)$ with density:
+$$ p(x) = \frac{\alpha x_m^\alpha}{x^{\alpha+1}}, \quad x \ge x_m $$
+This law is fundamental in the modeling of power-law phenomena.
+\end{definition}
+
+\begin{definition}[Gumbel Distribution]
+The \textbf{Gumbel distribution} (Type I extreme value) with location parameter $\mu \in \R$ and scale parameter $\beta > 0$ is an absolutely continuous law on $\R$ defined by the density:
+$$ p(x) = \frac{1}{\beta} \exp\left(-\frac{x-\mu}{\beta} - \exp\left(-\frac{x-\mu}{\beta}\right)\right) $$
+This law emerges in extreme value theory, as the distribution of the maximum of a collection of random variables.
+\end{definition}
+
+\begin{definition}[Dirichlet Distribution]
+The \textbf{Dirichlet distribution}, with a parameter vector $\boldsymbol{\alpha} = (\alpha_1, \dots, \alpha_K)$ where $\alpha_i > 0$, is the multivariate generalization of the Beta distribution. Its law is absolutely continuous with support on the standard $(K-1)$-simplex, defined by $S_K = \{\mathbf{x} \in \R^K : x_i > 0, \sum_{i=1}^K x_i = 1\}$.
+
+Its probability density function is:
+$$ p(\mathbf{x}) = \frac{1}{B(\boldsymbol{\alpha})} \prod_{i=1}^K x_i^{\alpha_i - 1} $$
+where $B(\boldsymbol{\alpha}) = \frac{\prod_{i=1}^K \Gamma(\alpha_i)}{\Gamma(\sum_{i=1}^K \alpha_i)}$ is the multivariate Beta function.
+\end{definition}
+
+\begin{definition}[Student's t-Distribution]
+A random variable $\xi$ follows a \textbf{Student's t-law} with $k \in \mathbb{N}$ degrees of freedom if its law is that of the random variable $T$ constructed as the ratio
+$$ T = \frac{Z}{\sqrt{V/k}} $$
+where $Z$ is a standard normal random variable and $V$ is a Chi-squared random variable with $k$ degrees of freedom, with $Z$ and $V$ being stochastically independent. Its density is:
+$$ p(x) = \frac{\Gamma(\frac{k+1}{2})}{\sqrt{k\pi}\Gamma(\frac{k}{2})} \left(1 + \frac{x^2}{k}\right)^{-\frac{k+1}{2}} $$
+\end{definition}
+
+\begin{definition}[F-Distribution of Fisher-Snedecor]
+A random variable $\xi$ follows an \textbf{F-law} with $(d_1, d_2)$ degrees of freedom, where $d_1, d_2 \in \mathbb{N}$, if its law is that of the ratio
+$$ F = \frac{U_1/d_1}{U_2/d_2} $$
+where $U_1$ and $U_2$ are independent Chi-squared random variables with $d_1$ and $d_2$ degrees of freedom, respectively. Its density, with support on $(0, \infty)$, is:
+$$ p(x) = \frac{\sqrt{\frac{(d_1 x)^{d_1} d_2^{d_2}}{(d_1 x + d_2)^{d_1+d_2}}}}{x B(\frac{d_1}{2}, \frac{d_2}{2})} $$
+\end{definition}
+
+\begin{definition}[Wishart Distribution]
+The \textbf{Wishart distribution} is the multivariate generalization of the Chi-squared distribution. It is a probability law on the space of symmetric positive semi-definite matrices. Let $\mathbf{S}$ be a $p \times p$ random matrix constructed as the scatter matrix
+$$ \mathbf{S} = \sum_{i=1}^n \mathbf{X}_i \mathbf{X}_i^T $$
+where the $\mathbf{X}_i$ are i.i.d. $p$-dimensional random vectors following a multivariate Normal law $\mathcal{N}_p(\mathbf{0}, \mathbf{\Sigma})$. Then, $\mathbf{S}$ follows a Wishart distribution with $n$ degrees of freedom and scale matrix $\mathbf{\Sigma}$, denoted $\mathcal{W}_p(n, \mathbf{\Sigma})$.
+
+For $n \ge p$, its probability density function with respect to the Lebesgue measure, for a positive definite matrix $\mathbf{W}$, is:
+$$ p(\mathbf{W}) = \frac{|\mathbf{W}|^{\frac{n-p-1}{2}} \exp\left(-\frac{1}{2}\mathrm{tr}(\mathbf{\Sigma}^{-1}\mathbf{W})\right)}{2^{\frac{np}{2}}|\mathbf{\Sigma}|^{\frac{n}{2}}\Gamma_p(\frac{n}{2})} $$
+where $\Gamma_p$ is the multivariate Gamma function.
+\end{definition}
+
+\subsection{The Standard Normal Law and Standardization}
+
+A case of particular importance is the \textbf{standard normal law}, denoted $\mathcal{N}(0,1)$, which is a normal distribution with mean zero and variance one. Its probability density function is:
+$$ \phi(x) = \frac{1}{\sqrt{2\pi}} e^{-x^2/2} $$
+Its cumulative distribution function, denoted by $\Phi(z) = \int_{-\infty}^{z} \phi(x)\,dx$, is of fundamental importance, as any probability associated with a general normal law can be expressed in terms of it. This is established by the following proposition.
+
+\begin{proposition}[Standardization of a Normal Variable]
+If a random variable $\xi$ follows a normal law with parameters $(a, \sigma^2)$, i.e., $\xi \sim \mathcal{N}(a, \sigma^2)$, then the transformed variable
+$$ Z = \frac{\xi - a}{\sigma} $$
+follows the standard normal law, $Z \sim \mathcal{N}(0,1)$.
+\end{proposition}
+\begin{proof}
+We find the CDF of $Z$, denoted $F_Z(z)$.
+$$ F_Z(z) = \probP\{Z \le z\} = \probP\left\{\frac{\xi - a}{\sigma} \le z\right\} = \probP\{\xi \le a + \sigma z\} $$
+By definition, this is the CDF of $\xi$ evaluated at the point $a + \sigma z$, i.e., $F_\xi(a + \sigma z)$. The probability density function of $Z$, $p_Z(z)$, is obtained by differentiation with respect to $z$:
+$$ p_Z(z) = \frac{d}{dz} F_\xi(a + \sigma z) = p_\xi(a + \sigma z) \cdot \sigma $$
+Substituting the density function for a $\mathcal{N}(a, \sigma^2)$ law:
+$$ p_Z(z) = \frac{1}{\sigma\sqrt{2\pi}} \exp\left\{-\frac{((a+\sigma z)-a)^2}{2\sigma^2}\right\} \cdot \sigma = \frac{1}{\sqrt{2\pi}} \exp\left\{-\frac{(\sigma z)^2}{2\sigma^2}\right\} = \frac{1}{\sqrt{2\pi}} e^{-z^2/2} $$
+This is precisely the density of the standard normal law.
+\end{proof}
+
+\begin{remark}
+The integral defining $\Phi(z)$ does not possess a closed-form expression in terms of elementary functions. Consequently, its values are computed numerically and are traditionally provided in statistical tables or via computational software. The Standardization Proposition is powerful because it reduces the problem of computing probabilities for an infinite family of normal distributions to the evaluation of a single, well-tabulated function.
+\end{remark}
+
+\begin{proposition}[Normal Approximation to the Binomial Law]
+The De Moivre-Laplace Theorem, previously stated as a corollary to the Central Limit Theorem, provides the theoretical foundation for approximating the law of a binomial variable $S_n \sim B(n,p)$ with a normal distribution. For large $n$, the law of $S_n$ is well-approximated by $\mathcal{N}(np, np(1-p))$.
+\end{proposition}
+
+\begin{remark}[Continuity Correction]
+When approximating a discrete probability law (like the Binomial) with a continuous one (like the Normal), the accuracy of the approximation is improved by using a continuity correction. The probability mass at an integer $k$ in the discrete distribution is approximated by the area under the continuous density over the interval $[k-0.5, k+0.5]$. This leads to the following adjustment:
+$$ \probP\{S_n \le k\} \approx \Phi\left(\frac{k+0.5 - np}{\sqrt{np(1-p)}}\right) $$
+\end{remark}
+
+\chapter{Multivariable Probability Theory}
+
+\section{Random Vectors}
+The notion of a random variable naturally extends to a finite set of them, which gives rise to the concept of a random vector and its joint probability law in a Euclidean space.
+
+\subsection{Joint Distributions and Densities}
+
+\begin{definition}[Random Vector and Joint Distribution]
+A \textbf{random vector} $\boldsymbol{\xi}$ is an n-tuple $(\xi_1, \dots, \xi_n)$ of random variables defined on the same probability space $(\Omega, \germF, \probP)$. It is a measurable function $\boldsymbol{\xi}: (\Omega, \germF) \to (\R^n, \B^n)$, where $\B^n$ is the Borel $\sigma$-algebra in $\R^n$.
+
+In the previous chapter, a glimpse into the future was given regarding the \textbf{joint distribution function} of a random vector $\boldsymbol{\xi}$\dots we have now arrived at it. It is defined as the function $F(x_1, \dots, x_n)$ of $n$ real arguments defined by the equality:
+$$ F(x_1, \dots, x_n) = \probP\{\xi_1 < x_1, \dots, \xi_n < x_n \} $$
+This function is non-decreasing and left-continuous with respect to each argument.
+\end{definition}
+
+\begin{definition}[Joint Probability Density]
+The distribution of a random vector $\boldsymbol{\xi}$ is \textbf{absolutely continuous} if its joint distribution function $F(x_1, \dots, x_n)$ can be represented by the integral of a non-negative function $p(y_1, \dots, y_n)$, the \textbf{joint probability density}:
+$$ F(x_1, \dots, x_n) = \int_{-\infty}^{x_1} \int_{-\infty}^{x_2} \cdots \int_{-\infty}^{x_n} p(y_1, y_2, \dots, y_n) \,dy_1 dy_2 \cdots dy_n $$
+The density satisfies that $$\int_{\R}\int_{\R} \dots\int_{\R} p(y_1, \dots, y_n) \,dy_1 dy_2\cdots dy_n = 1$$.
+\end{definition}
+
+\subsection{Expected Value of a Random Vector}
+
+\begin{definition}[Mean Vector]
+The \textbf{expected value} of a random vector $\boldsymbol{\xi} = (\xi_1, \dots, \xi_n)$, denoted $\M\boldsymbol{\xi}$, is the vector of the expected values of its components:
+$$ \M\boldsymbol{\xi} = (\M\xi_1, \M\xi_2, \dots, \M\xi_n) $$
+provided that $\M|\xi_k| < \infty$ for all $k=1, \dots, n$.
+\end{definition}
+
+\subsection{Marginal and Conditional Distributions}
+
+\begin{definition}[Marginal Distribution Function]
+The \textbf{marginal distribution function} of a subset of variables from a random vector, for example $(\xi_{k_1}, \dots, \xi_{k_m})$, is obtained from the joint distribution function $F(x_1, \dots, x_n)$ by taking the limit as the remaining arguments tend to $+\infty$. For example, for $\xi_1$:
+$$ F_{\xi_1}(x_1) = \lim_{x_2, \dots, x_n \to \infty} F(x_1, x_2, \dots, x_n) $$
+\end{definition}
+
+\begin{definition}[Conditional Distribution Function]
+The \textbf{conditional distribution function} of $\xi_1$ given that $\xi_2 = x_2, \dots, \xi_n = x_n$, denoted $F(x_1 | x_2, \dots, x_n)$, is defined (under regularity conditions) through the Radon-Nikodym derivative. Intuitively, if the densities exist, the conditional density is:
+$$ p(x_1 | x_2, \dots, x_n) = \frac{p(x_1, x_2, \dots, x_n)}{p_{\xi_2, \dots, \xi_n}(x_2, \dots, x_n)} $$
+where $p_{\xi_2, \dots, \xi_n}$ is the marginal density of the vector $(\xi_2, \dots, \xi_n)$.
+\end{definition}
+
+\subsection{Independence of Random Variables}
+
+\begin{definition}[Independence of Random Variables]
+The random variables $\xi_1, \dots, \xi_n$ are called \textbf{independent in the aggregate} if their joint distribution function factorizes into the product of their marginal distribution functions:
+$$ F(x_1, \dots, x_n) = F_{\xi_1}(x_1) F_{\xi_2}(x_2) \cdots F_{\xi_n}(x_n) $$
+for all $(x_1, \dots, x_n) \in \R^n$.
+\end{definition}
+
+\subsection{Covariance and Correlation}
+
+\begin{definition}[Mixed Moments and Covariance Matrix]
+The \textbf{mixed moment} of order $k_1, \dots, k_n$ of the random vector $\boldsymbol{\xi}$ is $\M[\xi_1^{k_1} \cdots \xi_n^{k_n}]$.
+The \textbf{covariance} between two random variables $\xi_i$ and $\xi_j$ is the central mixed moment:
+$$ \mathrm{Cov}(\xi_i, \xi_j) = \M[(\xi_i - \M\xi_i)(\xi_j - \M\xi_j)] $$
+The \textbf{covariance matrix} $\mathbf{B}$ of a random vector $\boldsymbol{\xi}$ is an $n \times n$ matrix whose $(i,j)$-th element is $\mathrm{Cov}(\xi_i, \xi_j)$. The diagonal of $\mathbf{B}$ contains the variances $\D\xi_i$.
+\end{definition}
+
+\begin{definition}[Correlation Coefficient]
+The \textbf{correlation coefficient} between $\xi_i$ and $\xi_j$ is the normalized covariance:
+$$ \rho(\xi_i, \xi_j) = \frac{\mathrm{Cov}(\xi_i, \xi_j)}{\sqrt{\D\xi_i \D\xi_j}} $$
+assuming the variances are strictly positive.
+\end{definition}
+
+\subsection{Conditional Expectation}
+
+Conditional expectation is a profound concept in measure theory that generalizes the notion of conditional probability.
+
+\begin{definition}[Conditional Expectation]
+Let $\xi$ be an integrable random variable ($\M|\xi| < \infty$) and let $\mathfrak{G}$ be a sub-$\sigma$-algebra of $\germF$. The \textbf{conditional expectation} of $\xi$ given $\mathfrak{G}$, denoted $\M(\xi | \mathfrak{G})$, is a random variable that satisfies two conditions:
+\begin{enumerate}
+    \item $\M(\xi | \mathfrak{G})$ is $\mathfrak{G}$-measurable.
+    \item For every event $A \in \mathfrak{G}$, the equality of integrals holds:
+    $$ \int_A \xi \,d\probP = \int_A \M(\xi | \mathfrak{G}) \,d\probP $$
+\end{enumerate}
+By the Radon-Nikodym Theorem, such a random variable exists and is unique almost surely. If $\mathfrak{G}$ is the $\sigma$-algebra generated by another random variable $\eta$, one writes $\M(\xi|\eta)$.
+\end{definition}
+
+\chapter{Convergence of Random Variables}
+
+Given a probability space $(\Omega, \germF, \probP)$, a sequence of random variables $\{\xi_n\}_{n \in \N}$ is a collection of measurable functions $\xi_n: \Omega \to \R$. The study of the asymptotic behavior of such sequences is fundamental. The notion of a limit, however, is not unique. One can analyze the convergence of the induced probability laws, the probability that the realizations approach each other, or the pointwise convergence of the numerical sequences $\{\xi_n(\omega)\}_{n \in \N}$ for each $\omega$. This chapter formalizes these different modes of convergence.
+
+\section{Convergence in Distribution}
+
+\begin{definition}[Convergence in Distribution]
+A sequence of random variables $\{\xi_n\}$ converges in \textbf{distribution} (or in \textbf{law}) to a random variable $\xi$, denoted $\xi_n \xrightarrow{d} \xi$, if the sequence of their distribution functions $F_{\xi_n}(x)$ converges to the distribution function $F_\xi(x)$ at every point $x \in \R$ where $F_\xi$ is continuous.
+$$ \lim_{n \to \infty} F_{\xi_n}(x) = F_\xi(x), \quad \forall x \text{ s.t. } \probP\{\xi = x\} = 0 $$
+\end{definition}
+
+\begin{remark}
+This notion of convergence is, in essence, a weak convergence of the induced probability measures $\probP_{\xi_n}$ on $(\R, \B)$. Notably, it does not require the random variables in the sequence to be defined on the same probability space.
+\end{remark}
+
+\section{Convergence in Probability}
+
+\begin{definition}[Convergence in Probability]
+A sequence of random variables $\{\xi_n\}$ defined on the same probability space converges in \textbf{probability} to a random variable $\xi$, denoted $\xi_n \xrightarrow{\probP} \xi$, if for every $\varepsilon > 0$:
+$$ \lim_{n \to \infty} \probP\{|\xi_n - \xi| > \varepsilon\} = 0 $$
+\end{definition}
+
+\begin{remark}
+Convergence in distribution does not imply convergence in probability. The former is a property of the probability laws as mathematical objects, whereas the latter describes the approach of the realizations of the random variables on a common space.
+\end{remark}
+
+\section{Almost Sure Convergence}
+
+\begin{definition}[Almost Sure Convergence]
+A sequence of random variables $\{\xi_n\}$ converges \textbf{almost surely} (a.s.) to a random variable $\xi$, denoted $\xi_n \xrightarrow{a.s.} \xi$, if the set of elementary outcomes for which the numerical sequence $\xi_n(\omega)$ converges to $\xi(\omega)$ has probability one.
+$$ \probP\left(\left\{\omega \in \Omega : \lim_{n \to \infty} \xi_n(\omega) = \xi(\omega)\right\}\right) = 1 $$
+\end{definition}
+
+\begin{lemma}[Characterization of a.s. Convergence]
+$\xi_n \xrightarrow{a.s.} \xi$ if and only if for every $\varepsilon > 0$,
+$$ \lim_{k \to \infty} \probP\left(\bigcup_{n=k}^\infty \{|\xi_n - \xi| \ge \varepsilon\}\right) = 0 $$
+\end{lemma}
+
+\section{Fundamental Convergence Results}
+
+\subsection{Inequalities and the Borel-Cantelli Lemma}
+
+\begin{theorem}[Markov's Inequality]
+Let $\xi$ be a random variable and $\varphi: \R \to [0, \infty)$ a non-negative, non-decreasing function. Then, for every $\varepsilon$ such that $\varphi(\varepsilon)>0$:
+$$ \probP\{\xi \ge \varepsilon\} \le \frac{\M[\varphi(\xi)]}{\varphi(\varepsilon)} $$
+A fundamental particular case (the original Markov's inequality) occurs for $\xi \ge 0$ and $\varphi(x)=x$.
+\end{theorem}
+
+\begin{corollary}[Chebyshev's Inequality]
+For a random variable $\xi$ with finite variance, by taking $\varphi(x) = x^2$ and replacing $\xi$ with $|\xi - \M\xi|$, we obtain:
+$$ \probP\{|\xi - \M\xi| \ge \varepsilon\} \le \frac{\D\xi}{\varepsilon^2} $$
+\end{corollary}
+
+\begin{definition}[Limit Superior and Inferior of Events]
+Given a sequence of events $\{A_n\}$, we define:
+\begin{itemize}
+    \item The \textbf{limit superior}: $\limsup_{n \to \infty} A_n = \bigcap_{k=1}^\infty \bigcup_{n=k}^\infty A_n$. It represents the event "the $A_n$ occur infinitely often".
+    \item The \textbf{limit inferior}: $\liminf_{n \to \infty} A_n = \bigcup_{k=1}^\infty \bigcap_{n=k}^\infty A_n$. It represents the event "the $A_n$ occur from a certain index onwards".
+\end{itemize}
+\end{definition}
+
+\begin{lemma}[Borel-Cantelli Lemma]
+Given a sequence of events $\{A_n\}_{n \in \N}$:
+\begin{enumerate}
+    \item If $\sum_{n=1}^\infty \probP(A_n) < \infty$, then $\probP(\limsup A_n) = 0$.
+    \item If $\sum_{n=1}^\infty \probP(A_n) = \infty$ and the events $\{A_n\}$ are independent, then $\probP(\limsup A_n) = 1$.
+\end{enumerate}
+\end{lemma}
+
+\subsection{Laws of Large Numbers and Central Limit Theorem}
+
+\begin{theorem}[Weak Law of Large Numbers]
+Let $\{\xi_n\}$ be a sequence of independent random variables with common expected value $\M\xi_n = \mu$ and uniformly bounded variances $\D\xi_n \le C < \infty$. Let $\bar{\xi}_n = \frac{1}{n}\sum_{i=1}^n \xi_i$. Then:
+$$ \bar{\xi}_n \xrightarrow{\probP} \mu $$
+\end{theorem}
+
+\begin{theorem}[Kolmogorov's Strong Law of Large Numbers]
+Let $\{\xi_n\}$ be a sequence of i.i.d. random variables. Let $\bar{\xi}_n = \frac{1}{n}\sum_{i=1}^n \xi_i$. Then, $\bar{\xi}_n$ converges almost surely to a finite constant $\mu$ if and only if $\M|\xi_1| < \infty$. In such a case, $\mu = \M\xi_1$.
+$$ \bar{\xi}_n \xrightarrow{a.s.} \M\xi_1 $$
+\end{theorem}
+
+\begin{theorem}[Lindeberg-Lévy Central Limit Theorem]
+Let $\{\xi_n\}$ be a sequence of i.i.d. random variables with mean $\mu$ and finite, non-zero variance $\sigma^2$. Let $\{Z_n\}$ be the sequence of normalized sums:
+$$ Z_n = \frac{\sum_{k=1}^n \xi_k - n\mu}{\sigma\sqrt{n}} $$
+Then, $Z_n$ converges in distribution to a standard normal random variable.
+$$ Z_n \xrightarrow{d} Z, \quad \text{where } Z \sim \mathcal{N}(0,1) $$
+\end{theorem}
+
+\begin{corollary}[De Moivre-Laplace Theorem]
+As a particular case of the CLT, if $\{\xi_n\}$ is a sequence of i.i.d. random variables with a Bernoulli law of parameter $p$, then the sum $S_n = \sum_{k=1}^n \xi_k$ (which follows a Binomial law $B(n,p)$) satisfies:
+$$ \frac{S_n - np}{\sqrt{np(1-p)}} \xrightarrow{d} Z, \quad \text{where } Z \sim \mathcal{N}(0,1) $$
+\end{corollary}
+
+%====================================================================
+% BLOQUE DE CÓDIGO 2: THE MAJOR THEOREMS OF CONVERGENCE
+% Inserte este bloque al final del capítulo 3.
+%====================================================================
+
+\section{The Major Theorems of Convergence}
+
+Beyond the foundational laws, there exist theorems of a higher order that serve as the connective tissue of modern probability and statistics. They provide the machinery to manipulate limits of random variables and to construct powerful theoretical arguments.
+
+\begin{theorem}[Skorokhod's Representation Theorem]
+Let $\{F_n\}_{n\in\N}$ be a sequence of cumulative distribution functions that converges weakly to a CDF $F$, i.e., $F_n(x) \to F(x)$ for all continuity points $x$ of $F$. Then there exists a single probability space $(\Omega, \germF, \probP)$ and a sequence of random variables $\{\eta_n\}_{n\in\N}$ and $\eta$ defined on it, such that:
+\begin{enumerate}
+    \item The law of $\eta_n$ is given by $F_n$ for each $n$.
+    \item The law of $\eta$ is given by $F$.
+    \item The sequence $\{\eta_n\}$ converges to $\eta$ almost surely: $\probP(\{\omega \in \Omega : \lim_{n\to\infty} \eta_n(\omega) = \eta(\omega)\}) = 1$.
+\end{enumerate}
+This theorem is a profound bridge between the weakest and strongest forms of convergence. It asserts that any abstract convergence in distribution can be "realized" as a concrete, pointwise almost sure convergence by a judicious choice of probability space. The canonical choice for this construction is the space $([0,1], \B([0,1]), \lambda)$, where $\lambda$ is the Lebesgue measure, and the random variables are constructed via the inverse transform method: $\eta_n(\omega) = F_n^{-1}(\omega)$ and $\eta(\omega) = F^{-1}(\omega)$.
+\end{theorem}
+
+\begin{theorem}[Slutsky's Theorem]
+Let $\{\xi_n\}$ and $\{\eta_n\}$ be sequences of random variables defined on the same probability space. If $\xi_n$ converges in distribution to a random variable $\xi$, and $\eta_n$ converges in probability to a constant $c$, then:
+\begin{enumerate}
+    \item \textbf{(Addition)} $\xi_n + \eta_n \xrightarrow{d} \xi + c$
+    \item \textbf{(Multiplication)} $\xi_n \eta_n \xrightarrow{d} \xi c$
+    \item \textbf{(Division)} $\xi_n / \eta_n \xrightarrow{d} \xi / c$, provided $c \neq 0$.
+\end{enumerate}
+\end{theorem}
+\begin{proof}
+We prove the addition rule, as the others follow from similar arguments using the continuous mapping theorem. We want to show that for any bounded, continuous function $f$, $\E[f(\xi_n + \eta_n)] \to \E[f(\xi+c)]$.
+The key insight is to show that the difference between $f(\xi_n + \eta_n)$ and $f(\xi_n+c)$ becomes negligible in probability. Let $\epsilon > 0$. Since $f$ is uniformly continuous on any compact interval and bounded, for any $\delta > 0$, we can find a large $M$ and a small $\gamma$ such that if $|\eta_n-c| < \gamma$ and $|\xi_n| \le M$, then $|f(\xi_n+\eta_n) - f(\xi_n+c)| < \delta$.
+The difference in expectations can be bounded:
+$$ |\E[f(\xi_n + \eta_n) - f(\xi_n+c)]| \le \delta \cdot \probP(A_n^c) + 2K \cdot \probP(A_n) $$
+where $A_n = \{|\eta_n-c| \ge \gamma\} \cup \{|\xi_n| > M\}$ and $K$ is the bound on $|f|$. As $n \to \infty$, $\probP\{|\eta_n-c| \ge \gamma\} \to 0$ by hypothesis. We can choose $M$ large enough such that $\probP\{|\xi|>M\} < \epsilon$ and, by convergence in distribution, $\probP\{|\xi_n|>M\}$ is also small for large $n$. Thus, $\probP(A_n)$ can be made arbitrarily small. As $\delta$ and $\epsilon$ can be chosen arbitrarily small, the first term vanishes in the limit. The convergence $\E[f(\xi_n+c)] \to \E[f(\xi+c)]$ follows directly from the convergence in distribution of $\xi_n$.
+\end{proof}
+\begin{remark}
+Slutsky's theorem is the workhorse of asymptotic statistics. It provides the justification for replacing unknown population parameters in a test statistic with their consistent estimators without altering the asymptotic distribution of the statistic.
+\end{remark}
+
+%====================================================================
+% FIN DEL BLOQUE 2
+%====================================================================
+
+\end{document}
