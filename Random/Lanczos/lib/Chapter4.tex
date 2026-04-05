@@ -1,0 +1,439 @@
+\documentclass[12pt,a4paper]{book}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish]{babel}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{bm}
+\usepackage{geometry}
+\geometry{margin=2.5cm}
+
+\begin{document}
+
+\chapter{El principio de D'Alembert}
+
+\textit{Introducción:} Con el principio de d'Alembert dejamos el ámbito de la estática y entramos en el ámbito de la dinámica. Aquí los problemas son mucho más complicados y su solución requiere métodos más elaborados. Mientras que los problemas de la estática de sistemas con un número finito de grados de libertad conducen a ecuaciones algebraicas que pueden resolverse mediante eliminaciones y sustituciones, los problemas de la dinámica conducen a ecuaciones diferenciales. El presente tratado está dedicado principalmente a la formulación e interpretación de las ecuaciones diferenciales básicas del movimiento, más que a su integración final. El principio de d'Alembert, que discutiremos en el presente capítulo, no contribuyó directamente al problema de la integración. Sin embargo, constituye un hito importante en la historia de la mecánica teórica, ya que proporciona una interpretación de la fuerza de inercia que es fundamental para el desarrollo posterior de los métodos variacionales.
+
+\section{La fuerza de inercia.}
+
+Con un golpe de genialidad, el eminente matemático y filósofo francés d'Alembert (1717--1783) logró extender la aplicabilidad del principio del trabajo virtual del ámbito de la estática al de la dinámica. La idea simple pero de largo alcance de d'Alembert puede abordarse como sigue. Comenzamos con la ley fundamental newtoniana del movimiento: ``masa por aceleración es igual a fuerza'':
+\begin{equation}
+m\mathbf{A} \;=\; \mathbf{F}, \tag{41.1}
+\end{equation}
+y reescribimos esta ecuación en la forma
+\begin{equation}
+\mathbf{F} - m\mathbf{A} \;=\; 0. \tag{41.2}
+\end{equation}
+Definimos ahora un vector $\mathbf{I}$ mediante la ecuación
+\begin{equation}
+\mathbf{I} \;=\; -m\mathbf{A}. \tag{41.3}
+\end{equation}
+Este vector puede ser considerado como una fuerza, creada por el movimiento. Lo llamamos la ``fuerza de inercia.'' Con este concepto, la ecuación de Newton puede formularse como sigue:
+\begin{equation}
+\mathbf{F} + \mathbf{I} \;=\; 0. \tag{41.4}
+\end{equation}
+
+Aparentemente no se gana nada, puesto que el paso intermedio (41.3) simplemente da un nuevo nombre al producto negativo de la masa por la aceleración. Es exactamente esta aparente trivialidad la que convierte al principio de d'Alembert en una invención tan ingeniosa y, al mismo tiempo, tan susceptible de distorsión y malentendido.
+
+La importancia de la ecuación (41.4) radica en el hecho de que es más que una reformulación de la ecuación de Newton. Es la expresión de un \textit{principio}. Sabemos que la anulación de una fuerza en la mecánica newtoniana significa equilibrio. Por lo tanto, la ecuación (41.4) dice que la adición de la fuerza de inercia a las demás fuerzas actuantes produce equilibrio. Pero esto significa que si tenemos cualquier criterio para el equilibrio de un sistema mecánico, podemos extender inmediatamente ese criterio a un sistema que está en movimiento. Todo lo que tenemos que hacer es agregar la nueva ``fuerza de inercia'' a las fuerzas preexistentes. Mediante este artificio, \textit{la dinámica se reduce a estática}.
+
+Esto no significa que podamos realmente \textit{resolver} un problema dinámico por métodos de la estática. Las ecuaciones resultantes son \textit{ecuaciones diferenciales} que deben resolverse. Simplemente hemos \textit{deducido} estas ecuaciones diferenciales mediante consideraciones estáticas. La adición de la fuerza de inercia $\mathbf{I}$ a la fuerza actuante $\mathbf{F}$ transforma el problema del movimiento en un problema de equilibrio.
+
+Se puede plantear la objeción de que, puesto que la masa $m$ está realmente en movimiento, ¿por qué deberíamos tratarla como si estuviera en equilibrio? Se pueden dar dos respuestas a esta objeción. En primer lugar, el movimiento es un fenómeno relativo. Podemos introducir un sistema de referencia que se mueve con el cuerpo y podemos observar el cuerpo en dicho sistema. El cuerpo está entonces realmente en reposo. En segundo lugar, el principio de d'Alembert centra la atención en las fuerzas, no en el cuerpo en movimiento, y el equilibrio de un sistema dado de fuerzas puede ser tratado sin referirse al estado de movimiento del cuerpo sobre el que actúan. El criterio para el equilibrio de un sistema arbitrario de fuerzas es que el trabajo virtual total de todas las fuerzas se anula. Este criterio involucra desplazamientos \textit{virtuales}, no desplazamientos reales, y por lo tanto es igualmente aplicable a masas en reposo y a masas en movimiento. Puesto que el desplazamiento virtual involucra un experimento puramente matemático, puede ser aplicado \textit{en un cierto instante definido de tiempo} (incluso si tal desplazamiento implicaría velocidades físicamente infinitas). En ese instante, el movimiento real del cuerpo no se toma en cuenta.
+
+D'Alembert generalizó su consideración de equilibrio de una partícula individual a cualquier sistema mecánico arbitrario. Su principio establece que \textit{cualquier sistema de fuerzas está en equilibrio si añadimos a las fuerzas impresas las fuerzas de inercia}. Esto significa que \textit{el trabajo virtual total de las fuerzas impresas, aumentado por las fuerzas inerciales, se anula para desplazamientos reversibles}. Parece apropiado tener un nombre especial para la fuerza que resulta si añadimos la fuerza de inercia $\mathbf{I}_k$ a la fuerza impresa dada $\mathbf{F}_k$ que actúa sobre una partícula. Llamaremos a esta fuerza la ``fuerza efectiva''\footnote{Synge y Griffith, \textit{The Principles of Mechanics} (véase la Bibliografía), y unos pocos autores más usan el nombre ``fuerza efectiva'' para el producto de la masa por la aceleración, es decir, para el negativo de la fuerza de inercia.} y la denotaremos por $\mathbf{F}_k^e$:
+\begin{equation}
+\mathbf{F}_k^e \;=\; \mathbf{F}_k + \mathbf{I}_k. \tag{41.5}
+\end{equation}
+
+El principio de d'Alembert puede ahora formularse como sigue: \textit{El trabajo virtual total de las fuerzas efectivas es cero para todas las variaciones reversibles que satisfagan las condiciones cinemáticas dadas}:
+\begin{equation}
+\sum_{k=1}^{N} \mathbf{F}_k^e \cdot \delta\mathbf{R}_k \;\equiv\; \sum_{k=1}^{N} (\mathbf{F}_k - m_k \mathbf{A}_k) \cdot \delta\mathbf{R}_k \;=\; 0. \tag{41.6}
+\end{equation}
+
+Nótese que las fuerzas impresas $\mathbf{F}_k$ pueden actuar solo en unos pocos puntos, mientras que las fuerzas efectivas $\mathbf{F}_k^e$ están presentes dondequiera que una masa se encuentre en movimiento acelerado.
+
+Un sistema dado de fuerzas impresas generalmente no estará en equilibrio. Esto requiere el cumplimiento de condiciones especiales. El trabajo virtual total de las fuerzas impresas usualmente será diferente de cero. En ese caso, el \textit{movimiento} del sistema compensa la deficiencia. El cuerpo se mueve de tal manera que las fuerzas inerciales adicionales, producidas por el movimiento, hacen que el balance llegue a cero. De esta manera, el principio de d'Alembert proporciona \textit{las ecuaciones de movimiento de un sistema mecánico arbitrario}.
+
+En contraste con las fuerzas impresas, que son usualmente derivables de una sola función de trabajo por diferenciación (monogénicas), las fuerzas de inercia son de carácter poligénico. Mientras que el trabajo virtual de las fuerzas impresas puede escribirse como la variación completa de la función de trabajo:
+\begin{equation}
+\overline{\delta w} \;=\; \delta U, \tag{41.7}
+\end{equation}
+el trabajo virtual de las fuerzas de inercia:
+\begin{equation}
+\overline{\delta w^i} \;=\; -\,\Sigma\, m_k \mathbf{A}_k \cdot \delta\mathbf{R}_k \tag{41.8}
+\end{equation}
+es meramente una forma diferencial, no reducible a la variación de una función escalar. (Veremos más adelante cómo esta deficiencia puede remediarse mediante una integración respecto al tiempo.)
+
+La ecuación newtoniana (41.1) es válida solo si la masa es una constante. Si $m$ cambia durante el movimiento, la ecuación fundamental del movimiento debe escribirse en la forma:
+\begin{equation}
+\frac{d}{dt}\,(m\mathbf{v}) \;=\; \mathbf{F}, \tag{41.9}
+\end{equation}
+es decir, ``la tasa de cambio del momento es igual a la fuerza que lo provoca.'' En consecuencia, la fuerza de inercia $\mathbf{I}$ debe definirse como la tasa negativa de cambio del momento:
+\begin{equation}
+\mathbf{I} \;=\; -\,\frac{d}{dt}\,(m\mathbf{v}). \tag{41.10}
+\end{equation}
+Para el caso habitual de $m$ constante, la definición general puede reemplazarse por (41.3).
+
+La definición de la fuerza de inercia requiere un ``sistema de referencia absoluto'' en el cual se mide la aceleración. Esta es una dificultad inherente de la mecánica newtoniana, sentida agudamente por Newton y sus contemporáneos. La solución de esta dificultad llegó en tiempos recientes a través del gran logro de Einstein, la Teoría de la Relatividad General.
+
+Podemos preguntarnos cuál es el significado \textit{físico} del principio de d'Alembert. De la definición de la ``fuerza efectiva'' dada por (41.5) se deduce que esta fuerza es cero en el caso de una partícula libre, mientras que es igual al negativo de la fuerza de reacción si la partícula está sujeta a restricciones. Por lo tanto, la aplicación del principio del trabajo virtual a la fuerza efectiva $\mathbf{F}^e$ es equivalente a la suposición de que ``el trabajo virtual de las fuerzas de reacción es cero para cualquier desplazamiento virtual que esté en armonía con las restricciones dadas.'' Volvemos así al mismo ``Postulado A'' que hemos encontrado antes en el cap.\ \textsc{iii}, sección 1. El principio de d'Alembert generaliza este postulado del campo de la estática al campo de la dinámica, sin ninguna alteración.
+
+\begin{quote}
+\textit{Resumen.} El principio de d'Alembert introduce una nueva fuerza, la fuerza de inercia, definida como el negativo del producto de la masa por la aceleración. Si esta fuerza se añade a las fuerzas impresas, tenemos equilibrio, lo que significa que el principio del trabajo virtual se satisface. El principio del trabajo virtual se extiende así del ámbito de la estática al ámbito de la dinámica.
+\end{quote}
+
+\section{El lugar del principio de d'Alembert en la mecánica.}
+
+El principio de d'Alembert proporciona una solución completa de los problemas de la mecánica. Todos los diferentes principios de la mecánica son meramente formulaciones matemáticamente diferentes del principio de d'Alembert. El principio variacional más avanzado de la mecánica, el principio de Hamilton, puede obtenerse a partir del principio de d'Alembert mediante una transformación matemática. Es equivalente al principio de d'Alembert donde ambos son aplicables. De hecho, el principio de Hamilton está restringido a sistemas holónomos, mientras que el principio de d'Alembert puede aplicarse igualmente bien a sistemas holónomos y no holónomos.
+
+Este principio es más elemental que los principios variacionales posteriores porque no requiere integración respecto al tiempo. Pero la desventaja del principio es que el trabajo virtual de las fuerzas inerciales es una cantidad poligénica y por lo tanto no es reducible a una sola función escalar. Esto hace que el principio sea inadecuado para el uso de coordenadas curvilíneas. Sin embargo, en muchos problemas elementales de dinámica que pueden tratarse adecuadamente con coordenadas rectangulares, o por métodos vectoriales sin el uso de coordenada alguna, el principio de d'Alembert es de gran utilidad.
+
+Para ciertos problemas, el principio de d'Alembert es incluso más flexible que el principio más avanzado de mínima acción. Las ecuaciones diferenciales del movimiento son de segundo orden, determinando las aceleraciones del sistema en movimiento. Estas aceleraciones son las segundas derivadas $\ddot{q}_i$ de las coordenadas de posición $q_i$ o las primeras derivadas de las velocidades $\dot{q}_i$. Ahora puede suceder ---y tal situación surge particularmente en la dinámica de cuerpos rígidos--- que es más conveniente caracterizar el movimiento con la ayuda de ciertas velocidades que \textit{no} son las derivadas de coordenadas de posición reales. Tales cantidades se denominan ``variables cinemáticas.'' Un buen ejemplo es el espín de un trompo alrededor de su eje de simetría. Este espín es la velocidad angular de rotación, $\omega = \overline{d\phi}/dt$, pero el $\overline{d\phi}$ es aquí meramente un diferencial infinitesimal del ángulo de rotación $\phi$. Este ángulo existe solo si el eje está fijo, pero no si el eje está cambiando. Y sin embargo, es conveniente usar el espín como una de las cantidades que caracterizan el movimiento de un trompo. En el principio de mínima acción no podemos usar variables cinemáticas, mientras que en el principio de d'Alembert sí podemos.
+
+El principio de d'Alembert es fundamental en aún otro aspecto: hace posible el uso de sistemas de referencia móviles, y es por lo tanto un precursor de las ideas revolucionarias de Einstein sobre la relatividad del movimiento, explicando ---dentro del alcance de la física newtoniana--- la naturaleza de esas ``fuerzas aparentes'' que están presentes en un marco de referencia móvil.
+
+\begin{quote}
+\textit{Resumen.} El principio de d'Alembert requiere una cantidad poligénica para formar el trabajo virtual de las fuerzas de inercia; por lo tanto, no puede proporcionar las mismas facilidades en el uso analítico de coordenadas curvilíneas que el principio de mínima acción. Sin embargo, en problemas que involucran el uso de variables cinemáticas (velocidades no holónomas) y la transformación a sistemas de referencia móviles, el principio de d'Alembert es eminentemente útil.
+\end{quote}
+
+En las secciones siguientes mostramos la aplicación del principio de d'Alembert a varios problemas típicos, particularmente relacionados con el uso de sistemas de referencia móviles. La primera aplicación concierne a la deducción de la ley de conservación de la energía, bien conocida de la mecánica elemental. Esta deducción es de interés, sin embargo, porque muestra los límites dentro de los cuales la ley es válida.
+
+\section{La conservación de la energía como consecuencia del principio de d'Alembert.}
+
+Aunque el principio de d'Alembert es generalmente de naturaleza poligénica, en un caso especial se vuelve monogénico e integrable. Este caso especial conduce a una de las leyes más fundamentales de la mecánica, la ley de conservación de la energía.
+
+Consideramos la formulación general del principio de d'Alembert, dada en la ecuación (41.6). Supongamos que las fuerzas impresas son monogénicas, derivables de una función de energía potencial. Entonces el trabajo de las fuerzas impresas es igual al negativo de la variación de la energía potencial, y el principio de d'Alembert puede escribirse como sigue:
+\begin{equation}
+\delta V + \Sigma\, m_k \mathbf{A}_k \cdot \delta\mathbf{R}_k \;=\; 0. \tag{43.1}
+\end{equation}
+
+El segundo término, el trabajo virtual negativo de las fuerzas de inercia, no puede en general escribirse como la variación de algo. Pero ahora consideremos las $\delta\mathbf{R}_k$ ---que significan variaciones tentativas arbitrarias del vector de radio $\mathbf{R}_k$--- de una manera especial. Hagamos que estos desplazamientos tentativos coincidan con los desplazamientos \textit{reales} tal como ocurren durante el tiempo $dt$. Esto significa que reemplazamos $\delta\mathbf{R}_k$ por $d\mathbf{R}_k$, lo cual es meramente una aplicación especial del principio variacional (43.1).
+
+Para esta variación especial, el cambio virtual $\delta\mathbf{v}$ de la energía potencial coincidirá con el cambio real $d\mathbf{v}$ que ocurre durante el tiempo $dt$. Además, el segundo término también se convierte en el diferencial perfecto de una cantidad, como puede verse si la aceleración $\mathbf{A}_k$ se reemplaza por la segunda derivada del vector de radio $\mathbf{R}_k$:
+\begin{equation}
+\Sigma\, m_k \ddot{\mathbf{R}}_k \cdot d\mathbf{R}_k \;=\; \Sigma\, m_k \ddot{\mathbf{R}}_k \cdot \dot{\mathbf{R}}_k \, dt \;=\; \frac{d}{dt}\left(\tfrac{1}{2}\,\Sigma\, m_k \dot{\mathbf{R}}_k^2\right) dt \;=\; dT, \tag{43.2}
+\end{equation}
+donde hemos puesto
+\begin{equation}
+\tfrac{1}{2}\,\Sigma\, m_k \dot{\mathbf{R}}_k^2 \;=\; \tfrac{1}{2}\,\Sigma\, m_k \mathbf{v}_k^2 \;=\; T. \tag{43.3}
+\end{equation}
+$T$ es la energía cinética del sistema mecánico.
+
+La ecuación (43.1) toma ahora la forma
+\begin{equation}
+dV + dT \;=\; d(V + T) \;=\; 0, \tag{43.4}
+\end{equation}
+la cual puede integrarse para dar
+\[
+T + V \;=\; \text{constante} \;=\; E.
+\]
+
+\textit{La suma de las energías cinética y potencial permanece invariable durante el movimiento.} Este teorema fundamental se llama la ``ley de conservación de la energía.'' Es una ecuación escalar y solo \textit{una} de las integrales de las ecuaciones de movimiento. Aunque en sí misma es insuficiente para la solución completa del problema del movimiento, excepto en el caso de un solo grado de libertad, es una de las leyes más fundamentales y universales de la naturaleza y, debidamente modificada, es válida no solo para fenómenos mecánicos sino para todos los fenómenos físicos. La constante $E$ se denomina la ``constante de energía.''
+
+A primera vista podríamos pensar que \textit{siempre} es permisible identificar los $\delta\mathbf{R}_k$ con los $d\mathbf{R}_k$ porque el desplazamiento real seguramente debe estar entre los desplazamientos cinemáticamente posibles. Y este razonamiento aparentemente obvio no siempre es correcto. Es válido en el caso de partículas libres, pero no siempre en el caso de sistemas mecánicos con restricciones. Ciertamente es permisible variar la posición del punto $C$ en el espacio de configuración arbitrariamente, y con certeza podemos hacer que los $\delta q_i$ coincidan con los $dq_i$. Esto, sin embargo, no siempre significará que las variaciones $\delta\mathbf{R}_i$ de las posiciones de las partículas coincidan con los desplazamientos reales $d\mathbf{R}_i$. Debemos tener en cuenta que la variación se aplica \textit{súbitamente}, en un cierto instante, lo que significa con velocidad infinita, mientras que el movimiento real ocurre con velocidad finita. Si comparamos las ecuaciones (12.8) con las ecuaciones (18.3), notamos que en el primer caso la identificación de $\delta q_i$ con $dq_i$ conduce a $\delta\mathbf{R}_i = d\mathbf{R}_i$; en el segundo caso, no. Las ecuaciones del primer tipo se cumplen en el caso ``escleronómico'', donde las condiciones cinemáticas dadas no contienen el tiempo explícitamente, mientras que las ecuaciones del segundo tipo se cumplen en el caso ``reonómico'', donde las condiciones cinemáticas involucran el tiempo explícitamente.
+
+Una observación similar se aplica a la energía potencial $V$. Si $V$ es función solo de las $q_i$, entonces la elección $\delta q_i = dq_i$ conducirá a $\delta V = dV$. Pero esto dejaría de ser cierto si $V$ dependiera de $t$ explícitamente. Puesto que $V$ fue definida como $-U$, nuestro resultado implica que la función de trabajo $U$ no debe depender de $t$ explícitamente si la conservación de la energía ha de cumplirse.
+
+Vemos que la ley de conservación de la energía debe restringirse a sistemas que son \textit{escleronómicos tanto en la función de trabajo como en las condiciones cinemáticas}. Además, nuestra deducción supuso implícitamente que las masas $m_k$ son \textit{constantes}.
+
+\begin{quote}
+\textit{Resumen.} Si las variaciones de posición en el principio de d'Alembert se hacen coincidir con los desplazamientos reales que ocurren durante el tiempo $dt$, la ecuación resultante puede integrarse. Se obtiene la ley de conservación de la energía, que establece que la suma de las energías cinética y potencial permanece constante durante el movimiento. Las condiciones para la validez de este procedimiento son que las masas de las partículas sean constantes, y que tanto la función de trabajo del sistema como las condiciones cinemáticas dadas deben ser escleronómicas, es decir, independientes del tiempo.
+\end{quote}
+
+\section{Fuerzas aparentes en un sistema de referencia acelerado. La hipótesis de equivalencia de Einstein.}
+
+La solidez fundamental del principio de d'Alembert puede comprobarse mediante los experimentos físicos más exactos. Las conclusiones del principio están en concordancia con la observación. El principio de d'Alembert supone que la fuerza de inercia es simplemente una fuerza adicional más que actúa exactamente como todas las demás fuerzas. Ahora bien, para la definición de la fuerza de inercia tenemos que hacer uso de un ``sistema de referencia absoluto.'' Si el sistema de referencia en el cual se miden las aceleraciones está en movimiento relativo al sistema absoluto, la fuerza de inercia medida en el sistema en movimiento ya no es la verdadera fuerza de inercia, sino que debe corregirse con términos adicionales. Según el principio de d'Alembert, los términos de corrección que entran en la fuerza de inercia a causa del movimiento del sistema de referencia pueden igualmente bien interpretarse como pertenecientes a las fuerzas impresas, como fuerzas producidas por un campo externo de fuerza. Esto da lugar al fenómeno de las ``fuerzas aparentes'' que ocurren en sistemas de referencia que están en movimiento.
+
+En la discusión siguiente será necesaria una comparación entre dos sistemas de referencia, uno de los cuales está en ``reposo absoluto'', el otro en movimiento. Distinguiremos estos dos sistemas de referencia como ``el sistema $S$'' y ``el sistema $S'$,'' y acordamos la siguiente convención: las cantidades medidas en el sistema en movimiento se denotarán con las mismas letras que las cantidades medidas en el sistema en reposo, pero con un ``primo.'' Estamos particularmente interesados en la comparación de tres cantidades cinemáticas fundamentales: el vector de radio $\mathbf{R}$, la velocidad $\mathbf{v}$ y la aceleración $\mathbf{A}$ de una partícula en movimiento, medidas en los sistemas $S$ y $S'$.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.5\linewidth]{Dalembert im 1.png}
+    \label{fig:placeholder}
+\end{figure}
+
+Consideramos primero un sistema de referencia que está en movimiento puramente \textit{traslatorio}, tal como un elevador que puede subir y bajar con aceleraciones arbitrarias.
+
+Tal movimiento traslatorio del sistema de referencia puede caracterizarse como sigue. El origen $O'$ de un sistema de referencia rígido $S'$ se mueve a lo largo de una curva dada $C$, trazada por el vector $\mathbf{C}$ que es una función del tiempo $t$. El vector de radio $\mathbf{R}'$ medido en el sistema en movimiento y el vector de radio $\mathbf{R}$ medido en el sistema absoluto están en la siguiente relación mutua (véase la Figura 4):
+\begin{equation}
+\mathbf{R} \;=\; \mathbf{C} + \mathbf{R}'. \tag{44.1}
+\end{equation}
+Diferenciando dos veces respecto al tiempo obtenemos
+\begin{equation}
+\ddot{\mathbf{R}} \;=\; \ddot{\mathbf{C}} + \ddot{\mathbf{R}}'. \tag{44.2}
+\end{equation}
+Esta ecuación puede escribirse
+\begin{equation}
+\mathbf{A} \;=\; \ddot{\mathbf{C}} + \mathbf{A}', \tag{44.3}
+\end{equation}
+y la multiplicación por $-m$ da
+\begin{equation}
+\mathbf{I} \;=\; -m\ddot{\mathbf{C}} + \mathbf{I}'. \tag{44.4}
+\end{equation}
+Vemos que la fuerza de inercia que, según el principio de d'Alembert, debe añadirse a las fuerzas impresas $\mathbf{F}$, consta de dos partes. La cantidad $-m\ddot{\mathbf{C}}$ es parte de la verdadera fuerza de inercia y se debe al hecho de que el sistema de referencia en el cual se realizan las mediciones está en movimiento relativo al sistema absoluto. Siempre que el movimiento del sistema de referencia genera una fuerza que debe añadirse a la fuerza de inercia relativa $\mathbf{I}'$, medida en dicho sistema, llamamos a esa fuerza una ``fuerza aparente.'' El nombre es acertado, en tanto que esa fuerza no existe en el sistema absoluto y es creada únicamente por el hecho de que nuestro sistema de referencia se mueve relativo al sistema absoluto. El nombre es engañoso, sin embargo, si se interpreta como una fuerza que no es ``real'' como cualquier otra fuerza física dada. En el sistema de referencia en movimiento, la fuerza aparente es una fuerza perfectamente real que es indistinguible en su naturaleza de cualquier otra fuerza impresa. Supongamos que el observador no es consciente del hecho de que su sistema de referencia está en movimiento acelerado. Entonces observaciones puramente mecánicas no pueden revelarle ese hecho. De acuerdo con el principio de d'Alembert, la acción física está determinada por la suma de la fuerza impresa $\mathbf{F}$ y la fuerza de inercia $\mathbf{I}$. No hay manera de separar estas dos fuerzas de modo fundamental alguno. Si el físico que desconoce su propio movimiento interpreta la fuerza aparente $-m\ddot{\mathbf{C}}$ como una fuerza externa, no entra en conflicto alguno con los hechos.
+
+Esto es en efecto una consecuencia lógica del principio de d'Alembert. Supongamos que la verdadera fuerza de inercia $\mathbf{I}$ y la fuerza de inercia $\mathbf{I}'$ medida en un sistema en movimiento están relacionadas entre sí como sigue:
+\begin{equation}
+\mathbf{I} \;=\; \mathbf{J} + \mathbf{I}'. \tag{44.5}
+\end{equation}
+Ahora la fuerza efectiva que actúa en el sistema en movimiento es
+\begin{equation}
+\mathbf{F}^e \;=\; \mathbf{F} + \mathbf{J} + \mathbf{I}'. \tag{44.6}
+\end{equation}
+Puesto que es esta fuerza efectiva sola la que determina la acción mecánica, no hay diferencia en si interpretamos $\mathbf{F}^e$ como la suma de $\mathbf{F}$ y $\mathbf{J} + \mathbf{I}'$, o como la suma de $\mathbf{F} + \mathbf{J}$ e $\mathbf{I}'$. En el primer caso, tomamos nota del hecho de que nuestro sistema de referencia está en movimiento, y que ese movimiento crea la fuerza $\mathbf{J}$ como parte de la fuerza de inercia. En el segundo caso, nos olvidamos del movimiento de nuestro sistema de referencia e interpretamos la fuerza $\mathbf{J}$ como una fuerza impresa adicional que actúa sobre la partícula.
+
+Supongamos en particular que estamos en un laboratorio cerrado que es jalado hacia arriba con aceleración constante $\mathbf{G}$, mientras que al mismo tiempo el campo de gravedad desaparece repentinamente (el ``experimento de la caja'' de Einstein). Entonces el principio de d'Alembert implica que ningún experimento mecánico puede detectar este cambio, porque es imposible distinguir entre las dos hipótesis siguientes:
+
+1. Nuestro sistema de referencia se mueve hacia arriba con aceleración constante $\mathbf{G}$; no existe campo de gravedad.
+
+2. Nuestro sistema de referencia está en reposo pero existe un campo de gravedad presente que tira de toda masa $m$ hacia abajo con la fuerza $m\mathbf{G}$.
+
+Esta ``hipótesis de equivalencia'' fue introducida por Einstein en sus primeros intentos de resolver el enigma de la gravedad, antes de establecer el principio general de la relatividad. Para fenómenos puramente mecánicos, la hipótesis de equivalencia es una consecuencia directa del principio de d'Alembert. Einstein la elevó a un principio general de la naturaleza. Parece justificable llamar a la fuerza aparente
+\begin{equation}
+\mathbf{E} \;=\; -\,m\ddot{\mathbf{C}}, \tag{44.7}
+\end{equation}
+que actúa en un sistema de referencia acelerado a causa del principio de d'Alembert, la ``fuerza de Einstein.'' Nótese que \textit{todas las fuerzas aparentes, siendo generadas por la fuerza de inercia $-m\mathbf{A}$, son proporcionales a la masa inercial $m$}. El hecho empírico de que la masa gravitacional es siempre proporcional a la masa inercial fue la pista decisiva que permitió a Einstein establecer la fuerza de gravedad como una fuerza aparente.
+
+\medskip
+\noindent (a) El piloto de un avión que se lanza en paracaídas tiene una sensación peculiar durante los primeros momentos de su caída, causada por el hecho de que se siente completamente ingrávido. La fuerza aparente generada por su caída compensa la fuerza de gravedad. A medida que su paracaídas se abre, su peso regresa gradualmente. (b) Una sensación similar de volverse más ligero se siente en menor grado en los primeros instantes después de que un elevador comienza a descender. Cuando el elevador desacelera antes de detenerse, nuestro peso aparente aumenta. (c) Cuando un autobús comienza a moverse, somos empujados hacia atrás; cuando desacelera, hacia adelante. (d) La aceleración y desaceleración de un tren puede medirse mediante una balanza de resorte sensible fijada a una pared perpendicular a las vías. ---Todos estos fenómenos son ilustraciones del principio de d'Alembert.
+
+\begin{quote}
+\textit{Resumen.} Si un sistema de referencia está en movimiento acelerado, este movimiento produce el mismo efecto que si fuerzas externas estuvieran presentes, que deben añadirse a las fuerzas impresas. Estas fuerzas se denominan las ``fuerzas de d'Alembert'' o ``fuerzas aparentes'' porque son generadas por el movimiento del sistema de referencia pero no están presentes en un sistema absoluto. Si el sistema de referencia está en un estado de traslación uniformemente acelerada, la fuerza aparente generada es la de un campo gravitacional uniforme.
+\end{quote}
+
+\section{Fuerzas aparentes en un sistema de referencia en rotación.}
+
+Cualquier movimiento de un sistema de referencia rígido puede considerarse como una traslación más una rotación. Después de estudiar una traslación pura del sistema, tratamos ahora el caso de una rotación pura. El problema general es una superposición de estos dos problemas especiales.
+
+Si el origen $O$ del sistema de referencia se mantiene fijo, los vectores de radio $\mathbf{R}$ y $\mathbf{R}'$ en el sistema absoluto $S$ y en el sistema en movimiento $S'$ son iguales:
+\begin{equation}
+\mathbf{R} \;=\; \mathbf{R}'. \tag{45.1}
+\end{equation}
+No obstante, las velocidades y aceleraciones medidas en ambos sistemas difieren entre sí debido al hecho de que las tasas de cambio observadas en los dos sistemas son diferentes. Si un cierto vector $\mathbf{B}$ es constante en $S'$, rota con el sistema y por lo tanto, si se observa en $S$, experimenta en el tiempo $dt$ un cambio infinitesimal
+\begin{equation}
+d\mathbf{B} \;=\; (\mathbf{\Omega} \times \mathbf{B})\,dt \tag{45.2}
+\end{equation}
+(véase 32.4), donde $\mathbf{\Omega}$ es el vector de velocidad angular que da la rotación de $S'$ respecto a $S$. Por lo tanto
+\begin{equation}
+\frac{d\mathbf{B}}{dt} \;=\; \mathbf{\Omega} \times \mathbf{B}, \tag{45.3}
+\end{equation}
+mientras que al mismo tiempo
+\begin{equation}
+\frac{d'\mathbf{B}}{dt} \;=\; 0. \tag{45.4}
+\end{equation}
+Hemos introducido aquí la notación $d'/dt$ que se refiere a la operación de observar la tasa de cambio de una cantidad en el sistema en movimiento $S'$.
+
+Si, por otra parte, el vector $\mathbf{B}$ no es constante en $S'$, de modo que $d'\mathbf{B}/dt \neq 0$, encontramos, haciendo uso del principio de superposición de procesos infinitesimales, que
+\begin{equation}
+\frac{d\mathbf{B}}{dt} \;=\; \frac{d'\mathbf{B}}{dt} + \mathbf{\Omega} \times \mathbf{B}. \tag{45.5}
+\end{equation}
+Aplicando esta ecuación al vector de radio $\mathbf{R} = \mathbf{R}'$ obtenemos
+\begin{equation}
+\frac{d\mathbf{R}}{dt} \;=\; \frac{d'\mathbf{R}'}{dt} + \mathbf{\Omega} \times \mathbf{R}'. \tag{45.6}
+\end{equation}
+Esto produce la siguiente relación entre las velocidades $\mathbf{v}$ y $\mathbf{v}'$:
+\begin{equation}
+\mathbf{v} \;=\; \mathbf{v}' + \mathbf{\Omega} \times \mathbf{R}'. \tag{45.7}
+\end{equation}
+
+Para obtener la relación entre las aceleraciones absoluta $\mathbf{A}$ y relativa $\mathbf{A}'$, diferenciamos la ecuación (45.7):
+\begin{equation}
+\frac{d\mathbf{v}}{dt} \;=\; \frac{d\mathbf{v}'}{dt} + \dot{\mathbf{\Omega}} \times \mathbf{R}' + \mathbf{\Omega} \times \frac{d\mathbf{R}'}{dt}. \tag{45.8}
+\end{equation}
+En el lado derecho, la relación (45.6) puede emplearse para expresar todo en términos de cantidades que pertenecen a $S'$. El resultado es:
+\begin{equation}
+\frac{d\mathbf{v}}{dt} \;=\; \frac{d'\mathbf{v}'}{dt} + 2\,\mathbf{\Omega} \times \mathbf{v}' + \mathbf{\Omega} \times (\mathbf{\Omega} \times \mathbf{R}') + \dot{\mathbf{\Omega}} \times \mathbf{R}'. \tag{45.9}
+\end{equation}
+La multiplicación por $-m$ da la relación entre las dos fuerzas de inercia $\mathbf{I}$ e $\mathbf{I}'$,
+\begin{equation}
+\mathbf{I} = \mathbf{I}' - 2m\,\mathbf{\Omega} \times \mathbf{v}' - m\,\mathbf{\Omega} \times (\mathbf{\Omega} \times \mathbf{R}') - m\,\dot{\mathbf{\Omega}} \times \mathbf{R}'. \tag{45.10}
+\end{equation}
+
+De aquí en adelante, abandonamos la comparación entre sistemas absoluto y rotante. \textit{Acordamos permanecer consistentemente en el sistema rotante $S'$.} Por lo tanto, podemos omitir los primos con el entendimiento de que todas las cantidades se referirán a $S'$. Notamos que el movimiento del sistema de referencia da lugar a tres fuerzas aparentes de carácter diferente. El tercer término del lado derecho de (45.10) puede transformarse en
+\begin{equation}
+\mathbf{C} \;=\; m\omega^2\,\mathbf{R}_\perp, \tag{45.11}
+\end{equation}
+donde $\mathbf{R}_\perp$ denota la componente del vector de radio $\mathbf{R}$ que es perpendicular al vector $\mathbf{\Omega}$. Esta fuerza es de naturaleza monogénica, siendo derivable de la energía potencial
+\begin{equation}
+\phi \;=\; -\,\frac{m}{2}\,\omega^2 r_\perp^2. \tag{45.12}
+\end{equation}
+Se llama ``fuerza centrífuga.'' Sobre la tierra, que rota alrededor de su eje, la plomada indica la dirección de la resultante de la fuerza de gravedad y la fuerza centrífuga. El principio de d'Alembert muestra que estas dos fuerzas no pueden separarse por ningún experimento.
+
+De naturaleza diferente es el segundo término:
+\begin{equation}
+\mathbf{B} \;=\; -\,2m\,\mathbf{\Omega} \times \mathbf{v} \;=\; 2m\,\mathbf{v} \times \mathbf{\Omega}, \tag{45.13}
+\end{equation}
+que depende de la velocidad de la partícula en movimiento. Es siempre perpendicular a la velocidad y por lo tanto no realiza trabajo. Esta fuerza se llama la ``fuerza de Coriolis.'' Su componente horizontal puede demostrarse que existe mediante el célebre experimento del péndulo precesante de Foucault, ---la primera demostración mecánica de la rotación de la tierra.
+
+La existencia de la componente vertical puede demostrarse por el ingenioso experimento del físico húngaro Eötvös, quien tomó una balanza química y la hizo rotar con velocidad angular constante alrededor de un eje vertical, después de retirar los dos platillos de la balanza. El brazo de la balanza rota en un plano horizontal, una partícula del brazo derecho y una simétricamente situada del brazo izquierdo teniendo velocidades iguales en direcciones opuestas. La fuerza de Coriolis actúa hacia arriba y hacia abajo y produce un par periódico sobre el brazo, que hace entrar a la balanza en vibración forzada (el máximo del par ocurre cuando el brazo es paralelo al meridiano, mientras que al pasar en dirección este-oeste el par se hace cero). Aunque el efecto es muy pequeño, es medible recurriendo al principio de resonancia y haciendo que el período de rotación coincida con el período de oscilación de la balanza libre.
+
+El último término de (45.10) está presente solo si la velocidad angular cambia en dirección o en magnitud. Se anula para rotación uniforme alrededor de un eje fijo. Esta tercera fuerza aparente no tiene un nombre universalmente aceptado. Al autor le gusta llamarla la ``fuerza de Euler,'' en vista de las sobresalientes investigaciones de Euler en este tema. Ponemos
+\begin{equation}
+\mathbf{K} \;=\; -\,m\,\dot{\mathbf{\Omega}} \times \mathbf{R}, \tag{45.14}
+\end{equation}
+y finalmente obtenemos la fuerza efectiva $\mathbf{F}^e$ que actúa en un sistema en rotación:
+\begin{equation}
+\mathbf{F}^e \;=\; \mathbf{F} + \mathbf{C} + \mathbf{B} + \mathbf{K} + \mathbf{I} \tag{45.15}
+\end{equation}
+(fuerza impresa + fuerza centrífuga + fuerza de Coriolis + fuerza de Euler + fuerza de inercia).
+
+\begin{quote}
+\textit{Resumen.} Un observador que está adscrito a un sistema de referencia en rotación experimenta en su sistema la fuerza centrífuga y la fuerza de Coriolis como fuerzas aparentes. Si además la rotación no es uniforme, se genera una tercera fuerza aparente, la ``fuerza de Euler.''
+\end{quote}
+
+\section{Dinámica de un cuerpo rígido. El movimiento del centro de masa.}
+
+Como última ilustración de la acción de las fuerzas aparentes y del principio de d'Alembert, consideramos la dinámica de un cuerpo rígido que puede moverse libremente en el espacio. Suponemos un observador que hace sus mediciones en un sistema de referencia adscrito al cuerpo en movimiento. En este sistema de referencia el cuerpo está en reposo y por lo tanto en equilibrio.
+
+Ahora bien, hemos visto en el cap.\ \textsc{iii}, sección 2, que el equilibrio de un cuerpo rígido requiere dos condiciones vectoriales: la suma de todas las fuerzas y la suma de todos los momentos deben anularse. En la presente sección consideramos solo la primera condición.
+
+Al formar la fuerza resultante $\mathbf{F}^e$ debemos tener en cuenta que, además de las fuerzas impresas $\mathbf{F}$, tenemos las fuerzas aparentes que actúan en nuestro sistema. Tenemos en primer lugar la ``fuerza de Einstein'' (44.7), resultante del movimiento traslatorio del cuerpo rígido. Luego tenemos la fuerza centrífuga (45.11) y la ``fuerza de Euler'' (45.14) a causa del movimiento rotatorio del cuerpo rígido (la fuerza de Coriolis $\mathbf{B}$ y la fuerza de inercia $\mathbf{I}$ desaparecen puesto que no hay velocidades ni aceleraciones en nuestro sistema de referencia). Supondremos que el origen $O'$ de nuestro sistema de referencia coincide con el centro de masa del cuerpo rígido. Esto significa
+\begin{equation}
+\Sigma\, m\mathbf{R} \;=\; 0. \tag{46.1}
+\end{equation}
+
+\noindent\textit{Problema} 1. Demuestre que en nuestro sistema de referencia la suma vectorial de las fuerzas centrífugas se anula.
+
+\noindent\textit{Problema} 2. Demuestre que en nuestro sistema de referencia la suma vectorial de las fuerzas de Euler se anula.
+
+Puesto que la resultante de la fuerza centrífuga y la fuerza de Euler se anulan en nuestro sistema de referencia, debemos tener equilibrio entre las fuerzas impresas y las fuerzas de Einstein. Esto da la condición
+\begin{equation}
+\bar{\mathbf{F}} - \Sigma\, m\ddot{\mathbf{C}} \;=\; 0, \tag{46.2}
+\end{equation}
+o
+\begin{equation}
+\bar{m}\,\ddot{\mathbf{C}} \;=\; \bar{\mathbf{F}}, \tag{46.3}
+\end{equation}
+donde hemos puesto
+\begin{equation}
+\bar{m} \;=\; \Sigma\, m. \tag{46.4}
+\end{equation}
+Si tenemos en cuenta que $\ddot{\mathbf{C}}$ es la aceleración del centro de masa, vemos que la ecuación (46.3) expresa el bien conocido teorema del centro de masa: \textit{el centro de masa de un cuerpo rígido se mueve como una partícula en la cual se concentra la masa total del cuerpo y sobre la cual actúa la resultante de todas las fuerzas impresas sobre el cuerpo rígido.}
+
+\begin{quote}
+\textit{Resumen.} La ley que gobierna el movimiento del centro de masa de un cuerpo rígido puede concebirse como una consecuencia del hecho de que las fuerzas impresas y las fuerzas de Einstein que actúan en un sistema de referencia adscrito al cuerpo rígido están en equilibrio.
+\end{quote}
+
+\section{Dinámica de un cuerpo rígido. Las ecuaciones de Euler.}
+
+Llegamos ahora a la \textit{segunda} condición para el equilibrio de un cuerpo rígido, libremente movible en el espacio: la suma de todos los momentos debe anularse.
+
+\noindent\textit{Problema} 1. Demuestre que el momento resultante de las fuerzas de Einstein se anula en nuestro sistema de referencia.
+
+Puesto que las fuerzas de Einstein no tienen momento resultante, la suma de los momentos de las tres fuerzas siguientes debe anularse: las fuerzas impresas, las fuerzas centrífugas y las fuerzas de Euler.
+
+Establecemos un sistema rectangular de ejes $x$, $y$, $z$, con origen en el centro de masa. Supondremos que estos ejes están rígidamente conectados con el cuerpo en movimiento, y que coinciden con los ``ejes principales.'' Esto significa que en nuestro sistema de referencia los ``productos de inercia'' son cero:
+\begin{equation}
+\Sigma\, myz \;=\; \Sigma\, mzx \;=\; \Sigma\, mxy \;=\; 0. \tag{47.1}
+\end{equation}
+Además, introducimos las notaciones habituales:
+\begin{align}
+\Sigma\, m(y^2 + z^2) &= A, \notag\\
+\Sigma\, m(z^2 + x^2) &= B, \notag\\
+\Sigma\, m(x^2 + y^2) &= C. \tag{47.2}
+\end{align}
+
+\noindent\textit{Problema} 2. Demuestre que el momento resultante de las fuerzas centrífugas (45.11) tiene las componentes
+\begin{equation}
+(B - C)\omega_y\omega_z,\quad (C - A)\omega_z\omega_x,\quad (A - B)\omega_x\omega_y. \tag{47.3}
+\end{equation}
+
+\noindent\textit{Problema} 3. Demuestre que el momento resultante de las fuerzas de Euler (45.14) tiene las componentes
+\begin{equation}
+-\,A\dot{\omega}_x,\quad -\,B\dot{\omega}_y,\quad -\,C\dot{\omega}_z. \tag{47.4}
+\end{equation}
+
+Sea que denotemos las componentes del momento resultante $\bar{M} = \Sigma(\mathbf{R} \times \mathbf{F})$ de las fuerzas impresas por
+\begin{equation}
+\overline{M}_x,\quad \overline{M}_y,\quad \overline{M}_z. \tag{47.5}
+\end{equation}
+La anulación de la resultante de los momentos (47.3), (47.4), y (47.5) da las ecuaciones de Euler:
+\begin{align}
+A\dot{\omega}_x - (B - C)\omega_y\omega_z &= \overline{M}_x, \notag\\
+B\dot{\omega}_y - (C - A)\omega_z\omega_x &= \overline{M}_y, \tag{47.6}\\
+C\dot{\omega}_z - (A - B)\omega_x\omega_y &= \overline{M}_z. \notag
+\end{align}
+
+Estas famosas ecuaciones describen cómo el eje instantáneo de rotación $\mathbf{\Omega}$ cambia con el tiempo relativo a un sistema de referencia centrado en el cuerpo. Proporcionan una solución parcial del problema dinámico de un cuerpo rígido que rota libremente, pero deben completarse fijando la posición del sistema de referencia centrado en el cuerpo relativo a un sistema centrado en el espacio. Este problema, y muchos otros en la dinámica de cuerpos rígidos, está fuera del alcance del presente libro, que está dedicado a los principios generales de la mecánica y trata con aplicaciones solo como ilustraciones de la operación de los principios generales. Para desarrollos ulteriores se remite al lector a los libros de texto indicados en la Bibliografía.
+
+\begin{quote}
+\textit{Resumen.} Las ecuaciones de Euler, que describen la tasa de cambio del eje instantáneo de rotación de un cuerpo rígido relativo al sistema de referencia centrado en el cuerpo con el sistema de los ejes principales, pueden interpretarse como las condiciones para la anulación de la resultante de tres momentos: los de las fuerzas de Euler, las fuerzas centrífugas y las fuerzas externas.
+\end{quote}
+
+\section{El principio de mínima restricción de Gauss.}
+
+El principio de d'Alembert no es un principio de mínimo. Hace uso de una cantidad infinitesimal ---el trabajo virtual de las fuerzas impresas, aumentado por el trabajo virtual de las fuerzas de inercia--- pero esta última cantidad no es la variación de alguna función. Gauss (1777--1855) dio una ingeniosa reinterpretación del principio de d'Alembert que lo transforma en un principio de mínimo. El procedimiento de Gauss puede describirse como sigue.
+
+Las ecuaciones diferenciales del movimiento determinan las \textit{aceleraciones} de las coordenadas de posición $q_i$. Supongamos que estamos confrontados con el siguiente problema. En un cierto instante $t$ la posición y la velocidad de todas las partículas de un sistema mecánico están dadas. Sin embargo, podemos disponer de las aceleraciones a voluntad, aunque sujetas a las restricciones dadas. Si la aceleración real de una partícula en el tiempo $t$ es $\mathbf{A}(t)$, el cambio de esa aceleración a $\mathbf{A} + \delta\mathbf{A}$ tiene el siguiente efecto. La posición de la partícula en el tiempo $t + \tau$ está dada por el teorema de Taylor:
+\begin{equation}
+\mathbf{R}(t + \tau) \;=\; \mathbf{R}(t) + \mathbf{v}(t)\,\tau + \tfrac{1}{2}\,\mathbf{A}(t)\,\tau^2 + \ldots \tag{48.1}
+\end{equation}
+Ahora la variación de la aceleración causará una desviación en la trayectoria de la partícula. La variación de los dos primeros términos del lado derecho de (48.1) es cero, de acuerdo con nuestra convención de que no cambiaremos la posición ni la velocidad iniciales del sistema. Por lo tanto, si consideramos $\tau$ como un intervalo de tiempo arbitrariamente pequeño y despreciamos los términos de orden superior, obtenemos
+\begin{equation}
+\delta\mathbf{R}(t + \tau) \;=\; \tfrac{1}{2}\,\delta\mathbf{A}(t) \cdot \tau^2. \tag{48.2}
+\end{equation}
+Esta consideración es enteramente independiente de cualquier restricción; interviene solo en la elección de los $\delta\mathbf{A}(t)$.
+
+Ahora sabemos que el principio de d'Alembert requiere que
+\begin{equation}
+\sum_{i=1}^{N} (\mathbf{F}_i - m_i \mathbf{A}_i) \cdot \delta\mathbf{R}_i \;=\; 0, \tag{48.3}
+\end{equation}
+donde los $\delta\mathbf{R}_i$ pueden identificarse con cualesquiera desplazamientos virtuales que estén de acuerdo con las restricciones dadas. Podemos aplicar este principio en el tiempo $t + \tau$, eligiendo nuestros $\delta\mathbf{R}_i(t + \tau)$ de acuerdo con (48.2). Esto da
+\begin{equation}
+\sum_{i=1}^{N} (\mathbf{F}_i - m_i \mathbf{A}_i) \cdot \delta\mathbf{A}_i \;=\; 0. \tag{48.4}
+\end{equation}
+Puesto que las fuerzas impresas $\mathbf{F}_i$ están dadas y no pueden variarse, la condición (48.4) puede reescribirse como sigue:
+\begin{equation}
+\sum_{i=1}^{N} (\mathbf{F}_i - m_i \mathbf{A}_i) \cdot \delta\!\left(\frac{\mathbf{F}_i - m_i \mathbf{A}_i}{m_i}\right) \;=\; 0, \tag{48.5}
+\end{equation}
+pero esto significa que
+\begin{equation}
+\delta\,\sum_{i=1}^{N}\frac{1}{2m_i}\,(\mathbf{F}_i - m_i \mathbf{A}_i)^2 \;=\; 0. \tag{48.6}
+\end{equation}
+Gauss definió la cantidad
+\begin{equation}
+Z \;=\; \sum_{i=1}^{N}\frac{1}{2m_i}\,(\mathbf{F}_i - m_i \mathbf{A}_i)^2 \tag{48.7}
+\end{equation}
+como la ``restricción'' del movimiento y expresó la ecuación (48.6) en la forma del ``principio de mínima restricción'': el movimiento real que ocurre en la naturaleza es tal que, bajo las condiciones cinemáticas dadas, la restricción se hace tan pequeña como sea posible. Si las partículas están libres de restricciones, $Z$ puede alcanzar su mínimo absoluto, que es cero. Obtenemos entonces
+\begin{equation}
+m_i \mathbf{A}_i \;=\; \mathbf{F}_i \tag{48.8}
+\end{equation}
+que expresa la ley de movimiento de Newton. Si las restricciones impiden la elección libre de los $\mathbf{A}_i$, aún podemos minimizar $Z$ bajo las condiciones auxiliares dadas. La solución obtenida produce el movimiento real del sistema realizado en la naturaleza.
+
+\medskip
+\noindent\textit{Ejemplo:} Una partícula es forzada a permanecer sobre la superficie
+\begin{equation}
+z \;=\; f(x,\,y), \tag{48.9}
+\end{equation}
+y está sometida a la fuerza $\mathbf{F}$. Hallar las ecuaciones de movimiento. Ahora tenemos
+\begin{equation}
+\ddot{z} \;=\; f_x\ddot{x} + f_y\ddot{y} + f_{xx}\dot{x}^2 + \ldots\;. \tag{48.10}
+\end{equation}
+La cantidad a minimizar es
+\begin{equation}
+(F_1 - m\ddot{x})^2 + (F_2 - m\ddot{y})^2 + (F_3 - m\ddot{z})^2, \tag{48.11}
+\end{equation}
+donde $\ddot{z}$ está dada por (48.10). Las variables independientes son $\ddot{x}$, $\ddot{y}$. Esto produce:
+\begin{align}
+F_1 - m\ddot{x} + (F_3 - m\ddot{z})f_x &= 0, \notag\\
+F_1 - m\ddot{y} + (F_3 - m\ddot{z})f_y &= 0, \tag{48.12}
+\end{align}
+y estas son las ecuaciones de movimiento.
+
+Gauss estaba muy apegado a este principio porque representaba una perfecta analogía física con el ``método de mínimos cuadrados'' (descubierto por él e independientemente por Legendre), en el ajuste de errores. Si una relación funcional involucra ciertos parámetros que deben determinarse por observaciones, el cálculo es directo mientras el número de observaciones coincide con el número de parámetros desconocidos. Pero si el número de observaciones excede el número de parámetros, las ecuaciones se vuelven contradictorias a causa de los errores de observación. El valor hipotético de la función menos el valor observado es el ``error.'' La suma de los cuadrados de todos los errores individuales se forma, y los parámetros del problema se determinan por el principio de que esta suma debe ser un mínimo.
+
+El principio de minimizar la cantidad $Z$ es completamente análogo al procedimiento esbozado arriba. Los $3N$ términos de la suma (48.7) corresponden a $3N$ observaciones. Este número está en exceso del número de incógnitas $\ddot{q}_i$, a causa de las $m$ condiciones cinemáticas dadas. El ``error'' está representado por la desviación de la fuerza impresa respecto de la fuerza de inercia ``masa por aceleración.'' Incluso el factor $1/m_i$ en la expresión de $Z$ puede interpretarse como un ``factor de peso,'' en analogía con el caso de observaciones de diferente calidad que se ponderan de acuerdo con su fiabilidad estimada.
+
+Aunque la condición (48.6) establece a primera vista solo el valor estacionario de $Z$, podemos demostrar fácilmente que en el caso presente el valor estacionario conduce automáticamente a un mínimo, sin ninguna condición adicional. Esto se deduce del hecho de que $Z$ ---siendo una suma de términos esencialmente positivos--- debe tener un mínimo en algún punto. Por lo tanto, si la condición para el valor estacionario da una solución única, esa solución debe dar el mínimo de $Z$. Ahora la unicidad de la solución proporcionada por el principio gaussiano puede establecerse como sigue. Hemos visto en el ejemplo anterior que $\ddot{z}$ resulta ser una función \textit{lineal} de $\ddot{x}$ e $\ddot{y}$. En general, no importa cuáles sean las condiciones cinemáticas, al diferenciar dos veces siempre obtenemos relaciones \textit{lineales} entre las aceleraciones. Si eliminamos las aceleraciones excedentes a partir de estas condiciones, la expresión resultante para $Z$ será nuevamente una función cuadrática de las aceleraciones restantes, que ahora pueden variarse libremente. De aquí obtenemos un sistema de ecuaciones \textit{lineales} que tiene una solución única.
+
+El principio gaussiano de mínima restricción es así un verdadero principio de mínimo, comparable con el principio de mínima acción, pero más simple en que no requiere una integración respecto al tiempo. Sin embargo, esta ventaja se ve más que compensada por la desventaja de que se requieren las \textit{aceleraciones}, mientras que el principio de mínima acción solo necesita las velocidades. Esto coloca al principio de Gauss en una posición notablemente inferior. Por otra parte, puede usarse para fuerzas no holónomas no menos que para las holónomas, sin perder su carácter de mínimo, mientras que el principio de mínima acción no puede formularse como un principio de mínimo si las fuerzas o las condiciones auxiliares son no holónomas.
+
+Hertz\footnote{Cf.\ H.\ Hertz, \textit{Principles of Mechanics} (Londres, Macmillan, 1900).} dio una interpretación geométrica sorprendente del principio gaussiano para el caso especial donde las fuerzas impresas se anulan. Mostró que en este caso la restricción $Z$ puede interpretarse como la ``curvatura geodésica'' del punto $C$ que representa la posición del sistema mecánico en un espacio euclidiano de $3N$ dimensiones con las coordenadas rectangulares $\sqrt{m_i}\,x_i$, $\sqrt{m_i}\,y_i$, $\sqrt{m_i}\,z_i$ (cf.\ cap.\ \textsc{i}, secciones 4 y 5). Nuestro punto está confinado a permanecer dentro de un cierto subespacio de ese espacio de $3N$ dimensiones, debido a las restricciones dadas. El principio de que $Z$ se convierta en un mínimo puede ahora formularse como el principio de que el punto $C$ en movimiento intenta reducir la curvatura de su trayectoria al menor valor compatible con las restricciones dadas. Esto significa que la trayectoria del punto $C$ tiende a ser \textit{tan recta como sea posible}. Este principio hertziano de la ``trayectoria más recta'' pone al principio gaussiano en estrecha relación con el de Jacobi, que alcanza el mismo objetivo mucho más directamente, minimizando la longitud de arco del espacio de configuración. Las ``trayectorias de mínima curvatura'' hertzianas pueden interpretarse como \textit{las líneas geodésicas de aquel espacio de configuración curvado que está embebido en el espacio euclidiano plano de $3N$ dimensiones de Hertz} (cf.\ cap.\ \textsc{i}, sección 5).
+
+Appell\footnote{P.\ E.\ Appell, ``\textit{Sur une forme g\'en\'erale des \'equations de la dynamique}'' (\textit{M\'emorial des sciences math\'em.}, fasc.\ 1, París, Gauthier-Villars, 1925).} dio una formulación modificada del principio gaussiano que lo hizo particularmente adecuado para la derivación de las ecuaciones de movimiento en el caso de condiciones no holónomas y en casos donde es deseable emplear variables cinemáticas del tipo considerado en la sección 2.
+
+\begin{quote}
+\textit{Resumen.} Mediante una forma especial de variación, Gauss logró transformar el principio de d'Alembert en un genuino principio de mínimo en el cual una cantidad escalar ---llamada por Gauss la ``restricción''--- es minimizada, considerando las aceleraciones como las variables del problema de mínimo. Como principio de mínimo, el principio de mínima restricción es paralelo al principio de mínima acción. Es más simple que este último principio en que no requiere el cálculo de variaciones porque no hay integral definida, sino una función ordinaria, que debe minimizarse. Sin embargo, la gran desventaja del principio es que requiere la evaluación de las aceleraciones; esto, en general, involucra cálculos bastante engorrosos y elaborados, mientras que en el principio de mínima acción todo se deduce de una función escalar que no contiene derivadas superiores a las primeras.
+\end{quote}
+
+\end{document}

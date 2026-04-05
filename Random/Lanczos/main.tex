@@ -1,0 +1,108 @@
+\documentclass[12pt,oneside]{book}
+
+% ======================
+% Codificación e idioma
+% ======================
+\usepackage[spanish, es-noquoting]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+
+% ======================
+% Tipografía (mejor calidad)
+% ======================
+\usepackage{lmodern}
+\usepackage{microtype}
+
+% ======================
+% Matemáticas (núcleo duro)
+% ======================
+\usepackage{amsmath, amssymb, amsthm, mathtools}
+\numberwithin{equation}{chapter}
+
+% ======================
+% Física (útil pero controlado)
+% ======================
+\usepackage{physics} % cuidado: no redefinir manualmente cosas encima
+
+% ======================
+% Gráficos (por si luego aparecen)
+% ======================
+\usepackage{graphicx}
+
+% ======================
+% Notas al pie más estables
+% ======================
+\usepackage[bottom]{footmisc}
+
+% ======================
+% Enumeraciones finas
+% ======================
+\usepackage{enumitem}
+
+% ======================
+% Márgenes
+% ======================
+\usepackage[a4paper,margin=2.5cm]{geometry}
+
+% ======================
+% Hipervínculos (si compilas PDF)
+% ======================
+\usepackage[hidelinks]{hyperref}
+
+% ======================
+% Ajustes finos para texto científico
+% ======================
+\setlength{\parskip}{0.5em}
+\setlength{\parindent}{0pt}
+
+% ======================
+% Comandos útiles (mínimos y seguros)
+% ======================
+\newcommand{\dif}{\mathrm{d}}
+\newcommand{\e}{\mathrm{e}}
+
+% ======================
+% Inicio documento
+% ======================
+\begin{document}
+
+% ===========
+% Portada básica
+% ===========
+\begin{titlepage}
+\centering
+{\Large Cornelius Lanczos\par}
+\vspace{1cm}
+{\huge \textbf{Los Principios Variacionales de la Mecánica}\par}
+\vspace{1cm}
+{\large Transcripción por A. Lee\par}
+\vfill
+\end{titlepage}
+
+\tableofcontents
+\clearpage
+
+% ======================
+% CONTENIDO
+% ======================
+
+% Ejemplo: aquí pegas tus bloques generados
+
+% ---------- Introducción ----------
+\input{lib/Introduction}
+\input{lib/Chapter1}
+\input{lib/Chapter2}
+\input{lib/Chapter3}
+\input{lib/Chapter4}
+\input{lib/Chapter5}
+
+% --- pega aquí tu contenido traducido ---
+% (lo que ya tienes del archivo)
+
+% \input{cap1_p1-5.tex}
+% \input{cap1_p6-10.tex}
+
+% ======================
+% Fin
+% ======================
+\end{document}

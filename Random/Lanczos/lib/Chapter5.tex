@@ -1,0 +1,1279 @@
+\documentclass[12pt,a4paper]{book}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish]{babel}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{geometry}
+\geometry{margin=2.5cm}
+\usepackage{setspace}
+\onehalfspacing
+
+\newcommand{\vect}[1]{\mathbf{#1}}
+\newcommand{\deltabar}{\overline{\delta w^e}}
+
+\begin{document}
+
+\chapter{Las ecuaciones lagrangianas del movimiento}
+
+\textit{Introducción.} Llegamos ahora a los típicos ``principios variacionales'', es decir, aquellos principios que operan con el mínimo---o más generalmente el valor estacionario---de una integral definida. El carácter poligénico de la fuerza de inercia puede superarse si integramos con respecto al tiempo. Mediante este procedimiento, el problema de la dinámica se reduce a la investigación de un escalar integral. La condición para el valor estacionario de esta integral proporciona todas las ecuaciones del movimiento.
+
+A pesar de los diversos nombres conectados con estos principios---Euler, Lagrange, Jacobi, Hamilton---todos están estrechamente relacionados entre sí, y el nombre ``principio de mínima acción'', si se toma en el sentido más amplio, se aplica a todos ellos.
+
+En nuestra exposición de estos principios no seguiremos el desarrollo histórico, sino que comenzaremos con el ``principio de Hamilton'', que es la transformación más directa y natural del principio de d'Alembert en un principio de mínimo. A partir de este, podemos obtener por especialización la forma más antigua del principio utilizada por Euler y Lagrange, y asimismo el principio de Jacobi.
+
+\section{El principio de Hamilton.}
+
+El principio de d'Alembert opera con una diferencial no integrable. Una cierta cantidad infinitesimal $\overline{\delta w^e}$---el trabajo virtual total realizado por las fuerzas impresas e inerciales---se iguala a cero. Las dos partes del trabajo realizado son de naturaleza muy diferente. Mientras que el trabajo virtual de las fuerzas impresas es una diferencial monogénica, deducible de una única función, la función de trabajo, el trabajo virtual de las fuerzas inerciales no puede deducirse de una única función, sino que debe formarse para cada partícula por separado. Esto coloca a las fuerzas inerciales en una gran desventaja comparadas con las fuerzas impresas. Es de la mayor importancia teórica y práctica que esta situación pueda remediarse mediante una transformación que lleva el principio de d'Alembert a una forma monogénica. Aunque fue utilizado implícitamente por Euler y Lagrange, fue Hamilton quien primero transformó el principio de d'Alembert, mostrando que una integración con respecto al tiempo convierte el trabajo realizado por las fuerzas inerciales en una forma monogénica.
+
+%%% Página 112 %%%
+
+Multipliquemos $\overline{\delta w^e}$ por $dt$ e integremos entre los límites $t = t_1$ y $t = t_2$:
+\begin{equation}
+\int_{t_1}^{t_2} \overline{\delta w^e} \, dt \equiv \int_{t_1}^{t_2} \sum \left[ \vect{F}_i - \frac{d}{dt}(m_i \vect{V}_i) \right] \cdot \delta \vect{R}_i \, dt \,. \tag{51.1}
+\end{equation}
+
+Separamos el lado derecho en dos partes. La primera parte puede escribirse como
+\begin{equation}
+\int_{t_1}^{t_2} \sum \vect{F}_i \cdot \delta \vect{R}_i \, dt = - \int_{t_1}^{t_2} \delta V \, dt = - \delta \int_{t_1}^{t_2} V \, dt. \tag{51.2}
+\end{equation}
+
+(Suponemos que la función de trabajo es independiente de las velocidades y ponemos $V = -U$). En la segunda parte, puede realizarse una integración por partes:
+\begin{equation}
+- \int_{t_1}^{t_2} \frac{d}{dt}(m_i \vect{V}_i) \cdot \delta \vect{R}_i \, dt = - \int_{t_1}^{t_2} \frac{d}{dt}(m_i \vect{V}_i \cdot \delta \vect{R}_i) \, dt + \int_{t_1}^{t_2} m_i \vect{V}_i \cdot \frac{d}{dt}(\delta \vect{R}_i) \, dt. \tag{51.3}
+\end{equation}
+
+La primera parte de esta suma es integrable y obtenemos un término de frontera:
+\begin{equation}
+- \left[ m_i \vect{V}_i \cdot \delta \vect{R}_i \right]_{t_1}^{t_2}, \tag{51.4}
+\end{equation}
+
+mientras que la segunda parte, haciendo uso de la naturaleza intercambiable de la variación y la diferenciación (véase ec.\ (29.4)), puede escribirse como
+\begin{align}
+\int_{t_1}^{t_2} m_i \vect{V}_i \cdot \frac{d}{dt} \delta \vect{R}_i \, dt &= \int_{t_1}^{t_2} m \vect{V}_i \cdot \delta \vect{V}_i \, dt \notag \\
+&= \tfrac{1}{2} \int_{t_1}^{t_2} m_i \, \delta(\vect{V}_i \cdot \vect{V}_i) \, dt = \tfrac{1}{2} \, \delta \int_{t_1}^{t_2} m_i v_i^2 \, dt. \tag{51.5}
+\end{align}
+
+Sumando sobre todas las partículas obtenemos finalmente:
+\begin{align}
+\int_{t_1}^{t_2} \overline{\delta w^e} \, dt &= \delta \int_{t_1}^{t_2} \tfrac{1}{2} \sum m_i v_i^2 \, dt - \delta \int_{t_1}^{t_2} V \, dt \notag \\
+&\quad - \left[ \sum m_i \vect{V}_i \cdot \delta \vect{R}_i \right]_{t_1}^{t_2}. \tag{51.6}
+\end{align}
+
+%%% Página 113 %%%
+
+Introducimos la energía cinética $T$ del sistema mecánico según la definición (15.9) y además definimos
+\begin{equation}
+L = T - V. \tag{51.7}
+\end{equation}
+
+Esta función $L$, definida como el exceso de la energía cinética sobre la energía potencial, es la cantidad más fundamental en el análisis matemático de los problemas mecánicos. Se la denomina frecuentemente como la ``función lagrangiana.''
+
+Con estas definiciones podemos escribir (51.6) en la forma:
+\begin{equation}
+\int_{t_1}^{t_2} \overline{\delta w^e} \, dt = \delta \int_{t_1}^{t_2} L \, dt - \left[ \sum m_i \vect{V}_i \cdot \delta \vect{R}_i \right]_{t_1}^{t_2}. \tag{51.8}
+\end{equation}
+
+Hasta ahora las variaciones $\delta \vect{R}_i$ son cambios virtuales arbitrarios de los vectores de posición $\vect{R}_i$. Ahora requerimos que los $\delta \vect{R}_i$ \textit{se anulen en los dos límites} $t_1$ y $t_2$:
+\begin{align}
+\delta \vect{R}_i \,(t_1) &= 0, \notag \\
+\delta \vect{R}_i \,(t_2) &= 0. \tag{51.9}
+\end{align}
+
+Esto significa que se supone que la posición del sistema mecánico está dada para $t = t_1$ y $t = t_2$, y no se permiten variaciones en estos límites. Decimos que ``variamos entre límites definidos'', porque las posiciones límite del sistema están prescritas. En ese caso, el término de frontera en el lado derecho de (51.8) se anula y \textit{la integral con respecto al tiempo del trabajo virtual realizado por las fuerzas efectivas se convierte en la variación de una integral definida}:
+\begin{equation}
+\int_{t_1}^{t_2} \overline{\delta w^e} \, dt = \delta \int_{t_1}^{t_2} L \, dt = \delta A, \tag{51.10}
+\end{equation}
+con
+\begin{equation}
+A = \int_{t_1}^{t_2} L \, dt. \tag{51.11}
+\end{equation}
+
+Puesto que el principio de d'Alembert requiere la anulación de $\overline{\delta w^e}$ en todo instante, el lado izquierdo de (51.10) también se anula. Por lo tanto, el principio de d'Alembert puede reformularse como sigue:
+\begin{equation}
+\delta A = 0. \tag{51.12}
+\end{equation}
+
+Este es el ``principio de Hamilton'', que establece que el movimiento de un sistema mecánico arbitrario ocurre de tal manera que \textit{la integral definida $A$ se vuelve estacionaria para variaciones arbitrarias posibles de la configuración del sistema, siempre que las configuraciones inicial y final del sistema estén prescritas}.
+
+%%% Página 114 %%%
+
+Hamilton dio una formulación matemática mejorada de un principio que estaba bien establecido por las investigaciones fundamentales de Euler y Lagrange; el proceso de integración empleado por él era asimismo conocido por Lagrange. El nombre ``principio de Hamilton'', acuñado por Jacobi, no fue adoptado por los científicos del siglo pasado. Entró en uso, sin embargo, a través de los libros de texto de fecha más reciente.
+
+Nuestro razonamiento que condujo al principio de Hamilton puede seguirse en el orden opuesto. Podemos partir del postulado de que $\delta A$ se anula para variaciones arbitrarias de posición, transformar el lado izquierdo de (51.10) y deducir la anulación de $\overline{\delta w^e}$, que es el principio de d'Alembert. Esto muestra que el principio de Hamilton y el principio de d'Alembert son matemáticamente equivalentes y sus alcances son los mismos, siempre que las fuerzas impresas que actúan sobre el sistema mecánico sean monogénicas. Para fuerzas poligénicas, la transformación del principio de d'Alembert en un principio de mínimo---o estrictamente hablando, de valor estacionario---no es posible. Puesto que las condiciones cinemáticas holonómicas son mecánicamente equivalentes a fuerzas monogénicas, las condiciones no holonómicas son equivalentes a fuerzas poligénicas; podemos decir que \textit{el principio de Hamilton es válido para sistemas mecánicos arbitrarios que se caracterizan por fuerzas monogénicas y condiciones auxiliares holonómicas}. La naturaleza \textit{conservativa} de estas fuerzas y condiciones auxiliares---es decir, su independencia del tiempo---\textit{no} es requerida.
+
+Mientras que el principio de d'Alembert hace una declaración independiente en cada instante de tiempo durante el movimiento, el principio de Hamilton incluye todas estas en una sola declaración. El movimiento se toma \textit{como un todo}.
+
+La cualidad unificadora de un principio variacional es verdaderamente notable. Aunque el desarrollo moderno de la física se desvía esencialmente del curso más antiguo a causa de la relatividad y la teoría cuántica, sin embargo la idea de derivar las ecuaciones básicas de la naturaleza a partir de un principio variacional nunca ha sido abandonada, y tanto las ecuaciones de la relatividad como las ecuaciones de la mecánica ondulatoria comparten con las ecuaciones más antiguas de la física la característica común de que son derivables de un ``principio de mínima acción.'' Es solo la función lagrangiana $L$ la que debe definirse de una manera diferente.
+
+%%% Página 115 %%%
+
+\begin{quote}
+\textit{Resumen.} Mediante una integración con respecto al tiempo, el trabajo virtual realizado por la fuerza de inercia puede transformarse en una variación verdadera. El principio de d'Alembert puede así reformularse matemáticamente como el principio de Hamilton, el cual requiere que una integral definida sea estacionaria, a saber, la integral temporal de la función lagrangiana $L$, donde $L$ es la diferencia entre las energías cinética y potencial. La variación debe ocurrir entre posiciones extremas definidas.
+\end{quote}
+
+\section{Las ecuaciones lagrangianas del movimiento y su invariancia respecto a transformaciones de punto.}
+
+En la derivación del principio de mínima acción se utilizan coordenadas rectangulares. Sin embargo, el sistema mecánico puede estar sujeto a condiciones cinemáticas; si estas condiciones son holonómicas, las $3N$ coordenadas de posición rectangulares del sistema serán expresables en términos de $n$ coordenadas generalizadas $q_1, \ldots, q_n$, como en (12.8) y (18.3). Entonces, tanto la energía potencial como la cinética son funciones de las coordenadas generalizadas y las velocidades generalizadas $\dot{q}_1, \ldots, \dot{q}_n$. El movimiento del sistema puede ahora visualizarse como el de un único $C$-punto en el espacio de configuración $n$-dimensional de las $q_i$. Sin embargo, podemos ir un paso más allá en la geometrización de la dinámica trazando el tiempo $t$ como una dimensión adicional y así operar con un espacio de configuración ``extendido'' de $n + 1$ dimensiones que comprende las coordenadas generalizadas \textit{y el tiempo $t$} como variables independientes.\footnote{La idea de añadir el tiempo $t$ como una dimensión adicional para la geometrización de la mecánica fue introducida por primera vez por Lagrange en su \textit{Mécanique Analytique} (1788).} En este espacio, las fases sucesivas del movimiento aparecen como puntos sucesivos de una \textit{curva}. Esta curva, la ``línea de mundo'' del $C$-punto, contiene en forma geométrica la historia física completa del sistema mecánico.
+
+Ahora bien, en esta representación la variación de la posición del sistema en cualquier instante entre $t_1$ y $t_2$ se convierte en una variación de la curva $C$,
+
+%%% Página 116 %%%
+
+es decir, de la línea de mundo del sistema mecánico. Puesto que las dos posiciones extremas del sistema en los tiempos $t_1$ y $t_2$ están dadas, la variación ocurre entre límites definidos, lo que significa que la curva variada $C'$ tiene los mismos puntos extremos $A$ y $B$. El tiempo $t$ no desempeña ningún papel especial en esta representación y no necesita ser considerado como la variable independiente. Uno podría caracterizar la curva $C$ en forma paramétrica igualmente bien, dando todas las $q_i$ y el tiempo $t$ como funciones de un parámetro $\tau$. \\
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.62\linewidth]{Curve tao chap5.png}
+    \label{fig:placeholder}
+\end{figure}
+
+Las condiciones necesarias y suficientes para que la integral de acción (51.11) sea estacionaria son (véase cap.~\textsc{ii}):
+\begin{equation}
+\frac{d}{dt}\frac{\partial L}{\partial \dot{q}_i} - \frac{\partial L}{\partial q_i} = 0, \quad (i = 1, \ldots, n). \tag{52.1}
+\end{equation}
+
+Es un hecho notable que el problema de minimizar una integral definida es completamente independiente de cualquier sistema de referencia especial. Supongamos que el conjunto original de coordenadas $q_i$ se cambia a un nuevo conjunto de coordenadas mediante una transformación de punto (14.3). Esta transformación de punto puede visualizarse como una aplicación del espacio $q$ $n$-dimensional sobre sí mismo: (cf.\ cap.~\textsc{i}, sección~4). En el espacio $(q,t)$, la curva $C$ se transforma en una nueva curva
+
+%%% Página 117 %%%
+
+$\bar{C}$. La curva variada $C'$ se transforma en una correspondiente variación $\bar{C}'$ de $\bar{C}$. Variación entre límites definidos en el espacio $(q,t)$ significa variación entre límites definidos en el espacio $(\bar{q},t)$; (cf.\ Fig.~5). La anulación de la variación de la integral $A$ requiere la anulación de esta variación cuando se expresa en términos de las nuevas coordenadas. De aquí que \textit{las ecuaciones diferenciales de Euler-Lagrange permanecen válidas en el nuevo sistema de referencia}. La función lagrangiana $L$ y la integral de acción $A$ son invariantes de la transformación. Simplemente sustituimos para $q_i$ las funciones que las expresan en términos de las nuevas variables $\bar{q}_i$. La \textit{forma} de $L$ en las nuevas variables es bastante diferente de lo que era antes, pero su \textit{valor} permanece el mismo. De manera similar, el valor de la integral de acción $A$, tomada a lo largo de la curva $C$, y luego a lo largo de la curva $\bar{C}$, permanece el mismo. Las ecuaciones lagrangianas del movimiento, si se toman separadamente para un cierto índice $i$, no se transforman en las ecuaciones correspondientes en el nuevo sistema de referencia. Pero \textit{el conjunto completo de ecuaciones} se transforma en el conjunto correspondiente en el nuevo sistema de coordenadas,\footnote{Por esta razón usamos la palabra ``covariante'' en lugar de ``invariante'' si se involucra un sistema completo de ecuaciones.} porque el conjunto completo de ecuaciones lagrangianas expresa la anulación de la variación de la integral de acción $A$, y esta declaración es independiente de cualquier sistema especial de coordenadas.
+
+Puesto que $t$ es simplemente una variable adicional más, estas consideraciones permanecen válidas incluso si las relaciones entre las antiguas y las nuevas $q_i$ dependen del tiempo $t_1$ (véase cap.~\textsc{i}, sección~8). Este es el caso si los fenómenos mecánicos se describen en un sistema de referencia que está en movimiento. \textit{Las ecuaciones lagrangianas del movimiento permanecen válidas incluso en sistemas de referencia arbitrariamente móviles.}
+
+La notable \textit{invariancia de las ecuaciones lagrangianas con respecto a transformaciones arbitrarias de punto} da a estas ecuaciones una posición única en el desarrollo del pensamiento matemático. Estas ecuaciones se destacan como el primer ejemplo de ese ``principio de invariancia'' que fue una de las ideas directrices de las matemáticas del siglo 19 y que se ha convertido en de importancia dominante en la física contemporánea.
+
+La invariancia de las ecuaciones lagrangianas del movimiento es una de sus características más importantes. Hace posible ajustar
+
+%%% Página 118 %%%
+
+el tipo de coordenadas empleadas a la naturaleza del problema. No existe un método general conocido por el cual las ecuaciones lagrangianas puedan resolverse. Lo mejor que podemos hacer es intentar encontrar un sistema de coordenadas en el cual las ecuaciones sean al menos parcialmente integrables.
+
+Otra gran ventaja del principio de mínima acción, comparada con el principio de d'Alembert, es el uso de la \textit{única función escalar} $L$. Ya no es necesario encontrar la aceleración de cada partícula y el trabajo virtual realizado por todas las fuerzas inerciales. \textit{La función escalar $L = T - V$ determina la dinámica completa del sistema dado.}
+
+\textit{Problema~1.} Caracterizar la posición de un péndulo compuesto por el ángulo que el plano que pasa por el eje de suspensión y el centro de masa forma con la vertical. Mostrar que
+\[
+T = \tfrac{1}{2} I \dot{\theta}^2,
+\]
+donde $I$ es el momento de inercia alrededor del eje de suspensión, y
+\[
+V = M g l \,(1 - \cos\theta),
+\]
+donde $M$ es la masa del péndulo y $l$ la distancia del centro de masa al eje de suspensión.
+
+Formar la ecuación lagrangiana del movimiento e integrarla suponiendo que $\theta$ sea pequeño.
+
+\textit{Problema~2.} Caracterizar la posición de un planeta por las coordenadas polares $r$, $\theta$. Mostrar que:
+\[
+T = \frac{m}{2}(\dot{r}^2 + r^2\dot{\theta}^2),
+\]
+\[
+V = -\frac{fmM}{r}\,,
+\]
+suponiendo el sol fijo en el origen.
+
+Formar las ecuaciones lagrangianas del movimiento.
+
+\textit{Problema~3.} Caracterizar la posición de un péndulo esférico de longitud $l$ por coordenadas polares esféricas $r$, $\theta$, $\phi$ y obtener:
+\[
+T = \frac{m}{2} l^2 (\dot{\theta}^2 + \sin^2\theta\,\dot{\phi}^2),
+\]
+\[
+V = mgl\,(1 - \cos\theta).
+\]
+
+Formar las ecuaciones lagrangianas del movimiento.
+
+%%% Página 119 %%%
+
+Las dos funciones básicas $T$ y $V$ corresponden a los dos lados de la ecuación newtoniana: ``masa por aceleración igual a fuerza''. Esta ecuación puede interpretarse como el equilibrio entre la fuerza de inercia y la fuerza motriz. Un equilibrio similar puede establecerse en el tratamiento analítico separando los dos escalares básicos de la mecánica analítica: la energía cinética $T$ y la función de trabajo $U$. Las ecuaciones lagrangianas pueden escribirse como
+\begin{equation}
+\frac{d}{dt}\frac{\partial T}{\partial \dot{q}_i} - \frac{\partial T}{\partial q_i} = -\frac{d}{dt}\frac{\partial U}{\partial \dot{q}_i} + \frac{\partial U}{\partial q_i}. \tag{52.2}
+\end{equation}
+
+Las $n$ cantidades
+\begin{equation}
+\frac{d}{dt}\frac{\partial T}{\partial \dot{q}_i} - \frac{\partial T}{\partial q_i} \tag{52.3}
+\end{equation}
+
+representan las $n$ componentes de la fuerza de inercia en el espacio de configuración. Las $n$ cantidades
+\begin{equation}
+-\frac{d}{dt}\frac{\partial U}{\partial \dot{q}_i} + \frac{\partial U}{\partial q_i} \tag{52.4}
+\end{equation}
+
+representan de manera similar las $n$ componentes de la fuerza motriz.
+
+Ordinariamente, el primer término de (52.4) se omite bajo la suposición de que $U$ es una función solo de las $q_i$. Además, $U$ se reemplaza por $-V$. Sin embargo, no existe razón inherente para excluir la posibilidad de que la función de trabajo pueda depender de las velocidades $\dot{q}_i$. En la forma relativista de la mecánica esto es de hecho el caso; la fuerza electromagnética que actúa sobre una partícula cargada puede deducirse de una función de trabajo dependiente de la velocidad.
+
+\begin{quote}
+\textit{Resumen.} El principio de Hamilton conduce a un sistema de ecuaciones diferenciales simultáneas de segundo orden, las ecuaciones lagrangianas del movimiento. Estas ecuaciones tienen la notable propiedad de permanecer invariantes con respecto a transformaciones arbitrarias de las coordenadas.
+\end{quote}
+
+\section{El teorema de la energía como consecuencia del principio de Hamilton.}
+
+%%% Página 120 %%%
+La ley fundamental de la conservación de la energía, derivada previamente como consecuencia del principio de d'Alembert (cf.\ cap.\ \textsc{iv}, sección~3), puede establecerse ahora como consecuencia del principio de Hamilton. Esta nueva derivación pondrá de manifiesto la relación general existente entre la energía total de un sistema mecánico y la función lagrangiana $L$.
+
+Para este propósito usamos una vez más aquel proceso variacional especial que consideramos antes cuando relacionamos el principio de d'Alembert con el teorema de la energía. Hacemos que el desplazamiento virtual $\delta q_i$ en cada instante coincida con el desplazamiento real $dq_i$ que tiene lugar durante el tiempo infinitesimal $dt = \epsilon$. Esto significa que ponemos
+\begin{equation}
+\delta q_i = dq_i = \epsilon\,\dot{q}_i. \tag{53.1}
+\end{equation}
+
+\textit{Problema~1.} Hacer un gráfico de esta variación en el diagrama $q$, $t$ y mostrar que equivale a un \textit{desplazamiento horizontal de la curva real hacia la izquierda} en la cantidad $\epsilon$. No olvidar que el tiempo $t$ \textit{no} se varía, de acuerdo con nuestra convención general; (cf.\ cap.~\textsc{ii}, sección~8).
+
+Esta variación altera las coordenadas $q_i(t)$ incluso en los dos extremos $t_1$ y $t_2$, y por tanto no podemos hablar de una ``variación entre límites definidos.'' Sabemos que las ecuaciones del movimiento se derivaron del principio
+\begin{equation}
+\delta \int_{t_1}^{t_2} L \, dt = 0, \tag{53.2}
+\end{equation}
+siempre que las $q_i$ no se varíen en los dos extremos. Pero ahora deseamos ver qué sucede con la variación de la integral de acción si \textit{no} nos adherimos a la condición de variar entre límites definidos, sino que variamos la posición incluso en los límites. El método de integración por partes en la transformación de la variación de una integral definida [cf.\ (210.4)] muestra que la variación en los límites causa la aparición de un \textit{término de frontera}. Obtenemos:
+\begin{equation}
+\delta \int_{t_1}^{t_2} L \, dt = \left[ \sum_{i=1}^{n} \frac{\partial L}{\partial \dot{q}_i} \,\delta q_i \right]_{t_1}^{t_2}. \tag{53.3}
+\end{equation}
+
+Antes de continuar nuestras deducciones, introduciremos una notación de importancia fundamental. Las derivadas parciales de la función lagrangiana con respecto a las velocidades desempeñan un papel tan fundamental en todas las consideraciones de la mecánica analítica que se ha creado un nombre y notación especiales para ellas. Ponemos
+
+%%% Página 121 %%%
+
+\begin{equation}
+p_i = \frac{\partial L}{\partial \dot{q}_i}\,, \tag{53.4}
+\end{equation}
+
+y llamamos a estos $p_i$ las componentes del ``momento generalizado'', porque si tratamos con una sola partícula libre y usamos coordenadas rectangulares, las tres cantidades $p_1$, $p_2$, $p_3$ se vuelven idénticas a las componentes rectangulares del momento $m\vect{v}$. En el caso general, las cantidades $p_i$ ni siquiera se asemejan a la definición elemental y deben considerarse como las componentes de un vector en el espacio de configuración. La importancia fundamental de los $p_i$ como un nuevo conjunto de variables independientes fue reconocida por Hamilton, quien desarrolló toda su teoría a partir de la constatación de que los momentos pueden manejarse como un nuevo conjunto de variables mecánicas. Pero incluso las ecuaciones lagrangianas ganan en simplicidad si introducimos los $p_i$ como un conjunto de variables intermedias y escribimos las ecuaciones del movimiento en la forma
+\begin{equation}
+\dot{p}_i = \frac{\partial L}{\partial q_i}. \tag{53.5}
+\end{equation}
+
+Con estos momentos, la ecuación (53.3) se convierte en
+\begin{equation}
+\delta \int_{t_1}^{t_2} L \, dt = \left[ \sum_{i=1}^{n} p_i \,\delta q_i \right]_{t_1}^{t_2}. \tag{53.6}
+\end{equation}
+
+Ahora, para la variación especial (53.1) de las $q_i$, podemos establecer una cierta relación entre la variación de $L$ y el cambio real infinitesimal de $L$ que ocurre durante el intervalo $dt$. Supongamos que nuestro sistema es \textit{escleronómico}, es decir, $L$ no contiene explícitamente el tiempo (cf.\ cap.~\textsc{i}, sección~8):
+\begin{equation}
+L = L(q_1, \ldots, q_n;\, \dot{q}_1, \ldots, \dot{q}_n). \tag{53.7}
+\end{equation}
+
+Entonces vemos de inmediato que la condición (53.1) conduce a una ecuación correspondiente para la variación de $L$:
+\begin{equation}
+\delta L = dL = \epsilon\,\dot{L}, \tag{53.8}
+\end{equation}
+y obtenemos
+\begin{equation}
+\delta \int_{t_1}^{t_2} L \, dt = \int_{t_1}^{t_2} \delta L \, dt = \int_{t_1}^{t_2} \epsilon\,\dot{L} \, dt = \epsilon \left[ L \right]_{t_1}^{t_2}, \tag{53.9}
+\end{equation}
+mientras que el lado derecho de (53.6) se convierte en
+\begin{equation}
+\left[ \sum p_i \,\delta q_i \right]_{t_1}^{t_2} = \epsilon \left[ \sum_{i=1}^{n} p_i \dot{q}_i \right]_{t_1}^{t_2}. \tag{53.10}
+\end{equation}
+
+%%% Página 122 %%%
+
+La ecuación (53.6) da así
+\begin{equation}
+\left[ \sum_{i=1}^{n} p_i \dot{q}_i - L \right]_{t_1}^{t_2} = 0. \tag{53.11}
+\end{equation}
+
+Esto significa que la cantidad $\sum p_i \dot{q}_i - L$ tiene el mismo valor en el tiempo $t = t_1$ que en el tiempo $t = t_2$. Puesto que, sin embargo, los límites $t_1$ y $t_2$ no entran en las ecuaciones del movimiento y $t_2$ puede elegirse arbitrariamente, obtenemos
+\begin{equation}
+\sum_{i=1}^{n} p_i \dot{q}_i - L = \text{const.} \tag{53.12}
+\end{equation}
+
+Este teorema fundamental no asume ninguna forma específica para $L$, excepto su independencia del tiempo $t$. Ahora bien, en las aplicaciones mecánicas del cálculo de variaciones, la función $L$ tiene usualmente la forma $T - V$ y tanto $T$ como $V$ son funciones de carácter definido. $T$ es una forma cuadrática en las velocidades $\dot{q}_i$ [cf.\ (15.16)]:
+\begin{equation}
+T = \tfrac{1}{2} \sum_{i,\,k=1}^{n} a_{ik}\,\dot{q}_i\,\dot{q}_k, \tag{53.13}
+\end{equation}
+
+---siendo los $a_{ik}$ funciones de las $q_i$--- mientras que $V$ es ordinariamente independiente de las velocidades. Bajo estas circunstancias tenemos
+\begin{equation}
+p_i = \frac{\partial T}{\partial \dot{q}_i} = \sum_{k=1}^{n} a_{ik}\,\dot{q}_k, \tag{53.14}
+\end{equation}
+y por tanto
+\begin{equation}
+\sum_{i=1}^{n} p_i \dot{q}_i = \sum_{i,\,k=1}^{n} a_{ik}\,\dot{q}_i\,\dot{q}_k = 2T. \tag{53.15}
+\end{equation}
+
+La ecuación (53.12) toma ahora la forma
+\begin{equation}
+2T - (T - V) = T + V = \text{const.} = E. \tag{53.16}
+\end{equation}
+
+Esta es la bien conocida \textit{ley de la conservación de la energía}.
+
+Nuestra deducción muestra que la forma habitual del teorema de la energía: ``la suma de las energías cinética y potencial es constante durante el movimiento'', se cumple solo bajo condiciones restrictivas definidas. No es suficiente que el sistema sea escleronómico. Es además necesario que la energía cinética sea una forma cuadrática en las velocidades y que la energía potencial no contenga las velocidades. Encontramos sistemas mecánicos con ``términos giroscópicos'' que son lineales y no cuadráticos en las
+
+%%% Página 123 %%%
+
+velocidades. Además, en la mecánica relativista la parte cinética de la función lagrangiana depende de las velocidades de una manera más complicada que en la mecánica newtoniana. Tales sistemas, si son escleronómicos, \textit{aún satisfacen una ley de conservación}. Pero esa ley toma la forma más general (53.12) que es válida para \textit{cualquier} forma de la función lagrangiana.
+
+Nótese que en el caso de sistemas mecánicos de \textit{un} grado de libertad, el teorema de la energía (53.12) conduce a una \textit{integración completa} del problema. La ecuación (53.12) es entonces de la forma
+\begin{equation}
+f(q, \dot{q}) = E, \tag{53.17}
+\end{equation}
+de la cual $\dot{q}$ puede hallarse:
+\begin{equation}
+\dot{q} = \varphi(E, q). \tag{53.18}
+\end{equation}
+
+Tenemos entonces
+\begin{equation}
+t = \int \frac{dq}{\varphi(E, q)} + \tau, \tag{53.19}
+\end{equation}
+
+que da $t$ como función de $q$. La función inversa da $q$ como función de $t$, con las dos constantes de integración $E$ y $\tau$.
+
+\textit{Problema~1.} Resolver el problema del oscilador lineal:
+\[
+T = \tfrac{1}{2}\,m\dot{x}^2, \quad V = \tfrac{1}{2}\,kx^2,
+\]
+con la ayuda del teorema de la energía.
+
+\textit{Problema~2.} Hacer lo mismo para el problema del péndulo compuesto, tratado en el Problema~1 de la sección~2. (Aquí la cuadratura conduce a una integral elíptica.)
+
+Podemos interpretar la cantidad
+\begin{equation}
+\Lambda = \sum_{i=1}^{n} p_i \dot{q}_i - L \tag{53.20}
+\end{equation}
+
+como la ``energía total'' del sistema mecánico. Es, junto con la función lagrangiana $L$, el escalar más importante asociado con un sistema mecánico. De hecho, veremos más adelante que en la forma hamiltoniana de la dinámica esta función $\Lambda$ toma precedencia sobre la función lagrangiana $L$, y, expresada en las variables propias, se convierte en la ``función hamiltoniana'' $H$ del sistema mecánico que reemplaza completamente la función lagrangiana $L$ original.
+
+%%% Página 124 %%%
+
+Es de interés ver qué sucede con la energía total $\Lambda$ si el sistema es reonómico, es decir, si $L$ depende del tiempo $t$ explícitamente:
+\begin{equation}
+L = L(q_1, \ldots, q_n;\, \dot{q}_1, \ldots, \dot{q}_n;\, t). \tag{53.21}
+\end{equation}
+
+En ese caso $\delta L$ y $dL$ ya no son iguales porque la variación $\delta L$ ocurre \textit{a un tiempo definido}, mientras que el cambio $dL$ ocurre durante el intervalo $dt$. En lugar de (53.8) obtenemos ahora la relación más general
+\begin{equation}
+\delta L = dL - \frac{\partial L}{\partial t}\,dt = \epsilon\left(\dot{L} - \frac{\partial L}{\partial t}\right), \tag{53.22}
+\end{equation}
+y nuestra ecuación anterior (53.11) tiene que generalizarse ahora como sigue:
+\begin{equation}
+\left[ \sum_{i=1}^{n} p_i \dot{q}_i - L \right]_{t_1}^{t_2} = -\int_{t_1}^{t_2} \frac{\partial L}{\partial t}\,dt. \tag{53.23}
+\end{equation}
+
+Esto muestra que la energía total $\Lambda$ ya no es una constante, sino que cambia de acuerdo con la siguiente ley:
+\begin{equation}
+\Delta\Lambda = -\int_{t_1}^{t_2} \frac{\partial L}{\partial t}\,dt. \tag{53.24}
+\end{equation}
+
+\textit{Problema~3.} Un péndulo simple cuelga de una polea fija. El otro extremo de la cuerda está en la mano de un observador que tira de la cuerda lentamente, acortando así la longitud del péndulo con velocidad uniforme. (Péndulo de Ehrenfest.) Mostrar que, despreciando la fricción, la amplitud de las oscilaciones aumenta de la siguiente manera. El cambio de la energía total desde la posición $\theta = 0$ a la siguiente posición $\theta = 0$ está dado por
+\[
+\Delta E = -\tfrac{1}{2}\frac{\Delta l}{l}\,E\,,
+\]
+donde $E$ es la constante de energía de las oscilaciones no perturbadas.
+
+\begin{quote}
+\textit{Resumen.} Para sistemas escleronómicos, las ecuaciones lagrangianas del movimiento proporcionan una primera integral de la forma $\sum p_i \dot{q}_i - L = E$, que puede interpretarse como la ley de la conservación de la energía si definimos el lado izquierdo de la ecuación como la energía total del sistema. Para los problemas habituales de la mecánica clásica, la suma $\sum p_i \dot{q}_i$ es igual a dos veces la energía cinética, en cuyo caso el teorema de la energía toma la forma $T + V = E$.
+\end{quote}
+
+%%% Página 125 %%%
+
+\section{Variables cinostéticas o ignorables y su eliminación.}
+
+Hemos mencionado antes que no puede darse un método general de integración de las ecuaciones lagrangianas. Es posible, sin embargo, que bajo circunstancias especiales pueda lograrse al menos una integración \textit{parcial}. Un ejemplo particularmente importante de tal situación es el caso de las variables ``ignorables'' o ``cinostéticas''.
+
+La función lagrangiana $L$ es generalmente una función de todas las coordenadas de posición $q_i$ y las velocidades $\dot{q}_i$. Ahora bien, puede suceder que una cierta variable $q_k$ no aparezca en la función lagrangiana, aunque $\dot{q}_k$ esté presente. La importancia fundamental de estas variables para la integración de las ecuaciones lagrangianas fue reconocida primero por Routh\footnote{E.~J.~Routh, \textit{Dynamics of Rigid Bodies} (Macmillan, 1877).} y algo más tarde por Helmholtz.\footnote{H.~V.~Helmholtz, \textit{Journal of Math.}, \textbf{97} (1884), p.~111.} Routh llamó a estas variables ``coordenadas ausentes'' mientras que J.~J.~Thomson se refiere a ellas como ``cinostéticas'' o ``coordenadas de velocidad.'' Helmholtz llama a las mismas coordenadas ``variables cíclicas'' mientras que el libro de texto de Whittaker (cf.\ Bibliografía) usa el nombre ``variables ignorables.'' El presente libro adopta la última expresión, pero en algunos casos el nombre ``cinostéticas'' parece más apropiado.
+
+Hemos visto que, después de introducir los ``momentos'' $p_k$ según la definición (53.4), podemos escribir las ecuaciones lagrangianas del movimiento en la siguiente forma:
+\begin{equation}
+\dot{p}_k = \frac{\partial L}{\partial q_k}. \tag{54.1}
+\end{equation}
+
+Ahora, si $q_k$ es una variable ignorable,
+\begin{equation}
+\frac{\partial L}{\partial q_k} = 0, \tag{54.2}
+\end{equation}
+y (54.1) puede integrarse de inmediato para dar
+\begin{equation}
+p_k = \text{const.} = c_k. \tag{54.3}
+\end{equation}
+
+\textit{El momento conectado con una variable ignorable es una constante durante el movimiento.} Este importante teorema tiene muchas aplicaciones físicas.
+
+%%% Página 126 %%%
+
+\textit{Problema~1.} Considerar el problema del movimiento planetario, tratado antes en el Problema~2 de la sección~2. Mostrar que la constancia del momento cinostético $p_\theta$ expresa la ley de las áreas de Kepler.
+
+\textit{Problema~2.} Examinar de manera similar el problema del péndulo esférico considerado en el Problema~3, sección~2, interpretando la constancia del momento cinostético.
+
+Puesto que $q_k$ no está presente en la derivada parcial $p_k = \partial L / \partial \dot{q}_k$, pero $\dot{q}_k$ sí lo está, podemos obtener $\dot{q}_k$ de (54.3) como una función de las variables y velocidades no ignorables. Por simplicidad de formalismo, restringimos nuestras consideraciones a una sola coordenada ignorable, siendo obvia la generalización a cualquier número. Suponemos que hemos arreglado los subíndices de las coordenadas $q_i$ de tal manera que la \textit{última} coordenada $q_n$ es la coordenada ignorable, de modo que
+\begin{equation}
+\frac{\partial L}{\partial \dot{q}_n} = c_n; \tag{54.4}
+\end{equation}
+y por lo tanto
+\begin{equation}
+\dot{q}_n = f(q_1, \ldots, q_{n-1};\, \dot{q}_1, \ldots, \dot{q}_{n-1};\, c_n;\, t). \tag{54.5}
+\end{equation}
+
+Siempre que encontremos $\dot{q}_n$ en las ecuaciones lagrangianas ($q_n$ misma no está presente), podemos reemplazarla por el lado derecho de (54.5). De aquí que el problema de integración de las ecuaciones lagrangianas puede reducirse a uno que involucra solo las variables no ignorables. Después de obtener la solución del problema reducido, finalmente ponemos las $q_i$ y $\dot{q}_i$---que son ahora funciones dadas de $t$---en la relación (54.5) y obtenemos $q_n$ por una cuadratura.
+
+Si este proceso de reducción puede llevarse a cabo después de escribir las ecuaciones lagrangianas del movimiento, puede plantearse la cuestión de si podríamos eliminar las variables ignorables \textit{antes} de escribir estas ecuaciones, es decir, en la formulación del problema variacional mismo. Sabemos que la primera variación del integral
+\begin{equation}
+A = \int_{t_1}^{t_2} L(q_1, \ldots, q_{n-1};\, \dot{q}_1, \ldots, \dot{q}_{n-1},\, \dot{q}_n;\, t) \, dt \tag{54.6}
+\end{equation}
+se anula para variaciones arbitrarias de las $q_k$ entre límites definidos. Si eliminamos $\dot{q}_n$ mediante la ecuación (54.5), nuestro problema se reduce de $n$ a $n-1$ grados de libertad \textit{desde el inicio}. Por lo tanto, podemos efectivamente simplificar el problema variacional dado
+
+%%% Página 127 %%%
+
+eliminando de antemano todas las coordenadas cinostéticas. Sin embargo, debemos tener en cuenta que la relación (54.5) hace de $q_n$ una función de las variables no ignorables en el sentido de que suponemos que la relación (54.4) se cumple no solo para el movimiento real sino también para el movimiento variado. Ahora bien, no hay objeción a esta restricción de la variación de $q_n$, puesto que la variación de $A$ se anula para variaciones \textit{arbitrarias} de todas las $q_k$. Sin embargo, la condición de que la variación de $q_n$ debe anularse en los dos extremos del intervalo es violada porque $q_n$ se obtiene de (54.5) por una cuadratura. De aquí que, a partir de la ecuación (53.3), ahora tenemos
+\begin{equation}
+\delta \int_{t_1}^{t_2} L \, dt = \left[ p_n\,\delta q_n \right]_{t_1}^{t_2}. \tag{54.7}
+\end{equation}
+
+Pero $p_n$, el momento cinostético, es constante a lo largo de toda la $C$-curva. De aquí que podemos escribir
+\begin{equation}
+\left[ p_n\,\delta q_n \right]_{t_1}^{t_2} = p_n \,\delta \int_{t_1}^{t_2} \dot{q}_n \, dt = \delta \int_{t_1}^{t_2} p_n \dot{q}_n \, dt, \tag{54.8}
+\end{equation}
+de modo que (54.7) se convierte en
+\begin{equation}
+\delta \int_{t_1}^{t_2} (L - p_n \dot{q}_n) \, dt = 0. \tag{54.9}
+\end{equation}
+
+Pongamos
+\begin{equation}
+L - c_n \dot{q}_n = \bar{L}, \tag{54.10}
+\end{equation}
+y llamemos $\bar{L}$ la ``función lagrangiana modificada.'' El resultado de nuestra deducción puede ahora enunciarse como sigue: La minimización de la integral de acción $A$ con la variable ignorable $q_n$ puede reducirse a la minimización de la integral de acción modificada
+\begin{equation}
+\bar{A} = \int_{t_1}^{t_2} \bar{L}\,dt \tag{54.11}
+\end{equation}
+
+\textit{sin} la variable ignorable $q_n$, después de eliminar $\dot{q}_n$ con ayuda de la integral del momento $p_n = c_n$.
+
+El proceso de eliminación de una variable ignorable puede dividirse en tres pasos.
+
+1. Escribir la ecuación para el momento cinostético
+\begin{equation}
+\frac{\partial L}{\partial \dot{q}_n} = c_n. \tag*{$(a)$}
+\end{equation}
+
+%%% Página 128 %%%
+
+2. Modificar la función lagrangiana dada como
+\begin{equation}
+\bar{L} = L - c_n \dot{q}_n. \tag*{$(\beta)$}
+\end{equation}
+
+3. Eliminar la velocidad ignorable $\dot{q}_n$ resolviendo la ecuación $(a)$ para $\dot{q}_n$ y sustituyendo en $(\beta)$. Entonces la nueva función lagrangiana $\bar{L}$ no depende de la variable ignorable, y el problema variacional original de $n$ grados de libertad se reduce a un nuevo problema variacional de $n-1$ grados de libertad.
+
+Este proceso de reducción es el mismo si el problema dado contiene más de una coordenada ignorable. La función lagrangiana modificada tiene entonces que definirse como
+\begin{equation}
+\bar{L} = L - \sum c_k \dot{q}_k, \tag{54.12}
+\end{equation}
+extendiéndose la suma en el segundo término sobre todas las coordenadas ignorables.
+
+\textit{Problema~1.} Aplicar el proceso general de reducción al problema del movimiento planetario estudiado antes (cf.\ Problema~2 de la sección~2), eliminando $\theta$. El problema reducido tiene un solo grado de libertad y puede integrarse por el teorema de la energía.
+
+\textit{Problema~2.} Tratar de la misma manera el problema del péndulo esférico (cf.\ Problema~3 de la sección~2).
+
+\textit{Problema~3.} De nuevo, considerar aquellas coordenadas ignorables que están presentes pero cuyas \textit{velocidades} no aparecen en la función lagrangiana. Mostrar que una variable de esta naturaleza puede eliminarse algebraicamente con ayuda de la ecuación
+\[
+\frac{\partial L}{\partial q_n} = 0,
+\]
+\textit{sin} modificar la función lagrangiana $L$.
+
+La eliminación de una variable ignorable tiene consecuencias interesantes para el problema reducido. La energía cinética $T$ del sistema original puede escribirse [cf.\ (53.13)] como:
+\begin{equation}
+T = \tfrac{1}{2} \sum_{i,\,k=1}^{n-1} a_{ik}\,\dot{q}_i\,\dot{q}_k + \sum_{i=1}^{n-1} a_{in}\,\dot{q}_i\,\dot{q}_n + \tfrac{1}{2}\,a_{nn}\,\dot{q}_n^2. \tag{54.13}
+\end{equation}
+
+Hemos separado aquí la velocidad cinostética de las otras velocidades. Ahora el momento cinostético se convierte en
+\begin{equation}
+p_n = \frac{\partial T}{\partial \dot{q}_n} = \sum_{i=1}^{n-1} a_{in}\,\dot{q}_i + a_{nn}\,\dot{q}_n = c_n, \tag{54.14}
+\end{equation}
+
+%%% Página 129 %%%
+
+y obtenemos para la función lagrangiana modificada
+\begin{equation}
+\bar{L} = L - c_n \dot{q}_n = \tfrac{1}{2} \sum_{i,\,k=1}^{n-1} a_{ik}\,\dot{q}_i\,\dot{q}_k - \tfrac{1}{2}\,a_{nn}\,\dot{q}_n^2 - V. \tag{54.15}
+\end{equation}
+
+El proceso de reducción aún no está completo puesto que debemos eliminar $\dot{q}_n$ con ayuda de (54.14). Obtenemos un término en $\bar{L}$:
+\begin{equation}
+-\tfrac{1}{2}\frac{c_n^2}{a_{nn}}\,, \tag{54.16}
+\end{equation}
+que es independiente de cualesquiera velocidades. Obtenemos además $n-1$ términos que son \textit{lineales} en las velocidades no cinostéticas.
+
+El término (54.16) se comporta como una energía potencial aparente y puede combinarse con $V$ para dar
+\begin{equation}
+\bar{V} = V + \tfrac{1}{2}\frac{c_n^2}{a_{nn}}\,. \tag{54.17}
+\end{equation}
+
+Los términos restantes, sin embargo, son de una naturaleza inusual. Pueden ser considerados como parte de la energía cinética $T$, pero en lugar de ser cuadráticos son \textit{lineales} en las velocidades. Tales expresiones en la función lagrangiana se denominan ``términos giroscópicos'' porque son responsables del comportamiento paradójico de un giroscopio. La fuerza de Coriolis en un sistema de referencia rotante y la fuerza magnética debida a corrientes eléctricas son ejemplos adicionales del efecto de los términos giroscópicos en la función lagrangiana.
+
+Que obtengamos o no términos giroscópicos depende de los coeficientes $a_{in}$ ($i \neq n$) entre las velocidades ignorables y no ignorables. Decimos que existe un ``acoplamiento cinético'' entre las velocidades ignorables y no ignorables si los $a_{in}$ no se anulan todos. Si estos coeficientes se anulan, no hay acoplamiento y el problema reducido está libre de términos giroscópicos.
+
+\textit{Ejemplo.} En el problema de Kepler, la eliminación de $\dot{\theta}$ produce una energía potencial aparente de la forma $c^2/r^2$. Esto significa una fuerza repulsiva aparente que es proporcional a $1/r^3$ mientras que la fuerza atractiva es proporcional a $1/r^2$. Estas dos fuerzas se equilibran mutuamente en un cierto punto, que es un punto de equilibrio estable. La oscilación de $r$ alrededor de ese punto explica la pulsación del vector radio entre el perihelio y el afelio. Si la fuerza atractiva disminuyera como $1/r^3$ o cualquier potencia inversa mayor de $/r$, no existiría equilibrio estable de las dos fuerzas y el vector radio no podría oscilar entre límites finitos. Las trayectorias de los planetas serían o bien de tipo hiperbólico, o bien de la naturaleza de espirales que se aproximan al sol---dependiendo de la magnitud de la constante de momento angular. (El acoplamiento cinético es aquí cero.)
+
+%%% Página 130 %%%
+
+\begin{quote}
+\textit{Resumen.} Si una variable no está presente explícitamente en la función lagrangiana, sino solo su velocidad, esa variable se denomina cinostética o ignorable. El momento conectado con una variable ignorable es una constante durante el movimiento. Las variables ignorables pueden eliminarse de la función lagrangiana mediante una modificación adecuada. La eliminación produce una energía potencial aparente; además, podemos obtener una energía cinética aparente que no es cuadrática sino lineal en las velocidades.
+\end{quote}
+
+\section{La mecánica sin fuerzas de Hertz.}
+
+Las propiedades de las variables ignorables formaron la base de una ingeniosa teoría de Hertz diseñada para explicar el significado más profundo de la energía potencial. Un sistema mecánico se caracteriza por un número definido de coordenadas de posición, pero no es seguro que todas estas coordenadas sean observables. Un sistema mecánico puede contener ``parámetros microscópicos'' que no son directamente evidentes. A causa de estos ``parámetros microscópicos'', el número de grados de libertad de un sistema mecánico puede parecer mucho menor de lo que realmente es. Por ejemplo, un cuerpo sólido es aproximadamente rígido; pero en realidad las moléculas del cuerpo sólido oscilan alrededor de sus posiciones promedio. Los seis grados de libertad de un cuerpo rígido describen el comportamiento mecánico de un sólido solo \textit{macroscópicamente}.
+
+Ahora bien, estos movimientos microscópicos dentro de un sistema mecánico pueden clasificarse en dos categorías: aquellos expresables por variables cinostéticas y aquellos expresables por variables no cinostéticas. Los movimientos asociados con variables no cinostéticas producen fuerzas aparentemente poligénicas en el movimiento macroscópico. Un buen ejemplo es la fuerza de fricción que actúa macroscópicamente como una fuerza poligénica, pero que es en realidad simplemente un sustituto del movimiento no observable microscópico de las moléculas.
+
+De naturaleza completamente diferente son aquellos movimientos microscópicos que están asociados con variables cinostéticas. Estos pueden ser eliminados, y es posible tener un sistema mecánico con
+
+%%% Página 131 %%%
+
+movimientos ocultos que no son puestos en evidencia por ningún comportamiento no holonómico. El sistema reducido es enteramente holonómico y satisface el principio de mínima acción. La presencia de movimientos ocultos no puede detectarse.
+
+Ahora bien, si existe un acoplamiento cinético entre las coordenadas ocultas ignorables y las macroscópicas, la función lagrangiana del sistema macroscópico contendrá términos giroscópicos que son lineales en las velocidades observables. Si, sin embargo, este acoplamiento no existe, la presencia de movimientos ocultos se manifestará solo en la forma de una energía potencial aparente adicional de las variables macroscópicas.
+
+Esta consideración llevó a Hertz\footnote{H.~Hertz, \textit{Die Prinzipien der Mechanik} (Barth, 1894), p.~256; cf.\ también J.~J.~Thomson, \textit{Applications of dynamics to Physics and Chemistry} (Macmillan, 1888), p.~11.} a la especulación de que posiblemente toda la energía potencial de las fuerzas impresas pueda estar causada por movimientos ocultos expresables por variables cinostéticas. El dualismo de la energía cinética y la potencial es un problema desconcertante para el pensamiento filosófico. Tenemos por un lado la propiedad inercial de la materia, por el otro la fuerza. La propiedad inercial de la materia es algo derivable de la mera existencia de la masa. La inercia pura causa que la materia se mueva a lo largo de una línea recta, y lo mismo es válido en el espacio riemanniano que representa incluso el movimiento dinámico más complicado como el movimiento de un solo punto. Uno obtiene la impresión de que la inercia es una cualidad innata de la materia que difícilmente puede reducirse a algo aún más simple. De aquí que, desde el punto de vista filosófico, podemos reconciliarnos con la expresión de la propiedad inercial de la materia por medio de la energía cinética. Pero no puede ofrecerse una explicación similar para la ``fuerza.'' Si la energía cinética es la fuerza motriz última de la mecánica, ¿podríamos prescindir de algún modo de la energía potencial y así eliminar el inexplicable dualismo que se introduce en la mecánica a causa de las dos formas ampliamente diferentes de energía, cinética y potencial? Hertz pensó en explicar la energía potencial como en realidad de origen \textit{cinético}, causada por los movimientos ocultos de variables ignorables. Las
+
+%%% Página 132 %%%
+
+condiciones cinemáticas impuestas al movimiento de los parámetros microscópicos toman el lugar de la fuerza en la mecánica sin fuerzas de Hertz.
+
+Esta ingeniosa hipótesis, aunque no desarrollada más allá de sus comienzos esquemáticos, tuvo sin embargo un significado profético. La teoría de la relatividad, partiendo de consideraciones enteramente diferentes y desarrollándose a lo largo de líneas diferentes, proporcionó un impresionante ejemplo de la mecánica sin fuerzas de Hertz. El movimiento planetario alrededor del sol se explicó como causado por la inercia pura, sin ninguna fuerza actuante. Los planetas trazan las líneas más cortas en un espacio riemanniano, tal como Hertz imaginó para los sistemas mecánicos que están libres de energía potencial. La única diferencia es que en el sistema de Hertz, la curvatura riemanniana del espacio de configuración era causada por condiciones cinemáticas impuestas sobre los movimientos ocultos del sistema, mientras que en la teoría de Einstein la estructura riemanniana del espacio-tiempo físico es una propiedad inherente de la geometría del mundo.
+
+\begin{quote}
+\textit{Resumen.} Si un sistema mecánico contiene movimientos microscópicos ocultos expresables por variables ignorables, estos movimientos no perturban el carácter holonómico del sistema macroscópico, ni la validez del principio de Hamilton. Son ``ignorables'' porque pueden ser eliminados. Causan una energía potencial aparente que puede interpretarse como la energía potencial de las fuerzas impresas. Este fenómeno condujo a la especulación de Hertz de que la energía potencial de cualquier sistema mecánico puede tener su origen en movimientos ocultos de naturaleza cinostética.
+\end{quote}
+
+\section{El tiempo como variable cinostética; principio de Jacobi; el principio de mínima acción.}
+
+Consideramos un sistema mecánico escleronómico o ``conservativo'' cuya función lagrangiana no contiene el tiempo explícitamente. Imaginemos que no usamos el tiempo $t$ como la variable independiente, sino que todas las $n + 1$ variables $q_1, \ldots, q_n$ y $t$ están dadas como funciones de algún parámetro $\tau$.
+
+%%% Página 133 %%%
+
+El sistema tiene ahora $n + 1$ grados de libertad. Denotando las derivadas con respecto a $\tau$ por una prima, la integral de acción aparece en la siguiente forma:
+\begin{equation}
+A = \int_{\tau_1}^{\tau_2} L\left(q_1, \ldots, q_n;\, \frac{q_1'}{t'}, \ldots, \frac{q_n'}{t'}\right) t' \, d\tau. \tag{56.1}
+\end{equation}
+
+El tiempo es ahora una variable cinostética puesto que solo $t'$ aparece en el integrando y no $t$ mismo.
+
+Podemos hacer uso del teorema de que el momento conectado con una variable cinostética es una constante del movimiento. Para este propósito formemos $p_t$, el momento que está asociado con el tiempo $t$:
+\begin{align}
+p_t &= \frac{\partial(Lt')}{\partial t'} = L - \left(\sum_{i=1}^{n} \frac{\partial L}{\partial \dot{q}_i}\,\frac{q_i'}{t'^2}\right) t' \notag \\
+&= L - \sum_{i=1}^{n} p_i \dot{q}_i \notag \\
+&= -\left(\sum_{i=1}^{n} p_i \dot{q}_i - L\right). \tag{56.2}
+\end{align}
+
+La expresión en el último paréntesis es exactamente la que encontramos antes al tratar la ley de la conservación de la energía (cf.\ sección~3). La llamamos ``energía total'' y la denotamos por $\Lambda$. Para los sistemas mecánicos usuales, $\Lambda$ es la suma de las energías cinética y potencial, $T + V$. Tenemos entonces el importante teorema---que es válido tanto si el sistema es conservativo como si no---de que \textit{el momento asociado con el tiempo $t$ es el negativo de la energía total}. Si $t$ es cinostético, es decir, si nuestro sistema es conservativo, obtenemos de inmediato
+\begin{equation}
+p_t = -\Lambda = \text{const.} = -E, \tag{56.3}
+\end{equation}
+lo que da una nueva derivación del teorema de la energía.
+
+Sin embargo, puede hacerse más que esto. Sabemos que una variable cinostética puede eliminarse, reduciendo el problema variacional original en un grado de libertad. En el caso presente podemos eliminar la variable cinostética $t$ del problema variacional y obtener un nuevo problema variacional que determina el movimiento en el espacio pero que no dice nada sobre cómo se describe la trayectoria con respecto al tiempo $t$.
+
+%%% Página 134 %%%
+
+De acuerdo con el proceso general de reducción, primero modificamos la función lagrangiana. En el caso presente tenemos que poner
+\begin{equation}
+\bar{L} = Lt' - p_t t' = (L - p_t)t' = \sum_{i=1}^{n} p_i \dot{q}_i \, t', \tag{56.4}
+\end{equation}
+y así nuestra nueva integral de acción se convierte en
+\begin{equation}
+\bar{A} = \int_{\tau_1}^{\tau_2} \sum_{i=1}^{n} p_i \dot{q}_i \, t' \, d\tau, \tag{56.5}
+\end{equation}
+que, en vista de (53.15), podemos escribir como
+\begin{equation}
+\bar{A} = 2\int_{\tau_1}^{\tau_2} T\,t' \, d\tau'. \tag{56.6}
+\end{equation}
+
+En la literatura del siglo XVIII, esta integral apareció frecuentemente en la forma
+\begin{equation}
+\bar{A} = 2\int T \, dt, \tag{56.7}
+\end{equation}
+pero Jacobi señaló que esto es insatisfactorio porque el tiempo $t$ no puede usarse como una variable independiente en el problema variacional. En efecto, nuestro proceso de reducción no está terminado aún. Tenemos que eliminar la variable cinostética $t$ de la ecuación del momento (56.3) y esto convierte a $t$ en una variable dependiente. Sin esta eliminación, el principio variacional (56.6) o (56.7) no puede usarse.
+
+Ahora hacemos uso del $C$-punto simbólico que representa el sistema mecánico en el espacio de configuración. Sabemos que la energía cinética del sistema puede escribirse como la energía cinética de una sola partícula de masa 1:
+\begin{equation}
+T = \tfrac{1}{2}\left(\frac{\overline{ds}}{dt}\right)^2, \tag{56.8}
+\end{equation}
+donde $\overline{ds}$ es el elemento de línea del espacio de configuración (véase cap.~\textsc{i}, sección~5). Puesto que nuestra variable independiente ya no es $t$ sino $\tau$, debemos escribir
+\begin{equation}
+T = \tfrac{1}{2}\left(\frac{\overline{ds}}{d\tau}\right)^2 / t'^2. \tag{56.9}
+\end{equation}
+
+De aquí que la eliminación de $t'$ del teorema de la energía (56.3) da
+\begin{equation}
+t' = \frac{1}{\sqrt{2(E - V)}}\,\frac{\overline{ds}}{d\tau}. \tag{56.10}
+\end{equation}
+
+%%% Página 135 %%%
+
+Además, en el integrando de (56.6) podemos poner
+\begin{equation}
+T = E - V, \tag{56.11}
+\end{equation}
+y (56.6) finalmente se convierte en
+\begin{align}
+\bar{A} &= \int_{\tau_1}^{\tau_2} \sqrt{2\,(E - V)}\,\frac{\overline{ds}}{d\tau}\,d\tau \notag \\
+&= \int_{\tau_1}^{\tau_2} \sqrt{2(E-V)} \;\; \overline{ds}. \tag{56.12}
+\end{align}
+
+Hemos completado ahora el proceso de eliminación y hemos obtenido la integral de acción del sistema reducido. El tiempo $t$ no aparece en $\bar{A}$, que es además independiente del parámetro $\tau$. Sin embargo, sería bastante erróneo creer que el integrando de $\bar{A}$ es $\sqrt{2(E-V)}$; $\overline{ds}$ corresponde a la diferencial de la variable independiente. \textit{Algún} parámetro $\tau$ debe elegirse como independiente. En particular, podemos tomar $\tau$ como una de las $q_i$, por ejemplo $q_n$, dando todas las otras $q_i$ como funciones de $q_n$. Esto reduce de una vez el problema variacional de $n$ a $n-1$ grados de libertad.
+
+El principio de minimizar la integral (56.12) para hallar la trayectoria del sistema mecánico se denomina ``principio de Jacobi.'' El tiempo no aparece en su formulación. Determina la trayectoria del $C$-punto en el espacio de configuración, no el movimiento en el tiempo. Sin embargo, esta última parte del problema puede resolverse fácilmente integrando la ecuación (56.10) que dará $t$ como función de $\tau$. Esta última ecuación es la expresión del teorema de la energía y no es parte del problema variacional. Sin embargo, completa el problema variacional determinando cómo ocurre el movimiento en el tiempo.
+
+El principio de Jacobi es un principio fundamental de la mecánica. Si nos restringimos al caso de una sola partícula, el elemento de línea $\overline{ds}$ se vuelve idéntico al elemento de línea del espacio tridimensional ordinario en coordenadas curvilíneas arbitrarias. El principio de Jacobi presenta entonces una notable analogía con el principio de Fermat del tiempo mínimo en óptica que determina la trayectoria óptica minimizando la integral
+\begin{equation}
+I = \int_{\tau_1}^{\tau_2} n\,\overline{ds}, \tag{56.13}
+\end{equation}
+donde $n$ es el índice de refracción, que puede cambiar de punto a punto,
+
+%%% Página 136 %%%
+
+comportándose así de manera similar a la cantidad $\sqrt{2(E-V)}$. Maupertuis afirmó que los fenómenos de la naturaleza pueden derivarse minimizando cierta cantidad que él llamó ``acción''---la cual, si se formula adecuadamente, coincide con la integral de Jacobi (56.12)---y trató de mostrar que la ley de la refracción de la luz es deducible tanto del principio de mínima acción como del principio de Fermat del tiempo mínimo. Así señaló esa notable analogía entre los fenómenos ópticos y mecánicos que fue observada mucho antes por John Bernoulli y que fue más tarde plenamente desarrollada en la ingeniosa teoría óptico-mecánica de Hamilton. Esta analogía desempeñó un papel fundamental en el desarrollo de la moderna mecánica ondulatoria.
+
+El vínculo en esta analogía es el principio de Jacobi por un lado y el principio de Fermat por el otro. La analogía no va más allá de la \textit{trayectoria} descrita por un punto móvil en mecánica y por un rayo de luz en óptica. Cómo ocurre el movimiento \textit{en el tiempo} es enteramente diferente en el caso mecánico y en el caso óptico (cf.\ cap.~\textsc{viii}, sección~5).
+
+Jacobi criticó el tratamiento de Lagrange del ``principio de mínima acción'', señalando la importancia de variar entre límites definidos, lo cual no es posible si el tiempo se usa como la variable independiente. En ese caso, el límite superior de la integral de acción debe variarse de una manera definida, para satisfacer la conservación de la energía a lo largo de la trayectoria real y la variada. Sin embargo, el procedimiento de Euler y Lagrange en su formulación del principio de mínima acción es, cuando se entiende correctamente, enteramente correcto, y su principio es solo formalmente diferente del principio de Jacobi. El principio de Jacobi, como hemos visto arriba, puede concebirse como el resultado de los siguientes pasos.
+
+1. En la energía cinética, reemplazar la diferenciación con respecto a $t$ por la diferenciación con respecto al parámetro $\tau$:
+\begin{equation}
+T' = \tfrac{1}{2}\,\sum a_{ik}\,q_i'\,q_k' = T\,t'^2. \tag{56.14}
+\end{equation}
+
+%%% Página 137 %%%
+
+2. Minimizar la integral de acción
+\begin{equation}
+\bar{A} = 2\int_{\tau_1}^{\tau_2} \frac{T'}{t'}\,d\tau, \tag{56.15}
+\end{equation}
+después de eliminar $t'$ mediante la relación de energía
+\begin{equation}
+\frac{T'}{t'^2} + V = E. \tag{56.16}
+\end{equation}
+
+Ahora la ``acción'' usada por Euler y Lagrange era la misma integral que sirve de base para el principio de Jacobi excepto por el uso del parámetro $\tau$. Además, Euler y Lagrange usaron (56.16) como una \textit{condición auxiliar} que es equivalente a eliminar $t'$ de esa relación. Sabemos que una condición auxiliar puede tratarse por eliminación, pero también puede tratarse por el método de los multiplicadores $\lambda$. El primer método corresponde al procedimiento de Jacobi, el segundo al procedimiento de Lagrange. Este último método conduce a la siguiente nueva forma de la integral de acción:
+\begin{equation}
+\bar{\bar{A}} = \int_{\tau_1}^{\tau_2} \left[2\,\frac{T'}{t'} + \lambda\left(\frac{T'}{t'^2} + V\right)\right] d\tau. \tag{56.17}
+\end{equation}
+
+Sucede que en el presente problema el multiplicador indeterminado $\lambda$ puede evaluarse fácilmente. Puesto que $t'$ es una de nuestras variables, obtenemos minimizando con respecto a $t'$
+\begin{equation}
+-\frac{2T'}{t'^2} - \frac{2\lambda T'}{t'^3} = 0, \tag{56.18}
+\end{equation}
+lo cual da
+\begin{equation}
+\lambda = -t'. \tag{56.19}
+\end{equation}
+
+De aquí que la integral resultante se convierte en:
+\begin{equation}
+\bar{\bar{A}} = \int_{\tau_1}^{\tau_2} \left(\frac{T'}{t'^2} - V\right) t' d\tau = \int_{\tau_1}^{\tau_2} (T - V)\,t'\,d\tau. \tag{56.20}
+\end{equation}
+
+Puesto que, sin embargo, el nuevo problema variacional es un problema \textit{libre}, sin ninguna condición auxiliar, ya no hay razón por la cual no debamos usar el tiempo $t$ como variable independiente. Esto da la integral de acción
+\begin{equation}
+\bar{\bar{A}} = \int_{t_1}^{t_2} (T - V)\,dt = A, \tag{56.21}
+\end{equation}
+
+%%% Página 138 %%%
+
+lo cual conduce de vuelta al \textit{principio de Hamilton}. Esta deducción explica cómo Lagrange llega a las ecuaciones lagrangianas del movimiento---que son en realidad consecuencias directas del principio de Hamilton---aunque partiendo de un principio enteramente diferente, el ``principio de mínima acción.''
+
+\begin{quote}
+\textit{Resumen.} En la representación paramétrica del movimiento, el tiempo es una coordenada de posición adicional que puede participar en el proceso de variación. El momento asociado con el tiempo es el negativo de la energía total. Para sistemas escleronómicos, el tiempo se convierte en una variable cinostética y el momento correspondiente en una constante. Esto da el teorema de la energía de los sistemas conservativos. La eliminación del tiempo como una coordenada ignorable da un nuevo principio que determina solo la trayectoria del sistema mecánico, no el movimiento en el tiempo. Este es el principio de Jacobi que es análogo al principio de Fermat en óptica. El mismo principio puede formularse como el ``principio de mínima acción.'' En este último, la integral temporal del doble de la energía cinética se minimiza con la condición auxiliar de que tanto los movimientos real como variado satisfagan el teorema de la energía durante el movimiento. Si este principio se trata por el método de los multiplicadores $\lambda$, las ecuaciones resultantes son las ecuaciones lagrangianas del movimiento.
+\end{quote}
+
+\section{El principio de Jacobi y la geometría riemanniana.}
+
+Como se señaló en el capítulo~\textsc{i}, sección~5, la estructura geométrica del espacio de configuración no es en general euclidiana, sino riemanniana. Si un sistema mecánico consiste en $N$ partículas libres, entonces el espacio de configuración es euclidiano de $3N$ dimensiones. Pero si existen restricciones entre estas partículas, entonces el espacio de configuración es un subespacio curvado de menos de $3N$ dimensiones, cuya geometría puede caracterizarse por un elemento de línea riemanniano. Este elemento de línea está definido por la energía cinética del sistema mecánico, expresada en coordenadas curvilíneas $q_k$:
+
+%%% Página 139 %%%
+
+\begin{equation}
+ds^2 = 2T\,dt^2 = \sum a_{ik}\,dq_i\,dq_k. \tag{57.1}
+\end{equation}
+
+El principio de Jacobi pone vividamente de manifiesto la íntima relación que existe entre el movimiento de sistemas holonómicos conservativos y la geometría de espacios curvados. Introducimos, además del elemento de línea $\overline{ds}$ del espacio de configuración, otro elemento de línea riemanniano $\overline{d\sigma}$ definido por
+\begin{equation}
+\overline{d\sigma}^2 = (E - V)\,\overline{ds}^2. \tag{57.2}
+\end{equation}
+
+Según (56.12), el principio de Jacobi requiere la minimización de la integral definida
+\begin{equation}
+\bar{A} = \int_{\tau_1}^{\tau_2} \overline{d\sigma}. \tag{57.3}
+\end{equation}
+
+Esto es lo mismo que \textit{encontrar la trayectoria más corta entre dos puntos extremos definidos en un cierto espacio riemanniano}. Podemos asociar con el movimiento de un sistema mecánico bajo la acción de la energía potencial $V$ el movimiento de un punto \textit{a lo largo de alguna geodésica de un espacio riemanniano dado}. El problema de encontrar la solución de un problema dinámico dado es matemáticamente equivalente al problema de encontrar estas geodésicas.
+
+En particular, restringámonos al caso donde la energía potencial $V$ se anula, es decir, donde el movimiento ocurre en ausencia de toda fuerza impresa. En ese caso, podemos prescindir de la introducción del elemento de línea adicional $\overline{d\sigma}$ y podemos operar directamente con el elemento de línea $\overline{ds}$ del espacio de configuración. Puesto que $V = 0$, el principio de Jacobi requiere ahora:
+\begin{equation}
+\delta \int_{\tau_1}^{\tau_2} \overline{ds} = 0. \tag{57.4}
+\end{equation}
+
+Esto significa que \textit{el $C$-punto del sistema mecánico se mueve a lo largo de la línea más corta o geodésica del espacio de configuración}. Además, el teorema de la energía da
+\begin{equation}
+\frac{1}{2}\left(\frac{ds}{dt}\right)^2 = E, \tag{57.5}
+\end{equation}
+lo que muestra que \textit{el $C$-punto se mueve con velocidad constante}.
+
+Aquí tenemos una generalización verdaderamente bella de la ley de inercia afirmada por Leonardo da Vinci y Galileo: ``Una partícula bajo la acción de su propia inercia se mueve en una línea recta, con velocidad
+
+%%% Página 140 %%%
+
+constante.'' Esta ley es válida incluso para los sistemas mecánicos más complicados sujetos a restricciones holonómicas arbitrarias. Sin embargo, la ``partícula'' que representa ese sistema no se mueve en el espacio tridimensional ordinario sino en un múltiple riemanniano $n$-dimensional.
+
+\textit{Ejemplo.} Una partícula está forzada a permanecer sobre una superficie curvada; ninguna fuerza impresa está presente. El espacio riemanniano es ahora bidimensional y su geometría idéntica a la geometría intrínseca de la superficie dada. La partícula en movimiento traza una línea geodésica de esa superficie.
+
+\textit{Problema.} Demostrar lo mismo usando el principio de Hamilton.
+
+Nótese la estrecha relación de este principio geodésico con el principio dinámico de la teoría de Einstein. Allí también, el problema del movimiento es equivalente al de encontrar las geodésicas de un espacio riemanniano. Ese espacio riemanniano tiene cuatro dimensiones, puesto que el espacio y el tiempo forman juntos un múltiple unificado de cuatro dimensiones. La ley de inercia da el movimiento de los planetas sin la introducción de ninguna fuerza específica de gravedad. El principio de Jacobi es válido para la mecánica relativista de una partícula. La única diferencia es que ahora la estructura riemanniana del múltiple espacio-temporal es una propiedad innata del mundo y no una consecuencia de restricciones cinemáticas.
+
+\begin{quote}
+\textit{Resumen.} El principio de Jacobi vincula el movimiento de sistemas holonómicos conservativos con la geometría riemanniana. En particular, si el sistema se mueve bajo su propia inercia sin fuerzas impresas, el $C$-punto representativo describe una geodésica o trayectoria más corta del espacio de configuración, que es un múltiple riemanniano $n$-dimensional. El teorema de la energía añade que el movimiento ocurre con velocidad constante. Esta es una generalización natural de la ley ordinaria de inercia que establece que una partícula bajo la acción de su propia inercia se mueve en una línea recta con velocidad uniforme.
+\end{quote}
+
+%%% Página 141 %%%
+
+\section{Condiciones auxiliares; el significado físico del factor $\lambda$ lagrangiano.}
+
+En el tratamiento general del Cálculo de Variaciones hemos discutido en detalle cómo pueden manejarse los sistemas mecánicos con restricciones cinemáticas (cf.\ cap.~\textsc{ii}, sección~12). Si estas restricciones son holonómicas y aparecen en la forma de relaciones algebraicas entre las variables:
+\begin{equation}
+f_i(q_1, \ldots, q_n,\, t) = 0, \quad (i = 1, \ldots, m), \tag{58.1}
+\end{equation}
+podemos proceder de dos maneras diferentes. Podemos eliminar $m$ de las coordenadas $q_i$ con ayuda de las condiciones auxiliares, reduciendo así nuestro sistema a un sistema libre sin restricciones cinemáticas. O bien podemos prescindir de las eliminaciones y utilizar el método de los multiplicadores $\lambda$ lagrangianos. En este método, el integrando $L$ del problema variacional dado se modifica a $\bar{L}$ añadiendo a los lados izquierdos de las ecuaciones (58.1), después de multiplicar cada ecuación por algún factor indeterminado $\lambda_i(t)$.\footnote{El método de los multiplicadores $\lambda$ sigue siendo válido incluso si las condiciones auxiliares contienen no solo las $q_i$ sino también las $\dot{q}_i$. Encontramos tal situación en la sección~6 donde la ecuación de energía era una condición auxiliar de la variación.} Entonces el problema se maneja de nuevo como un problema libre, descartando las condiciones auxiliares dadas.
+
+Puesto que los $\lambda_i$ son factores indeterminados, podemos igualmente usar $-\lambda_i$ como factores y escribir $\bar{L}$ en la forma
+\begin{equation}
+\bar{L} = L - (\lambda_1 f_1 + \ldots + \lambda_m f_m). \tag{58.2}
+\end{equation}
+
+Además, en los problemas ordinarios de la mecánica clásica $L$ aparece en la forma $T - V$. Podemos combinar la modificación de $L$ con la energía potencial $V$ diciendo que $V$ ha sido cambiada a $\bar{V}$ definida como sigue:
+\begin{equation}
+\bar{V} = V + \lambda_1 f_1 + \ldots + \lambda_m f_m. \tag{58.3}
+\end{equation}
+
+Este elegante método matemático tiene una contraparte física sorprendente e impresionante. El hecho de que hagamos el problema variacional libre después de modificar la función lagrangiana $L$ significa que eliminamos las condiciones cinemáticas dadas y consideramos el sistema mecánico como sin restricciones. Pero entonces la modificación de $V$ a $\bar{V}$ significa que \textit{añadimos a la energía potencial de las fuerzas impresas la energía potencial de las fuerzas que mantienen las restricciones cinemáticas dadas}. Estas fuerzas están dadas por:
+
+%%% Página 142 %%%
+
+\begin{align}
+K_i &= -\frac{\partial}{\partial x_i}(\lambda_1 f_1 + \ldots + \lambda_m f_m) \notag \\
+&= -\left(\lambda_1 \frac{\partial f_1}{\partial x_i} + \ldots + \lambda_m \frac{\partial f_m}{\partial x_i}\right). \tag{58.4}
+\end{align}
+
+Vemos que son las mismas condiciones que encontramos antes en estática (cf.\ cap.~\textsc{iii}, sección~5) que prevalecen de una manera exactamente similar en dinámica. Una vez más \textit{el método de los multiplicadores $\lambda$ lagrangianos proporciona las fuerzas de reacción que mantienen las restricciones cinemáticas}.
+
+Sin embargo, el siguiente punto requiere atención especial. Supongamos que las condiciones cinemáticas dadas (58.1) y la energía potencial $V$ son independientes del tiempo $t$. Entonces el sistema es conservativo, como podemos ver de inmediato si usamos el método de eliminación de surplus variables al tratar las condiciones auxiliares. Pero entonces las fuerzas que mantienen las restricciones dadas deben asimismo ser conservativas, lo que significa que su energía potencial no puede depender de $t$. Por otro lado, los $\lambda_i$ son funciones de $t$, lo cual da la impresión de que la energía potencial de las fuerzas de reacción
+\begin{equation}
+V_0 = \lambda_1 f_1 + \ldots + \lambda_m f_m \tag{58.5}
+\end{equation}
+es también función de $t$.
+
+Esta contradicción aparente proviene del hecho de que conocemos la energía potencial de las fuerzas de reacción \textit{solo a lo largo de la $C$-curva}. Un análisis más detallado resuelve la contradicción y aporta una interpretación física interesante de los factores $\lambda_i$.
+
+Será suficiente considerar una sola condición auxiliar
+\begin{equation}
+f(q_1, \ldots, q_n) = 0, \tag{58.6}
+\end{equation}
+puesto que los resultados pueden extenderse fácilmente a un número arbitrario de tales condiciones. Supondremos que la energía potencial $V_1$ de las fuerzas que mantienen la condición (58.6) tiene la forma
+\begin{equation}
+V_1 = \phi(f). \tag{58.7}
+\end{equation}
+
+[Esta suposición necesita revisión. Es obvio que (58.6) no tiene significancia invariante puesto que la misma condición podría haberse expresado en la forma más general
+\begin{equation}
+g\,f = 0, \tag{58.8}
+\end{equation}
+
+%%% Página 143 %%%
+
+donde $g(q_1, \ldots, q_n)$ es cualquier otra función de las coordenadas que \textit{no} se anula sobre la superficie $f = 0$. De aquí que el argumento de $\phi$ en (58.7) debería cambiarse en realidad a $gf$, donde $g$ es alguna función de las $q_i$. Véase el Problema~4 al final de esta sección.]
+
+Sabemos que la restricción (58.6) es mantenida por fuerzas fuertes, de modo que la ecuación (58.6) no puede ser violada considerablemente. De aquí que necesitamos el potencial $V_1$ solo para valores \textit{pequeños} de $f$. Así, podemos expandir la función $\phi$ en una serie de Taylor en la vecindad de $f = 0$. Puesto que una constante no tiene significancia en la energía potencial, podemos escribir
+\begin{equation}
+V_1 = \phi'(0)\,f + \tfrac{1}{2}\,\phi''(0)\,f^2, \tag{58.9}
+\end{equation}
+despreciando términos de orden superior al segundo.
+
+Ahora sabemos que las fuerzas de reacción están dormidas mientras la restricción (58.6) se cumpla \textit{exactamente}. Esto significa que $f = 0$ debe ser un estado de equilibrio de estas fuerzas, y podemos afirmar además que la restricción dada no podría mantenerse si no fuera un estado de equilibrio \textit{estable}. De aquí que $V_1$ debe tener un \textit{mínimo} en $f = 0$, lo que significa que
+\begin{equation}
+\phi'(0) = 0, \tag{58.10}
+\end{equation}
+y que $\phi''(0)$ debe ser \textit{positiva}. Ponemos
+\begin{equation}
+\phi''(0) = 1/\epsilon\,, \tag{58.11}
+\end{equation}
+donde $\epsilon$ es una pequeña constante positiva. La pequeñez de $\epsilon$ expresa el hecho de que la restricción (58.6) es mantenida por fuerzas \textit{fuertes}. El cumplimiento exacto permanente de la condición (58.6) requeriría fuerzas \textit{infinitamente fuertes}, es decir, $\epsilon = 0$.
+
+Puesto que en realidad $\epsilon$ es una constante pequeña pero \textit{finita}, la restricción (58.6) no será cumplida \textit{exactamente} durante el movimiento. El movimiento real ocurrirá según la ley
+\begin{equation}
+f(q_1, \ldots, q_n) = \epsilon\,\rho(t), \tag{58.12}
+\end{equation}
+donde $\rho(t)$ es alguna función del tiempo. En vista de la pequeñez de $\epsilon$ podemos decir que la condición $f = 0$ será cumplida \textit{macroscópicamente} pero no \textit{microscópicamente}. Podemos llamar al lado derecho de (58.12) el ``error microscópico'' de la restricción dada $f = 0$. Este error cambia con el tiempo $t$.
+
+%%% Página 144 %%%
+
+Ahora, debido a la energía potencial
+\begin{equation}
+V_1 = \frac{1}{2\epsilon}\,f^2, \tag{58.13}
+\end{equation}
+la fuerza
+\begin{equation}
+K_i = -\frac{1}{\epsilon}\,f\,\frac{\partial f}{\partial x_i}\,, \tag{58.14}
+\end{equation}
+mientras que por el método de los multiplicadores $\lambda$ lagrangianos
+\begin{equation}
+K_i = -\lambda\,\frac{\partial f}{\partial x_i}. \tag{58.15}
+\end{equation}
+
+La comparación de (58.14) y (58.15) da
+\begin{equation}
+\lambda = \frac{f}{\epsilon}\,, \tag{58.16}
+\end{equation}
+y en vista de (58.12)
+\begin{equation}
+\lambda = \rho(t). \tag{58.17}
+\end{equation}
+
+Esta relación muestra que \textit{el factor $\lambda$ lagrangiano es una medida de la violación microscópica de la ecuación de restricción $f = 0$}. El lado derecho de esa ecuación es en realidad no cero, sino $\epsilon$ veces $\lambda$, donde $\epsilon$ es una pequeña constante positiva que tiende hacia cero a medida que la fuerza que mantiene la restricción aumenta hacia infinito.
+
+Aquí tenemos la explicación de por qué la energía potencial $V_1$ de la fuerza de reacción depende aparentemente del tiempo $t$, aunque la fuerza es \textit{en realidad} una fuerza conservativa.
+
+Hemos establecido una vez más el resultado---como se hizo antes para sistemas en equilibrio---de que \textit{las condiciones auxiliares holonómicas son mecánicamente equivalentes a fuerzas monogénicas}. Podemos añadir que \textit{las condiciones holonómicas escleronómicas son equivalentes a fuerzas monogénicas conservativas}.
+
+\textit{Problema~1.} Considerar una molécula diatómica de la siguiente estructura. Las fuerzas internas tienen una energía potencial de la forma
+\[
+V_1 = \frac{A}{2}\left(r^2 + \frac{1}{r^2}\right),
+\]
+donde $r$ es la distancia mutua entre los dos átomos; $A$ es una constante grande. Mostrar que el movimiento del sistema bajo la acción de fuerzas impresas de energía potencial $V$ es macroscópicamente equivalente al movimiento de una molécula diatómica sin ningún $V_1$ pero con la condición auxiliar $r = 1$.
+
+\textit{Problema~2.} Mostrar que en el mismo problema el factor lagrangiano $\lambda$ es igual a la violación microscópica de la condición $r = 1$, multiplicada por $4A$.
+
+%%% Página 145 %%%
+
+\textit{Problema~3.} Considerar una partícula pesada de masa $m$ que está restringida a permanecer sobre la esfera
+\[
+r = 1.
+\]
+Mostrar que el $\lambda$ lagrangiano es aquí proporcional a la penetración elástica microscópica de la presión sobre la superficie; el factor $\lambda$, y con él la fuerza de reacción, se vuelve cero en el punto donde la masa abandona la esfera y continúa su movimiento cayendo libremente.
+
+\textit{Problema~4.} Considerar el problema más general que surge debido al hecho de que la ecuación $f = 0$ no tiene significancia invariante, de modo que la relación simple (58.7) debe ser reemplazada por la suposición más general
+\begin{equation}
+V_1 = \phi(fg), \tag{58.18}
+\end{equation}
+donde $g$ es una función desconocida de las coordenadas. Para eliminar esta función desconocida, necesitamos información adicional no contenida en la ecuación de restricción $f = 0$. Sabemos que la superficie $f = 0$ será una superficie equipotencial de las fuerzas de reacción. Supongamos que conocemos una \textit{segunda} superficie equipotencial vecina. Esta superficie puede caracterizarse dando en cada punto de la superficie $f = 0$ la distancia infinitesimal $\nu$ entre las dos superficies equipotenciales $\phi = 0$ y $\phi = p$, donde $p$ es una constante infinitesimal positiva. Entonces la siguiente relación puede establecerse para $\lambda$:
+\begin{equation}
+\lambda = \frac{2p}{\nu^2\,|\text{grad}\,f|^2}\,f. \tag{58.19}
+\end{equation}
+
+Una vez más, $\lambda$ es proporcional a $f$---es decir, a la violación microscópica de la restricción $f = 0$---pero el factor de proporcionalidad ya no es generalmente constante, aunque sigue siendo necesariamente una cantidad \textit{positiva}.
+
+Esta información adicional se requiere solo para la \textit{interpretación} del factor $\lambda$. La fuerza de reacción no depende de la función desconocida $g$ y siempre es proporcionada por el método de los multiplicadores $\lambda$ lagrangianos.\footnote{El autor no conoce una discusión similar sobre el significado físico del factor $\lambda$ en la literatura.}
+
+\begin{quote}
+\textit{Resumen.} El método de los multiplicadores $\lambda$ lagrangianos al tratar con condiciones auxiliares tiene el significado físico de que reemplazamos las restricciones cinemáticas dadas por las fuerzas que mantienen esas restricciones. El método de los multiplicadores $\lambda$ proporciona las fuerzas de reacción asociadas con una restricción dada. Estas fuerzas se ejercen a través de una violación microscópica de las restricciones, y el factor $\lambda$ puede interpretarse como una medida de esta violación. Esta violación cambia durante el movimiento, haciendo así que los $\lambda_i$ sean funciones del tiempo $t$, a pesar de la naturaleza conservativa de las fuerzas que mantienen las restricciones dadas.
+\end{quote}
+
+%%% Página 146 %%%
+
+\section{Condiciones auxiliares no holonómicas y fuerzas poligénicas.}
+
+Si las condiciones cinemáticas no aparecen en la forma de relaciones algebraicas entre las coordenadas sino como relaciones diferenciales no integrables de la forma (26.1), ya no podemos reducir el número de grados de libertad eliminando las variables sobrantes. El método de los multiplicadores $\lambda$ lagrangianos, sin embargo, sigue siendo válido. A partir de (26.1) tenemos ahora, de hecho, para las ecuaciones lagrangianas:
+\begin{equation}
+\frac{d}{dt}\frac{\partial L}{\partial \dot{q}_k} - \frac{\partial L}{\partial q_k} = -(\lambda_1 A_{1k} + \lambda_2 A_{2k} + \ldots + \lambda_m A_{mk}). \tag{59.1}
+\end{equation}
+
+Los $A_{ik}$ son funciones dadas de las $q_i$. Toman el lugar de las $\partial f_i / \partial x_k$ que aparecen cuando las condiciones son holonómicas.
+
+Esto puede interpretarse físicamente observando que la función de trabajo de las fuerzas que mantienen las condiciones no holonómicas dadas ya no existe, \textit{pero las fuerzas mismas son una vez más proporcionadas por el método de los multiplicadores $\lambda$}. Pongamos
+\begin{equation}
+K_i = -(\lambda_1 A_{1i} + \ldots + \lambda_m A_{mi}). \tag{59.2}
+\end{equation}
+
+Estos $K_i$ pueden interpretarse físicamente como las componentes de la fuerza que actúa sobre el sistema mecánico para mantener las condiciones no holonómicas dadas. Esta fuerza es ahora de naturaleza poligénica. Una vez más vemos que \textit{las condiciones auxiliares no holonómicas son mecánicamente equivalentes a fuerzas poligénicas}.
+
+En vista de esta equivalencia, concluimos que, cuando se modifica apropiadamente, las ecuaciones lagrangianas del movimiento son aplicables incluso al caso de fuerzas poligénicas. Esto es efectivamente el caso. Podemos caracterizar un sistema poligénico de fuerzas por medio del trabajo virtual de estas fuerzas. Sea ese trabajo
+\begin{equation}
+\overline{\delta w} = \rho_1\,\delta q_1 + \rho_2\,\delta q_2 + \ldots + \rho_n\,\delta q_n. \tag{59.3}
+\end{equation}
+
+La única diferencia comparada con una fuerza monogénica es que este trabajo ya no puede expresarse como la variación de una función escalar. Supongamos que todas las fuerzas impresas de tipo monogénico se absorben de la manera usual en la función lagrangiana $L$, mientras que las fuerzas poligénicas están dadas por su trabajo virtual (59.3). Entonces obtenemos las ecuaciones del movimiento en la forma
+\begin{equation}
+\frac{d}{dt}\frac{\partial L}{\partial \dot{q}_i} - \frac{\partial L}{\partial q_i} = \rho_i. \tag{59.4}
+\end{equation}
+
+%%% Página 147 %%%
+
+Aquí también, como en (59.1), la fuerza poligénica produce un ``lado derecho'' de las ecuaciones lagrangianas.
+
+\begin{quote}
+\textit{Resumen.} El método del multiplicador lagrangiano sigue siendo válido incluso en el caso de condiciones auxiliares no holonómicas. Las fuerzas ejercidas a causa de estas condiciones son una vez más proporcionadas. Estas fuerzas son de naturaleza poligénica. Las condiciones auxiliares no holonómicas y las fuerzas poligénicas tienen el mismo efecto en las ecuaciones lagrangianas del movimiento: producen un ``lado derecho'' de estas ecuaciones.
+\end{quote}
+
+\section{Pequeñas vibraciones alrededor de un estado de equilibrio.}
+
+Uno de los más bellos ejemplos del poder del método analítico es la aplicación de las ecuaciones lagrangianas a la teoría de pequeñas vibraciones alrededor de un estado de equilibrio estable. Esta teoría es de importancia básica para el comportamiento elástico de los sólidos, para las vibraciones de estructuras, para la teoría del calor específico y otros problemas fundamentales. La característica más impresionante de esta teoría es su gran \textit{generalidad}. No importa cuán simple o complicado sea un sistema mecánico, su movimiento cerca de un estado de equilibrio siempre es describible en los mismos términos. El cálculo real se complica si el número de grados de libertad es grande. Pero los aspectos teóricos del problema permanecen sin cambio.
+
+Las simplificaciones que ocurren en este problema se deben al hecho de que las vibraciones son \textit{pequeñas}. Sabemos que la geometría del espacio de configuración no es euclidiana sino riemanniana. Pero también sabemos que el espacio riemanniano curvado se aplana cada vez más si nos restringimos a regiones cada vez más pequeñas. Este comportamiento del espacio riemanniano encuentra su expresión analítica en el hecho de que el elemento de línea
+\begin{equation}
+\overline{ds}^2 = \sum_{i,\,k=1}^{n} a_{ik}\,dq_i\,dq_k, \tag{510.1}
+\end{equation}
+donde los $a_{ik}$ son funciones de las $q_i$, puede reemplazarse por un elemento de línea separado con coeficientes \textit{constantes} si no abandonamos la
+
+%%% Página 148 %%%
+
+vecindad inmediata del punto $P$. Los $a_{ik}$ cambian tan poco en esa vecindad que podemos reemplazarlos por sus valores en el punto $P$.
+
+Sea el punto $P$, que es el $C$-punto que representa el estado del sistema mecánico en el estado de equilibrio. Por simplicidad, convengamos en que el punto $P$ esté en el origen de nuestro sistema de referencia, lo que significa que sus coordenadas son $q_i = 0$. Consideramos ahora el elemento de línea (510.1), con los $a_{ik}$ constantes, como aplicable al \textit{espacio completo}. El nuevo espacio es euclidiano, pero el error que así cometemos tiende hacia cero a medida que nos acercamos al punto $P$.
+
+En el nuevo espacio las $q_i$ ya no son curvilíneas, sino \textit{rectilíneas}, y necesitamos conocer algunos hechos básicos sobre la naturaleza analítica de tales coordenadas. En primer lugar, en nuestro espacio plano, no solo la forma diferencial (510.1), sino también la forma finita
+\begin{equation}
+s^2 = \sum_{i,\,k=1}^{n} a_{ik}\,q_i\,q_k \tag{510.2}
+\end{equation}
+tiene un significado geométrico simple. Proporciona la distancia $s$ del punto $Q = (q_1, \ldots, q_n)$ al origen $P = (0, \ldots, 0)$.
+
+Supongamos ahora que estamos en un espacio euclidiano $n$-dimensional y que elegimos $n$ vectores básicos
+\begin{equation}
+\vect{u}_1, \, \vect{u}_2, \, \ldots, \, \vect{u}_n, \tag{510.3}
+\end{equation}
+que pueden ser de longitud y orientación arbitrarias siempre que sean linealmente independientes entre sí---es decir, ningún $\vect{u}_k$ es igual a una combinación lineal de los otros vectores básicos. Entonces podemos expresar el vector de posición $\vect{R}$ en ese espacio en la forma
+\begin{equation}
+\vect{R} = q_1 \vect{u}_1 + q_2 \vect{u}_2 + \ldots + q_n \vect{u}_n. \tag{510.4}
+\end{equation}
+
+Si formamos el ``producto escalar'' de $\vect{R}$ consigo mismo, obtenemos
+\begin{equation}
+\vect{R}^2 = s^2 = \sum_{i,\,k=1}^{n} (\vect{u}_i \cdot \vect{u}_k)\,q_i\,q_k. \tag{510.5}
+\end{equation}
+
+La comparación con (510.2) muestra que los coeficientes $a_{ik}$ del elemento de línea tienen el siguiente significado:
+\begin{equation}
+a_{ik} = a_{ki} = \vect{u}_i \cdot \vect{u}_k. \tag{510.6}
+\end{equation}
+
+En el caso especial de coordenadas \textit{rectangulares} los $\vect{u}_i$ se eligen como
+
+%%% Página 149 %%%
+
+vectores mutuamente perpendiculares de longitud unitaria. Entonces tenemos
+\begin{align}
+\vect{u}_i \cdot \vect{u}_k &= 0, \qquad (i \neq k) \notag \\
+\vect{u}_i^2 &= 1, \tag{510.7}
+\end{align}
+y el cuadrado de la distancia $s$ toma la forma pitagórica habitual
+\begin{equation}
+s^2 = q_1^2 + q_2^2 + \ldots + q_n^2. \tag{510.8}
+\end{equation}
+
+Sin embargo, intencionalmente no especializamos nuestros vectores unitarios, y operamos con un sistema de referencia rectilíneo arbitrario. Requerimos, sin embargo, que nuestro espacio euclidiano sea ``real'' en el sentido de que la distancia entre $P$ y $Q$ no puede ser cero a menos que $P$ y $Q$ coincidan. Esto implica que la forma cuadrática (510.5) es una forma ``positiva definida'' que siempre da un $s^2$ positivo sin importar qué valores asignemos a las $q_i$ excepto los valores triviales $q_i = 0$ cuando $s$ se vuelve cero.
+
+En el espacio de configuración, esta condición se cumple efectivamente porque la energía cinética que determina el elemento de línea (510.1), y con él la distancia (510.2), nunca puede volverse negativa, y el valor cero es solo posible si todos los $dq_i$ se anulan. Esto garantiza el carácter positivo definido de la expresión (510.2).
+
+Consideremos ahora dos puntos \textit{diferentes} $Q$ y $Q'$, pertenecientes a los dos vectores
+\begin{equation}
+\overline{PQ} = \vect{R} = q_1 \vect{u}_1 + \ldots + q_n \vect{u}_n, \tag{510.9}
+\end{equation}
+y
+\begin{equation}
+\overline{PQ}' = \vect{R}' = q_1' \vect{u}_1 + \ldots + q_n' \vect{u}_n. \tag{510.10}
+\end{equation}
+
+Formamos el producto escalar de estos dos vectores y obtenemos
+\begin{align}
+\vect{R} \cdot \vect{R}' &= \sum_{i,\,k=1}^{n} (\vect{u}_i \cdot \vect{u}_k)\,q_i\,q_k' \notag \\
+&= \sum_{i,\,k=1}^{n} a_{ik}\,q_i\,q_k'. \tag{510.11}
+\end{align}
+
+Notamos que la anulación de la suma (510.11) significa que los dos vectores $\vect{R}$ y $\vect{R}'$ son \textit{ortogonales} entre sí.
+
+Después de hacer estas observaciones generales que se aplican a la geometría analítica de un espacio euclidiano de $n$ dimensiones, pasamos ahora al estudio de la energía potencial $V(q_1, \ldots, q_n)$ del
+
+%%% Página 150 %%%
+
+sistema mecánico. Podemos expandir esta función en la vecindad del origen, $q_i = 0$, en una serie de Taylor:
+\begin{equation}
+V = V_0 + \sum_{i=1}^{n} \left(\frac{\partial V}{\partial q_i}\right)_0 q_i + \tfrac{1}{2} \sum_{i,\,k=1}^{n} \left(\frac{\partial^2 V}{\partial q_i \,\partial q_k}\right)_0 q_i q_k + \ldots \tag{510.12}
+\end{equation}
+
+Ahora hemos supuesto que el origen $P$ de nuestro sistema de referencia es un punto de \textit{equilibrio}. De aquí que $V$ debe tener un valor estacionario en ese punto (cf.\ cap.~\textsc{ii} y cap.~\textsc{iii}, sección~1) y por tanto los términos lineales de la expansión (510.12) desaparecen. Puesto que una constante aditiva en la energía potencial siempre es irrelevante, la expansión comienza con los términos de \textit{segundo} orden. No necesitamos ir más allá de estos términos porque los términos de tercer orden se vuelven despreciables si las $q_i$ permanecen suficientemente pequeñas. De aquí que podemos escribir
+\begin{equation}
+V = \tfrac{1}{2} \sum_{i,\,k=1}^{n} b_{ik}\,q_i\,q_k, \tag{510.13}
+\end{equation}
+donde
+\begin{equation}
+b_{ik} = b_{ki} = \left(\frac{\partial^2 V}{\partial q_i \,\partial q_k}\right)_0. \tag{510.14}
+\end{equation}
+
+Consideremos ahora la ecuación $V = \frac{1}{2}$, o sea
+\begin{equation}
+\sum_{i,\,k=1}^{n} b_{ik}\,q_i\,q_k = 1. \tag{510.15}
+\end{equation}
+
+Geométricamente, esta ecuación representa una \textit{superficie} del espacio $n$-dimensional, y podemos decir más específicamente que representa una superficie del \textit{segundo} orden en ese espacio. Podemos pensar en un elipsoide o un hiperboloide de nuestro espacio ordinario, solo que el número de dimensiones se incrementa de 3 a $n$. Es notable que la geometría analítica de las superficies de segundo orden puede desarrollarse igualmente bien en \textit{cualquier} número de dimensiones. La teoría de tales superficies es de gran importancia en casi todas las ramas de la física matemática. Todo el trasfondo matemático de la elasticidad, la acústica y la mecánica ondulatoria puede formularse en términos de la geometría analítica de tales superficies en un espacio de infinitas dimensiones.
+
+En mecánica encontramos esta teoría en conexión con las oscilaciones de un sistema mecánico alrededor de un estado de equilibrio. Sabemos de la geometría analítica del sólido ordinario que el estudio
+
+%%% Página 151 %%%
+
+de las superficies de segundo orden se facilita enormemente si hacemos coincidir los ejes de nuestro sistema de referencia con ciertos ejes de simetría, por ejemplo, un elipsoide o hiperboloide tiene tres ``ejes principales'' que son mutuamente perpendiculares.
+
+Si la ecuación de la superficie no está dada con referencia a estos ejes principales, estos deben encontrarse y el sistema de referencia rotarse a la nueva posición. En problemas de física, esta ``transformación a ejes principales'' es de la mayor importancia porque la parte principal del problema analítico usualmente se resuelve cuando se ha efectuado esta transformación.
+
+Mostraremos ahora cómo el problema de las pequeñas oscilaciones de un sistema mecánico alrededor de un estado de equilibrio está íntimamente vinculado con el de determinar los ejes principales de la energía potencial $V$. Los ejes principales de una superficie del segundo orden tienen ciertas propiedades extremales. Pueden encontrarse buscando aquellos puntos de la superficie cuyas distancias al origen tienen valores estacionarios. Así, nuestro problema es encontrar el valor estacionario de
+\begin{equation}
+s^2 = \sum_{i,\,k=1}^{n} a_{ik}\,q_i\,q_k, \tag{510.16}
+\end{equation}
+bajo la condición auxiliar de que nos movemos sobre la superficie
+\begin{equation}
+\sum_{i,\,k=1}^{n} b_{ik}\,q_i\,q_k = 1. \tag{510.17}
+\end{equation}
+
+Este es un problema algebraico extremal ordinario, con una condición auxiliar, que puede tratarse por el método de los multiplicadores $\lambda$. Eliminamos la condición auxiliar (510.17) y minimizamos la función
+\begin{equation}
+\sum a_{ik}\,q_i\,q_k - \frac{1}{\lambda}\,\sum b_{ik}\,q_i\,q_k. \tag{510.18}
+\end{equation}
+
+Puesto que $\lambda$ es un factor indeterminado, es permisible reemplazarlo por $-1/\lambda$, que será más conveniente para nuestro propósito actual. Pero entonces vemos que en lugar de minimizar (510.18) podemos igualmente bien minimizar la función
+\begin{equation}
+F(q_1, \ldots, q_n) = \sum b_{ik}\,q_i\,q_k - \lambda \sum a_{ik}\,q_i\,q_k. \tag{510.19}
+\end{equation}
+
+Esto da la siguiente interpretación de nuestro problema extremal: encontrar los valores estacionarios de la función
+\begin{equation}
+2V = \sum b_{ik}\,q_i\,q_k, \tag{510.20}
+\end{equation}
+
+%%% Página 152 %%%
+
+bajo la condición auxiliar
+\begin{equation}
+\sum a_{ik}\,q_i\,q_k = 1. \tag{510.21}
+\end{equation}
+
+La condición auxiliar (510.21) significa que nos mantenemos sobre una esfera de radio~1. En cada punto de esta esfera la energía potencial $V$ tiene un cierto valor. \textit{Deseamos encontrar aquellos puntos especiales $Q_i$ de la esfera unitaria en los cuales $V$ se vuelve estacionaria.}
+
+Las condiciones para el valor estacionario de la función $F$ nos dan las siguientes ecuaciones lineales:
+\begin{align}
+b_{11}\,q_1 + \ldots + b_{1n}\,q_n &= \lambda(a_{11}\,q_1 + \ldots + a_{1n}\,q_n), \notag \\
+&\;\;\vdots \tag{510.22} \\
+b_{n1}\,q_1 + \ldots + b_{nn}\,q_n &= \lambda(a_{n1}\,q_1 + \ldots + a_{nn}\,q_n). \notag
+\end{align}
+
+Estas son ecuaciones lineales homogéneas para las $q_i$ que tienen una solución no trivial siempre que el determinante del sistema sea cero. Obtenemos así la siguiente condición fundamental determinantal, llamada la ``ecuación característica'', de la cual los ``valores característicos'' $\lambda_i$ pueden determinarse:
+\begin{equation}
+\begin{vmatrix}
+b_{11} - \lambda a_{11}, & \ldots, & b_{1n} - \lambda a_{1n} \\
+\vdots & & \vdots \\
+b_{n1} - \lambda a_{n1}, & \ldots, & b_{nn} - \lambda a_{nn}
+\end{vmatrix} = 0. \tag{510.23}
+\end{equation}
+
+Esta es una ecuación algebraica de orden $n$ para $\lambda$ que debe tener $n$ raíces (posiblemente complejas). Denotamos estas raíces por
+\begin{equation}
+\lambda_1, \, \lambda_2, \, \ldots, \, \lambda_n. \tag{510.24}
+\end{equation}
+
+Es posible que algunas de las raíces sean múltiples. Consideramos tal caso como ``degenerado'', y eliminamos la degeneración modificando los coeficientes $a_{ik}$ o $b_{ik}$ en cantidades arbitrariamente pequeñas. Esto separa las raíces múltiples, y después realizamos un proceso de paso al límite. De aquí que es justificable excluir raíces múltiples y suponer que \textit{todos los $\lambda_i$ son diferentes entre sí}.
+
+Para cada $\lambda_i$ podemos encontrar una solución correspondiente de las ecuaciones lineales (510.22). Esta solución deja un factor común de todas
+
+%%% Página 153 %%%
+
+las $q_i$ arbitrario, pero este factor se determina de forma única (excepto por el signo $\pm$) al satisfacer la condición auxiliar (510.21).
+
+Los valores $q_1, \ldots, q_n$ que pertenecen a un cierto $\lambda_i$ pueden considerarse como las componentes de un vector $\vect{p}_i$ de longitud unitaria. Este vector se llamará el ``$i$-ésimo eje principal'' de la superficie (510.17). Tenemos $n$ tales ejes principales
+\begin{equation}
+\vect{p}_1, \, \vect{p}_2, \, \ldots, \, \vect{p}_n, \tag{510.25}
+\end{equation}
+correspondientes a los $n$ valores característicos (510.24).
+
+Estos ejes principales tienen una serie de propiedades notables que mencionaremos brevemente:
+
+1. \textit{Las raíces $\lambda$ de la ecuación característica son invariantes con respecto a transformaciones lineales arbitrarias de las coordenadas $q_i$.} Si multiplicamos la ecuación (510.22) sucesivamente por $q_1, \ldots, q_n$ y formamos la suma, obtenemos en el lado derecho $\lambda \cdot 1$ en vista de la condición auxiliar (510.21), mientras que el lado izquierdo se convierte en $2V$. Esto da la relación
+\begin{equation}
+\lambda = 2V. \tag{510.26}
+\end{equation}
+
+De aquí que cualquier transformación lineal de las coordenadas $q_i$ que deja el valor de $V$ sin cambiar también deja los $\lambda_i$ sin cambiar. Mientras que los $n$ ejes principales $\vect{p}_i$ dan las \textit{direcciones} en las cuales la energía potencial $V$ toma sus valores estacionarios, las raíces $\lambda_i$ dan esos propios valores estacionarios $V_i$, según la relación
+\begin{equation}
+V_i = \lambda_i / 2. \tag{510.27}
+\end{equation}
+
+2. \textit{Las raíces $\lambda$ son todas reales, y por tanto los ejes principales son $n$ vectores reales del espacio euclidiano $n$-dimensional.} Las raíces $\lambda_i$ de una ecuación algebraica de grado $n$ son en general \textit{complejas}; que sean reales en el caso de la ecuación característica (510.23) se debe a la \textit{simetría} de los elementos $a_{ik}$ y $b_{ik}$ del determinante:
+\begin{equation}
+a_{ik} = a_{ki}, \quad b_{ik} = b_{ki}. \tag{510.28}
+\end{equation}
+
+Para demostrar este importante teorema, procedemos como sigue. Supongamos que un cierto $\lambda_i$ es complejo y resolvamos las ecuaciones lineales (510.22) asociadas con este $\lambda$ complejo. Las $q_i$ son ahora números complejos y sabemos que cualquier
+
+%%% Página 154 %%%
+
+relación entre números complejos permanece verdadera si $i$ se cambia a $-i$. De aquí que podemos escribir las ecuaciones (510.22) una vez más, cambiando $q_i$ a $q_i^*$ y $\lambda$ a $\lambda^*$, donde el ``asterisco'' denota el conjugado complejo. Ahora multiplicamos el primer conjunto de ecuaciones sucesivamente por $q_1^*, \ldots, q_n^*$, y el segundo conjunto de ecuaciones por $q_1, \ldots, q_n$ y formamos la suma en cada caso. En el lado izquierdo obtenemos la \textit{misma} suma en ambos casos y así la comparación de los lados derechos da la relación
+\begin{equation}
+(\lambda - \lambda^*)\,\sum_{i,\,k=1}^{n} a_{ik}\,q_i\,q_k^* = 0. \tag{510.29}
+\end{equation}
+
+Si reemplazamos $q_k$ por $\mathfrak{a}_k + i\beta_k$, donde $\mathfrak{a}_k$ y $\beta_k$ son reales, (510.29) se convierte, en vista de (510.28),
+\begin{equation}
+(\lambda - \lambda^*)\,(s_1^2 + s_2^2) = 0, \tag{510.30}
+\end{equation}
+donde $s_1$ y $s_2$ son distancias reales del espacio euclidiano $n$-dimensional. De aquí
+\begin{equation}
+\lambda = \lambda^*, \tag{510.31}
+\end{equation}
+lo que significa que $\lambda$ debe ser real.
+
+3. \textit{Los ejes principales $\vect{p}_i$ son mutuamente perpendiculares y forman así un sistema de referencia ortogonal para el espacio $n$-dimensional.} Esta propiedad fundamental de los ejes principales de una superficie del segundo orden puede demostrarse con ayuda de la misma relación (510.29) que usamos antes para demostrar la realidad de los $\lambda_i$. Ahora \textit{interpretamos} esta ecuación de una nueva manera. Supongamos que $\lambda$ y $\lambda^*$ son dos raíces características diferentes y que $q_i$ y $q_i^*$ definen respectivamente los dos ejes principales asociados con estos dos $\lambda_i$. En el presente caso, el primer factor de (510.29) no puede anularse porque $\lambda$ y $\lambda^*$ son diferentes. De aquí que el \textit{segundo} factor debe anularse, lo que da
+\begin{equation}
+\sum_{i,\,k=1}^{n} a_{ik}\,q_i\,q_k^* = 0. \tag{510.32}
+\end{equation}
+
+Según (510.11), el significado de esta ecuación, si se escribe en forma vectorial, es
+\begin{equation}
+\vect{p} \cdot \vect{p}^* \tag{510.33}
+\end{equation}
+lo que significa que los dos ejes principales $\vect{p}$ y $\vect{p}^*$---que pueden identificarse con \textit{cualquier} par de ejes $\vect{p}_i$ y $\vect{p}_k$---son ortogonales.
+
+%%% Página 155 %%%
+
+Con la ayuda de estas propiedades fundamentales, podemos ahora tomar estos $n$ ejes principales como los ejes de un nuevo sistema de referencia que es \textit{rectangular}. Analíticamente, esta transformación se realiza según el siguiente esquema. Denotemos la solución $q_i, \ldots, q_n$ obtenida al resolver el problema de ejes principales para un cierto $\lambda_i$, por
+\begin{equation}
+\mathfrak{a}_{1i}, \, \mathfrak{a}_{2i}, \, \ldots, \, \mathfrak{a}_{ni}. \tag{510.34}
+\end{equation}
+
+Disponemos estas soluciones en \textit{columnas} sucesivas, según el siguiente esquema:
+\[
+\begin{array}{cccc}
+\vect{p}_1, & \vect{p}_2, & \ldots, & \vect{p}_n \\
+\hline
+\mathfrak{a}_{11}, & \mathfrak{a}_{12}, & \ldots, & \mathfrak{a}_{1n} \\
+\vdots & \vdots & & \vdots \\
+\mathfrak{a}_{n1}, & \mathfrak{a}_{n2}, & \ldots, & \mathfrak{a}_{nn}
+\end{array}
+\]
+
+Entonces aplicamos la transformación lineal:
+\begin{align}
+q_1 &= \mathfrak{a}_{11}\,u_1 + \ldots + \mathfrak{a}_{1n}\,u_n, \notag \\
+&\;\;\vdots \tag{510.35} \\
+q_n &= \mathfrak{a}_{n1}\,u_1 + \ldots + \mathfrak{a}_{nn}\,u_n. \notag
+\end{align}
+
+Las $u_1, \ldots, u_n$ son las coordenadas \textit{rectangulares} de un cierto punto $Q$ que en el sistema antiguo tenía las coordenadas \textit{rectilíneas} $q_1, \ldots, q_n$.
+
+La simplificación que esta transformación logra es bastante notable. En primer lugar, el cuadrado de la distancia $s^2$ de un punto $Q$ al origen aparece ahora en la forma pitagórica
+\begin{equation}
+s^2 = u_1^2 + u_2^2 + \ldots + u_n^2, \tag{510.36}
+\end{equation}
+porque operamos con coordenadas cartesianas ordinarias. De aquí que la forma cuadrática general (510.2) se transforma a una forma puramente \textit{diagonal}.
+
+Ahora veamos qué sucede con la energía potencial $V$ como consecuencia de esta transformación. Al principio sabemos solo que $V$ debe ser alguna forma cuadrática de las nuevas coordenadas $u_k$ con nuevos coeficientes $b'_{ik}$:
+\begin{equation}
+V = \tfrac{1}{2} \sum_{i,\,k=1}^{n} b'_{ik}\,u_i\,u_k. \tag{510.37}
+\end{equation}
+
+%%% Página 156 %%%
+
+Pero ahora podemos plantear el problema de los ejes principales una vez más en nuestro nuevo sistema de referencia. Ahora obtenemos las ecuaciones
+\begin{equation}
+\sum_{\alpha=1}^{n} b_{i\alpha}\,u_\alpha = \lambda u_i, \tag{510.38}
+\end{equation}
+junto con la condición auxiliar
+\begin{equation}
+u_1^2 + \ldots + u_n^2 = 1. \tag{510.39}
+\end{equation}
+
+Sabemos que los $\lambda$ de la ecuación (510.38) pueden identificarse sucesivamente con los $n$ valores \textit{previos} $\lambda_1, \ldots, \lambda_n$, puesto que los $\lambda_i$ son invariantes de la transformación. Además, en el nuevo sistema de referencia la solución del problema de los ejes principales es conocida \textit{explícitamente}, viendo que los ejes principales coinciden con los ejes coordenados. De aquí que la solución que pertenece a un dado $\lambda_i$ debe ser
+\begin{equation}
+u_i = 1, \quad \text{todos los otros } u_k = 0. \tag{510.40}
+\end{equation}
+
+Si ponemos estos valores en las ecuaciones (510.38), tenemos
+\begin{align}
+b'_{ii} &= \lambda_i, \notag \\
+b'_{ik} &= 0, \quad (i \neq k). \tag{510.41}
+\end{align}
+
+Esto muestra que la energía potencial $V$ toma en el nuevo sistema de referencia la forma
+\begin{equation}
+V = \tfrac{1}{2}\,(\lambda_1 u_1^2 + \lambda_2 u_2^2 + \ldots + \lambda_n u_n^2), \tag{510.42}
+\end{equation}
+y obtenemos el resultado notable de que no solo el cuadrado de la distancia, $s^2$, sino también la energía potencial $V$, adopta en el nuevo sistema de referencia una forma diagonal. \textit{Mediante una transformación lineal de las coordenadas, dos formas cuadráticas generales pueden reducirse simultáneamente a forma diagonal.}
+
+Para nuestro problema mecánico, esta transformación logra una gran simplificación tanto de las energías cinética como potencial. La energía cinética en el nuevo sistema de referencia se convierte en
+\begin{equation}
+T = \tfrac{1}{2}\left(\frac{ds}{dt}\right)^2 = \tfrac{1}{2}\,(\dot{u}_1^2 + \ldots + \dot{u}_n^2), \tag{510.43}
+\end{equation}
+mientras que la energía potencial se convierte en
+\begin{equation}
+V = \tfrac{1}{2}\,(\lambda_1\,u_1^2 + \ldots + \lambda_n\,u_n^2). \tag{510.44}
+\end{equation}
+
+%%% Página 157 %%%
+
+Las ecuaciones lagrangianas del movimiento son ahora:
+\begin{align}
+\ddot{u}_1 + \lambda_1\,u_1 &= 0, \notag \\
+&\;\;\vdots \tag{510.45} \\
+\ddot{u}_n + \lambda_n\,u_n &= 0. \notag
+\end{align}
+
+Estas ecuaciones diferenciales están completamente \textit{separadas} y son fácilmente integrables. Son las ecuaciones diferenciales del movimiento armónico simple, dando
+\begin{equation}
+u_i = A_i\,\cos\sqrt{\lambda_i}\,t + B_i\,\sin\sqrt{\lambda_i}\,t, \tag{510.46}
+\end{equation}
+donde $A_i$ y $B_i$ son constantes arbitrarias de integración.
+
+\textit{Problema.} Considerar un péndulo doble, compuesto por dos péndulos simples de la misma longitud y masa, el segundo suspendido del extremo del primero. Usar como coordenadas de posición los dos ángulos infinitesimales $\theta_1$ y $\theta_2$ entre el hilo y la línea de plomada.
+
+1. Formar la energía cinética y la energía potencial del sistema.
+
+2. Mostrar a partir de la forma del elemento de línea que los dos ejes $Q_1$ y $Q_2$ del sistema de referencia oblicuo están a un ángulo de $45°$ entre sí.
+
+3. Mostrar que los dos ejes principales $\vect{p}_1$ y $\vect{p}_2$ bisectan el ángulo entre $Q_1$ y $Q_2$ y su ángulo suplementario.
+
+4. Mostrar que las frecuencias conectadas con los dos ejes principales son
+\begin{align*}
+\nu_1 &= \sqrt{2 - \sqrt{2}}\;\nu, \\
+\nu_2 &= \sqrt{2 + \sqrt{2}}\;\nu,
+\end{align*}
+donde $\nu$ es la frecuencia natural de cada uno de los péndulos simples.
+
+%%% Página 158 %%%
+
+Ahora tenemos que distinguir entre dos posibilidades fundamentalmente diferentes. Sabemos que los $\lambda_i$ son siempre números \textit{reales}. Pero no podemos garantizar que sean siempre \textit{positivos}. En el caso general algunos de los $\lambda_i$ pueden ser positivos y algunos negativos. Supongamos que todos los $\lambda_i$ \textit{son positivos}. En este caso, la solución (510.46) muestra que el $C$-punto \textit{oscila alrededor del punto de equilibrio $P$}. El movimiento consiste en una superposición de vibraciones monocromáticas de frecuencia
+\begin{equation}
+\nu_i = \sqrt{\lambda_i}, \tag{510.47}
+\end{equation}
+con amplitudes pequeñas pero constantes y fases arbitrarias. Estas vibraciones ocurren en la dirección de los $n$ ejes principales mutuamente ortogonales $\vect{p}_i$. La superposición de todas estas vibraciones da
+
+``figuras de Lissajous'' en el espacio de configuración $n$-dimensional. Estas vibraciones se denominan ``vibraciones normales'' a causa de su ortogonalidad mutua. Su número es siempre igual al número de grados de libertad del sistema mecánico. Las frecuencias $\nu_i$ cambian de un eje principal a otro, y así hablamos del ``espectro'' de las vibraciones normales.
+
+Un bello ejemplo es el caso de un cuerpo sólido, cuyas moléculas están cerca de un estado de equilibrio pero en permanente vibración irregular a causa del movimiento térmico. Todas estas vibraciones pueden ser analíticamente representadas por un solo $C$-punto que se coloca en un espacio euclidiano de $3N$ dimensiones. El movimiento del $C$-punto puede visualizarse como vibraciones armónicas de frecuencias definidas a lo largo de ejes definidos mutuamente perpendiculares. Cada grado de libertad está conectado con un eje. El espectro de estas vibraciones se extiende desde las muy bajas vibraciones elásticas y acústicas hasta las muy altas vibraciones infrarrojas. La distribución de las amplitudes y fases se rige por leyes estadísticas y es función de la temperatura absoluta $T$.
+
+Supongamos ahora que al menos \textit{una} de las raíces características $\lambda_i$---por ejemplo $\lambda_n$---es \textit{negativa}. En este caso ponemos
+\begin{equation}
+\sqrt{-\lambda_n} = \nu_n, \tag{510.48}
+\end{equation}
+y obtenemos como solución de la última ecuación lagrangiana del movimiento
+\begin{equation}
+u_n = A_n\,e^{\nu_n t} + B_n\,e^{-\nu_n t}. \tag{510.49}
+\end{equation}
+
+Esta solución ya no es periódica, sino \textit{exponencial}. El más pequeño impulso a lo largo del eje $\vect{p}_n$ es suficiente para llevar al $C$-punto a un movimiento que ya no es oscilatorio sino que se aleja cada vez más del punto $P$ de equilibrio.
+
+Vemos que el estudio de las pequeñas vibraciones alrededor de un estado de equilibrio nos lleva a la conclusión de que tenemos que distinguir entre dos tipos de equilibrio que son ampliamente diferentes en su comportamiento físico. El primer caso se realiza si todas las raíces de la ecuación característica son positivas. En este caso llamamos al equilibrio ``estable,'' porque pequeñas perturbaciones no sacarán al sistema de su estado de equilibrio, sino que simplemente producirán vibraciones alrededor de ese estado. El segundo estado se realiza si al menos una de las raíces características es negativa. En ese caso la más pequeña perturbación basta para llevar al sistema lejos del
+
+%%% Página 159 %%%
+
+estado original de equilibrio, lo que significa que el equilibrio, incluso si existe en un instante particular, no puede mantenerse. Un equilibrio de esta naturaleza se denomina ``inestable.'' En el caso límite donde ninguno de los $\lambda_i$ es negativo pero uno o más son \textit{cero}, hablamos de un equilibrio ``neutral.''
+
+Tenemos que llevar las discusiones de esta sección, que exploran los eventos mecánicos en la vecindad de un estado de equilibrio, a relación con la representación \textit{macroscópica} del espacio de configuración. Nuestras coordenadas con las que hemos operado tienen el significado de coordenadas \textit{locales}; representan pequeñas variaciones locales $\delta q_i$ de las coordenadas $q_i^0$ a partir del punto de equilibrio $P$. La energía potencial $V$ que hemos considerado representa la \textit{variación local} de la energía potencial $V$ en la vecindad del punto $P$, obtenida expandiendo $V$ en una serie de Taylor. Los términos lineales desaparecen puesto que expandimos alrededor de un punto de equilibrio. La expansión comienza con los términos de segundo orden y da lo que llamamos en nuestras discusiones generales (cf.\ cap.~\textsc{ii}, sección~3) la ``segunda variación'' de $V$. Ahora vemos que la misma segunda variación que fue decisiva para las propiedades de mínimo de un valor estacionario es decisiva para la estabilidad o inestabilidad de un estado de equilibrio. Si todos los $\lambda_i$ son positivos, entonces la segunda variación es una forma positiva definida lo que significa que la energía potencial aumenta en toda dirección desde $P$. De aquí que $V$ tiene un \textit{mínimo local} en $P$. Estabilidad de una posición de equilibrio y mínimo de la energía potencial son declaraciones equivalentes. Si al menos uno de los $\lambda_i$ es negativo, la segunda variación cambia de signo y el valor estacionario de la energía potencial ya no conduce a un verdadero extremo. Al mismo tiempo el equilibrio correspondiente es inestable.
+
+Las cuestiones de estabilidad son de la mayor importancia para ciertos problemas de elasticidad. Una estructura elástica delgada colapsa súbitamente si la carga se vuelve demasiado grande. Este colapso no ocurre por una ruptura de las fuerzas elásticas sino por ``pandeo''. El fenómeno del pandeo tiene el significado de que a una cierta carga la estructura elástica cambia su estado de equilibrio estable a uno de equilibrio inestable. El problema analítico del pandeo conduce automáticamente a una investigación de la segunda variación $\delta^2 V$ de la energía potencial en un punto donde $\delta V$ es cero. Si los valores característicos de $\delta^2 V$ pueden encontrarse, entonces los signos de los $\lambda_i$ deciden de inmediato si el equilibrio es estable o no. Mientras el más pequeño $\lambda_i$ sea positivo, la estructura es estable; si el más pequeño $\lambda_i$ es negativo, la estructura es inestable. La carga crítica se alcanza en el momento en que el más pequeño $\lambda_i$ se anula.
+
+Frecuentemente es muy difícil encontrar el espectro característico de la segunda variación y otro enfoque del problema es más accesible. Minimizamos la segunda variación e investigamos si el mínimo es positivo o negativo. En el primer caso, el equilibrio es estable; en el segundo caso, inestable. La condición para el pandeo se obtiene igualando a cero el valor mínimo de $\delta^2 V$.
+
+%%% Página 160 %%%
+
+\begin{quote}
+\textit{Resumen.} El movimiento de cualquier sistema mecánico cerca de un estado de equilibrio estable puede estudiarse convenientemente en el espacio de configuración. Este espacio es ahora euclidiano y las $q_i$-variables son coordenadas rectilíneas de ese espacio. Los ejes principales de la energía potencial designan $n$ direcciones mutuamente perpendiculares en el espacio de configuración que pueden elegirse como los ejes de un sistema de referencia natural. El $C$-punto realiza vibraciones armónicas en estas direcciones, con frecuencias definidas que cambian de eje a eje. Las amplitudes y fases de estas vibraciones, llamadas ``vibraciones normales'', son arbitrarias, dependiendo de las condiciones iniciales. El movimiento general del sistema es una superposición de las vibraciones normales, resultando en figuras de Lissajous descritas por el $C$-punto en el espacio de configuración. La estabilidad del equilibrio requiere que todas las raíces de la ecuación característica sean positivas, puesto que de lo contrario el carácter oscilatorio del movimiento se destruye.
+\end{quote}
+
+\end{document}

@@ -1,0 +1,355 @@
+\chapter{El principio del trabajo virtual}
+
+\section{El principio del trabajo virtual para desplazamientos reversibles}
+
+El primer principio variacional que encontramos en la ciencia de la mecánica es el principio del trabajo virtual. Este controla el equilibrio de un sistema mecánico y es fundamental para el desarrollo posterior de la mecánica analítica.
+
+En la forma newtoniana de la mecánica, una partícula está en equilibrio si la fuerza resultante que actúa sobre dicha partícula es cero. Esta forma de la mecánica aísla la partícula y reemplaza todas las restricciones por fuerzas. La inconveniencia de este procedimiento es obvia si pensamos en un problema tan simple como el equilibrio de una palanca. La palanca está compuesta por una infinidad de partículas y una infinidad de fuerzas internas que actúan entre ellas. El tratamiento analítico puede prescindir de todas estas fuerzas y tomar en cuenta únicamente la fuerza externa ---es decir, en este caso la fuerza de gravedad--- solamente. Esto se logra realizando únicamente aquellos desplazamientos virtuales que estén en armonía con las restricciones dadas. En el caso de la palanca, por ejemplo, hacemos que la palanca rote alrededor de su punto de apoyo \emph{como un cuerpo rígido}, preservando así la distancia mutua entre cualesquiera dos partículas. Mediante este procedimiento, las fuerzas internas que producen las restricciones no necesitan ser consideradas.
+
+El comportamiento mecánico de un cuerpo rígido es ciertamente muy diferente del de un montón de arena. Existen fuerzas internas intensas que actúan entre las partículas de un cuerpo rígido y que mantienen a estas partículas unidas, y que no actúan entre las partículas de un montón de arena. Pero, ¿cómo podemos demostrar la presencia de estas fuerzas? Intentando \emph{romper} el cuerpo rígido, es decir, intentando mover las partículas unas respecto a otras de una manera que \emph{no} esté en armonía con las restricciones dadas. Si simplemente movemos un cuerpo rígido o un montón de arena mediante rotación y traslación, la diferencia mecánica entre los dos sistemas desaparece, porque ahora las intensas fuerzas internas que caracterizan al cuerpo rígido, en contraste con el montón de arena, no entran en acción. Esta es la razón por la cual en el tratamiento variacional de la mecánica las ``fuerzas de restricción'' que mantienen ciertas condiciones cinemáticas dadas son ignoradas, y solo el trabajo de las ``fuerzas impresas'' necesita ser tomado en cuenta. Podemos eliminar la acción de las fuerzas internas, ya que los desplazamientos virtuales aplicados al sistema están en armonía con las condiciones cinemáticas dadas. El número de ecuaciones obtenido mediante este procedimiento es menor que el número de partículas. Pero es exactamente igual al número de grados de libertad que caracterizan al sistema.
+
+Usemos primero el lenguaje de la mecánica vectorial. Asumimos que las fuerzas externas dadas $\mathbf{F}_1,\, \mathbf{F}_2,\, \ldots,\, \mathbf{F}_n$ actúan en los puntos $P_1,\, P_2,\, \ldots,\, P_n$ del sistema. Los desplazamientos virtuales de estos puntos serán denotados por
+\begin{equation}
+\delta\mathbf{R}_1,\; \delta\mathbf{R}_2,\; \ldots,\; \delta\mathbf{R}_n. \tag{31.1}
+\end{equation}
+Estos desplazamientos virtuales deben estar en armonía con las restricciones cinemáticas dadas, y asumiremos que son \emph{reversibles}, es decir, que las restricciones dadas no nos impiden cambiar un $\delta\mathbf{R}_i$ arbitrario en $-\delta\mathbf{R}_i$.
+
+Ahora, el principio del trabajo virtual afirma que \emph{el sistema mecánico dado estará en equilibrio si, y solo si, el trabajo virtual total de todas las fuerzas impresas se anula}:
+\begin{equation}
+\overline{\delta w} \;=\; \mathbf{F}_1 \cdot \delta\mathbf{R}_1 + \mathbf{F}_2 \cdot \delta\mathbf{R}_2 + \ldots + \mathbf{F}_n \cdot \delta\mathbf{R}_n = 0. \tag{31.2}
+\end{equation}
+
+Traduzcamos esta ecuación al lenguaje analítico. Para este propósito, expresamos las coordenadas rectangulares $x_i$, $y_i$, $z_i$ como funciones de las coordenadas generalizadas $q_1,\, q_2,\, \ldots,\, q_n$, exactamente como se hizo en el capítulo~I, sección~7. La forma diferencial (31.2) se transforma entonces en la nueva forma diferencial
+\begin{equation}
+\overline{\delta w} \;=\; F_1\,\delta q_1 + F_2\,\delta q_2 + \ldots + F_n\,\delta q_n, \tag{31.3}
+\end{equation}
+donde $F_1,\, F_2,\, \ldots,\, F_n$ son llamados los componentes de la fuerza generalizada. Estos forman un vector del espacio de configuración $n$-dimensional.
+
+El principio del trabajo virtual requiere que
+\begin{equation}
+F_1\,\delta q_1 + F_2\,\delta q_2 + \ldots + F_n\,\delta q_n = 0. \tag{31.4}
+\end{equation}
+
+Podemos dar una interpretación geométrica notable de esta ecuación. El lado izquierdo de la ecuación no es más que el ``producto escalar'' de la fuerza y el desplazamiento virtual. La anulación de este producto escalar significa que \emph{la fuerza $F_i$ es perpendicular a todo desplazamiento virtual posible}.
+
+Asumamos primero que el sistema mecánico dado es libre de toda restricción. En ese caso, el punto $C$ del espacio de configuración puede ser desplazado en una dirección arbitraria. Entonces el principio (31.4) requiere que la fuerza $F_i$ se anule, porque no existe ningún vector que pueda ser perpendicular a todas las direcciones en el espacio.
+
+Asumamos ahora que el punto $C$ debe permanecer dentro de cierto subespacio $(n - m)$-dimensional del espacio de configuración, debido a $m$ restricciones cinemáticas dadas. Entonces la condición (31.2) ya no requiere la anulación de la fuerza $F_i$, sino solo su \emph{perpendicularidad} a dicho subespacio. Esto da lugar a $n - m$ ecuaciones, en conformidad con los $n - m$ grados de libertad del sistema mecánico.
+
+Pasemos ahora a la interpretación \emph{física} del principio del trabajo virtual. Según la mecánica newtoniana, el estado de equilibrio requiere que la fuerza resultante que actúa sobre \emph{cualquier} partícula del sistema se anule. Esta fuerza resultante es la suma de la fuerza impresa y las fuerzas que mantienen las restricciones dadas. Estas últimas fuerzas se denominan usualmente ``fuerzas de reacción''. Puesto que el principio de equilibrio requiere que ``fuerza impresa más fuerza resultante de reacción sea igual a cero'', vemos que el trabajo virtual de las fuerzas impresas puede ser reemplazado por el negativo del trabajo virtual de las fuerzas de reacción. De aquí que el principio del trabajo virtual pueda formularse de la siguiente manera, que llamaremos Postulado~$A$:
+
+\begin{quote}
+``El trabajo virtual de las fuerzas de reacción es siempre cero para cualquier desplazamiento virtual que esté en armonía con las restricciones cinemáticas dadas.''
+\end{quote}
+
+Este postulado no está restringido al ámbito de la estática. Se aplica igualmente a la dinámica, cuando el principio del trabajo virtual es generalizado adecuadamente por medio del principio de d'Alembert. Puesto que todos los principios variacionales fundamentales de la mecánica ---los principios de Euler, Lagrange, Jacobi, Hamilton--- son formulaciones matemáticas alternativas del principio de d'Alembert, el Postulado~$A$ es en realidad el \emph{único} postulado de la mecánica analítica, y es por tanto de importancia fundamental.\footnote{Aquellos científicos que afirman que la mecánica analítica no es más que una formulación matemáticamente diferente de las leyes de Newton deben suponer que el Postulado~$A$ es deducible de las leyes newtonianas del movimiento. El autor no ve cómo esto pueda hacerse. Ciertamente, la tercera ley del movimiento, ``acción igual a reacción'', no es suficientemente amplia para reemplazar al Postulado~$A$.}
+
+El principio de mínima acción adquiere una significación especial en el caso particularmente importante donde la fuerza impresa $F_i$ es monogénica, es decir, derivable de una única función escalar, la función de trabajo. En este caso, el trabajo virtual es igual a la variación de la función de trabajo $U(q_1, \ldots, q_n)$. Puesto que la función de trabajo puede ser reemplazada por el negativo de la energía potencial, podemos decir que el estado de equilibrio de un sistema mecánico se distingue por el valor estacionario de la energía potencial, es decir, por la condición
+\begin{equation}
+\delta V \;=\; 0. \tag{31.5}
+\end{equation}
+Si el equilibrio es \emph{estable}, la energía potencial debe asumir su valor mínimo ---el mínimo entendido en el sentido local--- mientras que, en general, el equilibrio no requiere el mínimo, sino solo el valor estacionario de~$V$.
+
+\begin{quote}
+\textit{Resumen.} El principio del trabajo virtual exige que, para el estado de equilibrio, el trabajo de las fuerzas impresas sea cero para cualquier variación infinitesimal de la configuración del sistema que esté en armonía con las restricciones cinemáticas dadas. Para fuerzas monogénicas, esto conduce a la condición de que, para el equilibrio, la energía potencial debe ser estacionaria con respecto a todas las variaciones cinemáticamente admisibles.
+\end{quote}
+
+Las dos secciones siguientes estarán dedicadas a la aplicación del principio del trabajo virtual a la estática de un cuerpo rígido. Los resultados son bien conocidos a partir de la mecánica vectorial elemental, pero su deducción a partir de un principio fundamental es una experiencia valiosa.
+
+\section{El equilibrio de un cuerpo rígido}
+
+Un cuerpo rígido que puede moverse libremente en el espacio tiene seis grados de libertad: tres por traslación y tres por rotación. Haciendo uso del principio de superposición de cantidades infinitesimales, podemos aplicar estos dos tipos de desplazamientos independientemente uno del otro.
+
+\medskip
+\noindent (A) \textit{Traslación.} Una traslación infinitesimal produce en cada punto del cuerpo rígido el mismo desplazamiento. Sea $\epsilon$ la magnitud del desplazamiento infinitesimal, y $\mathbf{B}$ un vector de longitud unitaria. Tenemos entonces para el desplazamiento virtual $\delta\mathbf{R}_k$ de la partícula $P_k$
+\begin{equation}
+\delta\mathbf{R}_k = \epsilon\,\mathbf{B}, \tag{32.1}
+\end{equation}
+y el trabajo resultante se convierte en
+\begin{equation}
+\overline{\delta w} \;=\; \Sigma(\mathbf{F}_k \cdot \epsilon\,\mathbf{B}) \;=\; \epsilon\,\mathbf{B} \cdot \Sigma\mathbf{F}_k. \tag{32.2}
+\end{equation}
+Puesto que el vector $\mathbf{B}$ puede ser elegido en cualquier dirección, la anulación de (32.2) requiere:
+\begin{equation}
+\bar{\mathbf{F}} \;=\; \Sigma\mathbf{F}_k \;=\; 0, \tag{32.3}
+\end{equation}
+lo que significa que \emph{la fuerza resultante $\bar{\mathbf{F}}$ de todas las fuerzas impresas se anula}.
+
+Un pistón puede ser forzado a moverse hacia arriba y hacia abajo dentro de su cilindro. El vector $\mathbf{B}$ tiene entonces una dirección definida, y la anulación de (32.3) requiere solo que \emph{la componente de $\bar{\mathbf{F}}$ en la dirección del movimiento se anule}.
+
+\medskip
+\noindent (B) \textit{Rotación.} Sea $\epsilon$ el ángulo de una rotación infinitesimal, y $\Omega$ un vector de longitud unitaria a lo largo del eje de rotación. El desplazamiento del punto $P_k$ debido a la rotación puede escribirse como sigue:
+\begin{equation}
+\delta\mathbf{R}_k \;=\; \epsilon\,\Omega \times \mathbf{R}_k, \tag{32.4}
+\end{equation}
+donde $\mathbf{R}_k$ denota el vector de posición de $P_k$ con respecto a un origen sobre el eje de rotación.
+
+El trabajo de la fuerza $\mathbf{F}_k$ se convierte en
+\begin{equation}
+\overline{\delta w}_k \;=\; \mathbf{F}_k \cdot \epsilon\,\Omega \times \mathbf{R}_k \;=\; \epsilon\,\Omega \cdot (\mathbf{R}_k \times \mathbf{F}_k) \;=\; \epsilon\,\Omega \cdot \mathbf{M}_k, \tag{32.5}
+\end{equation}
+donde hemos introducido el vector
+\begin{equation}
+\mathbf{M}_k \;=\; \mathbf{R}_k \times \mathbf{F}_k \tag{32.6}
+\end{equation}
+para denotar el ``momento de la fuerza'' respecto al origen.
+
+De aquí que el trabajo total de todas las fuerzas actuantes se convierte en
+\begin{equation}
+\overline{\delta w} \;=\; \Sigma\,\epsilon\,\Omega \cdot \mathbf{M}_k \;=\; \epsilon\,\Omega \cdot \Sigma\mathbf{M}_k. \tag{32.7}
+\end{equation}
+Nótese la completa analogía de (32.7) con (32.2), tomando el vector $\Omega$ el papel del vector de traslación $\mathbf{B}$ y el momento $\mathbf{M}$ el papel de la fuerza~$\mathbf{F}$.
+
+Puesto que un cuerpo libre puede rotar alrededor de cualquier eje, y por tanto $\Omega$ tiene una dirección arbitraria, la anulación de (32.7) requiere que
+\begin{equation}
+\bar{\mathbf{M}} \;=\; \Sigma\mathbf{M}_k \;=\; 0. \tag{32.8}
+\end{equation}
+\emph{El momento resultante de todas las fuerzas impresas se anula.}
+
+Aquí tenemos la segunda condición para el equilibrio de un cuerpo rígido. Puesto que un desplazamiento virtual arbitrario de un cuerpo rígido puede siempre ser producido por la superposición de una traslación y una rotación infinitesimales, las condiciones (32.3) y (32.8) juntas determinan su equilibrio.
+
+\medskip
+\noindent\textit{Nota}~1. El cuerpo puede estar fijo en el origen y, por tanto, su libertad de traslación destruida. En ese caso, la primera condición, ``la suma de todas las fuerzas se anula'', ya no es válida; pero la segunda condición, la anulación del momento resultante, sigue siendo válida. Los vectores radio $\mathbf{R}_k$ se miden ahora desde el punto fijo; por lo tanto, es el momento resultante \emph{respecto a ese punto} el que debe anularse.
+
+\noindent\textit{Nota}~2. No solo un punto del cuerpo, sino un eje completo puede estar fijo. En este caso, $\Omega$ ya no es un vector arbitrario sino que tiene la dirección del eje dado. La anulación de (32.7) requiere solamente
+\begin{equation}
+\Omega \cdot \bar{M} \;=\; 0, \tag{32.9}
+\end{equation}
+lo que significa que \emph{solo la componente del momento resultante en la dirección del eje de rotación debe anularse}.
+
+\begin{quote}
+\textit{Resumen.} Las posibilidades cinemáticas generales de un cuerpo rígido son la traslación y la rotación. La posibilidad de traslación requiere que la suma de todas las fuerzas se anule, y la posibilidad de rotación requiere que la suma de todos los momentos se anule para el equilibrio.
+\end{quote}
+
+\section{Equivalencia de dos sistemas de fuerzas}
+
+Como veremos más adelante, el trabajo virtual de las fuerzas impresas determina no solo el equilibrio sino también el comportamiento dinámico de un sistema mecánico. \emph{Dos sistemas de fuerzas que producen el mismo trabajo virtual son dinámicamente equivalentes.}
+
+Puesto que el trabajo virtual de un sistema arbitrario de fuerzas que actúan sobre un cuerpo rígido depende únicamente de dos cantidades, a saber, la fuerza resultante $\bar{\mathbf{F}}$ y el momento resultante $\bar{\mathbf{M}}$, obtenemos de inmediato el importante teorema de que \emph{dos sistemas de fuerzas que tienen la misma fuerza resultante y el mismo momento resultante son mecánicamente equivalentes}.
+
+\medskip
+\noindent\textit{Problema}~1. Demostrar que cualquier sistema dado de fuerzas que actúan sobre un cuerpo rígido puede ser reemplazado por una fuerza única si, y solo si, el momento resultante $\bar{\mathbf{M}}$ y la fuerza resultante $\bar{\mathbf{F}}$ son perpendiculares entre sí:
+\begin{equation}
+\bar{\mathbf{F}} \cdot \bar{\mathbf{M}} \;=\; 0. \tag{33.1}
+\end{equation}
+
+\noindent\textit{Problema}~2. Demostrar que dos fuerzas pueden ser reemplazadas por una fuerza única si, y solo si, las dos fuerzas son coplanares.
+
+\medskip
+\noindent\textit{Problema}~3. Demostrar que un sistema \emph{paralelo} arbitrario de fuerzas
+\begin{equation}
+\mathbf{F}_i = m\,\mathbf{G}_i, \tag{33.2}
+\end{equation}
+puede ser siempre reemplazado por una fuerza única
+\begin{equation}
+\bar{\mathbf{F}} \;=\; \bar{m}\,\mathbf{G} \tag{33.3}
+\end{equation}
+aplicada en el punto
+\begin{equation}
+\mathbf{R}_0 = \frac{\Sigma m\,\mathbf{R}}{\Sigma m}\;, \tag{33.4}
+\end{equation}
+siempre que $\bar{m} = \Sigma m$ no sea cero.
+
+\medskip
+\noindent\textit{Problema}~4. Demostrar que un sistema arbitrario de fuerzas puede ser reemplazado por una fuerza única $\bar{\mathbf{F}} = \Sigma\mathbf{F}$ más un par cuyo eje es paralelo a~$\bar{\mathbf{F}}$.
+
+\section{Problemas de equilibrio con condiciones auxiliares}
+
+Ocasionalmente, se presentan problemas de equilibrio que involucran una o más condiciones auxiliares. En tales problemas, el trabajo virtual infinitesimal $\overline{\delta w}$, antes de ser igualado a cero, debe ser aumentado por la variación de las condiciones auxiliares, cada una multiplicada por un factor de Lagrange indeterminado~$\lambda$, de acuerdo con el método general discutido en el capítulo~II, secciones~5 y~12. Como ilustración del método general, consideramos aquí dos problemas de estática: uno requiere la minimización de una función ordinaria, y el otro la de una integral definida.
+
+\medskip
+\noindent 1.\ \textit{El problema de barras articuladas.} Considérese un sistema de barras rígidas uniformes de sección transversal constante, articuladas libremente en sus extremos. Los dos extremos libres de la cadena están suspendidos. Encontrar la posición de equilibrio del sistema.
+
+En este problema, la fuerza impresa es la fuerza de gravedad, que es una fuerza monogénica. Determinamos la energía potencial $V$ del sistema que debe ser minimizada. Denotemos por $x_k$, $y_k$ las coordenadas rectangulares de los puntos extremos de las barras ---el eje $x$ elegido horizontalmente, el eje $y$ verticalmente hacia abajo--- mientras que las longitudes dadas de las barras serán denotadas por~$l_k$:
+\begin{equation}
+l_k^{\,2} \;=\; (x_{k+1} - x_k)^2 + (y_{k+1} - y_k)^2 \;=\; (\Delta x_k)^2 + (\Delta y_k)^2, \qquad (k = 0,\, 1,\, \ldots,\, n-1). \tag{34.1}
+\end{equation}
+Si $\sigma$ es la masa por unidad de longitud, obtenemos la siguiente expresión para la energía potencial del sistema:
+\begin{equation}
+V \;=\; \frac{\sigma g}{2} \sum_{k=0}^{n-1} (y_k + y_{k+1})\,l_k. \tag{34.2}
+\end{equation}
+Esta es la energía potencial que debe ser minimizada, considerando las ecuaciones (34.1) como $n$ condiciones auxiliares.
+
+De acuerdo con el procedimiento lagrangiano general, formamos la energía potencial \emph{modificada}:
+\begin{equation}
+\overline{V} \;=\; \tfrac{1}{2} \sum_{k=0}^{n-1} (y_k + y_{k+1})\,l_k \;+\; \sum_{k=0}^{n-1} \lambda_k\;\bigl[(\Delta x_k)^2 + (\Delta y_k)^2\bigr] \tag{34.3}
+\end{equation}
+(omitiendo el factor constante irrelevante $\sigma g$ en $V$), y esta es la nueva función que debe ser minimizada. Las variables del problema son $x_k$ e $y_k$ $(k = 1, 2, \ldots, n-1)$, mientras que $x_0$, $y_0$ y $x_n$, $y_n$ están dados como los dos puntos de suspensión.
+
+La variación con respecto a $x_k$ da
+\begin{equation}
+\lambda_k\,\Delta x_k - \lambda_{k-1}\,\Delta x_{k-1} = 0. \tag{34.4}
+\end{equation}
+Esta ecuación en diferencias es soluble en la forma
+\begin{equation}
+\lambda_k \;=\; \frac{C}{\Delta x_k}\;. \tag{34.5}
+\end{equation}
+
+La variación con respecto a $y_k$ da
+\begin{equation}
+\tfrac{1}{2}\;(l_k + l_{k-1}) \;-\; \lambda_k\,\Delta y_k + \lambda_{k-1}\,\Delta y_{k-1} \;=\; 0, \tag{34.6}
+\end{equation}
+y si sustituimos para $\lambda_k$ su valor de (34.5), obtenemos la siguiente ecuación en diferencias como solución de nuestro problema de equilibrio:
+\begin{equation}
+c\left(\frac{\Delta y_k}{\Delta x_k} \;-\; \frac{\Delta y_{k-1}}{\Delta x_{k-1}}\right) \;=\; \tfrac{1}{2}\;(l_k + l_{k-1}). \tag{34.7}
+\end{equation}
+
+\medskip
+\noindent 2.\ \textit{El problema de la cadena uniforme (catenaria).} Si el número de barras articuladas aumenta cada vez más, mientras que sus longitudes disminuyen (independientemente de si estas longitudes son iguales o no), las barras se aproximan a una curva suave, continua y diferenciable. En el límite, obtenemos el problema de la \emph{cadena} uniforme. Ahora la ecuación en diferencias (34.7) se aproxima obviamente en el límite a la ecuación diferencial
+\begin{equation}
+c\;\frac{d}{ds}\!\left(\frac{dy}{dx}\right) = 1, \tag{34.8}
+\end{equation}
+si denotamos por $ds$ el elemento de línea de la curva. Caracterizemos la curva por la ecuación $y = f(x)$; entonces (34.8) puede escribirse en la forma
+\begin{equation}
+\frac{y''}{\sqrt{1 + y'^{\,2}}} \;=\; \mathfrak{a}, \tag{34.9}
+\end{equation}
+donde hemos puesto $\mathfrak{a} = \dfrac{1}{c}$. Esta ecuación puede ser integrada, y obtenemos
+\begin{equation}
+y \;=\; \frac{1}{2\mathfrak{a}}\;(e^{\mathfrak{a}x} + e^{-\mathfrak{a}x}), \tag{34.10}
+\end{equation}
+que es la bien conocida ecuación de la catenaria.
+
+En lugar de usar este proceso de paso al límite, apliquemos ahora los métodos directos del cálculo de variaciones a nuestro problema, trasladando el problema previo de las barras articuladas directamente al problema de la cadena. Asumimos que la curva resultante está dada en forma paramétrica por
+\begin{equation}
+x \;=\; x(\tau), \qquad y \;=\; y(\tau). \tag{34.11}
+\end{equation}
+La integral definida que debe ser minimizada es ahora
+\begin{equation}
+V \;=\; \int_{\tau_1}^{\tau_2} y\,\sqrt{x'^{\,2} + y'^{\,2}}\;\,d\tau. \tag{34.12}
+\end{equation}
+
+En lo que respecta a las condiciones auxiliares, podemos seguir dos procedimientos diferentes. Si procedemos como en el problema anterior, debemos mantener constante la longitud de cualquier parte arbitrariamente pequeña de la cadena durante el proceso de variación. Esto equivale a la condición auxiliar
+\begin{equation}
+x'^{\,2} + y'^{\,2} = 1, \tag{34.13}
+\end{equation}
+si convenimos en que nuestro parámetro $\tau$ coincida con la longitud de arco $s$ de la curva real. En este caso, el método del multiplicador de Lagrange requiere que minimicemos la integral modificada
+\begin{equation}
+\overline{V} \;=\; \int_{\tau_1}^{\tau_2} \bigl[y + \lambda(x'^{\,2} + y'^{\,2})\bigr]\;d\tau. \tag{34.14}
+\end{equation}
+
+Sin embargo, puesto que nuestra cadena es perfectamente flexible, podemos realizar nuestra variación de una manera diferente. Podemos permitir variaciones arbitrarias de la curva (34.11) que no cambiarán la longitud \emph{total} de la curva. Aquí el problema es minimizar la integral (34.12) con la condición auxiliar
+\begin{equation}
+\int_{\tau_1}^{\tau_2} \sqrt{x'^{\,2} + y'^{\,2}}\;\,d\tau \;=\; \text{Constante}. \tag{34.15}
+\end{equation}
+Este problema es del tipo isoperimétrico (véase el capítulo~II, sección~14). La integral modificada aquí se convierte en
+\begin{equation}
+\overline{V} \;=\; \int_{\tau_1}^{\tau_2} (y + \lambda)\,\sqrt{x'^{\,2} + y'^{\,2}}\;\,d\tau. \tag{34.16}
+\end{equation}
+
+La diferencia esencial entre los dos tratamientos es que en el primer caso ---la condición auxiliar es de tipo local--- el factor de Lagrange $\lambda$ será una función de $\tau$; mientras que en el segundo caso ---donde la condición auxiliar es una integral extendida sobre todo el rango--- $\lambda$ será una constante.
+
+\medskip
+\noindent\textit{Problema}~1. Aplicar las ecuaciones diferenciales de Euler-Lagrange a la integral (34.14). La primera ecuación (asociada con la variable $x$) es directamente integrable. Eliminando $\lambda$ y sustituyendo en la segunda ecuación diferencial, se obtiene la ecuación diferencial (34.8). Verificar que $\lambda$ resulta ser una función de~$\tau$.
+
+\medskip
+\noindent\textit{Problema}~2. Aplicar la ecuación diferencial de Euler-Lagrange a la integral (34.16). Si identificamos $\tau$ con $y$, la ecuación diferencial para $x$ se convierte directamente integrable. Mostrar que los resultados coinciden en ambos problemas. En el segundo problema, $\lambda$ es una constante y enteramente diferente del $\lambda$ del primer problema.
+
+\section{Interpretación física del multiplicador de Lagrange}
+
+Supongamos que tenemos un sistema mecánico de $n$ grados de libertad, caracterizado por las coordenadas generalizadas $q_1,\, \ldots,\, q_n$, y que existe una condición cinemática dada en la forma
+\begin{equation}
+f(q_1, \ldots, q_n) \;=\; 0. \tag{35.1}
+\end{equation}
+Ahora, el método del multiplicador de Lagrange requiere que
+\begin{equation}
+\delta V + \lambda\,\delta f = 0. \tag{35.2}
+\end{equation}
+Esta ecuación puede, sin embargo, ser expresada en la forma
+\begin{equation}
+\delta\overline{V} \;=\; 0, \tag{35.3}
+\end{equation}
+donde
+\begin{equation}
+\overline{V} \;=\; V + \lambda\,f. \tag{35.4}
+\end{equation}
+
+Una vez más, tenemos el problema de encontrar el valor estacionario de una función, pero esa función ya no es la energía potencial original $V$, sino una energía potencial modificada $\overline{V}$. Esto, sin embargo, es físicamente muy plausible. Si no restringimos la variación de la configuración del sistema por la condición (35.1), sino que permitimos variaciones \emph{arbitrarias} de los $q_i$, entonces actuarán no solo las fuerzas impresas sino también las fuerzas que mantienen la condición cinemática dada. Estas también poseen una energía potencial que debe ser añadida a la energía potencial de las fuerzas impresas. Y así la modificación de la energía potencial por el término adicional $\lambda f$ no es meramente una cuestión de método matemático, sino que tiene una significación física muy real. \emph{La modificación de la energía potencial mediante el método $\lambda$ de Lagrange representa la energía potencial de las fuerzas que son responsables del mantenimiento de las condiciones auxiliares dadas.}
+
+Es enteramente propio de la naturaleza del problema que no podamos esperar demasiada información acerca del mecanismo que mantiene una condición cinemática dada si no sabemos nada más que esa condición misma. El término $\lambda f$ contiene el factor $\lambda$, que solo puede ser calculado para la configuración \emph{real} del sistema mecánico. Por lo tanto, $\lambda$ solo se conoce en un punto $C$ del espacio de configuración que yace sobre la superficie (35.1). Y sin embargo, este escaso conocimiento sobre la función de trabajo de la fuerza que mantiene una condición cinemática dada es suficiente para darnos dicha fuerza. La razón es que, al formar el gradiente de la energía potencial adicional
+\begin{equation}
+V_1 = \lambda\,f, \tag{35.5}
+\end{equation}
+obtenemos
+\begin{equation}
+F_{1i} \;=\; -\;\frac{\partial V_1}{\partial x_i} \;=\; -\lambda\;\frac{\partial f}{\partial x_i} \;-\; \frac{\partial\lambda}{\partial x_i}\;f. \tag{35.6}
+\end{equation}
+En el punto $C$, el segundo término se anula porque está multiplicado por $f$, que se anula en $C$; y así la ``fuerza de reacción'' $F_{1i}$ se reduce a
+\begin{equation}
+F_{1i} \;=\; -\;\lambda\;\frac{\partial f}{\partial x_i}\;. \tag{35.7}
+\end{equation}
+
+Vemos que el término $\lambda$ de Lagrange tiene la notable propiedad de proporcionarnos la fuerza de reacción asociada a una restricción cinemática dada. Lo mismo vale no solo en el estado de equilibrio sino también en el estado de movimiento, como veremos más adelante (cf.\ capítulo~V, sección~8).
+
+\medskip
+\noindent\textit{Problema}~1. Supongamos que la función de trabajo de un conjunto de partículas libres, sujetas a fuerzas mutuas entre ellas, depende solo de las ``coordenadas relativas''
+\begin{equation}
+\xi_{ik} = x_i - x_k, \quad \eta_{ik} = y_i - y_k, \quad \zeta_{ik} = z_i - z_k, \tag{35.8}
+\end{equation}
+de cualquier par de partículas $P_i$ y $P_k$:
+\begin{equation}
+U \;=\; U(\xi_{ik},\, \eta_{ik},\, \zeta_{ik}). \tag{35.9}
+\end{equation}
+Sea la coordenada $x_i$ variada por $\delta x_i$, obteniendo así la componente $x$ de la fuerza que actúa en $P_i$. Demostrar que la cantidad
+\begin{equation}
+X_{ik} = \frac{\partial U}{\partial \xi_{ik}} \tag{35.10}
+\end{equation}
+puede interpretarse como ``la componente $x$ de la fuerza sobre $P_i$ debida a $P_k$''. Vemos directamente que
+\begin{equation}
+X_{ik} = -\;X_{ki}, \tag{35.11}
+\end{equation}
+lo que muestra que estas fuerzas satisfacen la ley de Newton de ``acción igual a reacción''. Las fuerzas aparecen en pares de igual magnitud y dirección opuesta, y la suma de todas las fuerzas es cero.
+
+\medskip
+\noindent\textit{Problema}~2. Supongamos ahora más específicamente que $U$ depende solo de la combinación
+\begin{equation}
+r_{ik}^{\,2} \;=\; \xi_{ik}^{\,2} + \eta_{ik}^{\,2} + \zeta_{ik}^{\,2}, \tag{35.12}
+\end{equation}
+es decir, de la \emph{distancia mutua} entre cualesquiera dos partículas. Demostrar que las fuerzas internas son ahora de naturaleza central, actuando a lo largo de la línea recta entre $P_i$ y $P_k$. Tales fuerzas centrales no producen momento resultante.
+
+\medskip
+\noindent\textit{Problema}~3. Considérese un cuerpo rígido como un conjunto de partículas libres, restringido por las condiciones auxiliares
+\begin{equation}
+(x_i - x_k)^2 + (y_i - y_k)^2 + (z_i - z_k)^2 \;=\; c_{ik}^{\,2}. \tag{35.13}
+\end{equation}
+Demostrar, con ayuda del método del multiplicador de Lagrange y haciendo uso de los resultados de los dos problemas anteriores, que las fuerzas que mantienen un cuerpo rígido unido no producen fuerza resultante $\bar{F}$ ni momento resultante~$\bar{M}$.
+
+\medskip
+Si una condición cinemática dada es no holónoma, ya \textbf{no} podemos modificar la función que ha de minimizarse. Pero los términos $\lambda$ aún aparecen en las condiciones de equilibrio. Esto tiene de nuevo una significación física directa. Los términos $\lambda$ aumentan las fuerzas impresas con aquellas fuerzas que mantienen las restricciones cinemáticas dadas. No existe función de trabajo en este caso, \emph{pero una vez más las fuerzas de reacción son proporcionadas}.
+
+De aquí que el ingenioso método del multiplicador de Lagrange elucide la naturaleza de las condiciones cinemáticas holónomas y no holónomas, y muestre que las condiciones holónomas y las fuerzas monogénicas son mecánicamente equivalentes; por otro lado, las condiciones no holónomas y las fuerzas poligénicas son también mecánicamente equivalentes. \emph{Una condición holónoma es mantenida por fuerzas monogénicas; una condición no holónoma, por fuerzas poligénicas.}
+
+\begin{quote}
+\textit{Resumen.} El método del multiplicador de Lagrange tiene la significación física de proporcionar las fuerzas de reacción que se ejercen a causa de restricciones cinemáticas dadas. En el caso de condiciones holónomas, estas fuerzas son deducibles de una función de trabajo, mientras que en el caso de condiciones no holónomas tal función de trabajo no existe. Las fuerzas de reacción son proporcionadas en ambos casos.
+\end{quote}
+
+\section{La desigualdad de Fourier}
+
+Todas nuestras conclusiones anteriores fueron hechas bajo la suposición tácita de que los desplazamientos virtuales son reversibles. Este es el caso si nos encontramos en algún lugar \emph{dentro} del espacio de configuración, de manera que el movimiento puede ocurrir en todas las direcciones. La situación es bastante diferente, sin embargo, si alcanzamos las \emph{fronteras} del espacio de configuración. Aquí un desplazamiento virtual debe ser dirigido \emph{hacia adentro} y el desplazamiento opuesto no es posible porque nos llevaría fuera de la región. Considérese una bola colgando del extremo de una cuerda flexible. Esa bola puede moverse hacia arriba, lo cual simplemente relaja la cuerda. Pero no puede moverse hacia abajo porque la cuerda no lo permite. Igualmente, una bola sobre la superficie de una mesa puede moverse sobre la mesa, pero también puede moverse hacia arriba en cualquier dirección que deseemos; sin embargo, no puede moverse hacia abajo. El desplazamiento virtual es reversible si el movimiento ocurre en la dirección horizontal, pero es irreversible en todas las demás direcciones.
+
+Fourier señaló que la formulación ordinaria del principio del trabajo virtual
+\begin{equation}
+\delta V \;=\; 0, \tag{36.1}
+\end{equation}
+está restringida a desplazamientos \emph{reversibles}; para desplazamientos irreversibles, debe ser reemplazada por la desigualdad
+\begin{equation}
+\delta V \;\geq\; 0. \tag{36.2}
+\end{equation}
+En efecto, nuestro objetivo final es minimizar la energía potencial. Esto requiere, para desplazamientos pequeños pero finitos, que $V$ siempre aumente:
+\begin{equation}
+\Delta V \;>\; 0. \tag{36.3}
+\end{equation}
+Para desplazamientos infinitesimales, esto debe ser reemplazado por
+\begin{equation}
+\Delta V \;\geq\; 0. \tag{36.4}
+\end{equation}
+Ahora no hay objeción al signo ``mayor o igual que''. La única razón por la cual pudimos eliminarlo antes era que ``mayor que'', si se aplicara al desplazamiento inverso, se convertiría en ``menor que'', y ``menor que cero'' contradice la hipótesis de un mínimo. Para desplazamientos irreversibles, sin embargo, el argumento ya no es válido, y debemos dejar (36.4) en su forma original porque no hay objeción a cambios positivos de la energía potencial. Puesto que el cambio de la energía potencial es igual al negativo del trabajo de las fuerzas, podemos expresar la desigualdad (36.4) en la forma
+\begin{equation}
+\overline{\delta w} \;\leq\; 0. \tag{36.5}
+\end{equation}
+En esta forma, la desigualdad de Fourier incluye incluso fuerzas poligénicas que no poseen energía potencial. \emph{Si el trabajo de las fuerzas para cualquier desplazamiento virtual es cero o negativo, el sistema está en equilibrio.}
+
+Si la bola en el extremo de una cuerda es desplazada hacia arriba, el trabajo de la fuerza de gravedad es negativo. Para un desplazamiento horizontal (y reversible), es cero. De manera similar, al mover una bola sobre la mesa horizontal (desplazamientos reversibles), el trabajo de la fuerza de gravedad es cero, pero al mover la bola hacia arriba el trabajo se vuelve negativo. Cualquier sistema mecánico que no puede alcanzar el equilibrio \emph{dentro} del espacio de configuración se moverá hasta la \emph{frontera} de ese espacio y encontrará allí su equilibrio. Es más fácil satisfacer la desigualdad (36.5) en la frontera que la igualdad (36.1) en el interior de la región. Nótese que en la frontera del espacio de configuración, el equilibrio no requiere un valor estacionario de la energía potencial.
+
+\begin{quote}
+\textit{Resumen.} La formulación habitual del principio del trabajo virtual, ``la suma de todos los trabajos virtuales es igual a cero'', es válida solo para desplazamientos reversibles. Para desplazamientos irreversibles que ocurren en la frontera del espacio de configuración, ``igual a cero'' debe ser reemplazado por ``igual a o menor que cero''.
+\end{quote}

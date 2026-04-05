@@ -1,0 +1,843 @@
+\documentclass[12pt,a4paper]{book}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish]{babel}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{geometry}
+\geometry{margin=2.5cm}
+\usepackage{setspace}
+\onehalfspacing
+
+\begin{document}
+
+\chapter{El cálculo de las variaciones}
+
+\section{La naturaleza general de los problemas de extremo}
+
+Los problemas de extremo han despertado el interés y la curiosidad de todas las épocas. Caminar en línea recta es la solución instintiva de un problema de extremo: queremos llegar al punto final de nuestro destino con el menor desvío posible. El proverbial ``camino de menor resistencia'' es otro reconocimiento de nuestro deseo instintivo por las soluciones mínimas. El mismo deseo se expresa en el interés público asociado a registrar logros, a hacer algo que ``no pueda ser superado.''
+
+Matemáticamente hablamos de un ``problema de extremo'' siempre que el valor más grande o más pequeño posible de una cantidad está involucrado. Por ejemplo, podemos querer encontrar el pico más alto de una montaña o el punto más bajo de un valle, o el camino más corto entre dos puntos, o el mayor volumen de un recipiente cortado de una pieza de metal, o el menor desperdicio posible en un problema de iluminación o calefacción, y muchos otros problemas. Para la solución de tales problemas se ha desarrollado una rama especial de las matemáticas, llamada ``cálculo de variaciones.''
+
+Desde el punto de vista formal, el problema de minimizar una integral definida se considera como el dominio propio del cálculo de variaciones, mientras que el problema de minimizar una función pertenece al cálculo ordinario. Históricamente, los dos problemas surgieron simultáneamente y no se hizo una distinción clara hasta la época de Lagrange, quien desarrolló la técnica del cálculo de variaciones. El famoso problema de Dido, bien conocido por los antiguos geómetras, era un problema variacional que involucraba la minimización de una integral. Herón de Alejandría derivó la ley de reflexión a partir del principio de que un rayo de luz que es emitido en el punto $A$ y se dirige a un cierto punto $B$ después de reflejarse en un espejo, alcanza su destino en el menor tiempo posible. Fermat extendió este principio para derivar la ley de refracción. Todos estos problemas fueron resueltos empleando métodos esencialmente geométricos. El problema de la ``braquistocrona''---la curva de descenso más rápido---fue propuesto por John Bernoulli y resuelto independientemente por él, Newton y Leibniz. La ecuación diferencial básica de los problemas variacionales fue descubierta por Euler y Lagrange. Un método general para la solución de problemas variacionales fue introducido por Lagrange en su \textit{Mécanique Analytique} (1788).
+
+Antes de proceder a desarrollar las herramientas formales del cálculo de variaciones, consideraremos un ejemplo simple pero típico que puede servir bien para elucidar la naturaleza general de los problemas de extremo. Supongamos que deseamos encontrar el punto más alto de una montaña. La altura de la montaña puede ser representada analíticamente por la ecuación
+\begin{equation}
+z = f(x, y), \tag{21.1}
+\end{equation}
+donde $f(x, y)$ será considerada como una función continua y diferenciable de $x$ e $y$.
+
+Ahora bien, la cuestión de un máximo o un mínimo involucra por su propia naturaleza una \textit{comparación}. Si afirmamos estar en la cima de una montaña, tenemos que demostrar que todos los puntos cercanos están por debajo de nosotros. Aquí encontramos la primera restricción característica de un problema de extremo. Puede haber otros picos aún más altos en partes más distantes de la montaña. Estamos satisfechos si nuestra propia altura se establece como un máximo en comparación con los alrededores \textit{inmediatos}, aun si no se establece como un máximo en relación con alrededores arbitrariamente amplios. Hablamos así de un máximo (o mínimo) \textit{local} en contraste con un máximo (o mínimo) \textit{absoluto}.
+
+Sin embargo, incluso esta búsqueda de un extremo relativo puede ser restringida aún más explorando primero la vecindad \textit{infinitesimal} (es decir, arbitrariamente pequeña) de nuestra posición. Es obvio que en la cima de una montaña todos los puntos de la vecindad infinitesimal deben tener la misma altura (en primer orden), lo cual significa que \textit{la tasa de cambio de la altura debe ser cero en cualquier dirección en que procedamos}. En efecto, una tasa de cambio positiva en alguna dirección significaría que hay puntos en nuestra vecindad cuya altura excede la nuestra. Por otro lado, si la tasa de cambio es negativa en cierta dirección, podemos proceder en la dirección \textit{opuesta}---siempre que toda dirección pueda ser invertida (una condición muy esencial)---y así hacer que la tasa de cambio sea positiva.
+
+Vemos que tanto los valores positivos como los negativos de la tasa de cambio de la función deben ser excluidos si se requiere el máximo relativo de una función en un cierto punto. Esto conduce al principio importante de que el máximo de una función dada en un cierto punto requiere que la \textit{tasa de cambio de la función en ese punto debe ser cero en toda dirección posible}.
+
+Sin embargo, esta condición en sí misma no es suficiente para garantizar un máximo. Es posible que nos encontremos en el punto de nivel de una superficie de silla, la cual produce un mínimo con respecto a algunas direcciones y un máximo con respecto a otras. Vemos así que la anulación de la tasa de cambio en toda dirección posible es una condición necesaria pero de ninguna manera suficiente para un extremo. Sujeta a esta condición, se requiere una investigación adicional que determinará si se realiza un máximo o un mínimo o si estamos en un punto de silla sin ningún valor extremo.
+
+Sin embargo, incluso el hecho de que estemos en un punto donde la tasa de cambio de la función se anula en toda dirección posible es de interés en sí mismo. Los puntos donde esto ocurre son puntos excepcionales, sin importar si la condición adicional de un máximo o mínimo se satisface o no. Por esta razón se ha acuñado un nombre especial para tales puntos. Decimos que \textit{una función tiene un ``valor estacionario'' en un cierto punto si la tasa de cambio de la función en toda dirección posible desde ese punto se anula}.
+
+Sucede que los problemas de movimiento requieren solamente el \textit{valor estacionario} de cierta integral. Bajo estas circunstancias hay una diferencia notable entre el cálculo de variaciones como una ciencia de las matemáticas puras, y la aplicación de ese cálculo a problemas de mecánica. Desde el punto de vista puramente matemático, el problema de un valor estacionario es de menor interés. Después de establecer los criterios para un valor estacionario, procedemos a buscar los criterios adicionales para un verdadero extremo. Para los principios variacionales de la mecánica, sin embargo, esta última investigación es de interés solamente si están involucrados problemas de estabilidad---cuando buscamos el mínimo real de la energía potencial. Los problemas de movimiento no están influenciados por las condiciones específicas de mínimo.
+
+\begin{quote}
+\textit{Resumen.} El problema de encontrar la posición de un punto en el cual una función tiene un máximo o mínimo relativo requiere la exploración de la vecindad infinitesimal de ese punto. Esta exploración debe mostrar que la función tiene un valor estacionario en el punto en cuestión. Aunque este requisito no puede garantizar un extremo sin condiciones adicionales, sin embargo no necesitamos ir más allá para los objetivos generales de la dinámica porque los problemas de movimiento requieren meramente el valor estacionario, y no necesariamente el mínimo, de cierta integral definida.
+\end{quote}
+
+\section{El valor estacionario de una función}
+
+Consideramos una función de un número arbitrario de variables:
+\begin{equation}
+F = F(u_1, u_2, \ldots, u_n) \tag{22.1}
+\end{equation}
+Estas variables pueden ser representadas como las coordenadas rectangulares de un punto $P$ en un espacio de $n$ dimensiones. Si representamos gráficamente el valor de la función a lo largo de una dimensión adicional, obtenemos una superficie en un espacio de $n + 1$ dimensiones. Suponemos que $F$ es una función continua y diferenciable de las variables $u_k$.
+
+Traduzcamos ahora la expresión: ``la exploración de la vecindad infinitesimal de un punto'' al lenguaje matemático exacto. Es a este proceso al que se le da el nombre de ``variación''. Una ``variación'' significa un cambio infinitesimal, en analogía con el proceso-d del cálculo ordinario. Sin embargo, contrariamente al proceso-d ordinario, este cambio infinitesimal no es causado por el cambio \textit{real} de una variable independiente, sino que es impuesto por nosotros sobre un conjunto de variables como una especie de \textit{experimento matemático}. Consideremos por ejemplo una canica que está en reposo en el punto más bajo de un tazón. El desplazamiento real de la canica es cero. Es nuestro deseo, sin embargo, llevar la canica a una posición vecina para ver cómo cambia la energía potencial. Un desplazamiento de esta naturaleza se llama un ``desplazamiento virtual''. El término ``virtual'' indica que el desplazamiento fue hecho intencionalmente en cualquier dirección cinemáticamente admisible. Tal cambio virtual e infinitesimal de posición se llama brevemente una ``variación'' de la posición. El cambio correspondiente de la función dada $F$---que en nuestro ejemplo es la energía potencial de la canica---está determinado por esta variación. Tenemos la variación de la posición a nuestra disposición, pero el cambio correspondiente de la función---llamado la ``variación de la función''---no está a nuestra disposición.
+
+Fue la ingeniosa idea de Lagrange introducir un símbolo especial para el proceso de variación, con el fin de enfatizar su carácter virtual. Este símbolo es $\delta$. La analogía con $d$ viene a la mente, ya que ambos símbolos se refieren a \textit{cambios infinitesimales}. Sin embargo, $d$ se refiere a un cambio \textit{real}, $\delta$ a un cambio \textit{virtual}. Dado que en problemas que involucran la variación de integrales definidas ambos tipos de cambio deben ser considerados simultáneamente, la distinción es de vital importancia.
+
+De acuerdo con esta notación escribimos los cambios virtuales infinitesimales de nuestras coordenadas en la forma
+\begin{equation}
+\delta u_1, \, \delta u_2, \, \ldots \, , \, \delta u_n. \tag{22.2}
+\end{equation}
+El cambio correspondiente de la función $F$ se obtiene por las reglas del cálculo elemental
+\begin{equation}
+\delta F = \frac{\partial F}{\partial u_1} \, \delta u_1 + \frac{\partial F}{\partial u_2} \, \delta u_2 + \ldots + \frac{\partial F}{\partial u_n} \, \delta u_n. \tag{22.3}
+\end{equation}
+Esta expresión se llama la ``primera variación'' de la función $F$.
+
+Para operar con cantidades finitas en lugar de infinitesimales, ponemos:
+\begin{equation}
+\delta u_1 = \epsilon a_1, \quad \delta u_2 = \epsilon a_2 \, , \quad \ldots \, , \quad \delta u_n = \epsilon a_n, \tag{22.4}
+\end{equation}
+denotando por $a_1, a_2, \ldots, a_n$ los cosenos directores de la dirección virtual en la que hemos procedido, mientras que $\epsilon$ es un parámetro que tiende hacia cero.
+
+La tasa de cambio de la función $F$ en la dirección especificada se convierte ahora en
+\begin{equation}
+\frac{\delta F}{\epsilon} = \frac{\partial F}{\partial u_1} \, a_1 + \frac{\partial F}{\partial u_2} \, a_2 + \ldots + \frac{\partial F}{\partial u_n} \, a_n. \tag{22.5}
+\end{equation}
+Para que $F$ tenga un valor estacionario, esta cantidad debe anularse:
+\begin{equation}
+\sum_{k=1}^{n} \frac{\partial F}{\partial u_k} \, a_k \; = \; 0. \tag{22.6}
+\end{equation}
+Pero ahora la naturaleza ``virtual'' de nuestro desplazamiento implica que podemos proceder en cualquier dirección que deseemos, de modo que los $a_k$ son arbitrarios, y por lo tanto
+\begin{equation}
+\frac{\partial F}{\partial u_k} = 0, \quad (k = 1, 2, \ldots, n). \tag{22.7}
+\end{equation}
+
+Recíprocamente, si las ecuaciones (22.7) se satisfacen, la cantidad (22.5) se anula y por lo tanto $F$ tiene un valor estacionario. De aquí que las ecuaciones (22.7) sean tanto necesarias como suficientes.
+
+Nótese que las ecuaciones (22.7) determinan la \textit{posición} de un valor estacionario de una función más que el valor estacionario en sí. Si hemos encontrado $n$ valores $u_1, u_2, \ldots, u_n$ que satisfacen las $n$ ecuaciones (22.7) podemos sustituir estos valores en la expresión para $F$ y así obtener el valor estacionario de la función.
+
+\begin{quote}
+\textit{Resumen.} La condición necesaria y suficiente para que una función $F$ de $n$ variables tenga un valor estacionario en un cierto punto $P$ es que las $n$ derivadas parciales de $F$ con respecto a todas las $n$ variables se anulen en ese punto $P$.
+\end{quote}
+
+\section{La segunda variación}
+
+Determinemos una vez más el cambio infinitesimal de una función debido a una variación virtual de las coordenadas. Escribiendo la variación de las coordenadas una vez más en la forma (22.4), tenemos que evaluar la cantidad
+\begin{equation}
+\Delta F = F(u_1 + \epsilon a_1, \, u_2 + \epsilon a_2, \, \ldots \, , \, u_n + \epsilon a_n) - F(u_1, u_2, \ldots, u_n). \tag{23.1}
+\end{equation}
+Consideramos esta cantidad como una función del parámetro $\epsilon$ y la expandimos en potencias de $\epsilon$:
+\begin{equation}
+\Delta F = \epsilon \sum_{k=1}^{n} \frac{\partial F}{\partial u_k} \, a_k + \frac{1}{2} \, \epsilon^2 \sum_{i,\,k=1}^{n} \frac{\partial^2 F}{\partial u_i \partial u_k} \, a_i a_k + \ldots \tag{23.2}
+\end{equation}
+
+Ahora, si estamos en un punto donde $F$ tiene un valor estacionario, la primera suma se anula y $\Delta F$ comienza con los términos de segundo orden. Si $\epsilon$ es escogido suficientemente pequeño, podemos despreciar los términos de orden superior al segundo y escribir
+\begin{equation}
+\Delta F = \frac{1}{2} \, \delta^2 F, \tag{23.3}
+\end{equation}
+donde
+\begin{equation}
+\delta^2 F = \epsilon^2 \sum_{i,\,k=1}^{n} \frac{\partial^2 F}{\partial u_i \partial u_k} \, a_i a_k. \tag{23.4}
+\end{equation}
+
+Esta expresión se llama la ``segunda variación'' de $F$. Si sucede que $\delta^2 F$ es siempre positiva sin importar qué valores elijamos para los cosenos directores $a_i$---excepto que la suma de sus cuadrados debe ser igual a 1---entonces $F$ es \textit{creciente} en toda dirección posible desde $P$ y tenemos un mínimo real en ese punto. Si $\delta^2 F$ es siempre negativa, sin importar qué valores elijamos para los $a_i$, entonces $F$ es \textit{decreciente} en toda dirección posible desde $P$ y tenemos un máximo real en ese punto. Si $\delta^2 F$ es positiva en algunas direcciones y negativa en otras, entonces no tenemos ni un máximo ni un mínimo. De aquí que sea el \textit{signo de la segunda variación} lo que nos permite determinar la existencia de un valor extremo. Podemos escribir la ecuación
+\begin{equation}
+\delta^2 F = 0, \tag{23.5}
+\end{equation}
+y ver si podemos encontrar valores reales $a_i$ que la satisfagan. Si este es el caso, entonces $\delta^2 F$ puede cambiar de signo y no existe ningún extremo. Si, por otro lado, la ecuación (23.5) no tiene solución real para los $a_i$, entonces tenemos un valor extremo porque $\delta^2 F$ no puede cambiar de signo. (La decisión adicional sobre si tenemos un mínimo o un máximo se alcanza evaluando $\delta^2 F$ para un conjunto \textit{arbitrario} de $a_i$ y registrando si el resultado es positivo o negativo.)
+
+Trataremos la segunda variación de una función con mayor detalle más adelante cuando discutamos las pequeñas vibraciones cerca de un estado de equilibrio (cf.\ cap.\ V, sección 10). Entonces encontraremos criterios más exactos para decidir entre un máximo o un mínimo. Vale la pena mencionar, sin embargo, que ocasionalmente la investigación de la segunda variación es superflua porque la naturaleza del problema puede ser tal que la existencia de, digamos, un mínimo sea \textit{a priori} establecida. Si por ejemplo una función que debe ser minimizada está compuesta de términos puramente positivos, sabemos de antemano que esta función debe tener en algún lugar un valor más pequeño. De aquí que, si sucede que la condición para un valor estacionario tiene \textit{una} solución definida, esa solución debe automáticamente dar un mínimo (cf.\ cap.\ IV, sección 8).
+
+\begin{quote}
+\textit{Resumen.} Después de satisfacer las condiciones para un valor estacionario, el criterio adicional para un extremo depende del signo de la segunda variación. Un extremo requiere que el signo de la segunda variación permanezca el mismo para cualquier desplazamiento virtual infinitesimal posible---positivo para un mínimo, negativo para un máximo. Si el signo de la segunda variación es positivo para algunos desplazamientos y negativo para otros, entonces el valor estacionario de una función no conduce a un extremo.
+\end{quote}
+
+\section{Valor estacionario versus valor extremo}
+
+Debemos tener bien en mente la diferencia entre valor estacionario y extremo y la relación mutua de estos dos problemas. Un valor estacionario requiere solamente la anulación de la primera variación, sin ninguna restricción sobre la segunda variación. Un extremo requiere la anulación de la primera variación \textit{más} condiciones adicionales sobre la segunda variación. Además, hemos investigado la cuestión de un extremo bajo la condición de que estamos \textit{dentro} de los límites del espacio de configuración. Una función que no asume ningún extremo dentro de cierta región puede bien asumirlo en la frontera de esa región. En la frontera del espacio de configuración los desplazamientos ya no son reversibles y por lo tanto nuestro argumento de que la primera variación debe anularse---porque de otro modo puede hacerse tanto positiva como negativa---ya no es válido. Para desplazamientos no reversibles una función puede bien asumir un extremo \textit{sin} tener un valor estacionario en ese punto. En ese caso un extremo existe sin la anulación de la primera variación. Si una bola rueda por un surco, llegará al equilibrio en el punto más bajo del surco donde la tangente al camino es horizontal. Pero la bola puede ser detenida antes por una clavija que impide su descenso adicional. La bola está ahora en su posición más baja aunque la tangente no es cero y la altura no tiene un valor estacionario. Esa condición ya no se requiere porque la bola ha llegado al límite del espacio de configuración disponible y allí la variación de la posición no es reversible.
+
+\begin{quote}
+\textit{Resumen.} El extremo de una función requiere un valor estacionario solamente para desplazamientos reversibles. En la frontera del espacio de configuración, donde la variación de la posición no es reversible, es posible un extremo sin un valor estacionario.
+\end{quote}
+
+\section{Condiciones auxiliares. El método $\lambda$ de Lagrange}
+
+El problema de minimizar una función no siempre se presenta en la forma considerada anteriormente. El espacio de configuración en el cual el punto $P$ puede moverse puede estar restringido a menos de $n$ dimensiones por ciertas relaciones cinemáticas que existen entre las coordenadas. Tales condiciones cinemáticas se llaman ``condiciones auxiliares'' del problema variacional dado. Si tales condiciones no existen y las variables $u_1, \ldots, u_n$ pueden variarse sin restricción, tenemos un problema de variación ``libre'', como el considerado previamente (secciones 1--3).
+
+Investigaremos ahora la variación de la función
+\begin{equation}
+F = F(u_1, u_2, \ldots, u_n), \tag{25.1}
+\end{equation}
+con la condición auxiliar
+\begin{equation}
+f(u_1, u_2, \ldots, u_n) = 0. \tag{25.2}
+\end{equation}
+
+Nuestro primer pensamiento sería eliminar una de las $u_k$---por ejemplo $u_n$---de la condición auxiliar, expresándola en términos de las otras $u_k$. Entonces nuestra función dependería de las $n-1$ variables sin restricción $u_1, \ldots, u_{n-1}$ y podría manejarse como un problema de variación libre. Este método es enteramente justificado y a veces aconsejable. Pero frecuentemente la eliminación es un procedimiento bastante engorroso. Además, la condición (25.2) puede ser simétrica en las variables $u_1, \ldots, u_n$ y no habría razón por la cual una de las variables debería ser designada artificialmente como dependiente y las otras como independientes.
+
+Lagrange ideó un hermoso método para manejar condiciones auxiliares, el ``método del multiplicador indeterminado'', el cual preserva la simetría de las variables sin eliminaciones, y aún así reduce el problema a uno de variación libre. El método funciona de manera bastante general para cualquier número de condiciones auxiliares y es aplicable incluso a condiciones no-holonómicas que se dan como relaciones no integrables entre los diferenciales de las variables, y no como relaciones entre las variables mismas.
+
+Para entender la naturaleza del método del multiplicador de Lagrange, comenzamos con una sola condición auxiliar, dada en la forma (25.2). Tomando la variación de esta ecuación obtenemos la siguiente relación entre los $\delta u_k$:
+\begin{equation}
+\delta f = \frac{\partial f}{\partial u_1} \, \delta u_1 + \ldots + \frac{\partial f}{\partial u_n} \, \delta u_n = 0 \; ; \tag{25.3}
+\end{equation}
+mientras que el hecho de que la variación de $F$ debe anularse en un valor estacionario da
+\begin{equation}
+\delta F = \frac{\partial F}{\partial u_1} \, \delta u_1 + \ldots + \frac{\partial F}{\partial u_n} \, \delta u_n = 0. \tag{25.4}
+\end{equation}
+
+Sabemos de la sección 3 que la condición (25.4) conduciría a la anulación de cada $\dfrac{\partial F}{\partial u_k}$ si los $\delta u_k$ fueran todos independientes entre sí. Este, sin embargo, no es el caso, a causa de la condición (25.3). Acordamos eliminar $\delta u_n$ en términos de las otras variaciones---suponiendo que $\dfrac{\partial f}{\partial u_n}$ no es cero en el punto $P$---y entonces consideramos los otros $\delta u_k$ como variaciones libres. Pero antes de hacer esto, modifiquemos la expresión (25.4). Es obviamente permisible multiplicar el lado izquierdo de (25.3) por algún factor $\lambda$ indeterminado, que es una función de $u_1, \ldots, u_n$, y sumarlo a $\delta F$. Esto no cambia en absoluto el valor de $\delta F$ ya que hemos añadido cero. De aquí que sigue siendo cierto que:
+\begin{equation}
+\frac{\partial F}{\partial u_1} \, \delta u_1 + \ldots + \frac{\partial F}{\partial u_n} \, u\delta_n + \lambda \left( \frac{\partial f}{\partial u_1} \delta u_1 + \ldots + \frac{\partial f}{\partial u_n} \delta u_n \right) = 0. \tag{25.5}
+\end{equation}
+
+Este paso no es trivial porque, aunque hemos añadido cero, en realidad hemos añadido una \textit{suma}; los términos individuales de la suma no son cero, solo la suma total es cero.
+
+Escribimos (25.5) en la forma
+\begin{equation}
+\sum_{k=1}^{n} \left( \frac{\partial F}{\partial u_k} + \lambda \, \frac{\partial f}{\partial u_k} \right) \delta u_k = 0. \tag{25.6}
+\end{equation}
+Deseamos eliminar $\delta u_n$. Pero ahora podemos elegir $\lambda$ de modo que \textit{el factor que multiplica $\delta u_n$ se anule}:
+\begin{equation}
+\frac{\partial F}{\partial u_n} + \lambda \, \frac{\partial f}{\partial u_n} = 0. \tag{25.7}
+\end{equation}
+Esto nos libera de la tarea de eliminar $\delta u_n$. Después de eso, nuestra suma se reduce a solo $n-1$ términos:
+\begin{equation}
+\sum_{k=1}^{n-1} \left( \frac{\partial F}{\partial u_k} + \lambda \, \frac{\partial f}{\partial u_k} \right) \delta u_k = 0, \tag{25.8}
+\end{equation}
+y puesto que solo permanecen aquellos $\delta u_k$ que pueden ser elegidos arbitrariamente, las condiciones de un problema de variación libre son aplicables. Estas requieren que el coeficiente de cada $\delta u_k$ se anule:
+\begin{equation}
+\frac{\partial F}{\partial u_k} + \lambda \, \frac{\partial f}{\partial u_k} = 0, \quad (k = 1, 2, \ldots, n-1). \tag{25.9}
+\end{equation}
+
+Las condiciones (25.9), combinadas con la condición (25.7) sobre $\lambda$, conducen a la conclusión de que \textit{cada coeficiente de la suma} (25.6) \textit{se anula, exactamente como si todas las variaciones $\delta u_k$ fueran variaciones libres}. El resultado del ``método del multiplicador indeterminado'' de Lagrange puede ser formulado así: en lugar de considerar la anulación de $\delta F$, considérese la anulación de
+\begin{equation}
+\delta F + \lambda \delta f, \tag{25.10}
+\end{equation}
+y abandónese la condición auxiliar, tratando las $u_k$ como libres, independientes.
+
+Tenemos
+\begin{equation}
+\delta F + \lambda \delta f = \delta(F + \lambda f), \tag{25.11}
+\end{equation}
+ya que el término $f\delta\lambda$ se anula en virtud de la condición auxiliar $f = 0$. De aquí que podemos expresar el resultado de nuestras deducciones en una forma aún más sorprendente. En lugar de poner la primera variación de $F$ igual a cero, modifiquemos la función $F$ a
+\begin{equation}
+\bar{F} = F + \lambda f, \tag{25.12}
+\end{equation}
+y pongamos su primera variación igual a cero, para variaciones \textit{arbitrarias} de las $u_k$.
+
+Generalicemos este método-$\lambda$ para el caso de un número arbitrario de condiciones auxiliares. Supongamos una vez más que se busca el valor estacionario de $F$, pero bajo $m$ condiciones restrictivas independientes:
+\begin{equation}
+\begin{aligned}
+f_1 \; (u_1, u_2, \ldots, u_n) &= 0, \\
+&\;\;\vdots \hspace{2.5cm} (m < n). \tag{25.13} \\
+f_m(u_1, u_2, \ldots, u_n) &= 0.
+\end{aligned}
+\end{equation}
+
+Estas condiciones auxiliares establecen las siguientes relaciones entre las variaciones $\delta u_k$:
+\begin{equation}
+\begin{aligned}
+\delta f_1 &= \frac{\partial f_1}{\partial u_1} \, \delta u_1 + \ldots + \frac{\partial f_1}{\partial u_n} \, \delta u_n \;=\; 0, \\
+&\;\;\vdots \hspace{4cm} \tag{25.14} \\
+\delta f_m &= \frac{\partial f_m}{\partial u_1} \, \delta u_1 + \ldots + \frac{\partial f_m}{\partial u_n} \, \delta u_n \;=\; 0.
+\end{aligned}
+\end{equation}
+
+Debido a estas condiciones, $m$ de los $\delta u_k$ pueden ser designados como variables dependientes y expresados en términos de los otros. Consideraremos los \textit{últimos} $m$ de los $u_k$ como dependientes, y los primeros $n - m$ como variables independientes.
+
+Ahora bien, el problema variacional dado requiere la anulación de
+\begin{equation}
+\delta F = \sum_{k=1}^{n} \frac{\partial F}{\partial u_k} \, \delta u_k \tag{25.15}
+\end{equation}
+para todas las variaciones posibles $\delta u_k$ que satisfagan las condiciones auxiliares dadas. Debemos expresar los últimos $m$ $\delta u_k$ en términos de los $\delta u_k$ independientes. Sin embargo, antes de hacer esto, modifiquemos la expresión (25.15) sumando los lados izquierdos de las ecuaciones (25.14) después de multiplicar cada una por algún factor-$\lambda$ indeterminado. Así obtenemos
+\begin{equation}
+\sum_{k=1}^{n} \left( \frac{\partial F}{\partial u_k} + \lambda_1 \, \frac{\partial f_1}{\partial u_k} + \ldots + \lambda_m \, \frac{\partial f_m}{\partial u_k} \right) \delta u_k = 0. \tag{25.16}
+\end{equation}
+
+Ahora bien, la eliminación de los últimos $m$ $\delta u_k$ puede ser lograda mediante la elección apropiada de los factores-$\lambda$, de modo que
+\begin{equation}
+\frac{\partial F}{\partial u_k} + \lambda_1 \, \frac{\partial f_1}{\partial u_k} + \ldots + \lambda_m \, \frac{\partial f_m}{\partial u_k} = 0, \quad (k = n - m + 1, \ldots, n). \tag{25.17}
+\end{equation}
+Esto deja
+\begin{equation}
+\sum_{k=1}^{n-m} \left( \frac{\partial F}{\partial u_k} + \lambda_1 \, \frac{\partial f_1}{\partial u_k} + \ldots + \lambda_m \, \frac{\partial f_m}{\partial u_k} \right) \delta u_k = 0. \tag{25.18}
+\end{equation}
+Pero todos los $\delta u_k$ que permanecen en (25.18) son variaciones \textit{libres}. De aquí que el coeficiente de cada $\delta u_k$ debe anularse separadamente. En el análisis final tenemos las ecuaciones
+\begin{equation}
+\frac{\partial F}{\partial u_k} + \lambda_1 \, \frac{\partial f_1}{\partial u_k} + \ldots + \lambda_m \, \frac{\partial f_m}{\partial u_k} = 0, \quad (k = 1, \ldots, n), \tag{25.19}
+\end{equation}
+las cuales pueden ser consideradas como obtenidas del principio variacional
+\begin{equation}
+\delta F + \lambda_1 \, \delta f_1 + \ldots + \lambda_m \, \delta f_m = 0, \tag{25.20}
+\end{equation}
+considerando \textit{todas} las $u_k$ como variables independientes. Así, en el resultado final la distinción entre variables dependientes e independientes desaparece.
+
+La ecuación (25.20) puede ser enunciada de manera aún más llamativa escribiéndola en la forma
+\begin{equation}
+\delta(F + \lambda_1 f_1 + \ldots + \lambda_m f_m) = 0, \tag{25.21}
+\end{equation}
+e interpretando esta ecuación como sigue: \textit{En lugar de pedir el valor estacionario de $F$, pedimos el valor estacionario de la función modificada}
+\begin{equation}
+\bar{F} = F + \lambda f_1 + \ldots + \lambda_m f_m, \tag{25.22}
+\end{equation}
+\textit{abandonando las condiciones auxiliares y tratando esto como un problema de variación libre.} Esto produce $n$ ecuaciones. Además de estas ecuaciones, tenemos que satisfacer las $m$ condiciones auxiliares (25.13). Esto da $n + m$ ecuaciones para las $n + m$ incógnitas
+\begin{equation}
+u_1, u_2, \ldots, u_n; \quad \lambda_1, \lambda_2, \ldots, \lambda_m. \tag{25.23}
+\end{equation}
+
+El ingenioso método del multiplicador de Lagrange transforma un problema de $n - m$ grados de libertad en un problema de $n + m$ grados de libertad. Si añadimos a las $n$ variables $u_k$ las $m$ cantidades $\lambda_i$ como variables adicionales y pedimos el valor estacionario de la función $\bar{F}$, este problema variacional da las mismas $n$ ecuaciones que teníamos antes si variamos con respecto a las $u_k$, mientras que las variaciones de los $\lambda_i$ dan $m$ condiciones adicionales
+\begin{equation}
+f_1 = 0, \ldots, f_m = 0. \tag{25.24}
+\end{equation}
+\textit{Estas son exactamente las condiciones auxiliares dadas}, pero ahora obtenidas \textit{a posteriori}, en virtud del problema variacional.
+
+El método de Lagrange permite el uso de coordenadas sobrantes---una gran conveniencia en muchas consideraciones de mecánica. Preserva la simetría completa de todas las coordenadas haciendo innecesario distinguir entre variables dependientes e independientes.
+
+\begin{quote}
+\textit{Resumen.} El método del multiplicador de Lagrange reduce un problema variacional con condiciones auxiliares a un problema de variación libre sin condiciones auxiliares. Modificamos la función dada $F$, que debe hacerse estacionaria, sumando los lados izquierdos de las condiciones auxiliares, cada una multiplicada por un factor $\lambda$ indeterminado. Entonces tratamos el problema modificado como un problema de variación libre. Las condiciones resultantes, junto con las condiciones auxiliares dadas, determinan las incógnitas y los factores-$\lambda$.
+\end{quote}
+
+\section{Condiciones auxiliares no-holonómicas}
+
+Como se señaló en el cap.\ I, sección 6, las restricciones sobre las variables mecánicas de un problema pueden estar dadas en forma diferencial en lugar de finita. Entonces tenemos un problema variacional con condiciones auxiliares no-holonómicas. Las ecuaciones (25.13) no existen en este caso, pero tenemos relaciones análogas a las formas \textit{diferenciales} (25.14) de las condiciones auxiliares. La única diferencia es que los lados izquierdos de estas ecuaciones ya no son diferenciales exactas sino meramente cantidades infinitesimales. Podemos escribir las condiciones no-holonómicas en la siguiente forma:
+\begin{equation}
+\begin{aligned}
+\bar{\delta} f_1 &= A_{11}\delta u_1 + A_{12}\delta u_2 + \ldots + A_{1n}\delta u_n = 0, \\
+&\;\;\vdots \hspace{5cm} \tag{26.1} \\
+\bar{\delta} f_m &= A_{m1}\delta u_1 + A_{m2}\delta u_2 + \ldots + A_{mn}\delta u_n = 0.
+\end{aligned}
+\end{equation}
+Aquí los $A_{ik}$ son funciones dadas de las $u_i$ que no pueden ser consideradas como las derivadas parciales de una función $f_i$.
+
+Las condiciones no-holonómicas no pueden ser manejadas por el método de eliminación, porque las ecuaciones para eliminar algunas variables como dependientes no existen. El método lagrangiano del multiplicador-$\lambda$, sin embargo, sigue estando disponible. Mediante exactamente el mismo procedimiento que antes, podemos obtener una ecuación análoga a (25.20), a saber:
+\begin{equation}
+\delta F + \lambda_1 \bar{\delta} f_1 + \ldots + \lambda_m \bar{\delta} f_m = 0 \; ; \tag{26.2}
+\end{equation}
+y de nuevo todos los $\delta u_k$ son tratados como variaciones libres. La única diferencia radica en el hecho de que no podemos proceder a la ecuación (25.21) y debemos contentarnos con la formulación diferencial del procedimiento. La reducción de un problema variacional condicionado a un problema de variación libre se logra una vez más.
+
+\begin{quote}
+\textit{Resumen.} El método lagrangiano del multiplicador-$\lambda$ es aplicable incluso a condiciones no-holonómicas. Multiplicamos los lados izquierdos de estas condiciones por algunos factores $\lambda$ indeterminados y los sumamos a la variación de la función $F$ que debe hacerse estacionaria. Esta expresión completa se iguala a cero, considerando todas las variaciones $\delta u_k$ como variaciones libres.
+\end{quote}
+
+\section{El valor estacionario de una integral definida}
+
+Los problemas analíticos de movimiento involucran un tipo especial de problema de extremo: el valor estacionario de una \textit{integral definida}. La rama de las matemáticas que trata problemas de esta naturaleza se llama el Cálculo de Variaciones. Un problema típico de este tipo es el de la braquistocrona (la curva de descenso más rápido), formulado por primera vez y resuelto por John Bernoulli (1696); es uno de los primeros casos de un problema variacional. Deseamos encontrar una curva plana adecuada a lo largo de la cual una partícula desciende en el menor tiempo posible, partiendo de $A$ y llegando a $B$. \\
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.5\linewidth]{Variation chap2.png}
+    \label{fig:placeholder}
+\end{figure}
+
+Si la curva desconocida es caracterizada analíticamente por la ecuación
+\begin{equation}
+y = f(x), \tag{27.1}
+\end{equation}
+el tiempo que debe ser minimizado está dado por la siguiente integral definida:
+\begin{equation}
+t = \frac{1}{\sqrt{2g}} \int_a^b \frac{\sqrt{1 + y'^2}}{\sqrt{\alpha - y}} \, dx. \tag{27.2}
+\end{equation}
+Aquí $y$ es una función desconocida de $x$ que debe ser determinada. Entre todas las posibles $y = f(x)$ queremos encontrar aquella $f(x)$ particular que produzca el menor valor posible de $t$. Las condiciones generales son que $y$ debe ser una función continua y diferenciable de $x$, con una tangente continua. Además, dado que los dos puntos extremos de la curva desconocida $y = f(x)$ están dados, $y$ debe satisfacer las siguientes condiciones de frontera:
+\begin{equation}
+f(a) = \alpha, \quad f(b) = \beta. \tag{27.3}
+\end{equation}
+Existe una y solo una función $f(x)$ que satisface estas condiciones.
+
+El tipo de problema que encontramos aquí puede ser caracterizado de manera más general como sigue: se nos da una función $F$ de tres variables:
+\begin{equation}
+F = F(y, y', x) \tag{27.4}
+\end{equation}
+(en el ejemplo anterior $F$ resulta ser independiente de $x$, pero es innecesario imponer esa restricción); y dada la integral definida
+\begin{equation}
+I = \int_a^b F(y, y', x) \, dx; \tag{27.5}
+\end{equation}
+se nos dan también las condiciones de frontera
+\begin{equation}
+f(a) = \alpha, \quad f(b) = \beta. \tag{27.6}
+\end{equation}
+El problema es encontrar una función
+\begin{equation}
+y = f(x) \tag{27.7}
+\end{equation}
+---restringida por las condiciones de regularidad habituales---que hará de la integral $I$ un extremo, o al menos le dará un valor estacionario.
+
+A primera vista este problema parece completamente diferente del problema previo donde tratamos con el extremo o valor estacionario de una función $F(u_1, \ldots, u_n)$ de un conjunto de variables. En lugar de una \textit{función}, una integral \textit{definida} debe ser minimizada. Además, en lugar de un \textit{conjunto de variables} $u_1, \ldots, u_n$ tenemos cierta \textit{función desconocida} $y = f(x)$ a nuestra disposición. Sin embargo, una inspección más cercana revela que la naturaleza matemática de este nuevo problema no es sustancialmente diferente de la del problema anterior.
+
+Hagamos uso del concepto del ``espacio de funciones,'' originado por Hilbert. La función arbitraria $y = f(x)$---con tal de que satisfaga ciertas condiciones generales de continuidad---puede ser expandida en una serie de Fourier infinita a lo largo del rango dado entre $a$ y $b$:
+\begin{equation}
+\begin{aligned}
+f(x) &= \tfrac{1}{2}\,a_0 + a_1 \cos \xi + a_2 \cos 2\xi + \ldots \\
+&\quad + b_1 \sin \xi + b_2 \sin 2\xi + \ldots, \tag{27.8}
+\end{aligned}
+\end{equation}
+con
+\[
+\xi = \frac{2\pi}{b - a} \left( x - \frac{a + b}{2} \right).
+\]
+Los coeficientes de esta expansión están determinados de manera única. Entonces podemos asociar un conjunto definido de coeficientes $a_0, a_1, \ldots, a_n; b_1, \ldots, b_n$ con cualquier función $y = f(x)$, con tal de que elijamos $n$ suficientemente grande para hacer el resto de la expansión suficientemente pequeño. Representamos ahora estos coeficientes como coordenadas rectangulares de un punto $P$ en un espacio $(2n + 1)$-dimensional. En esta imagen, una función arbitraria es asociada como un punto definido de un espacio de muchas dimensiones; el valor de la integral $I$ asociada con esta $f(x)$ puede ser representado gráficamente perpendicularmente como una dimensión adicional. Volvemos así a la imagen de una \textit{superficie en un espacio de muchas dimensiones}. Un pequeño cambio de la función $f(x)$ significa un pequeño cambio de la posición del punto $P$. El problema de encontrar la función $f(x)$ que minimiza la integral definida $I$ se traduce en el problema de encontrar las coordenadas del punto más profundo de una superficie en un espacio de $2n + 2$ dimensiones. Este es exactamente el problema que hemos estudiado en las secciones previas de este capítulo.
+
+Euler mostró cómo el problema puede ser resuelto por medios elementales, sin recurrir a las herramientas de un cálculo específico. Hacemos uso del hecho de que una integral definida puede ser reemplazada por una suma de un número creciente de términos. Además, la derivada puede ser reemplazada por un coeficiente de diferencias. Los errores que cometemos en este procedimiento pueden hacerse tan pequeños como deseemos.
+
+De acuerdo con el procedimiento habitual del cálculo, dividimos el intervalo entre $x = a$ y $x = b$ en muchos intervalos pequeños iguales, obteniendo un conjunto de valores de abscisas:
+\begin{equation}
+x_0 = a, \; x_1, \, x_2, \, \ldots \, , \; x_n, \, x_{n+1} = b, \tag{27.9}
+\end{equation}
+y las ordenadas correspondientes
+\begin{equation}
+y_0 = \alpha, \; y_1, \, y_2, \, \ldots \, , \; y_n, \, y_{n+1} = \beta, \tag{27.10}
+\end{equation}
+donde
+\begin{equation}
+y_k = f(x_k). \tag{27.11}
+\end{equation}
+Reemplazamos entonces la derivada $f'(x_k)$ por el coeficiente de diferencias
+\begin{equation}
+z_k = \left( \frac{\Delta y}{\Delta x} \right)_{x = x_k} = \frac{y_{k+1} - y_k}{x_{k+1} - x_k}, \tag{27.12}
+\end{equation}
+y la integral (27.5) por la suma
+\begin{equation}
+S = \sum_{k=0}^{n} F(y_k, z_k, x_k) \; (x_{k+1} - x_k). \tag{27.13}
+\end{equation}
+Esto involucra un cierto error que, sin embargo, tiende a cero conforme cada uno de los intervalos $\Delta x_k = x_{k+1} - x_k$ tiende a cero.
+
+Reemplazamos la integral original por la suma (27.13) y pedimos el valor estacionario de esta suma. Este nuevo problema es del tipo habitual. Tenemos una función $S$ dada de las $n$ variables $y_1, \ldots, y_n$ que toman el lugar de nuestras anteriores $u_1, \ldots, u_n$. Sabemos que este problema se resuelve igualando las derivadas parciales de $S$ con respecto a $y_k$ a cero. Investigamos entonces qué sucede con estas condiciones cuando $\Delta x_k$ tiende a cero.
+
+Antes de llevar a cabo este programa alteramos la expresión (27.13) hasta un punto que se vuelve despreciable en el límite. Dado que $y_k$ e $y_{k+1}$ son arbitrariamente cercanos uno del otro, es permisible cambiar $F(y_k, z_k, x_k)$ a $F(y_{k+1}, z_k, x_k)$. De aquí que la función que queremos minimizar se define finalmente como sigue:
+\begin{equation}
+S' = \sum_{j=0}^{n} F(y_{j+1}, z_j, x_j)(x_{j+1} - x_j). \tag{27.14}
+\end{equation}
+
+Ahora, al formar la derivada parcial de $S'$ con respecto a, digamos, $y_{k+1}$, tenemos que tener en cuenta que $y_{k+1}$ aparece en la suma $S'$ en \textit{dos} términos vecinos, a saber, aquellos para los cuales $j = k$ y $j = k + 1$, en vista de la definición (27.12) de $z_{k+1}$. La diferenciación parcial con respecto a $y_{k+1}$ da entonces
+\begin{equation}
+\frac{\partial S'_|}{\partial y_{k+1}} = \left( \frac{\partial F}{\partial y} \right)_{x = x_k} (x_{k+1} - x_k) + \left( \frac{\partial F}{\partial y'} \right)_{x = x_k} - \left( \frac{\partial F}{\partial y'} \right)_{x = x_{k+1}} \tag{27.15}
+\end{equation}
+
+Dividiendo por $\Delta x_k = x_{k+1} - x_k$, esta ecuación puede escribirse como sigue:
+\begin{equation}
+\left[ \frac{\partial F}{\partial y} - \frac{\Delta}{\Delta x} \left( \frac{\partial F}{\partial y'} \right) \right]_{x = x_k} = 0, \quad (k = 0, 1, 2, \ldots, n-1). \tag{27.16}
+\end{equation}
+Aquí tenemos las condiciones necesarias, y también suficientes, para que la suma $S'$ sea estacionaria. Es importante notar que las dos ordenadas límite $y_0$ e $y_{n+1}$ son \textit{cantidades dadas} y por lo tanto permanecen invariadas. Si fueran también desconocidas, obtendríamos dos condiciones de frontera adicionales a las ecuaciones (27.16).
+
+En el límite, cuando $\Delta x$ decrece hacia cero, la ecuación en diferencias (27.16) se convierte en una \textit{ecuación diferencial}. Además, dado que los puntos $x_k$ se acercan arbitrariamente a cualquier punto del intervalo $(a, b)$, esa ecuación diferencial debe cumplirse para todo el intervalo:
+\begin{equation}
+\frac{\partial F}{\partial y} - \frac{d}{dx} \left( \frac{\partial F}{\partial y'} \right) = 0, \quad (a \leqq x \leqq b). \tag{27.17}
+\end{equation}
+Esta ecuación fundamental fue descubierta independientemente por Euler y Lagrange y es usualmente llamada la ecuación de Euler-Lagrange. Notamos que esta ecuación diferencial es derivable por medios elementales, como la condición de que la suma que reemplaza la integral originalmente dada debe ser estacionaria.
+
+Este método de derivar la ecuación diferencial básica del cálculo de variaciones, esencialmente debido a Euler, es objetable desde el punto de vista riguroso ya que hace uso de un proceso de doble límite de una manera que no es necesariamente admisible. El método directo de Lagrange que discutiremos en el siguiente capítulo está libre de esta objeción.
+
+\begin{quote}
+\textit{Resumen.} El problema de minimizar una integral definida que contiene una función desconocida y su derivada puede ser reducido al problema elemental de minimizar una función de muchas variables. Para este propósito la integral se reemplaza por una suma y la derivada por un coeficiente de diferencias. La condición para la anulación de la primera variación toma la forma de una ecuación en diferencias que en el límite se convierte en la ecuación diferencial de Euler y Lagrange.
+\end{quote}
+
+\section{Los procesos fundamentales del cálculo de variaciones}
+
+Lagrange se dio cuenta de que el problema de minimizar una integral definida requiere herramientas específicas, diferentes de las del cálculo ordinario. Con la ayuda de estas herramientas podemos atacar el problema directamente, en lugar de recurrir al proceso de paso al límite por el cual Euler obtuvo la solución del problema.
+
+Consideremos la función $y = f(x)$ que por hipótesis da un valor estacionario a la integral definida (27.5). Para probar que efectivamente tenemos un valor estacionario, debemos evaluar la misma integral para una función ligeramente \textit{modificada} $y = \bar{f(x)}$ y mostrar que la tasa de cambio de la integral debido al cambio en la función se vuelve cero.
+
+Ahora bien, la función modificada $\bar{f(x)}$ puede obviamente ser escrita en la forma
+\begin{equation}
+\bar{f(x)} = f(x) + \epsilon\phi(x), \tag{28.1}
+\end{equation}
+donde $\phi(x)$ es alguna función nueva arbitraria que satisface las mismas condiciones generales de continuidad que $\bar{f(x)}$. De aquí que $\phi(x)$ debe ser continua y diferenciable.
+
+Es obvio que la selección de la función hipotética $f(x)$ que resuelve nuestro problema variacional debe hacerse de la clase de funciones continuas que pueden diferenciarse al menos una vez, porque de otro modo la integral $F(y, y', x)$ no tendría significado. Sin embargo, queremos restringir nuestra $f(x)$ por la condición adicional de que incluso $f''(x)$ exista en todo el rango. (Una suposición similar para $\phi(x)$ no es requerida.)
+
+Haciendo uso del parámetro variable $\epsilon$ tenemos en nuestro poder la capacidad de modificar la función $f(x)$ en cantidades arbitrariamente pequeñas. Con ese propósito dejamos que $\epsilon$ decrezca hacia cero.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.5\linewidth]{Chap2 im2.png}
+    \label{fig:placeholder}
+\end{figure}
+
+Comparamos ahora los valores de la función modificada $\bar{f(x)}$ con los valores de la función original $f(x)$ \textit{en un cierto punto definido} $x$ de la variable independiente, formando la diferencia entre $\bar{f(x)}$ y $f(x)$. Esta diferencia se llama la ``variación'' de la función $f(x)$ y se denota por $\delta y$:
+\begin{equation}
+\delta y = \bar{f(x)} - f(x) = \epsilon\phi(x). \tag{28.2}
+\end{equation}
+
+La variación de una función---en completa analogía con la variación de la posición de un punto, estudiada antes---se caracteriza por dos propiedades fundamentales. Es un cambio \textit{infinitesimal}, ya que el parámetro $\epsilon$ decrece hacia cero. Además, es un cambio \textit{virtual}, que significa que lo hacemos de cualquier manera arbitraria que nos plazca. De aquí que $\phi(x)$ es una función elegida arbitrariamente, siempre que se satisfagan las condiciones generales de continuidad.
+
+Nótese la diferencia fundamental entre $\delta y$ y $dy$. Ambos son cambios infinitesimales de la función $y$. Sin embargo $dy$ se refiere al cambio infinitesimal de la función dada $f(x)$ causado por el cambio infinitesimal $dx$ de la variable independiente, mientras que $\delta y$ es un cambio infinitesimal de $y$ que produce una \textit{nueva función} $y + \delta y$.
+
+Es de la naturaleza del proceso de variación que solo la variable dependiente $y$ debe variarse mientras que la variación de $x$ no sirve para ningún propósito útil. De aquí que convenimos en que siempre pondremos
+\begin{equation}
+\delta x = 0. \tag{28.3}
+\end{equation}
+
+Además, si las dos ordenadas límite $f(a)$ y $f(b)$ de la función $f(x)$ están prescritas, estas dos ordenadas no pueden variarse, lo cual significa
+\begin{equation}
+\begin{aligned}[]
+[\delta f(x)]_{x=a} &= 0, \\
+[\delta f(x)]_{x=b} &= 0.
+\end{aligned} \tag{28.4}
+\end{equation}
+
+Hablamos entonces de una ``variación entre límites definidos.''
+
+\begin{quote}
+\textit{Resumen.} El cálculo de variaciones considera un cambio virtual infinitesimal de una función $y = f(x)$. La variación $\delta y$ se refiere a un cambio infinitesimal arbitrario del valor de $y$, \textit{en el punto} $x$. La variable independiente $x$ no participa en el proceso de variación.
+\end{quote}
+
+\section{Las propiedades conmutativas del proceso-$\delta$}
+
+La variación de la función $f(x)$ define una función enteramente nueva $\epsilon\phi(x)$. Podemos tomar la derivada de esta función. Por otro lado, podemos tomar la derivada de la nueva función $\bar{f(x)}$ y la derivada de la función original $f(x)$. La diferencia de estas dos derivadas puede naturalmente ser llamada la variación de la derivada $f'(x)$. En el primer caso tenemos ``la derivada de la variación'':
+\begin{equation}
+\frac{d}{dx} \, \delta y = \frac{d}{dx}\left[\bar{f(x)} - f(x)\right] = \frac{d}{dx} \, \epsilon\phi(x) = \epsilon\phi'(x). \tag{29.1}
+\end{equation}
+En el segundo caso tenemos ``la variación de la derivada'':
+\begin{equation}
+\delta \, \frac{d}{dx} f(x) = \bar{f'(x)} - f'(x) = (y' + \epsilon\phi') - y' = \epsilon\phi'(x). \tag{29.2}
+\end{equation}
+Esto da
+\begin{equation}
+\frac{d}{dx} \, \delta y = \delta \, \frac{d}{dx} \, y. \tag{29.3}
+\end{equation}
+Esto muestra que \textit{la derivada de la variación es igual a la variación de la derivada}.
+
+De manera similar podemos estar interesados en la variación de una integral definida. Esto significa que tomamos la integral definida evaluada para el integrando modificado menos la integral definida evaluada para el integrando original:
+\begin{equation}
+\begin{aligned}
+\delta \int_a^b F(x) \, dx &= \int_a^b \bar{F(x)} \, dx - \int_a^b F(x) \, dx \\
+&= \int_a^b \left[\bar{F(x)} - F(x)\right] dx = \int_a^b \delta F(x) \, dx.
+\end{aligned} \tag{29.4}
+\end{equation}
+De aquí
+\begin{equation}
+\delta \int_a^b F(x) \, dx \;=\; \int_a^b \delta F(x) \, dx. \tag{29.5}
+\end{equation}
+Esto muestra que \textit{la variación de una integral definida es igual a la integral definida de la variación}.
+
+\begin{quote}
+\textit{Resumen.} El proceso-$\delta$ revela dos propiedades características:
+
+(a) Variación y diferenciación son procesos permutables.
+
+(b) Variación e integración son procesos permutables.
+\end{quote}
+
+\section{El valor estacionario de una integral definida tratado por el cálculo de variaciones}
+
+Consideramos una vez más el problema de la sección 7, pero esta vez tratado por los métodos directos del cálculo de variaciones. Dada la integral definida (27.5), con las condiciones de frontera (27.6), el valor estacionario de esta integral debe ser encontrado.
+
+Para resolver este problema investigamos la tasa de cambio de la integral dada, causada por la variación de la función $y = f(x)$. Comenzamos con la variación del integrando $F(y, y', x)$ en sí, causada por la variación de $y$ (recordando que $F$ es una \textit{función dada} de las tres variables $y$, $y'$, $x$ y que esta dependencia funcional \textit{no es alterada} por el proceso de variación):
+\begin{equation}
+\begin{aligned}
+\delta F(y, y', x) &= F(y + \epsilon\phi, \, y' + \epsilon\phi', \, x) - F(y, y', x) \\
+&= \epsilon \left( \frac{\partial F}{\partial y} \, \phi + \frac{\partial F}{\partial y'} \, \phi' \right).
+\end{aligned} \tag{210.1}
+\end{equation}
+Los términos de orden superior del desarrollo de Taylor son despreciados ya que $\epsilon$ tiende a cero.
+
+Estamos ahora en posición de evaluar la variación de la integral definida (27.5):
+\begin{equation}
+\delta \int_a^b F \, dx = \int_a^b \delta F \, dx = \epsilon \int_a^b \left( \frac{\partial F}{\partial y} \, \phi + \frac{\partial F}{\partial y'} \, \phi' \right) dx. \tag{210.2}
+\end{equation}
+Para obtener la ``tasa de cambio'' de nuestra integral, tenemos que dividir por el parámetro infinitesimal $\epsilon$, como hicimos en la sección 2 cuando estaba involucrado el valor estacionario de una función ordinaria $F(u_1, \ldots, u_n)$. De aquí que la cantidad que debe anularse para un valor estacionario de la integral $I$ es
+\begin{equation}
+\frac{\delta I}{\epsilon} = \int_a^b \left( \frac{\partial F}{\partial y} \, \phi + \frac{\partial F}{\partial y'} \, \phi' \right) dx. \tag{210.3}
+\end{equation}
+Esta expresión no es accesible a un análisis ulterior en su forma actual, porque $\phi(x)$ y $\phi'(x)$ no son independientes entre sí, aunque su relación no puede formularse en ninguna forma algebraica. La dificultad puede ser eliminada mediante una ingeniosa aplicación del método de integración por partes. Podemos transformar la segunda parte de (210.3) como sigue:
+\begin{equation}
+\int_a^b \frac{\partial F}{\partial y'} \, \phi' \, dx = \left[ \frac{\partial F}{\partial y'} \, \phi \right]_a^b - \int_a^b \frac{d}{dx} \left( \frac{\partial F}{\partial y'} \right) \cdot \phi \, dx. \tag{210.4}
+\end{equation}
+El primer término se anula ya que variamos entre límites definidos de modo que $\phi(x)$ se anula en los dos puntos extremos $a$ y $b$. Haciendo uso de esta transformación, la ecuación (210.3) se convierte en
+\begin{equation}
+\frac{\delta I}{\epsilon} = \int_a^b \left( \frac{\partial F}{\partial y} - \frac{d}{dx} \, \frac{\partial F}{\partial y'} \right) \phi \, dx. \tag{210.5}
+\end{equation}
+
+Por brevedad introducimos la siguiente notación:
+\begin{equation}
+E(x) = \frac{\partial F}{\partial y} - \frac{d}{dx} \, \frac{\partial F}{\partial y'} \, , \tag{210.6}
+\end{equation}
+y escribimos la condición para un valor estacionario de $I$ en la forma
+\begin{equation}
+\int_a^b E(x)\phi(x) \, dx \;=\; 0. \tag{210.7}
+\end{equation}
+
+Ahora bien, no es difícil ver que esta integral puede anularse para funciones $\phi(x)$ \textit{arbitrarias} solo si $E(x)$ se anula en todas partes entre $a$ y $b$. En efecto, podemos arreglar que la función $\phi(x)$ se anule en todas partes con la excepción de una vecindad arbitrariamente pequeña alrededor del punto $x = \xi$. Pero dentro de este intervalo $E(x)$ es prácticamente constante y puede ponerse delante del signo integral\footnote{Suponemos que $E(x)$ es una función \textit{continua} de $x$.}
+\begin{equation}
+\frac{\delta I}{\epsilon} = E(\xi) \int_{\xi - \rho}^{\xi + \rho} \phi(x) \, dx. \tag{210.8}
+\end{equation}
+El error que hemos cometido tiende a cero conforme $\rho$ tiende a cero. Dado que la segunda integral está a nuestra disposición y no necesita anularse, la anulación de $\delta I / \epsilon$ requiere la anulación del primer factor. El punto $x = \xi$ puede ser elegido como \textit{cualquier} punto del intervalo entre $a$ y $b$. De aquí que obtenemos para todo el intervalo entre $a$ y $b$ la ecuación diferencial
+\begin{equation}
+\frac{\partial F}{\partial y} - \frac{d}{dx} \, \frac{\partial F}{\partial y'} = 0. \tag{210.9}
+\end{equation}
+Esta condición es \textit{necesaria} para la anulación de $\delta I$. Por otro lado, es también \textit{suficiente}, porque, si el integrando de (210.9) se anula, también se anula la integral. \textit{La ecuación diferencial (210.9) es por lo tanto la condición necesaria y suficiente para que la integral definida $I$ sea estacionaria bajo las condiciones de frontera dadas (27.6).}
+
+\textit{Problema.} Considérese la integral definida
+\begin{equation}
+I = \int_a^b F(y, y', y'', x) \, dx, \tag{210.10}
+\end{equation}
+la cual contiene la primera \textit{y segunda} derivadas de $y$. Encuéntrese la condición para un valor estacionario formando la variación de la integral y aplicando el método de integración por partes \textit{dos veces}. Deducir la ecuación diferencial
+\begin{equation}
+\frac{\partial F}{\partial y} - \frac{d}{dx} \, \frac{\partial F}{\partial y'} + \frac{d^2}{dx^2} \, \frac{\partial F}{\partial y''} = 0, \tag{210.11}
+\end{equation}
+y el término de frontera
+\begin{equation}
+\delta I = \left[ \left( \frac{\partial F}{\partial y'} - \frac{d}{dx} \, \frac{\partial F}{\partial y''} \right) \delta y + \frac{\partial F}{\partial y''} \, \delta y' \right]_a^b \, , \tag{210.12}
+\end{equation}
+el cual se anula si $y$ e $y'$ están prescritas en los dos puntos extremos.
+
+\begin{quote}
+\textit{Resumen.} La condición necesaria y suficiente para que la integral
+\[
+\int_a^b F(y, y', x) \, dx
+\]
+sea estacionaria, con las condiciones de frontera
+\[
+y(a) = \alpha, \quad y(b) = \beta,
+\]
+es que la ecuación diferencial de Euler-Lagrange
+\[
+\frac{\partial F}{\partial y} - \frac{d}{dx} \, \frac{\partial F}{\partial y'} = 0
+\]
+sea satisfecha.
+\end{quote}
+
+\section{Las ecuaciones diferenciales de Euler-Lagrange para $n$ grados de libertad}
+
+En mecánica el problema de variación se presenta en la siguiente forma. Encuéntrese el valor estacionario de una integral definida
+\begin{equation}
+I = \int_{t_1}^{t_2} L(q_1, \ldots, q_n;\, \dot{q}_1, \ldots, \dot{q}_n;\, t) \, dt, \tag{211.1}
+\end{equation}
+con las condiciones de frontera de que los $q_k$ están dados (y por lo tanto su variación es cero) en los dos puntos extremos $t_1$ y $t_2$:
+\begin{equation}
+[\,\delta q_k(t)\,]_{t = t_1} = 0, \quad [\,\delta q_k(t)\,]_{t = t_2} = 0. \tag{211.2}
+\end{equation}
+Los $q_1, \ldots, q_n$ son funciones desconocidas de $t$, a ser determinadas por la condición de que el movimiento real hará de la integral $I$ un valor estacionario:
+\begin{equation}
+\delta I = 0, \tag{211.3}
+\end{equation}
+para variaciones arbitrarias e independientes de los $q_k$, sujetas solamente a las condiciones de frontera (211.2).
+
+Ahora bien, obviamente podemos seleccionar un $q_k$ definido y variarlo solo por sí mismo, dejando los otros $q_i$ sin cambiar. De aquí que podemos aplicar la ecuación diferencial (210.7) a nuestro problema presente, después de adaptarla a nuestra notación actual. El $y$ corresponde a $q_k$, el $y'$ a $\dot{q}_k$, la variable independiente $x$ es ahora el tiempo $t$. La función $F$ es denotada por $L$ y los límites de integración son $t_1$ y $t_2$. De aquí que obtenemos
+\begin{equation}
+\frac{\partial L}{\partial q_k} - \frac{d}{dt} \, \frac{\partial L}{\partial \dot{q}_k} = 0, \quad (t_1 \leqq t \leqq t_2). \tag{211.4}
+\end{equation}
+Estas ecuaciones deben cumplirse para cada $q_k$ por separado, con $k$ variando de 1 a $n$.
+
+Las variaciones que hemos empleado hasta ahora son solamente variaciones \textit{especiales}, y surge la pregunta de si una variación simultánea de \textit{todos} los $q_k$ no traería condiciones adicionales. Esto de hecho no es el caso, en virtud del principio de superposición de procesos infinitesimales. Denotemos por $\delta_k I$ la variación de $I$ producida al variar $q_k$ solo. Entonces la variación simultánea de todos los $q_k$ produce la siguiente variación resultante:
+\begin{equation}
+\delta I = \delta_1 I + \delta_2 I + \ldots + \delta_n I. \tag{211.5}
+\end{equation}
+Ahora bien, la ecuación diferencial (211.4) garantiza la anulación de $\delta_k I$. Si esa ecuación diferencial se cumple para \textit{todos} los índices $k$, la suma (211.5) es cero y por lo tanto $\delta I$ es cero para variaciones \textit{arbitrarias} de los $q_k$.
+
+El problema de encontrar el valor estacionario de $I$ para variaciones arbitrarias de los $q_k$ entre límites definidos queda así resuelto. Las condiciones para el valor estacionario de $I$ resultan en la forma del siguiente \textit{sistema de ecuaciones diferenciales simultáneas}:
+\begin{equation}
+\frac{d}{dt} \, \frac{\partial L}{\partial \dot{q}_k} - \frac{\partial L}{\partial q_k} = 0, \quad (k = 1, 2, \ldots, n). \tag{211.6}
+\end{equation}
+Se llaman ``las ecuaciones diferenciales de Euler y Lagrange,'' o también, si se aplican a problemas de mecánica, ``las ecuaciones lagrangianas de movimiento.''
+
+Con la excepción del caso singular en que la función $L$ depende de algunos o todos los $\dot{q}_k$ de manera \textit{lineal}, las derivadas parciales $\dfrac{\partial L}{\partial \dot{q}_k}$ contendrán todos los $\dot{q}_k$, de modo que la diferenciación con respecto a $t$ introduce todas las segundas derivadas $\ddot{q}_k$. Podemos resolver las ecuaciones para los $\ddot{q}_k$ algebraicamente y así reescribir las ecuaciones diferenciales (211.6) en la siguiente forma explícita:
+\begin{equation}
+\ddot{q}_k = \phi_k(q_1, \ldots, q_n, \, \dot{q}_1, \ldots, \dot{q}_n, \, t). \tag{211.7}
+\end{equation}
+La integración de tal sistema de ecuaciones diferenciales de segundo orden involucra $2n$ constantes de integración, de modo que la solución completa de las ecuaciones (211.7) puede escribirse como sigue:
+\begin{equation}
+q_k = q_k(A_1, \ldots, A_n;\, B_1, \ldots, B_n;\, t). \tag{211.8}
+\end{equation}
+Las constantes de integración $A_k$ y $B_k$ pueden ajustarse a las condiciones de frontera dadas. Nuestro problema variacional requiere variación entre \textit{límites definidos}, lo cual significa que las coordenadas $q_k$ están dadas en $t = t_1$ y $t = t_2$. Estas son $2n$ condiciones de frontera que pueden satisfacerse por la elección apropiada de las constantes $A_k$ y $B_k$. La naturaleza de los problemas mecánicos es tal que más frecuentemente \textit{condiciones iniciales} toman el lugar de condiciones de frontera. La libertad de $2n$ constantes de integración permite que todas las posiciones iniciales y velocidades sean prescritas arbitrariamente.
+
+\begin{quote}
+\textit{Resumen.} Si una integral definida dada contiene no una sino $n$ funciones desconocidas, a ser determinadas por la condición de que la integral sea estacionaria, podemos variar estas funciones independientemente una de otra. Así la ecuación diferencial de Euler-Lagrange puede ser formada para cada función por separado. Esto da $n$ ecuaciones diferenciales simultáneas de segundo orden. La solución de estas ecuaciones diferenciales determina las $n$ funciones desconocidas en términos de la variable independiente y $2n$ constantes de integración.
+\end{quote}
+
+\section{Variación con condiciones auxiliares}
+
+Consideramos una vez más el problema del párrafo anterior, con la modificación de que las variables $q_1, \ldots, q_n$ no serán independientes, sino restringidas por condiciones auxiliares dadas. Estas condiciones tomarán la forma de ciertas relaciones funcionales entre los $q_k$:
+\begin{equation}
+\begin{aligned}
+f_1(q_1, \ldots, q_n, \, t) &= 0, \\
+&\;\;\vdots \hspace{2cm} \tag{212.1} \\
+f_m(q_1, \ldots, q_n, \, t) &= 0.
+\end{aligned}
+\end{equation}
+
+Es posible eliminar $m$ de los $q_k$ en términos de las otras variables y así reducir el problema a $n - m$ grados de libertad. Después de la reducción, las ecuaciones diferenciales de Euler-Lagrange se obtienen. Sin embargo, esta eliminación puede ser bastante engorrosa; además, las condiciones entre las variables pueden ser de una forma que hace la distinción entre variables dependientes e independientes artificial. Aquí de nuevo el método del multiplicador de Lagrange, estudiado antes en la sección 5, da una solución adecuada del problema.
+
+La variación de las ecuaciones (212.1) da:
+\begin{equation}
+\begin{aligned}
+\delta f_1 &= \frac{\partial f_1}{\partial q_1} \, \delta q_1 + \ldots + \frac{\partial f_1}{\partial q_n} \, \delta q_n = 0, \\
+&\;\;\vdots \hspace{4cm} \tag{212.2} \\
+\delta f_m &= \frac{\partial f_m}{\partial q_1} \, \delta q_1 + \ldots + \frac{\partial f_m}{\partial q_n} \, \delta q_n = 0.
+\end{aligned}
+\end{equation}
+Estas ecuaciones se cumplen en todo instante $t$. De acuerdo con el principio del multiplicador de Lagrange multiplicamos cada una de estas ecuaciones por un factor $\lambda_i$ indeterminado. Dado que las condiciones auxiliares están prescritas para todo valor de la variable independiente $t$, los factores-$\lambda$ deben también ser aplicados para todo valor de $t$, lo cual los convierte en funciones de $t$. Además, la suma sobre todas las condiciones auxiliares---después de multiplicar por $\lambda_i$---equivale a una integración con respecto al tiempo $t$. Así el método del multiplicador de Lagrange aparece aquí en la siguiente forma: en lugar de poner la variación de la integral $I$ dada igual a cero, modifíquese de la siguiente manera:
+\begin{equation}
+\delta I' = \delta \int_{t_1}^{t_2} L \, dt + \int_{t_1}^{t_2} (\lambda_1 \delta f_1 + \ldots + \lambda_m \delta f_m) \, dt = 0. \tag{212.3}
+\end{equation}
+
+Esto es obviamente permisible ya que en realidad hemos sumado cero a la variación de $I$. Ahora, en el primer término realizamos la integración estándar por partes y lo reducimos a la forma
+\begin{equation}
+\delta \int_{t_1}^{t_2} L \, dt = \int_{t_1}^{t_2} [E_1(t)\delta q_1 + \ldots + E_n(t)\delta q_n] \, dt. \tag{212.4}
+\end{equation}
+Unimos ahora los dos integrandos de (212.3) y recolectamos los términos que pertenecen a cierto $\delta q_k$. Deberíamos eliminar los últimos $(n - m)\delta q_k$ con la ayuda de las ecuaciones (212.2), pero podemos evitar este paso eligiendo los $\lambda_i$ de tal manera que los coeficientes de estos $\delta q_k$ se anulen. Los restantes $\delta q_i$, por otro lado, pueden ser elegidos arbitrariamente y de aquí que nuestra conclusión previa de que los coeficientes de estos $\delta q_i$ deben anularse individualmente a lo largo del rango se mantiene válida de nuevo. Pero entonces vemos que en el análisis final el coeficiente de \textit{cada} $\delta q_k$ individual se anula, independientemente de si un cierto $q_k$ fue designado como una variable dependiente o independiente. Las ecuaciones resultantes son:
+\begin{equation}
+\frac{\partial L}{\partial q_k} - \frac{d}{dt} \, \frac{\partial L}{\partial \dot{q}_k} + \lambda_1 \, \frac{\partial f_1}{\partial q_k} + \ldots + \lambda_m \, \frac{\partial f_m}{\partial q_k} = 0. \tag{212.5}
+\end{equation}
+Esto es equivalente al siguiente problema variacional. En lugar de considerar la variación de la integral definida
+\begin{equation}
+I = \int_{t_1}^{t_2} L \, dt, \tag{212.6}
+\end{equation}
+con las condiciones auxiliares (212.1), considérese la variación de la integral modificada
+\begin{equation}
+I' = \int_{t_1}^{t_2} L' \, dt, \tag{212.7}
+\end{equation}
+donde
+\begin{equation}
+L' = L + \lambda f_1 + \ldots + \lambda_m f_m, \tag{212.8}
+\end{equation}
+y abandónense las condiciones auxiliares.
+
+Aquí de nuevo, como en el procedimiento general, los $\lambda_i$ deben ser considerados como constantes relativas al proceso de variación. Pero también podemos incluirlos en el problema variacional como funciones desconocidas adicionales de $t$. La variación de los $\lambda_i$ da entonces las condiciones auxiliares (212.1) \textit{a posteriori}.
+
+La solución de las ecuaciones diferenciales (212.5) debe completarse satisfaciendo las $m$ condiciones auxiliares (212.1). Esto determina los $\lambda_i$ como funciones de $t$. En la cuestión de condiciones iniciales, podemos elegir arbitrariamente solo $n - m$ coordenadas de posición y $n - m$ velocidades iniciales, porque las restantes $q_i$ y $\dot{q}_i$ están determinadas por las condiciones auxiliares. Esto está de acuerdo con el hecho de que el sistema dado representa un sistema mecánico de $n - m$ grados de libertad y el uso de $n$ coordenadas sobrantes es meramente una cuestión de conveniencia matemática.
+
+\begin{quote}
+\textit{Resumen.} El método lagrangiano del multiplicador-$\lambda$ al tratar condiciones auxiliares prescinde de la eliminación de variables sobrantes y toma en cuenta las condiciones auxiliares sin reducir el número de variables. El integrando $L$ del problema variacional dado se modifica sumando los lados izquierdos de las condiciones auxiliares dadas, cada uno multiplicado por un factor $\lambda$ indeterminado. Entonces el problema se trata como un problema de variación libre. Los factores-$\lambda$ se determinan después como funciones de $t$, satisfaciendo las condiciones auxiliares dadas.
+\end{quote}
+
+\section{Condiciones no-holonómicas}
+
+Si las condiciones auxiliares del problema variacional no están dadas como relaciones algebraicas entre las variables, sino como relaciones diferenciales---cf.\ cap.\ I, sección 6 y cap.\ II, sección 6---el método lagrangiano del multiplicador-$\lambda$ sigue siendo aplicable. Obtenemos de nuevo las ecuaciones (212.4) con la única modificación de que las $\dfrac{\partial f_i}{\partial q_k}$ son reemplazadas por los coeficientes $A_{ik}$ de las condiciones no-holonómicas (26.1). Una diferencia existe en la cuestión de condiciones iniciales. Las coordenadas $q_i$ están en el presente no restringidas por ninguna condición, solo sus diferenciales. De aquí que los valores iniciales de todos los $q_i$ pueden ahora prescribirse arbitrariamente. Las velocidades, sin embargo, están restringidas en virtud de las condiciones dadas, de acuerdo con las ecuaciones
+\begin{equation}
+A_{i1}\dot{q}_1 + \ldots + A_{in}\dot{q}_n + B_i = 0, \quad (i = 1, \ldots, m). \tag{213.1}
+\end{equation}
+
+Las $m$ ecuaciones (213.1) sirven no solamente para el propósito de eliminar las velocidades iniciales. Tienen la función adicional de determinar los factores-$\lambda$ que entran en las ecuaciones de movimiento como multiplicadores indeterminados.
+
+Las condiciones auxiliares no-holonómicas que son reonómicas, es decir, dependientes del tiempo, requieren un cuidado particular. Aquí es necesario saber qué condiciones existen entre los $\delta q_k$ si la variación se realiza instantáneamente pero durante el tiempo infinitesimal $\delta t$. Las condiciones auxiliares toman ahora la forma
+\begin{equation}
+A_{i1}\delta q_1 + \ldots + A_{in}\delta q_n + B_i \delta t = 0, \tag{213.2}
+\end{equation}
+con coeficientes $A_{ik}$ y $B_i$ que son en general funciones de los $q_i$ y el tiempo $t$. Las cantidades $B_i$ no entran en las ecuaciones de movimiento ya que los desplazamientos virtuales $\delta q_k$ se realizan \textit{sin} variar el tiempo; pero sí entran en las relaciones que existen entre las velocidades:
+\begin{equation}
+A_{i1}\dot{q}_1 + \ldots + A_{in}\dot{q}_n + B_i = 0. \tag{213.3}
+\end{equation}
+
+\begin{quote}
+\textit{Resumen.} Un problema variacional con condiciones auxiliares no-holonómicas no puede ser reducido a una forma donde la variación de cierta cantidad se iguala a cero. Sin embargo, las ecuaciones de movimiento se derivan una vez más, con la ayuda del método del multiplicador, de manera análoga al caso de condiciones holonómicas.
+\end{quote}
+
+\section{Condiciones isoperimétircas}
+
+Puede ocurrir que una condición auxiliar no aparezca como una relación algebraica entre los $q_k$, sino en la forma de una integral definida que debe tener un valor prescrito $C$:
+\begin{equation}
+\int_{t_1}^{t_2} f(q_1, \ldots, q_n, \, t) \, dt = C. \tag{214.1}
+\end{equation}
+Las condiciones auxiliares de esta forma se llaman ``condiciones isoperimét\-ricas,'' ya que el primer problema de extremo históricamente registrado, el de encontrar el área máxima delimitada por un perímetro de longitud dada (el problema de Dido) prescribe una condición de esta naturaleza.
+
+De manera general, podríamos tener un número \textit{arbitrario} de condiciones de la forma (214.1) prescritas como condiciones auxiliares, pero bastará tratar el caso de una sola condición ya que la generalización a $m$ condiciones es obvia.
+
+La condición (214.1) debe cumplirse no solamente para las funciones reales $q_1, \ldots, q_n$ que hacen estacionaria la integral $I$ dada de (211.1), sino también para las funciones variadas $\bar{q}_1, \ldots, \bar{q}_n$; de aquí que podemos tomar la variación de (214.1), lo cual da la siguiente relación integral entre los $\delta q_1, \ldots, \delta q_n$:
+\begin{equation}
+\int_{t_1}^{t_2} \left( \frac{\partial f}{\partial q_1} \, \delta q_1 + \ldots + \frac{\partial f}{\partial q_n} \, \delta q_n \right) dt = 0. \tag{214.2}
+\end{equation}
+De aquí que nuestro problema actual es satisfacer la ecuación
+\begin{equation}
+\delta I = \int_{t_1}^{t_2} [E_1(t)\delta q_1 + \ldots + E_n(t)\delta q_n] \, dt = 0, \tag{214.3}
+\end{equation}
+con la condición auxiliar (214.2). De nuevo, es permisible multiplicar el lado izquierdo de la ecuación (214.2) por alguna constante $\lambda$ indeterminada y sumarlo a $\delta I$. De aquí que consideramos la ecuación
+\begin{equation}
+\int_{t_1}^{t_2} \left[ \left( E_1 + \lambda \, \frac{\partial f}{\partial q_1} \right) \delta q_1 + \ldots + \left( E_n + \lambda \, \frac{\partial f}{\partial q_n} \right) \delta q_n \right] dt = 0. \tag{214.4}
+\end{equation}
+
+Reemplacemos ahora $dt$ por $\Delta t$, y la integral definida por una suma, haciendo $\Delta t$ más y más pequeño y así aproximándose a la integral definida dada cada vez más. Podemos ver por un razonamiento similar que durante este proceso la $\lambda$ siempre puede ser determinada de modo que la integral (214.4) se anule para variaciones \textit{arbitrarias} de los $\delta q_k$. Dado que esto se cumple independientemente de $\Delta t$, debe cumplirse incluso en el límite; lo cual da el principio de que con una elección apropiada de $\lambda$ tenemos
+\begin{equation}
+\delta \int_{t_1}^{t_2} (L + \lambda f) \, dt = 0, \tag{214.5}
+\end{equation}
+para variaciones arbitrarias de los $\delta q_k$. Pero esto significa que una vez más hemos logrado transformar nuestro problema variacional condicionado en un problema de variación libre cambiando el $L$ original a
+\begin{equation}
+L' = L + \lambda f, \tag{214.6}
+\end{equation}
+donde $\lambda$ es una constante indeterminada.
+
+De aquí en adelante, las conclusiones son las mismas que en la sección 12. Una vez más llegamos a las ecuaciones (212.4) con la única diferencia de que los $\lambda_i$ son ahora \textit{constantes} y no funciones de $t$. Estas constantes pueden de nuevo ser determinadas satisfaciendo las condiciones integrales dadas.
+
+El mismo método-$\lambda$ se aplica si la condición isoperimétrica (214.1) depende no solo de los $q_k$ sino también de sus derivadas con respecto a $t$:
+\begin{equation}
+\int_{t_1}^{t_2} f(q_1, \ldots, q_n;\, \dot{q}_1, \ldots, \dot{q}_n;\, t) \, dt = C. \tag{214.7}
+\end{equation}
+Para un problema de esta naturaleza, véase el problema de la cadena flexible, tratado en el cap.\ III, sección 4.
+
+\begin{quote}
+\textit{Resumen.} El método lagrangiano del multiplicador-$\lambda$ puede extenderse al caso de condiciones auxiliares que son tales que ciertas integrales definidas dadas no deben cambiar su valor durante el proceso de variación. Las ecuaciones resultantes tienen la misma forma que aquellas que se cumplen para condiciones auxiliares algebraicas. La única diferencia es que ahora los factores-$\lambda$ son constantes y no funciones de $t$.
+\end{quote}
+
+\section{El cálculo de variaciones y condiciones de frontera. El problema de la barra elástica\protect\footnote{El crédito por el material discutido en esta sección va a las diversas referencias breves pero fundamentales sobre este tema en \textit{Courant-Hilbert} (véase Bibliografía), particularmente pp.\ 206--207 del volumen I. La conexión entre el cálculo de variaciones y condiciones de frontera es no solamente interesante por su propio mérito sino bastante importante para muchas aplicaciones, particularmente para problemas de estabilidad de elasticidad.}}
+
+En todas nuestras consideraciones previas estuvimos esencialmente interesados en las \textit{ecuaciones diferenciales} que pueden deducirse como la solución del problema de que cierta integral definida asuma un valor estacionario. La derivación de estas ecuaciones por el método de integración por partes reveló que la variación de una integral definida se compone de dos partes, a saber, una integral extendida sobre el rango dado, \textit{más un término de frontera}. No prestamos mucha atención a este término de frontera, ya que asumimos condiciones de frontera que hacían que este término se anulara. Pero en realidad hay situaciones donde este término de frontera desempeña un papel más activo. Veremos más adelante, en la teoría hamiltoniana de la resolución de las ecuaciones diferenciales de movimiento por medio de una ecuación diferencial parcial, que en la teoría matemática avanzada de la dinámica el término de frontera previamente despreciado es importante. Aquí, sin embargo, deseamos discutir otro aspecto del término de frontera que tiene una significación física más directa.
+
+Sabemos que cualquier problema que involucra la solución de ecuaciones diferenciales requiere un número apropiado de \textit{condiciones de frontera} para hacer la solución única. Estas condiciones podrían ser determinadas por las circunstancias físicas dadas. Pero también es posible que las circunstancias físicas bajo consideración no den condiciones de frontera o no den suficientes condiciones de frontera para hacer la solución única.
+
+Como ejemplo ilustrativo consideramos un problema de la mecánica de medios continuos. Consideramos una barra elástica horizontal, cargada por pesos y apoyada en los dos extremos. La ecuación diferencial que da el desplazamiento transversal de la barra es de cuarto orden y por lo tanto requiere la prescripción de cuatro condiciones de frontera. En efecto, podemos \textit{empotrar} la barra en ambos extremos, lo cual significa que no solo el desplazamiento, sino también su primera derivada, se prescribe como cero en ambos extremos. Esto da cuatro condiciones de frontera.
+
+Sin embargo, en lugar de estar empotrada, la barra puede estar meramente \textit{apoyada} en ambos extremos. En este caso las condiciones físicas prescriben solamente \textit{dos} condiciones de frontera, a saber, la anulación del desplazamiento en los dos extremos mientras que la derivada permanece indeterminada. ¿De dónde vendrán las dos condiciones de frontera adicionales?
+
+Es una característica particularmente bella de los problemas variacionales que \textit{siempre proporcionan automáticamente el número correcto de condiciones de frontera}. Aquellas condiciones de frontera que no son impuestas por el sistema a través de las circunstancias externas dadas, se deducen del problema variacional mismo, porque el término de frontera de la expresión para $\delta I$ proporciona algunas condiciones de frontera ``naturales'' además de las condiciones de frontera ``impuestas''. El problema de la barra elástica con diversas condiciones de extremo proporciona una excelente ilustración de este principio.
+
+Este principio es ilustrado por el problema de la barra elástica cargada al que ya nos referimos. El equilibrio de la barra se determina por la condición de que su energía potencial sea un mínimo. No nos ocupamos aquí de la derivación de la expresión para la energía elástica de una barra, la cual puede encontrarse en cualquier libro de texto sobre elasticidad. Denotamos por $l$ la longitud de la barra y por $x$ la variable independiente que va de 0 a $l$, caracterizando la posición de un punto de la barra. El pequeño desplazamiento vertical causado por la carga de la barra se denota por $y(x)$, mientras que $\rho(x)$ denota la carga por unidad de longitud. Suponemos que la barra tiene en todas partes la misma sección transversal. Entonces la energía potencial debida a las fuerzas elásticas está dada por
+\begin{equation}
+V_1 = \frac{k}{2} \int_0^l (y'')^2 \, dx, \tag{215.1}
+\end{equation}
+donde $k$ es una constante, mientras que la energía potencial debida a la gravedad es
+\begin{equation}
+V_2 = -\int_0^l \rho y \, dx. \tag{215.2}
+\end{equation}
+De aquí que la integral que debe ser minimizada es
+\begin{equation}
+I = \int_0^l \left( \frac{k}{2} \, y''^2 - \rho y \right) dx. \tag{215.3}
+\end{equation}
+
+La ecuación diferencial de Euler-Lagrange de este problema variacional es---véase (210.11):
+\begin{equation}
+ky''''(x) = \rho(x). \tag{215.4}
+\end{equation}
+Si esta ecuación se satisface, la variación $\delta I$ se reduce a un término de frontera que en nuestro problema aparece como sigue---véase (210.12):
+\begin{equation}
+\delta I = k \left[ -y'''(l)\delta y(l) + y'''(0)\delta y(0) + y''(l)\delta y'(l) - y''(0)\delta y'(0) \right] \tag{215.5}
+\end{equation}
+
+\textbf{1.} \textit{Extremos empotrados.} Las condiciones de frontera impuestas a la barra son aquí:
+\begin{equation}
+\begin{aligned}
+y(0) &= 0, &\quad y(l) &= 0, \\
+y'(0) &= 0, &\quad y'(l) &= 0.
+\end{aligned} \tag{215.6}
+\end{equation}
+Dado que la variación de cantidades fijas es cero, notamos que todos los términos de (215.5) se anulan y la única condición para la anulación de $\delta I$ es la ecuación diferencial (215.4). Todas las condiciones de frontera son aquí proporcionadas por las circunstancias externas del problema y no hay que agregar condiciones de frontera naturales.
+
+\textbf{2.} \textit{Extremos apoyados.} Las únicas condiciones impuestas son ahora
+\begin{equation}
+y(0) = 0, \qquad y(l) = 0. \tag{215.7}
+\end{equation}
+De aquí que las variaciones $\delta y'(0)$ y $\delta y'(l)$ son arbitrarias y la anulación de (215.5) requiere ahora las dos condiciones de frontera adicionales:
+\begin{equation}
+y''(0) = 0, \qquad y''(l) = 0, \tag{215.8}
+\end{equation}
+que complementan las condiciones de frontera ``impuestas'' (215.7).
+
+\textbf{3.} \textit{Un extremo empotrado, el otro libre.} Sea la barra empotrada en el punto $x = 0$, pero libre en el otro extremo. Las condiciones de frontera dadas son entonces:
+\begin{equation}
+y(0) = 0, \qquad y'(0) = 0, \tag{215.9}
+\end{equation}
+mientras que $y(l)$ e $y'(l)$ no están prescritas. De aquí que la variación de estas dos cantidades es arbitraria y la anulación de (215.5) requiere las siguientes dos condiciones:
+\begin{equation}
+y''(l) = 0, \qquad y'''(l) = 0, \tag{215.10}
+\end{equation}
+como consecuencia del problema variacional, complementando las condiciones impuestas (215.9).
+
+\textbf{4.} \textit{Ambos extremos libres.} Las condiciones de frontera naturales (215.10) entran en juego en ambos extremos:
+\begin{equation}
+\begin{aligned}
+y''(0) &= 0, &\quad y'''(0) &= 0, \\
+y''(l) &= 0, &\quad y'''(l) &= 0.
+\end{aligned} \tag{215.11}
+\end{equation}
+Nótese que ahora \textit{todas} las condiciones de frontera son proporcionadas por el problema variacional. No tenemos condiciones ``impuestas'', pero las condiciones de frontera ``naturales'' están presentes en número suficiente.
+
+Sin embargo, sentimos que este problema debe tener sus propias dificultades, ya que obviamente la barra no puede estar en equilibrio sin el apoyo apropiado de dos fuerzas hacia arriba. Consideraremos estas fuerzas como un caso límite de fuerzas continuamente distribuidas a lo largo de la barra, de modo que puedan ser incluidas en $\rho(x)$, contando una fuerza hacia arriba con signo negativo. Se muestra en la teoría general de ecuaciones diferenciales que el lado derecho de (215.4) puede ser prescrito arbitrariamente solo si la ecuación diferencial homogénea correspondiente---es decir, la ecuación diferencial sin ninguna distribución de carga---no tiene más solución que la solución trivial $y = 0$. En todos los casos previos las condiciones de frontera eran tales que la ecuación diferencial
+\begin{equation}
+y''''(x) = 0 \tag{215.12}
+\end{equation}
+no tenía solución bajo las condiciones de frontera dadas. Aquí, sin embargo, existen \textit{dos} tales soluciones independientes, a saber
+\begin{equation}
+y = 1, \tag{215.13}
+\end{equation}
+y
+\begin{equation}
+y = x. \tag{215.14}
+\end{equation}
+En tales casos nuestro problema de valor de frontera no es resoluble a menos que $\rho(x)$ sea ``ortogonal'' a las soluciones homogéneas (215.13), (215.14), es decir,
+\begin{equation}
+\int_0^l \rho(x) \, dx = 0, \tag{215.15}
+\end{equation}
+y
+\begin{equation}
+\int_0^l \rho(x) \, x \, dx = 0. \tag{215.16}
+\end{equation}
+La significación física de estas condiciones es que \textit{la suma de las fuerzas y la suma de los momentos de las fuerzas que actúan sobre la barra son cero}. Estas condiciones determinan las dos fuerzas hacia arriba que son necesarias para apoyar la barra. Son derivables como las condiciones de integrabilidad del problema de valor de frontera que es aquí completamente proporcionado por el cálculo de variaciones.
+
+\textit{Problema 1.} Investíguese el caso donde el extremo $x = 0$ está apoyado (pero no empotrado), y el extremo $x = l$ es libre. Muéstrese que ahora existe la sola condición de integrabilidad ``la suma de todos los momentos es igual a cero.''
+
+\textit{Problema 2.} Considérese el caso de dos barras de diferentes secciones transversales unidas rígidamente. Aquí la constante $k$ de la ecuación diferencial (215.4) hace un \textit{salto} repentino en el punto $x = \xi$ donde las dos barras están unidas. Muéstrese que ahora el término de frontera (215.5) produce dos condiciones de continuidad en el punto $x = \xi$, a saber, que $ky''$ \textit{y} $ky'''$ \textit{son continuas en el punto} $x = \xi$.
+
+\begin{quote}
+\textit{Resumen.} La solución de una ecuación diferencial---o un conjunto de ecuaciones diferenciales---no es única sin la adición del número apropiado de condiciones de frontera. Los problemas que surgen de encontrar el valor estacionario de una integral definida tienen siempre el número correcto de condiciones de frontera. Si las circunstancias externas dadas no proporcionan el número suficiente de condiciones de frontera, el resto es siempre aportado por el problema variacional mismo, porque el término de frontera en la expresión para $\delta I$ proporciona algunas condiciones de frontera ``naturales'' además de las condiciones de frontera ``impuestas''. El problema de la barra elástica con diversas condiciones de extremo proporciona una excelente ilustración de este principio.
+\end{quote}
+
+\end{document}

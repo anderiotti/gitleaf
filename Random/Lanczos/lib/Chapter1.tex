@@ -1,0 +1,611 @@
+\documentclass[12pt,a4paper]{book}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish]{babel}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage{setspace}
+\usepackage{enumitem}
+
+\geometry{margin=2.5cm}
+
+\title{\textbf{LOS PRINCIPIOS VARIACIONALES\\DE LA MEC\'ANICA}}
+\author{}
+\date{}
+
+\begin{document}
+
+\begin{titlepage}
+\vspace*{\fill}
+\begin{center}
+{\Large LOS PRINCIPIOS VARIACIONALES\\[0.5cm] DE LA MEC\'ANICA}
+\end{center}
+\vspace*{\fill}
+\end{titlepage}
+
+%--- CAPÍTULO I ---
+
+\chapter{Los conceptos básicos de la mecánica analítica}
+
+\section{Los puntos de vista principales de la mec\'anica anal\'itica.}
+
+La forma anal\'itica de la mec\'anica, tal como fue introducida por Euler y Lagrange, difiere considerablemente en su m\'etodo y punto de vista de la mec\'anica vectorial. La ley fundamental de la mec\'anica, tal como fue enunciada por Newton: ``masa por aceleraci\'on es igual a fuerza en movimiento'', es v\'alida en primera instancia solamente para una part\'icula individual. Fue deducida a partir del movimiento de una part\'icula en el campo gravitatorio terrestre y luego fue aplicada al movimiento de los planetas bajo la acci\'on del sol. En ambos problemas, el cuerpo en movimiento pod\'ia ser idealizado como un ``punto de masa'' o una ``part\'icula'', es decir, un punto individual al cual se le asigna una masa, y as\'i el problema din\'amico se presentaba en esta forma: ``Una part\'icula puede moverse libremente en el espacio y est\'a sometida a una fuerza dada. Describir el movimiento en cualquier instante de tiempo.'' La ley de Newton proporcion\'o la ecuaci\'on diferencial del movimiento, y el problema din\'amico se redujo a la integraci\'on de dicha ecuaci\'on.
+
+Si la part\'icula no es libre sino que est\'a asociada con otras part\'iculas, como por ejemplo en un cuerpo s\'olido, o un fluido, la ecuaci\'on newtoniana sigue siendo aplicable si se toman las precauciones adecuadas. Se debe aislar la part\'icula de todas las dem\'as part\'iculas y determinar la fuerza que ejercen sobre ella las part\'iculas circundantes. Cada part\'icula es una unidad independiente que sigue la ley de movimiento de una part\'icula libre.
+
+Este an\'alisis de fuerzas se vuelve a veces engorroso. La naturaleza desconocida de las fuerzas de interacci\'on hace necesario introducir postulados adicionales, y Newton pens\'o que el principio ``acci\'on es igual a reacci\'on'', enunciado como su tercera ley del movimiento, resolver\'ia todos los problemas din\'amicos. Sin embargo, esto no es el caso, e incluso para la din\'amica de un cuerpo r\'igido fue necesaria la hip\'otesis adicional de que las fuerzas internas del cuerpo son de naturaleza central. En situaciones m\'as complicadas, el enfoque newtoniano no logra dar una respuesta \'unica al problema.
+
+El enfoque anal\'itico del problema del movimiento es bastante diferente. La part\'icula ya no es una unidad aislada sino parte de un ``sistema''. Un ``sistema mec\'anico'' designa un conjunto de part\'iculas que interact\'uan entre s\'i. La part\'icula individual carece de importancia; es el sistema como un todo lo que cuenta. Por ejemplo, en el problema planetario uno puede estar interesado en el movimiento de un planeta particular. Sin embargo, el problema es irresoluble en esta forma restringida. La fuerza que act\'ua sobre ese planeta tiene su fuente principalmente en el sol, pero en menor medida tambi\'en en los otros planetas, y no puede ser determinada sin conocer el movimiento de los dem\'as miembros del sistema. Y as\'i es razonable considerar el problema din\'amico del sistema \textit{completo}, sin descomponerlo en partes.
+
+Pero a\'un m\'as decisiva es la ventaja de un tratamiento unificado del an\'alisis de fuerzas. En el tratamiento vectorial, cada punto requiere atenci\'on especial y la fuerza que act\'ua ha de ser determinada independientemente para cada part\'icula. En el tratamiento anal\'itico, basta con conocer una \'unica funci\'on, que depende de las posiciones de las part\'iculas en movimiento; esta ``funci\'on de trabajo'' contiene impl\'icitamente todas las fuerzas que act\'uan sobre las part\'iculas del sistema. Pueden obtenerse mediante simple diferenciaci\'on de dicha funci\'on.
+
+Otra diferencia fundamental entre los dos m\'etodos concierne a la cuesti\'on de las ``condiciones auxiliares''. Ocurre frecuentemente que ciertas condiciones cinem\'aticas existen entre las part\'iculas de un sistema en movimiento, las cuales pueden ser establecidas \textit{a priori}. Por ejemplo, las part\'iculas de un cuerpo s\'olido pueden moverse como si el cuerpo fuera ``r\'igido'', lo que significa que la distancia entre dos puntos cualesquiera no puede cambiar. Tales condiciones cinem\'aticas no existen en realidad sobre bases \textit{a priori}. Son mantenidas por fuerzas intensas. Sin embargo, es de gran ventaja que el tratamiento anal\'itico no requiera el conocimiento de estas fuerzas, sino que pueda tomar por sentadas las condiciones cinem\'aticas dadas. Podemos desarrollar las ecuaciones din\'amicas de un cuerpo r\'igido sin conocer qu\'e fuerzas producen la rigidez del cuerpo. De manera similar, no necesitamos conocer en detalle qu\'e fuerzas act\'uan entre las part\'iculas de un fluido. Basta con conocer el hecho emp\'irico de que un fluido se opone mediante fuerzas muy intensas a cualquier cambio en su volumen, mientras que las fuerzas que se oponen a un cambio en la forma del fluido sin cambiar el volumen son leves. Por lo tanto, podemos descartar las fuerzas internas desconocidas de un fluido y reemplazarlas por las condiciones cinem\'aticas de que durante el movimiento de un fluido el volumen de cualquier porci\'on debe conservarse. Si uno considera cu\'anto m\'as simple es tal condici\'on cinem\'atica \textit{a priori} que un conocimiento detallado de las fuerzas que se requieren para mantener dicha condici\'on, la gran superioridad del tratamiento anal\'itico sobre el vectorial se hace evidente.
+
+Sin embargo, m\'as fundamental que todas las caracter\'isticas anteriores es el \textit{principio unificador} en el cual culmina el enfoque anal\'itico. Las ecuaciones de movimiento de un sistema mec\'anico complicado forman un gran n\'umero---incluso un n\'umero infinito---de ecuaciones diferenciales separadas. Los principios variacionales de la mec\'anica anal\'itica descubren la base unificadora de la cual se derivan todas estas ecuaciones. Hay un \textit{principio} detr\'as de todas estas ecuaciones, el cual expresa el significado del conjunto completo. Dada una cantidad fundamental, la ``acci\'on'', el principio de que esta acci\'on sea estacionaria conduce al conjunto completo de ecuaciones diferenciales. Adem\'as, el enunciado de este principio es independiente de cualquier sistema especial de coordenadas. Por lo tanto, las ecuaciones anal\'iticas del movimiento son tambi\'en invariantes respecto a cualquier transformaci\'on de coordenadas.
+
+\bigskip
+
+\textit{Nota sobre terminolog\'ia.} La palabra ``anal\'itica'' en la expresi\'on ``mec\'anica anal\'itica'' no tiene nada que ver con el proceso filos\'ofico de an\'alisis, sino que proviene del t\'ermino matem\'atico ``an\'alisis'', referido a la aplicaci\'on de los principios del c\'alculo infinitesimal a problemas de matem\'aticas puras y aplicadas. Mientras que la literatura francesa y alemana reserva el t\'ermino ``mec\'anica anal\'itica'' para el tratamiento matem\'atico abstracto de problemas mec\'anicos mediante los m\'etodos de Euler, Lagrange y Hamilton, la literatura inglesa y particularmente la estadounidense frecuentemente llama por el mismo nombre incluso a aplicaciones muy elementales del c\'alculo a problemas de mec\'anica vectorial simple. El t\'ermino ``mec\'anica'' incluye ``est\'atica'' y ``din\'amica'', la primera trata del \textit{equilibrio} de part\'iculas y sistemas de part\'iculas, la segunda con su \textit{movimiento}. (Una rama separada de la mec\'anica se ocupa de la ``mec\'anica de medios continuos''---que incluye mec\'anica de fluidos y elasticidad---basada en ecuaciones diferenciales parciales en lugar de ordinarias. Estos problemas no est\'an incluidos en el presente libro.)
+
+\bigskip
+
+\begin{center}
+\fbox{\parbox{0.85\textwidth}{
+\textit{Resumen.} Estos son, entonces, los cuatro puntos de vista principales en los cuales difieren la mec\'anica vectorial y la mec\'anica anal\'itica:
+
+\begin{enumerate}
+\item La mec\'anica vectorial a\'isla la part\'icula y la considera como un individuo; la mec\'anica anal\'itica considera el sistema como un todo.
+
+\item La mec\'anica vectorial construye una fuerza separada que act\'ua sobre cada part\'icula en movimiento; la mec\'anica anal\'itica considera una \'unica funci\'on: la funci\'on de trabajo (o energ\'ia potencial). Esta \'unica funci\'on contiene toda la informaci\'on necesaria acerca de las fuerzas.
+
+\item Si fuerzas intensas mantienen una relaci\'on definida entre las coordenadas de un sistema, y esa relaci\'on se da emp\'iricamente, el tratamiento vectorial tiene que considerar las fuerzas necesarias para mantenerla. El tratamiento anal\'itico toma la relaci\'on dada por sentada, sin requerir conocimiento de las fuerzas que la mantienen.
+
+\item En el m\'etodo anal\'itico, el conjunto completo de ecuaciones del movimiento puede ser desarrollado a partir de un \'unico principio unificador que incluye impl\'icitamente todas estas ecuaciones. Este principio toma la forma de minimizar una cierta cantidad, la ``acci\'on''. Puesto que un principio de m\'inimo es independiente de cualquier sistema de referencia especial, las ecuaciones de la mec\'anica anal\'itica valen para cualquier conjunto de coordenadas. Esto permite ajustar las coordenadas a la naturaleza espec\'ifica de cada problema.
+\end{enumerate}
+}}
+\end{center}
+
+
+\section{Coordenadas generalizadas.}
+
+En el tratamiento vectorial elemental de la mec\'anica, el concepto abstracto de ``coordenada'' no entra en escena. El m\'etodo es esencialmente geom\'etrico en car\'acter.
+
+Los m\'etodos vectoriales son eminentemente \'utiles en problemas de est\'atica. Sin embargo, cuando se trata de problemas de movimiento, el n\'umero de tales problemas que pueden ser resueltos por m\'etodos puramente vectoriales es relativamente peque\~no. Para la soluci\'on de problemas m\'as complejos, los m\'etodos geom\'etricos de la mec\'anica vectorial dejan de ser adecuados y hay que recurrir a un tratamiento anal\'itico m\'as abstracto. En esta nueva fundamentaci\'on anal\'itica de la mec\'anica, el concepto de coordenada en su aspecto m\'as general ocupa una posici\'on central.
+
+La mec\'anica anal\'itica es una ciencia completamente matem\'atica. Todo se realiza mediante c\'alculos en el dominio abstracto de las cantidades. El mundo f\'isico se traduce a relaciones matem\'aticas. Esta traducci\'on se lleva a cabo con la ayuda de coordenadas. Las coordenadas establecen una correspondencia biyectiva entre los puntos del espacio f\'isico y los n\'umeros. Tras establecer esta correspondencia, podemos operar con las coordenadas como cantidades algebraicas y olvidar su significado f\'isico. El resultado final de nuestros c\'alculos se traduce finalmente de vuelta al mundo de las realidades f\'isicas.
+
+Durante el siglo que va de Fermat y Descartes a Euler y Lagrange, se produjeron desarrollos enormes en los m\'etodos de las matem\'aticas superiores. Uno de los m\'as importantes de estos fue la generalizaci\'on de la idea original de coordenadas de Descartes. Si el prop\'osito de las coordenadas es establecer una correspondencia biyectiva entre los puntos del espacio y los n\'umeros, la disposici\'on de tres ejes perpendiculares rectangulares y la determinaci\'on de longitud, anchura y altura respecto a esos ejes es s\'olo \textit{una} forma de establecer dicha correspondencia. Otros m\'etodos pueden servir igualmente bien. Por ejemplo, las coordenadas polares $r$, $\theta$, $\phi$ pueden tomar el lugar de las coordenadas rectangulares $x$, $y$, $z$. Es una de las caracter\'isticas del tratamiento anal\'itico de la mec\'anica que no especifiquemos la naturaleza de las coordenadas que traducen una situaci\'on f\'isica dada en una situaci\'on matem\'atica abstracta.
+
+Consideremos primero un sistema mec\'anico compuesto de $N$ part\'iculas libres, ``libres'' en el sentido de que no est\'an restringidas por ninguna condici\'on cinem\'atica. Las coordenadas rectangulares de estas part\'iculas:
+\begin{equation}
+x_i,\; y_i,\; z_i, \quad (i = 1, 2, \ldots, N),
+\tag{12.1}
+\end{equation}
+caracterizan la posici\'on del sistema mec\'anico, y el problema del movimiento se resuelve obviamente si $x_i$, $y_i$, $z_i$ se dan como funciones del tiempo $t$.
+
+El mismo problema se resuelve igualmente, sin embargo, si $x_i$, $y_i$, $z_i$ se expresan en t\'erminos de algunas otras cantidades
+\begin{equation}
+q_1,\; q_2,\; \ldots,\; q_{3N},
+\tag{12.2}
+\end{equation}
+y entonces estas cantidades $q_k$ se determinan como funciones del tiempo $t$.
+
+Este procedimiento indirecto de resolver el problema del movimiento proporciona grandes ventajas anal\'iticas y es de hecho el factor decisivo en la resoluci\'on de problemas din\'amicos. Matem\'aticamente, lo llamamos una ``transformaci\'on de coordenadas''. Es una generalizaci\'on de la transici\'on de coordenadas rectangulares $x$, $y$, $z$ de un solo punto en el espacio a coordenadas polares $r$, $\theta$, $\phi$. Las relaciones
+\begin{align}
+x &= r \sin\theta \cos\phi, \notag\\
+y &= r \sin\theta \sin\phi, \tag{12.3}\\
+z &= r \cos\theta, \notag
+\end{align}
+se generalizan de modo que las nuevas variables se expresen como funciones arbitrarias de las variables antiguas. El n\'umero de variables no es 3 sino $3N$, puesto que la posici\'on del sistema mec\'anico requiere $3N$ coordenadas para su caracterizaci\'on. Y as\'i, la forma general de tal transformaci\'on de coordenadas aparece como sigue:
+\begin{align}
+x_1 &= f_1(q_1, \ldots, q_{3N}), \notag\\
+&\cdots\cdots\cdots\cdots\cdots\cdots \tag{12.4}\\
+&\cdots\cdots\cdots\cdots\cdots\cdots \notag\\
+z_N &= f_{3N}(q_1, \ldots, q_{3N}). \notag
+\end{align}
+Podemos prescribir estas funciones, $f_1, \ldots, f_{3N}$, de cualquier modo que deseemos y as\'i trasladar el problema original de determinar los $x_i$, $y_i$, $z_i$ como funciones de $t$ al nuevo problema de determinar los $q_1, \ldots, q_{3N}$ como funciones de $t$. Con la habilidad adecuada en la elecci\'on de las coordenadas correctas, podemos resolver el nuevo problema m\'as f\'acilmente que el original. La flexibilidad del sistema de referencia hace posible elegir coordenadas que sean particularmente adecuadas para el problema dado. Por ejemplo, en el problema planetario, es decir, una part\'icula que gira alrededor de un centro fijo de atracci\'on, las coordenadas polares son m\'as apropiadas para el problema del movimiento que las rectangulares.
+
+La ventaja de las coordenadas generalizadas es a\'un m\'as obvia si se consideran sistemas mec\'anicos con condiciones cinem\'aticas dadas. Tales condiciones encuentran su expresi\'on matem\'atica en ciertas relaciones funcionales entre las coordenadas. Por ejemplo, dos \'atomos pueden formar una mol\'ecula, estando la distancia entre los dos \'atomos determinada por fuerzas intensas que est\'an en equilibrio a esa distancia. Din\'amicamente, este sistema puede ser considerado como compuesto de dos puntos de masa con coordenadas $x_1$, $y_1$, $z_1$ y $x_2$, $y_2$, $z_2$ que se mantienen a una distancia constante $a$ uno del otro. Esto implica la condici\'on
+\begin{equation}
+(x_1 - x_2)^2 + (y_1 - y_2)^2 + (z_1 - z_2)^2 = a^2.
+\tag{12.5}
+\end{equation}
+Debido a esta condici\'on, las 6 coordenadas $x_1, \ldots, z_2$ no pueden ser prescritas arbitrariamente. Basta con dar 5 coordenadas; la sexta coordenada queda entonces determinada por la condici\'on auxiliar (12.5). Sin embargo, es evidentemente inapropiado designar una de las coordenadas rectangulares como variable dependiente cuando la relaci\'on (12.5) es sim\'etrica en todas las coordenadas. Es m\'as natural prescribir las tres coordenadas rectangulares del centro de masa del sistema y a\~nadir dos \'angulos que caractericen la direcci\'on del eje de la mol\'ecula diat\'omica. Las 6 coordenadas rectangulares $x_1, \ldots, z_2$ son expresables en t\'erminos de estos 5 par\'ametros.
+
+Como otro ejemplo, consid\'erese el caso de un cuerpo r\'igido, que puede estar compuesto de cualquier n\'umero de part\'iculas. Pero sea cual sea el n\'umero de part\'iculas, es suficiente dar las tres coordenadas del centro de masa y tres \'angulos que definen la posici\'on del cuerpo respecto al centro de masa. Estos 6 par\'ametros determinan la posici\'on del cuerpo r\'igido completamente. Las coordenadas de cada una de las part\'iculas componentes pueden ser expresadas como funciones de estos 6 par\'ametros.
+
+En general, si un sistema mec\'anico consiste en $N$ part\'iculas y se imponen $m$ condiciones cinem\'aticas independientes, ser\'a posible caracterizar la configuraci\'on del sistema mec\'anico de manera un\'ivoca mediante
+\begin{equation}
+n = 3N - m
+\tag{12.6}
+\end{equation}
+par\'ametros independientes
+\begin{equation}
+q_1,\; q_2,\; \ldots,\; q_n,
+\tag{12.7}
+\end{equation}
+de tal modo que las coordenadas rectangulares de todas las part\'iculas sean expresables como funciones de las variables (12.7):
+\begin{align}
+x_1 &= f_1(q_1, \ldots, q_n), \notag\\
+&\cdots\cdots\cdots\cdots\cdots \tag{12.8}\\
+&\cdots\cdots\cdots\cdots\cdots \notag\\
+z_N &= f_{3N}(q_1, \ldots, q_n). \notag
+\end{align}
+El n\'umero $n$ es una constante caracter\'istica del sistema mec\'anico dado, que no puede ser alterada. Menos de $n$ par\'ametros no son suficientes para determinar la posici\'on del sistema. M\'as de $n$ par\'ametros no son necesarios y no podr\'ian ser asignados sin satisfacer ciertas condiciones. Expresamos el hecho de que $n$ par\'ametros son necesarios y suficientes para una caracterizaci\'on un\'ivoca de la configuraci\'on del sistema diciendo que tiene ``$n$ grados de libertad''. Adem\'as, llamamos a los $n$ par\'ametros $q_1, q_2, \ldots, q_n$ las ``coordenadas generalizadas'' del sistema. El n\'umero $N$ de part\'iculas que componen el sistema mec\'anico es irrelevante para el tratamiento anal\'itico, como tambi\'en lo son las coordenadas de estas part\'iculas. Es en las coordenadas generalizadas $q_1, q_2, \ldots, q_n$ y en ciertas funciones b\'asicas de ellas donde reside la importancia. Un cuerpo r\'igido puede estar compuesto de un n\'umero infinito de puntos de masa, pero para el tratamiento mec\'anico es un sistema de no m\'as de 6 coordenadas independientes.
+
+\bigskip
+
+\textit{Ejemplos:}
+
+\textit{Un grado de libertad:} Un pist\'on movi\'endose arriba y abajo. Un cuerpo r\'igido girando alrededor de un eje fijo.
+
+\textit{Dos grados de libertad:} Una part\'icula movi\'endose sobre una superficie dada.
+
+\textit{Tres grados de libertad:} Una part\'icula movi\'endose en el espacio. Un cuerpo r\'igido girando alrededor de un punto fijo (trompo).
+
+\textit{Cuatro grados de libertad:} Dos componentes de una estrella doble girando en el mismo plano.
+
+\textit{Cinco grados de libertad:} Dos part\'iculas mantenidas a distancia constante una de otra.
+
+\textit{Seis grados de libertad:} Dos planetas girando alrededor de un sol fijo. Un cuerpo r\'igido movi\'endose libremente en el espacio.
+
+\bigskip
+
+Las coordenadas generalizadas $q_1, q_2, \ldots, q_n$ pueden o no tener un significado geom\'etrico. Es necesario, sin embargo, que las funciones (12.8) sean finitas, univaluadas, continuas y diferenciables con respecto a los $q_k$, con un jacobiano $\Delta$ de al menos \textit{una} combinaci\'on de $n$ funciones que sea diferente de cero. Estas condiciones pueden violarse en ciertos puntos singulares, que han de ser excluidos de la consideraci\'on. Por ejemplo, la transformaci\'on (12.3) de coordenadas rectangulares a polares satisface la condici\'on general de regularidad, pero se requiere cuidado especial para los valores $r = 0$ y $\theta = 0$, para los cuales el jacobiano de la transformaci\'on se anula.
+
+Adem\'as de estas restricciones ``en lo peque\~no'', ciertas condiciones ``en lo grande'' deben ser observadas. Es necesario que un rango continuo adecuado de las variables $q_1, q_2, \ldots, q_n$ permita un rango suficientemente amplio de las coordenadas rectangulares originales, sin restringirlas m\'as que las condiciones cinem\'aticas dadas. Por ejemplo, la transformaci\'on (12.3) garantiza el rango completo e infinito de las variables $x$, $y$, $z$ si $r$ var\'ia entre $0$ e $\infty$, $\theta$ entre $0$ y $\pi$, y $\phi$ entre $0$ y $2\pi$. Sin embargo, tales condiciones en lo grande rara vez gravan nuestras consideraciones porque, incluso si no podemos cubrir todo el rango de movimiento, a\'un podemos describir una parte caracter\'istica de \'el.
+
+No siempre es aconsejable eliminar todas las condiciones cinem\'aticas introduciendo coordenadas generalizadas apropiadas. A veces preferimos eliminar solo \textit{algunas} de las condiciones cinem\'aticas y dejar las otras como condiciones restrictivas adicionales. Por lo tanto, el problema general de los sistemas mec\'anicos con condiciones cinem\'aticas se presenta en la siguiente forma. Tenemos las ecuaciones (12.8) y adem\'as $m$ ecuaciones de la forma:
+\begin{equation}
+\varphi_i(q_1, q_2, \ldots, q_n) = 0, \quad (i = 1, \ldots, m).
+\tag{12.9}
+\end{equation}
+El n\'umero de grados de libertad es aqu\'i
+\[
+n' = n - m.
+\]
+
+\begin{center}
+\fbox{\parbox{0.85\textwidth}{
+\textit{Resumen.} Los problemas anal\'iticos de movimiento requieren una generalizaci\'on del concepto original de coordenadas de Descartes. Cualquier conjunto de par\'ametros que pueda caracterizar la posici\'on de un sistema mec\'anico puede ser elegido como un conjunto adecuado de coordenadas. Estas se denominan las ``coordenadas generalizadas'' del sistema mec\'anico.
+}}
+\end{center}
+
+
+\section{El espacio de configuraci\'on.}
+
+Uno de los conceptos m\'as imaginativos del tratamiento anal\'itico abstracto de los problemas mec\'anicos es el concepto del espacio de configuraci\'on. Si asociamos los tres n\'umeros $x$, $y$, $z$ con un punto en un espacio tridimensional, no hay raz\'on por la que no debamos hacer lo mismo con los $n$ n\'umeros $q_1, q_2, \ldots, q_n$, consider\'andolos como las coordenadas rectangulares de un ``punto'' $P$ en un espacio $n$-dimensional. De manera similar, si podemos asociar las ecuaciones
+\begin{align}
+x &= f(t), \notag\\
+y &= g(t), \tag{13.1}\\
+z &= h(t), \notag
+\end{align}
+con la idea de una ``curva'' y el movimiento de un punto a lo largo de esa curva, no hay raz\'on por la que no debamos hacer lo mismo con las ecuaciones correspondientes
+\begin{align}
+q_1 &= q_1(t), \notag\\
+&\cdots\cdots \notag\\
+&\cdots\cdots \tag{13.2}\\
+q_n &= q_n(t). \notag
+\end{align}
+Estas ecuaciones representan la soluci\'on de un problema din\'amico. En la imagen geom\'etrica asociada, tenemos un punto $P$ de un espacio $n$-dimensional que se mueve a lo largo de una curva dada de ese espacio.
+
+Esta imagen geom\'etrica es una gran ayuda para nuestro pensamiento. No importa cu\'an numerosas sean las part\'iculas que constituyen un sistema mec\'anico dado, o cu\'an complicadas sean las relaciones existentes entre ellas, el sistema mec\'anico completo se representa como un solo punto de un espacio multidimensional, llamado ``espacio de configuraci\'on''. Por ejemplo, la posici\'on de un cuerpo r\'igido---con toda la infinidad de puntos de masa que lo forman---se simboliza como un solo punto de un espacio de 6 dimensiones. Este espacio de 6 dimensiones no tiene, naturalmente, nada que ver con la realidad f\'isica del cuerpo r\'igido. Est\'a meramente \textit{correlacionado} con el cuerpo r\'igido en el sentido de una correspondencia biyectiva. Las diversas posiciones del cuerpo r\'igido est\'an ``mapeadas'' como diversos puntos del espacio de 6 dimensiones, y a la inversa, los diversos puntos de un espacio de 6 dimensiones pueden ser interpretados f\'isicamente como diversas posiciones de un cuerpo r\'igido. Por brevedad, nos referiremos al punto que simboliza la posici\'on del sistema mec\'anico en el espacio de configuraci\'on como el ``punto C'', mientras que la curva trazada por ese punto durante el movimiento se denominar\'a la ``curva C''.
+
+La imagen que hemos formado aqu\'i del espacio de configuraci\'on necesita un refinamiento ulterior. Hemos basado nuestras discusiones en la geometr\'ia anal\'itica de un espacio eucl\'ideo de $n$ dimensiones. En consecuencia, hemos representado las $n$ coordenadas generalizadas del sistema mec\'anico como coordenadas rectangulares de dicho espacio. Una imagen mucho m\'as apropiada de la estructura geom\'etrica del espacio de configuraci\'on puede obtenerse si pasamos de la geometr\'ia anal\'itica a la geometr\'ia diferencial, como haremos en la secci\'on 5 de este cap\'itulo. Sin embargo, incluso nuestra imagen preliminar puede servir a algunos prop\'ositos \'utiles. Lo demostramos con el siguiente ejemplo.
+
+La posici\'on de una part\'icula libre en el espacio puede ser caracterizada por las coordenadas polares $(r, \theta, \phi)$. Si estos valores se toman como coordenadas \textit{rectangulares} de un punto, obtenemos un espacio cuyas propiedades geom\'etricas est\'an obviamente muy distorsionadas en comparaci\'on con el espacio real. Las l\'ineas rectas se convierten en curvas, los \'angulos y las distancias cambian. Sin embargo, ciertas propiedades importantes del espacio permanecen inalteradas por este proceso de mapeo. Un punto sigue siendo un punto, la vecindad de un punto sigue siendo la vecindad de un punto, una curva sigue siendo una curva, curvas adyacentes siguen siendo curvas adyacentes. Las curvas continuas y diferenciables siguen siendo continuas y diferenciables. Ahora bien, para los procesos del c\'alculo de variaciones, tales propiedades ``topol\'ogicas'' del espacio son las verdaderamente importantes, mientras que las propiedades ``m\'etricas'' del espacio, tales como distancias, \'angulos, \'areas, etc., son irrelevantes. Por esta raz\'on, incluso la imagen simplificada de un espacio de configuraci\'on sin una geometr\'ia correspondiente es a\'un un excelente instrumento de ayuda para visualizar algunos procesos anal\'iticos abstractos.
+
+\begin{center}
+\fbox{\parbox{0.85\textwidth}{
+\textit{Resumen.} El lenguaje pict\'orico de la geometr\'ia $n$-dimensional permite extender la mec\'anica de una part\'icula puntual individual a sistemas mec\'anicos arbitrariamente complicados. Tal sistema puede ser reemplazado por un solo punto para el estudio de su movimiento. Pero el espacio que contiene este punto ya no es el espacio f\'isico ordinario. Es un espacio abstracto con tantas dimensiones como la naturaleza del problema requiera.
+}}
+\end{center}
+
+
+\section{Mapeo del espacio sobre s\'i mismo.}
+
+Puesto que el significado de las $n$ coordenadas generalizadas
+\begin{equation}
+q_1,\; q_2,\; \ldots,\; q_n
+\tag{14.1}
+\end{equation}
+no est\'a especificado m\'as all\'a del requisito de que permitan una caracterizaci\'on completa del sistema, podemos elegir otro conjunto de cantidades
+\begin{equation}
+\bar{q}_1,\; \bar{q}_2,\; \ldots,\; \bar{q}_n
+\tag{14.2}
+\end{equation}
+como coordenadas generalizadas. Debe existir entonces una relaci\'on funcional entre los dos conjuntos de coordenadas, expresable en la forma:
+\begin{align}
+\bar{q}_1 &= f_1(q_1, \ldots, q_n), \notag\\
+&\cdots\cdots\cdots\cdots\cdots \notag\\
+&\cdots\cdots\cdots\cdots\cdots \tag{14.3}\\
+\bar{q}_n &= f_n(q_1, \ldots, q_n). \notag
+\end{align}
+Las funciones $f_1, f_2, \ldots, f_n$ deben satisfacer la condici\'on de regularidad ordinaria. Deben ser finitas, univaluadas, continuas y diferenciables con respecto a los $q_k$, con un jacobiano $\Delta$ que sea diferente de cero.
+
+La diferenciaci\'on de las ecuaciones (14.3) da
+\begin{align}
+d\bar{q}_1 &= \frac{\partial f_1}{\partial q_1}\,dq_1 + \cdots + \frac{\partial f_1}{\partial q_n}\,dq_n, \notag\\
+&\cdots\cdots\cdots\cdots\cdots\cdots \notag\\
+&\cdots\cdots\cdots\cdots\cdots\cdots \tag{14.4}\\
+d\bar{q}_n &= \frac{\partial f_n}{\partial q_1}\,dq_1 + \cdots + \frac{\partial f_n}{\partial q_n}\,dq_n. \notag
+\end{align}
+Estas ecuaciones muestran que no importa qu\'e relaciones funcionales existan entre los dos conjuntos de coordenadas, sus \textit{diferenciales} son siempre \textit{linealmente} dependientes.
+
+Podemos conectar una imagen geom\'etrica definida con esta ``transformaci\'on de coordenadas''. Si los $q_i$ se representan como coordenadas rectangulares de un espacio $n$-dimensional, lo mismo puede hacerse con los $\bar{q}_i$. \\
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.7\linewidth]{Q space and Qbar space.png}
+    \label{fig:placeholder}
+\end{figure}
+Pensamos entonces en los puntos del espacio $q$ y los puntos del espacio $\bar{q}$. A un punto definido $P$ del espacio $q$ corresponde un punto definido $\bar{P}$ del espacio $\bar{q}$. Por esta raz\'on, una transformaci\'on de la forma (14.3) se denomina una ``transformaci\'on puntual''. En cierta regi\'on, los puntos del espacio $q$ est\'an en correspondencia biyectiva con los puntos del espacio $\bar{q}$. Tenemos un ``mapeo'' del espacio $n$-dimensional sobre s\'i mismo. Este mapeo satisface requisitos m\'as estrictos que los de la correspondencia biyectiva general. Se preserva la continuidad. La vecindad del punto $P$ se mapea sobre la vecindad de $\bar{P}$ y viceversa. Pero a\'un m\'as se puede decir. Una l\'inea recta del espacio $q$ ya no es una l\'inea recta del espacio $\bar{q}$. Sin embargo, las relaciones se vuelven m\'as y m\'as regulares a medida que consideramos regiones m\'as y m\'as peque\~nas. En una regi\'on \textit{infinitesimal} alrededor de $P$, las l\'ineas rectas \textit{se} mapean sobre l\'ineas rectas y las l\'ineas paralelas permanecen paralelas, aunque las longitudes y los \'angulos no se conservan. Un peque\~no paralelep\'ipedo en la vecindad de $P$ se mapea sobre un peque\~no paralelep\'ipedo en la vecindad de $\bar{P}$. El determinante funcional $\Delta$ es justamente el determinante de las ecuaciones lineales (14.4). Geom\'etricamente, este determinante representa la raz\'on del volumen $\bar{\tau}$ del nuevo paralelep\'ipedo al volumen $\tau$ del original. El no desvanecimiento de $\Delta$ asegura que toda la vecindad de $P$ ser\'a mapeada sobre toda la vecindad de $\bar{P}$, lo cual es necesario si la correspondencia biyectiva entre los puntos de los dos espacios ha de ser reversible. Si $\Delta$ se anula, una regi\'on $n$-dimensional alrededor de $P$ se mapea sobre una regi\'on de menor dimensionalidad alrededor de $\bar{P}$, con la consecuencia de que algunos puntos alrededor de $\bar{P}$ no tienen imagen en el espacio $q$, mientras que otros tienen una infinidad de im\'agenes.
+
+Una realizaci\'on f\'isica de tal mapeo del espacio sobre s\'i mismo puede encontrarse en el \textit{movimiento de un fluido}. Si las part\'iculas del fluido se marcan y se toma una instant\'anea en un cierto instante, y luego en un instante posterior, las posiciones correspondientes de las part\'iculas del fluido representan un mapeo del espacio sobre s\'i mismo. Si recortamos un peque\~no paralelep\'ipedo de fluido, el movimiento del fluido distorsionar\'a los \'angulos y las longitudes de la figura, pero seguir\'a siendo un paralelep\'ipedo. Incidentalmente, si el fluido es incompresible, el volumen del paralelep\'ipedo permanecer\'a inalterado durante el movimiento. La imagen anal\'itica del movimiento de tal fluido es una transformaci\'on de coordenadas con un determinante funcional que tiene el valor 1 en todas partes.
+
+\begin{center}
+\fbox{\parbox{0.85\textwidth}{
+\textit{Resumen.} En vista de la arbitrariedad de las coordenadas, un conjunto de coordenadas generalizadas puede ser cambiado por otro conjunto. Esta ``transformaci\'on de coordenadas'' puede ser concebida geom\'etricamente como un mapeo de un espacio $n$-dimensional sobre s\'i mismo. El mapeo no preserva \'angulos ni distancias. Las l\'ineas rectas se curvan. Sin embargo, en regiones infinitesimales, todos los mapeos se ``rectifican'': las l\'ineas rectas se mapean sobre l\'ineas rectas, las l\'ineas paralelas sobre l\'ineas paralelas, y la raz\'on de vol\'umenes se conserva.
+}}
+
+\section{Energ\'ia cin\'etica y geometr\'ia riemanniana.}
+
+El uso de coordenadas generalizadas arbitrarias para describir el movimiento de un sistema mec\'anico es una de las caracter\'isticas principales de la mec\'anica anal\'itica. Las ecuaciones de la mec\'anica anal\'itica poseen una estructura tal que pueden ser enunciadas en una forma que es independiente de las coordenadas empleadas. Esta propiedad de las ecuaciones generales del movimiento vincula la mec\'anica anal\'itica con uno de los grandes desarrollos de las matem\'aticas del siglo diecinueve: la teor\'ia de invariantes y covariantes. Esta teor\'ia alcanz\'o su madurez en nuestros d\'ias cuando la teor\'ia de la relatividad de Einstein mostr\'o c\'omo las leyes de la naturaleza est\'an ligadas al problema de la invariancia. El programa principal de la relatividad es precisamente el de \textit{formular las leyes de la naturaleza independientemente de cualquier sistema especial de coordenadas}. La soluci\'on matem\'atica de este problema ha mostrado que est\'a \'intimamente vinculada con la geometr\'ia riemanniana. Seg\'un la relaci\'on general de la relatividad de Einstein, la verdadera geometr\'ia de la naturaleza no es la eucl\'idea simple, sino de un car\'acter riemanniano m\'as general; esta geometr\'ia enlaza el espacio y el tiempo como una \'unica variedad unificada de cuatro dimensiones.
+
+\footnotetext[1]{El primer descubridor de la relaci\'on \'intima entre la din\'amica y la geometr\'ia de los espacios curvos es Jacobi (1845) (cf.\ ``principio de Jacobi'', v). Investigaciones m\'as recientes se deben a Lipka, Berwald y Frank, Eisenhart, y otros. La investigaci\'on m\'as exhaustiva del tema, basada en el uso sistem\'atico del c\'alculo tensorial, se debe a J.~L.~Synge, ``On the geometry of dynamics'' (\textit{Philos.\ Transactions} (A) 226 (1927), p.~31).}
+
+El descubrimiento de Descartes de que la geometr\'ia puede ser tratada anal\'iticamente fue un hito en la historia de esa materia. Sin embargo, la geometr\'ia de Descartes asumi\'o la estructura eucl\'idea del espacio. Para establecer un sistema de coordenadas rectangulares, debemos asumir una geometr\'ia en la que se cumplan los postulados de congruencia y el postulado de las paralelas.
+
+Un segundo hito es la geometr\'ia de Riemann, que surgi\'o de las ingeniosas investigaciones de Gauss sobre la geometr\'ia intr\'inseca de las superficies curvas. La geometr\'ia de Riemann est\'a basada en una \'unica cantidad diferencial llamada el ``elemento de l\'inea'' $\overline{ds}$.\footnotemark[1] El significado de esta cantidad es \textit{la distancia entre dos puntos vecinos, expresada en t\'erminos de las coordenadas y sus diferenciales}. Consideremos, por ejemplo, la distancia infinitesimal $\overline{ds}$ entre dos puntos $P$ y $P^1$ con las coordenadas $x, y, z$ y $x + dx, y + dy, z + dz$. Seg\'un el teorema de Pit\'agoras tenemos
+\begin{equation}
+\overline{ds}^{\,2} = dx^2 + dy^2 + dz^2.
+\tag{15.1}
+\end{equation}
+Esta expresi\'on es una consecuencia de los postulados eucl\'ideos y de la definici\'on de las coordenadas $x$, $y$, $z$.
+
+Pero supongamos ahora que no sabemos nada acerca de postulado alguno, pero estamos dispuestos a aceptar (15.1) sin demostraci\'on como la expresi\'on para el elemento de l\'inea. Si sabemos adem\'as que las variables $x$, $y$, $z$ var\'ian entre $-\infty$ y $+\infty$, podemos entonces deducir todas las leyes de la geometr\'ia eucl\'idea, incluyendo la interpretaci\'on de $x$, $y$, $z$ como coordenadas rectangulares. De manera similar, si el cuadrado del elemento de l\'inea resulta estar dado en la forma
+
+\footnotetext[1]{Aqu\'i adoptamos la costumbre de denotar las diferenciales no integrables, que no pueden ser consideradas como el cambio infinitesimal de algo, poniendo una barra sobre el s\'imbolo. As\'i, $dq_k$ o $dt$ significa la ``$d$ de $q_k$'' o ``la $d$ de $t$'', mientras que $\overline{ds}$ por ejemplo ha de ser concebido como una \textit{expresi\'on} infinitesimal y no como la ``$d$ de $s$''. En efecto, si $\overline{ds}$ fuera integrable, ser\'ia imposible hallar la distancia m\'as corta entre dos puntos porque la longitud de cualquier curva entre esos dos puntos---dependiendo solo de las posiciones inicial y final---ser\'ia la misma.}
+
+\begin{equation}
+\overline{ds}^{\,2} = dx^2 + x^2\,dy^2 + x^2 \sin^2 y\,dz^2,
+\tag{15.2}
+\end{equation}
+donde $x$ var\'ia\footnotemark[1] entre 0 e $\infty$, $y$ entre 0 y $\pi$, $z$ entre 0 y $2\pi$, la geometr\'ia establecida por este elemento de l\'inea es una vez m\'as eucl\'idea, pero ahora las tres variables $x$, $y$, $z$ tienen el significado de \textit{coordenadas polares}, previamente denotadas por $r$, $\theta$, $\phi$. Toda esta informaci\'on est\'a contenida en la \'unica expresi\'on diferencial (15.2), aumentada por las condiciones de contorno.
+
+\footnotetext[1]{Debemos a\~nadir la condici\'on de contorno de que los dos puntos $(x,y,0)$ y $(x,y,2\pi)$ deben coincidir para todo $x$ e $y$.}
+
+En general, si las tres coordenadas del espacio se denotan por $x_1$, $x_2$, $x_3$ (en lugar de $x$, $y$, $z$), y representan coordenadas arbitrarias ``curvil\'ineas''---curvil\'ineas porque las l\'ineas coordenadas del sistema de referencia ya no son l\'ineas rectas como en el esquema de Descartes, sino curvas arbitrarias---entonces el cuadrado del elemento de l\'inea aparece en la siguiente forma general:
+\begin{align}
+\overline{ds}^{\,2} &= (g_{11}\,dx_1 + g_{12}\,dx_2 + g_{13}\,dx_3)\,dx_1 \notag\\
+&\quad + (g_{21}\,dx_1 + g_{22}\,dx_2 + g_{23}\,dx_3)\,dx_2 \tag{15.3}\\
+&\quad + (g_{31}\,dx_1 + g_{32}\,dx_2 + g_{33}\,dx_3)\,dx_3. \notag
+\end{align}
+Una expresi\'on de esta naturaleza se llama una ``forma diferencial cuadr\'atica'' en las variables $x_1$, $x_2$, $x_3$. Los ``coeficientes'' de esta forma, $g_{11}, \ldots, g_{33}$, no son constantes sino funciones de las tres variables $x_1$, $x_2$, $x_3$. La suma (15.3) puede ser escrita en la forma m\'as concisa
+\begin{equation}
+\overline{ds}^{\,2} = \sum_{i,\,k=1}^{3} g_{ik}\,dx_i\,dx_k.
+\tag{15.4}
+\end{equation}
+Puesto que los t\'erminos $g_{ik}\,dx_i\,dx_k$ y $g_{ki}\,dx_i\,dx_k$ pueden ser combinados en un solo t\'ermino, el n\'umero de t\'erminos independientes no es 9 sino 6. Podemos manejar esta reducci\'on de t\'erminos imponiendo la siguiente condici\'on sobre los coeficientes:
+\begin{equation}
+g_{ki} = g_{ik}
+\tag{15.5}
+\end{equation}
+
+En el ``c\'alculo absoluto'', que desarrolla sistem\'aticamente los covariantes e invariantes de la geometr\'ia riemanniana, las cantidades $g_{ik}$ forman las componentes de un ``tensor''. La cantidad $\overline{ds}^{\,2}$ tiene un significado absoluto puesto que la distancia entre dos puntos no cambia sin importar qu\'e coordenadas se empleen. Es una cantidad ``absoluta'' o ``invariante'' que es independiente de cualquier sistema de referencia especial. Un tensor se define por las componentes de una forma diferencial invariante. Por ejemplo, una forma diferencial invariante de primer orden
+\begin{equation}
+\overline{dw} = F_1\,dx_1 + F_2\,dx_2 + \cdots + F_n\,dx_n,
+\tag{15.6}
+\end{equation}
+define un vector. Las cantidades $F_1, F_2, \ldots, F_n$ son las ``componentes'' del vector; cambian con el sistema de referencia empleado y por ello son cantidades ``covariantes''. Toda la forma diferencial, sin embargo, es un invariante. He aqu\'i una definici\'on abstracta, puramente anal\'itica, de un vector que prescinde por completo de la imagen acostumbrada de una ``flecha''. Una forma diferencial de segundo orden define un tensor del segundo orden, y as\'i sucesivamente.
+
+El tensor especial $g_{ik}$ que se encuentra en la base de la geometr\'ia se llama el ``tensor m\'etrico''. Permite el desarrollo de una geometr\'ia completa no solo en tres, sino en cualquier n\'umero de dimensiones. La geometr\'ia de un espacio $n$-dimensional queda determinada al postular el elemento de l\'inea dado por
+\begin{equation}
+\overline{ds}^{\,2} = \sum_{i,\,k=1}^{n} g_{ik}\,dx_i\,dx_k,
+\tag{15.7}
+\end{equation}
+con la condici\'on adicional
+\begin{equation}
+g_{ik} = g_{ki},
+\tag{15.8}
+\end{equation}
+lo que hace del tensor m\'etrico un ``tensor sim\'etrico''. Einstein y Minkowski han mostrado que la geometr\'ia de la naturaleza incluye el espacio y el tiempo y forma as\'i un mundo de cuatro dimensiones, siendo las cuatro variables $x$, $y$, $z$, $t$.
+
+Las cantidades $g_{ik}$ no son en general constantes sino funciones de las variables $x_1, x_2, \ldots, x_n$. Son constantes solo si se emplean coordenadas rectangulares, o m\'as generalmente coordenadas ``rectil\'ineas'' (con ejes oblicuos en lugar de ejes rectangulares). Para coordenadas curvil\'ineas, los $g_{ik}$ cambian de punto a punto. Son comparables a las componentes de un vector, excepto que dependen de \textit{dos} \'indices $i$ y $k$ y por tanto forman una variedad de cantidades que puede ser dispuesta en un esquema bidimensional en lugar de uno unidimensional.
+
+El hecho de que la geometr\'ia pueda ser establecida anal\'iticamente e independientemente de cualquier sistema de referencia especial es solo \textit{uno} de los m\'eritos de la geometr\'ia riemanniana. A\'un m\'as fundamental es el descubrimiento de Riemann de que la definici\'on (15.7) del elemento de l\'inea proporciona no solo una base nueva, sino una mucho m\'as \textit{general}, para construir geometr\'ia que la base m\'as antigua de los postulados eucl\'ideos. Los $g_{ik}$ deben pertenecer a una \textit{cierta clase de funciones} para producir el tipo eucl\'ideo de geometr\'ia. Si los $g_{ik}$ no satisfacen esta condici\'on, surge un nuevo tipo de geometr\'ia, caracterizado por dos propiedades fundamentales:
+
+\begin{enumerate}
+\item Las propiedades del espacio cambian de punto a punto, pero solo de manera \textit{continua}.
+
+\item Aunque la geometr\'ia eucl\'idea no se cumple en regiones grandes, s\'i se cumple en regiones \textit{infinitesimales}.
+\end{enumerate}
+
+Riemann ha mostrado c\'omo podemos obtener por diferenciaci\'on una cantidad caracter\'istica, el ``tensor de curvatura'', que pone a prueba la naturaleza de la geometr\'ia. Si todas las componentes del tensor de curvatura se anulan, la geometr\'ia es eucl\'idea; de lo contrario, no.
+
+Cuando la ``relatividad especial'' de Einstein y Minkowski combin\'o el tiempo con el espacio y mostr\'o que la geometr\'ia de la naturaleza comprende cuatro en lugar de tres dimensiones, esa geometr\'ia era a\'un del tipo eucl\'ideo. Pero la ``relatividad general'' de Einstein demostr\'o que el elemento de l\'inea de coeficientes constantes debe ser reemplazado por un elemento de l\'inea riemanniano con diez $g_{ik}$ que son funciones de las cuatro coordenadas $x$, $y$, $z$, $t$. La misteriosa fuerza de la atracci\'on universal fue interpretada como un fen\'omeno puramente geom\'etrico---una consecuencia de la estructura riemanniana del mundo espacio-temporal.
+
+Las abstracciones de la geometr\'ia riemanniana se utilizan no solo en la teor\'ia de la relatividad, sino tambi\'en en la mec\'anica anal\'itica. Los conceptos de la geometr\'ia riemanniana y los m\'etodos del c\'alculo absoluto proporcionan herramientas naturales para tratar las transformaciones de coordenadas que aparecen en el tratamiento anal\'itico de los problemas din\'amicos.
+
+La geometr\'ia entra en el \'ambito de la mec\'anica en conexi\'on con la cualidad inercial de la masa. Esta cualidad inercial se expresa en el lado izquierdo de la ecuaci\'on de Newton en la forma ``masa por aceleraci\'on'' o ``tasa de cambio de la cantidad de movimiento''. Los principios de la mec\'anica anal\'itica han mostrado que la cantidad realmente fundamental que caracteriza la inercia de la masa no es la cantidad de movimiento sino la energ\'ia cin\'etica. Esta energ\'ia cin\'etica es una cantidad escalar definida como $\frac{1}{2}mv^2$ para una part\'icula individual, y como
+\begin{equation}
+T = \frac{1}{2}\sum_{i=1}^{n} m_i v_i^2,
+\tag{15.9}
+\end{equation}
+para un sistema de part\'iculas; $v$ es aqu\'i la velocidad de la part\'icula, definida por
+\begin{equation}
+v^2 = \left(\frac{ds}{dt}\right)^2 = \frac{dx^2 + dy^2 + dz^2}{dt^2}
+\tag{15.10}
+\end{equation}
+As\'i, la energ\'ia cin\'etica de una part\'icula involucra expl\'icitamente el elemento de l\'inea $\overline{ds}$ y por lo tanto depende de la geometr\'ia del espacio.
+
+Ahora definamos el elemento de l\'inea de un espacio de $3N$ dimensiones mediante la ecuaci\'on
+\begin{align}
+\overline{ds}^{\,2} &= 2T\,dt^2 = \sum_{i=1}^{N} m_i v_i^2\,dt^2 \tag{15.11}\\
+&= \sum_{i=1}^{N} m_i(dx_i^2 + dy_i^2 + dz_i^2). \notag
+\end{align}
+Si hacemos esto, entonces la energ\'ia cin\'etica total del sistema mec\'anico puede ser escrita en la forma
+\begin{equation}
+T = \frac{1}{2}\,m\left(\frac{ds}{dt}\right)^2,
+\tag{15.12}
+\end{equation}
+con
+\begin{equation}
+m = 1.
+\tag{15.13}
+\end{equation}
+El significado de este resultado es que \textit{la energ\'ia cin\'etica del sistema completo puede ser reemplazada por la energ\'ia cin\'etica de una sola part\'icula de masa} 1. Esta part\'icula imaginaria es un punto de ese espacio de $3N$ dimensiones de configuraci\'on que simboliza la posici\'on del sistema mec\'anico. En este espacio, un punto es suficiente para representar el sistema mec\'anico, y por lo tanto podemos trasladar la mec\'anica de una part\'icula libre a cualquier sistema mec\'anico si colocamos esa part\'icula en un espacio del n\'umero adecuado de dimensiones y con la geometr\'ia apropiada.
+
+La forma (15.11) del elemento de l\'inea muestra que el espacio de configuraci\'on de $3N$ dimensiones de $N$ part\'iculas libres tiene una estructura eucl\'idea, y que las cantidades
+\begin{equation}
+\sqrt{m}\,x_i,\quad \sqrt{m}\,y_i,\quad \sqrt{m}\,z_i
+\tag{15.14}
+\end{equation}
+han de ser consideradas como coordenadas rectangulares de dicho espacio.
+
+Si las coordenadas rectangulares (15.14) se cambian a coordenadas curvil\'ineas arbitrarias seg\'un las ecuaciones de transformaci\'on (12.4), la geometr\'ia sigue siendo eucl\'idea, aunque el elemento de l\'inea viene dado ahora por la forma riemanniana m\'as general (15.7) (con $n = 3N$).
+
+Pero consideremos ahora un sistema mec\'anico con \textit{condiciones cinem\'aticas} dadas entre las coordenadas. Podemos tratar tal sistema de dos maneras diferentes. Podemos considerar una vez m\'as el espacio de configuraci\'on previo de $3N$ dimensiones pero restringir la movibilidad libre del punto C por las condiciones cinem\'aticas dadas, que toman la forma
+\begin{align}
+f_1(x_1, \ldots, z_N) &= 0, \notag\\
+&\cdots\cdots\cdots\cdots\cdots \tag{15.15}\\
+f_m(x_1, \ldots, z_N) &= 0. \notag
+\end{align}
+Geom\'etricamente, cada una de estas ecuaciones restrictivas significa una hipersuperficie curva del espacio de $3N$ dimensiones. La intersecci\'on de estas hipersuperficies determina un subespacio de $3N - m = n$ dimensiones, en el cual el punto C est\'a forzado a permanecer. Este subespacio ya no es un espacio eucl\'ideo plano sino un espacio riemanniano curvo.
+
+Otra forma de abordar el mismo problema es expresar desde el principio las coordenadas rectangulares de las part\'iculas en t\'erminos de $n$ par\'ametros $q_1, \ldots, q_n$, como hemos hecho en (12.8). Estos par\'ametros son ahora las coordenadas curvil\'ineas de un espacio $n$-dimensional cuyo elemento de l\'inea puede obtenerse tomando los diferenciales de cada lado de las ecuaciones (12.8) y sustituy\'endolos en la expresi\'on (15.11). Esto resulta en un elemento de l\'inea de la forma
+\begin{equation}
+\overline{ds}^{\,2} = \sum_{i,\,k=1}^{n} a_{ik}\,dq_i\,dq_k.
+\tag{15.16}
+\end{equation}
+Los $a_{ik}$ son aqu\'i funciones dadas de los $q_i$. El elemento de l\'inea es ahora verdaderamente riemanniano, no solo porque los $q_i$ son coordenadas curvil\'ineas sino porque la geometr\'ia del espacio de configuraci\'on no preserva la estructura eucl\'idea del espacio original de $3N$ dimensiones, excepto en regiones infinitesimales. Por ejemplo, el movimiento de un trompo perfectamente equilibrado (es decir, un trompo que pivota sobre su centro de gravedad) puede ser concebido como el movimiento del punto C en un cierto espacio riemanniano curvo de 3 dimensiones. De manera similar, el movimiento de una mol\'ecula diat\'omica puede ser concebido como el problema de trazar la l\'inea m\'as corta en un cierto espacio riemanniano de cinco dimensiones, y as\'i sucesivamente. \textit{El problema mec\'anico se traduce en un problema de geometr\'ia diferencial.}
+
+N\'otese que en el primer m\'etodo de abordaje, el espacio de configuraci\'on $n$-dimensional se considera como encajado en un espacio eucl\'ideo de $3N$ dimensiones. En el segundo m\'etodo, el espacio de configuraci\'on existe por s\'i mismo, sin estar considerado como encajado en un espacio de dimensiones superiores.
+
+\begin{center}
+\fbox{\parbox{0.85\textwidth}{
+\textit{Resumen.} La consideraci\'on de sistemas de coordenadas arbitrarios y la invariancia de las ecuaciones mec\'anicas respecto a transformaciones arbitrarias de coordenadas vincula \'intimamente la mec\'anica anal\'itica con los conceptos y m\'etodos de la geometr\'ia riemanniana. El movimiento de un sistema mec\'anico arbitrario puede ser estudiado como el movimiento de una part\'icula libre en un cierto espacio riemanniano de $n$ dimensiones con estructura definida. La energ\'ia cin\'etica del sistema proporciona un elemento de l\'inea riemanniano definido para el espacio de configuraci\'on.
+}}
+\end{center}
+
+
+\section{Sistemas mec\'anicos holon\'omicos y no holon\'omicos.}
+
+Las condiciones cinem\'aticas dadas no siempre se presentan como ecuaciones entre las coordenadas de las part\'iculas. Ocasionalmente surgen condiciones de naturaleza m\'as general que solo pueden ser enunciadas en forma infinitesimal. Un ejemplo caracter\'istico es el rodamiento de una bola sobre una mesa. La bola, movi\'endose libremente en el espacio, tiene seis grados de libertad. Puesto que la bola reposa sobre la superficie, la altura del centro es una constante dada, lo que reduce el n\'umero de grados de libertad a cinco. Podemos caracterizar la posici\'on de la bola por las dos coordenadas rectangulares $x$ e $y$ del punto de contacto, m\'as tres \'angulos $\alpha$, $\beta$, $\gamma$ que fijan la posici\'on de la bola respecto a su centro. Si la bola puede deslizarse a lo largo de la superficie, puede hacer uso de todos sus cinco grados de libertad. Sin embargo, si est\'a restringida a rodar, el punto de contacto debe ser moment\'aneamente un punto en reposo. Esto requiere que el eje instant\'aneo de rotaci\'on pase por el punto de contacto. Si el eje instant\'aneo est\'a confinado a permanecer dentro de alguna l\'inea que est\'e dentro de la superficie de la mesa, tenemos ``rodamiento puro'', en caso contrario ``rodamiento y pivoteo''. El rodamiento puro reduce los grados de libertad a dos. Si la trayectoria del punto de contacto se determina dando $x$ e $y$ como funciones del tiempo $t$, la condici\'on de rodamiento determina la posici\'on de la bola en cualquier instante de manera \'unica. Esto sugerir\'ia que quiz\'a los \'angulos $\alpha$, $\beta$, $\gamma$ podr\'ian ser dados como funciones de $x$ e $y$. Sin embargo, esto no es posible. Los \textit{diferenciales} de $\alpha$, $\beta$, $\gamma$ son expresables en t\'erminos de los \textit{diferenciales} de $x$ e $y$, pero estas relaciones diferenciales no son integrables. No pueden ser convertidas en relaciones finitas entre las coordenadas. En efecto, si la bola parte de una cierta posici\'on y rueda a lo largo de dos trayectorias diferentes de modo que la posici\'on final del punto de contacto sea la misma en ambos casos, las dos posiciones finales de la bola est\'an rotadas una respecto a la otra. Si los \'angulos $\alpha$, $\beta$, $\gamma$ pudieran ser dados como funciones de $x$ e $y$, las posiciones finales ser\'ian las mismas en ambos casos.
+
+Tales condiciones cinem\'aticas, que solo pueden ser dadas como relaciones entre los diferenciales de las coordenadas y no como relaciones finitas entre las propias coordenadas, fueron denominadas por Hertz condiciones ``no holon\'omicas'', en contraste con las condiciones ``holon\'omicas'' ordinarias. Una condici\'on cinem\'atica de la forma
+\begin{equation}
+f(q_1, \ldots, q_n) = 0,
+\tag{16.1}
+\end{equation}
+es holon\'omica. De esto se sigue por diferenciaci\'on que
+\begin{equation}
+\frac{\partial f}{\partial q_1}\,dq_1 + \cdots + \frac{\partial f}{\partial q_n}\,dq_n = 0.
+\tag{16.2}
+\end{equation}
+Sin embargo, si partimos de una relaci\'on diferencial de la forma
+\begin{equation}
+A_1\,dq_1 + \cdots + A_n\,dq_n = 0,
+\tag{16.3}
+\end{equation}
+(con coeficientes $A_k$ que son funciones dadas de los $q_k$) esta relaci\'on es convertible a la forma (16.1) solo si se satisfacen ciertas condiciones de integrabilidad. La \'unica excepci\'on es el caso $n = 2$, porque una relaci\'on diferencial entre dos variables es siempre integrable.
+
+Es siempre posible decidir por mera diferenciaci\'on y eliminaci\'on si un conjunto dado de condiciones diferenciales es holon\'omico o no. Mostramos el procedimiento para el caso m\'as simple de una condici\'on entre tres variables; la generalizaci\'on a m\'as variables y m\'as de una ecuaci\'on se sigue autom\'aticamente. Primero reescribimos la condici\'on dada en la forma:
+\begin{equation}
+dq_3 = B_1\,dq_1 + B_2\,dq_2.
+\tag{16.4}
+\end{equation}
+Si hay una relaci\'on finita entre las variables $q_1$, $q_2$, $q_3$, debemos tener en raz\'on de la condici\'on dada:
+\begin{equation}
+\frac{\partial B_1}{\partial q_2} = \frac{\partial B_2}{\partial q_1}
+\tag{16.5}
+\end{equation}
+Esta relaci\'on debe ser reinterpretada en vista del hecho de que los coeficientes $B_1$ y $B_2$ pueden depender impl\'icitamente de $q_3$. As\'i reemplazamos (16.5) por
+\begin{equation}
+\frac{\partial B_1}{\partial q_2} + \frac{\partial B_1}{\partial q_3}\frac{\partial q_3}{\partial q_2} = \frac{\partial B_2}{\partial q_1} + \frac{\partial B_2}{\partial q_3}\frac{\partial q_3}{\partial q_1}\,;
+\tag{16.6}
+\end{equation}
+las cantidades $\partial q_3/\partial q_1$ y $\partial q_3/\partial q_2$ est\'an dadas por (16.4), y obtenemos
+\begin{equation}
+\frac{\partial B_1}{\partial q_2} + \frac{\partial B_1}{\partial q_3}\,B_2 = \frac{\partial B_2}{\partial q_1} + \frac{\partial B_2}{\partial q_3}\,B_1.
+\tag{16.7}
+\end{equation}
+Esta relaci\'on debe ser satisfecha para todos los valores de $q_1$ y $q_2$, lo que significa que debe ser una identidad, en cuyo caso la relaci\'on (16.4) es integrable; de lo contrario no. Sin embargo, puede ocurrir que $q_3$ no se elimine de la ecuaci\'on resultante y pueda ser expresada en t\'erminos de $q_1$ y $q_2$. Con esta soluci\'on para $q_3$ volvemos a (16.4) y verificamos si las derivadas parciales de $q_3$ respecto a $q_1$ y $q_2$ concuerdan con $B_1$ y $B_2$ o no. Si lo hacen, hemos demostrado que la relaci\'on diferencial dada es holon\'omica y la hemos reemplazado por una relaci\'on finita entre las coordenadas. En el caso de m\'as de dos variables independientes, todas las condiciones de integrabilidad
+\begin{equation}
+\frac{\partial B_2}{\partial q_k} = \frac{\partial B_2}{\partial q_k},
+\tag{16.8}
+\end{equation}
+deben ser verificadas de manera similar. Si se da un sistema completo de relaciones diferenciales independientes, primero las resolvemos para un conjunto adecuado de diferenciales dependientes y luego procedemos de manera similar, verificando las condiciones de integrabilidad.
+
+\textit{Problema.} Investigar la integrabilidad de la siguiente relaci\'on diferencial:
+\begin{equation}
+x\,dz + (y^2 - x^2 - z)\,dx + (z - y^2 - xy)\,dy = O.
+\tag{16.9}
+\end{equation}
+(Esta condici\'on es holon\'omica y puede ser reemplazada por la relaci\'on finita
+\begin{equation}
+z = x^2 - xy + y^2.)
+\tag{16.10}
+\end{equation}
+
+Las condiciones cinem\'aticas holon\'omicas pueden ser abordadas de \textit{dos} formas. Si hay $m$ ecuaciones entre $n$ variables, podemos eliminar $m$ de ellas y reducir el problema a $n - m$ variables independientes. O bien podemos operar con un n\'umero excedente de variables y conservar las relaciones dadas como condiciones auxiliares.
+
+Las condiciones \textit{no holon\'omicas} requieren la \textit{segunda} forma de tratamiento. Una reducci\'on en el n\'umero de variables no es aqu\'i posible y debemos operar con m\'as variables que los grados de libertad del sistema. El espacio de configuraci\'on est\'a aqu\'i encajado en un espacio de dimensiones superiores pero sin formar un subespacio definido, porque las condiciones cinem\'aticas prescriben ciertos haces de direcciones, pero estas direcciones no envuelven ninguna superficie.
+
+Desde el punto de vista de los principios variacionales de la mec\'anica, las condiciones holon\'omicas y no holon\'omicas exhiben un comportamiento notablemente diferente. Aunque las ecuaciones de movimiento pueden ser extendidas al caso de condiciones auxiliares no holon\'omicas, estas ecuaciones dejan de ser derivables del principio de que la variaci\'on de cierta cantidad se iguale a cero. (Cap.\ II, secci\'on 13.)
+
+\begin{center}
+\fbox{\parbox{0.85\textwidth}{
+\textit{Resumen.} Las condiciones cinem\'aticas no siempre toman la forma de relaciones definidas entre las coordenadas. Si lo hacen, las llamamos ``condiciones holon\'omicas''. Pero ocasionalmente la condici\'on solo puede ser enunciada como una relaci\'on entre los diferenciales de las coordenadas sin posibilidad de convertirla en una relaci\'on finita. Tales condiciones cinem\'aticas se denominan ``condiciones no holon\'omicas''. El rodamiento de un cuerpo s\'olido sobre una superficie es un ejemplo.
+}}
+\end{center}
+
+
+\section{Funci\'on de trabajo y fuerza generalizada.}
+
+Los dos lados de la ecuaci\'on newtoniana del movimiento corresponden a dos aspectos fundamentalmente diferentes de los problemas mec\'anicos. En el lado izquierdo tenemos la cualidad inercial de la masa. Esta es absorbida por la energ\'ia cin\'etica en el tratamiento anal\'itico. El lado derecho de la ecuaci\'on, la ``fuerza en movimiento'', describe el comportamiento din\'amico de un campo externo en su acci\'on sobre la part\'icula. Aunque estamos inclinados a creer que la fuerza es algo primitivo e irreducible, el tratamiento anal\'itico de la mec\'anica muestra que no es la fuerza sino el \textit{trabajo} realizado por las fuerzas aplicadas para desplazamientos infinitesimales arbitrarios lo que tiene importancia primordial, mientras que la fuerza es una cantidad secundaria derivada del trabajo.
+
+Supongamos que cada part\'icula de masa $m_i$ y coordenadas rectangulares $x_i$, $y_i$, $z_i$ est\'a sometida a una fuerza $F_i$ con componentes
+\begin{equation}
+X_i,\quad Y_i,\quad Z_i.
+\tag{17.1}
+\end{equation}
+Estas fuerzas provienen ya sea de un campo externo o de la interacci\'on mutua de las part\'iculas, pero no se deben incluir las fuerzas que mantienen las condiciones cinem\'aticas dadas. El tratamiento anal\'itico de la mec\'anica no requiere el conocimiento de estas \'ultimas fuerzas.
+
+Cambiemos las coordenadas de cada una de las part\'iculas por cantidades infinitesimales arbitrarias $dx_i$, $dy_i$, $dz_i$. El trabajo total de todas las fuerzas aplicadas es
+\begin{equation}
+\overline{dw} = \sum_{i=1}^{N} (X_i\,dx_i + Y_i\,dy_i + Z_i\,dz_i).
+\tag{17.2}
+\end{equation}
+Si ahora las coordenadas rectangulares se expresan como funciones de las coordenadas generalizadas $q_1, \ldots, q_n$ seg\'un las ecuaciones (12.8), los diferenciales $dx_i$, $dy_i$, $dz_i$ pueden ser expresados en t\'erminos de los $dq_i$, y el trabajo infinitesimal $\overline{dw}$ resulta como una forma diferencial lineal en las variables $q_i$:
+\begin{equation}
+\overline{dw} = F_1\,dq_1 + F_2\,dq_2 + \cdots + F_n\,dq_n.
+\tag{17.3}
+\end{equation}
+Esta forma diferencial es de importancia primordial para el tratamiento anal\'itico de la fuerza. Las componentes originales de fuerza carecen de importancia; solo los coeficientes
+\begin{equation}
+F_1,\; F_2,\; \ldots,\; F_n
+\tag{17.4}
+\end{equation}
+de la forma diferencial (17.3) importan. Ellos toman el lugar de las componentes de las fuerzas individuales que act\'uan sobre cada part\'icula. Las cantidades (17.4) determinan completamente la acci\'on din\'amica de todas las fuerzas. Estas cantidades forman las componentes de un vector del espacio de configuraci\'on $n$-dimensional y no de uno del espacio ordinario. Llamamos a este vector la ``fuerza generalizada'', y a las cantidades $F_i$ las ``componentes de la fuerza generalizada''.
+
+As\'i como el movimiento de un sistema mec\'anico puede ser simbolizado como el movimiento de una part\'icula individual en un espacio riemanniano $n$-dimensional---estando la inercia de todo el sistema incluida en la energ\'ia cin\'etica de esa part\'icula simb\'olica---la acci\'on din\'amica de todas las fuerzas puede igualmente ser representada por un solo vector que act\'ua sobre esa part\'icula. Este vector tiene $n$ componentes, en concordancia con las $n$ dimensiones del espacio de configuraci\'on. Ellas est\'an definidas anal\'iticamente como los coeficientes de una forma diferencial invariante de primer orden que da el trabajo total de todas las fuerzas aplicadas para un cambio infinitesimal arbitrario de la posici\'on del sistema.
+
+Ahora bien, las fuerzas que act\'uan sobre un sistema mec\'anico caen autom\'aticamente en dos categor\'ias. Es posible que todo lo que podamos decir acerca del trabajo $\overline{dw}$ sea que es una forma diferencial de primer orden. Pero tambi\'en es posible que $\overline{dw}$ resulte ser el verdadero diferencial de una cierta funci\'on. Este \'ultimo caso es el habitual en problemas anal\'iticos.
+
+Supongamos que el trabajo infinitesimal $\overline{dw}$ es el verdadero diferencial de cierta funci\'on de modo que la barra sobre $dw$ pueda ser omitida. Esa funci\'on se llama la ``funci\'on de trabajo'' y se denota frecuentemente por la letra $U$. As\'i ponemos
+\begin{equation}
+\overline{dw} = dU,
+\tag{17.5}
+\end{equation}
+donde
+\begin{equation}
+U = U(q_1, q_2, \ldots, q_n).
+\tag{17.6}
+\end{equation}
+As\'i tenemos
+\begin{equation}
+\sum F_i\,dq_i = \sum \frac{\partial U}{\partial q_i}\,dq_i,
+\tag{17.7}
+\end{equation}
+lo que da
+\begin{equation}
+F_i = \frac{\partial U}{\partial q_i}\,.
+\tag{17.8}
+\end{equation}
+
+La pr\'actica actual es usar la funci\'on de trabajo \textit{negativa} y llamar a esta cantidad $V$:
+\begin{equation}
+V = -\,U.
+\tag{17.9}
+\end{equation}
+La ventaja de este cambio de signo es que, en vista de la ley de la conservaci\'on de la energ\'ia, $V$ puede ser interpretado como la ``energ\'ia potencial'' del sistema. La ecuaci\'on (17.8) puede ahora ser reescrita en la forma
+\begin{equation}
+F_i = -\,\frac{\partial V}{\partial q_i}\,,
+\tag{17.10}
+\end{equation}
+donde $V$ es una funci\'on de las coordenadas de posici\'on:
+\begin{equation}
+V = V(q_1, q_2, \ldots, q_n).
+\tag{17.11}
+\end{equation}
+
+Las fuerzas de esta categor\'ia son notables por dos razones. Primero, satisfacen la ley de la conservaci\'on de la energ\'ia; por esta raz\'on, tales fuerzas se denominan ``fuerzas conservativas''. En segundo lugar, aunque la fuerza generalizada tiene $n$ componentes, pueden ser calculadas a partir de \textit{una \'unica funci\'on escalar}, $U$. El tratamiento variacional de la mec\'anica toma en cuenta solamente esta \'ultima propiedad, mientras que el requisito de que se satisfaga la conservaci\'on de la energ\'ia es irrelevante.
+
+La definici\'on de funci\'on de trabajo sobre la base de la ecuaci\'on (17.6) es demasiado restringida. Tenemos en la naturaleza fuerzas que son derivables de una funci\'on de trabajo \textit{dependiente del tiempo} $U = U(q_1, q_2, \ldots, q_n, t)$. Entonces la ecuaci\'on (17.5) sigue siendo v\'alida, con el entendimiento de que al formar el diferencial $dU$ el tiempo $t$ se considera como una constante. Las ecuaciones (17.7) y (17.8) siguen siendo v\'alidas, pero la conservaci\'on de la energ\'ia se pierde. La fuerza generalizada posee una funci\'on de trabajo \textit{sin} ser conservativa. Una part\'icula cargada el\'ectricamente que gira en un ciclotr\'on regresa al mismo punto con mayor energ\'ia cin\'etica, de modo que la energ\'ia no se conserva. Esto no se debe a que la funci\'on de trabajo no exista, sino a que la funci\'on de trabajo depende del tiempo. Por otro lado, una fuerza generalizada puede carecer de funci\'on de trabajo y a\'un as\'i satisfacer la conservaci\'on de la energ\'ia, como por ejemplo la fuerza que mantiene el rodamiento.
+
+Parece deseable tener un nombre distintivo para las fuerzas que son derivables de una cantidad escalar, independientemente de si son conservativas o no. Este libro adopta el nombre ``monog\'enicas'' (que significa ``generadas por un solo origen'') como nombre distintivo para esta categor\'ia de fuerzas, mientras que las fuerzas que no son derivables de una funci\'on escalar---tales como la fricci\'on---pueden denominarse ``polig\'enicas''.
+
+La funci\'on de trabajo asociada con una fuerza monog\'enica es en el caso m\'as general una funci\'on de las coordenadas \textit{y las velocidades}:
+\begin{equation}
+U = U(q_1, \ldots, q_n;\; \dot{q}_1, \ldots, \dot{q}_n;\; t).
+\tag{17.12}
+\end{equation}
+Por ejemplo, la fuerza electro-magn\'etica de Lorentz, que act\'ua sobre una part\'icula cargada en presencia de un campo el\'ectrico y un campo magn\'etico, es derivable de una funci\'on de trabajo de este tipo. Tales fuerzas son a\'un susceptibles del tratamiento variacional. Como muestra la ecuaci\'on diferencial de Euler--Lagrange (v\'ease m\'as adelante, cap.\ II, secci\'on 10), la conexi\'on entre la fuerza y la funci\'on de trabajo viene dada ahora por la ecuaci\'on
+\begin{equation}
+F_i = \frac{\partial U}{\partial q_i} - \frac{d}{dt}\,\frac{\partial U}{\partial \dot{q}_i}\,,
+\tag{17.13}
+\end{equation}
+que es una generalizaci\'on de la relaci\'on m\'as simple (17.8).
+
+\begin{center}
+\fbox{\parbox{0.85\textwidth}{
+\textit{Resumen.} La cantidad de importancia primordial para el tratamiento anal\'itico de la mec\'anica no es la fuerza, sino el \textit{trabajo} realizado por las fuerzas aplicadas para desplazamientos infinitesimales arbitrarios. Particularmente importantes para el tratamiento variacional son las fuerzas que son derivables de una \'unica cantidad escalar, la funci\'on de trabajo $U$. Tales fuerzas pueden llamarse ``monog\'enicas''. Si la funci\'on de trabajo es independiente del tiempo, obtenemos una clase de fuerzas denominadas ``conservativas'' porque satisfacen la conservaci\'on de la energ\'ia. En el caso frecuente en que la funci\'on de trabajo es no solo independiente del tiempo sino tambi\'en de las velocidades, la negativa de la funci\'on de trabajo puede ser interpretada como la energ\'ia potencial, y la fuerza se convierte en el gradiente negativo de la energ\'ia potencial. Las fuerzas que no son derivables de una funci\'on de trabajo pueden a\'un ser caracterizadas por el trabajo realizado en un peque\~no desplazamiento, pero no se prestan a los procedimientos generales de minimizaci\'on de la mec\'anica anal\'itica.
+}}
+\end{center}
+
+
+\section{Sistemas escleron\'omicos y reon\'omicos. La ley de la conservaci\'on de la energ\'ia.}
+
+En todas nuestras consideraciones precedentes no hemos tomado en cuenta la variable m\'as caracter\'istica de todos los problemas din\'amicos: el tiempo $t$. Los procedimientos de la mec\'anica anal\'itica est\'an influenciados de manera decisiva por la presencia o ausencia expl\'icita del tiempo en las cantidades escalares b\'asicas de la mec\'anica; la cuesti\'on es, sin embargo, si el tiempo aparece \textit{expl\'icitamente} en la energ\'ia cin\'etica o en la funci\'on de trabajo.
+
+En nuestra discusi\'on anterior (secci\'on 16) hemos supuesto que una condici\'on cinem\'atica holon\'omica toma la forma de una relaci\'on dada entre las coordenadas del sistema mec\'anico. Podr\'ia ocurrir que esta relaci\'on cambie continuamente con el tiempo $t$, de modo que la ecuaci\'on que expresa la condici\'on cinem\'atica tome la forma
+\begin{equation}
+f(q_1, \ldots, q_n, t) = 0.
+\tag{18.1}
+\end{equation}
+Este es, por ejemplo, el caso de un punto de masa que se mueve sobre una superficie que a su vez se mueve seg\'un una ley dada. La ecuaci\'on de esa superficie toma la forma
+\begin{equation}
+f(x, y, z, t) = 0.
+\tag{18.2}
+\end{equation}
+O consid\'erese un p\'endulo cuya longitud de hilo est\'a siendo cambiada constantemente al tirar del hilo de una manera definida. Esto equivale nuevamente a una condici\'on auxiliar que contiene el tiempo expl\'icitamente.
+
+Boltzmann us\'o los t\'erminos ``reon\'omico'' y ``escleron\'omico'' como nombres distintivos para condiciones cinem\'aticas que involucran o no el tiempo $t$. Si est\'an presentes condiciones reon\'omicas, la eliminaci\'on de estas condiciones cinem\'aticas mediante una elecci\'on adecuada de coordenadas curvil\'ineas tendr\'a la consecuencia de que las ecuaciones (12.8) contendr\'an $t$ expl\'icitamente:
+\begin{align}
+x_1 &= f_1(q_1, \ldots, q_n, t), \notag\\
+&\cdots\cdots\cdots\cdots\cdots\cdots \notag\\
+&\cdots\cdots\cdots\cdots\cdots\cdots \tag{18.3}\\
+z_N &= f_{3N}(q_1, \ldots, q_n, t). \notag
+\end{align}
+Una situaci\'on similar surge incluso sin condiciones cinem\'aticas dependientes del tiempo, si las coordenadas elegidas pertenecen a un sistema de referencia \textit{que est\'a en movimiento}.
+
+Los sistemas reon\'omicos est\'an dentro del alcance del enfoque anal\'itico, pero perdemos ciertas consecuencias caracter\'isticas que son v\'alidas solo para sistemas escleron\'omicos. En primer lugar, la diferenciaci\'on de las ecuaciones (18.3) respecto a $t$ da:
+\begin{align}
+\dot{x}_1 &= \frac{\partial f_1}{\partial q_1}\,\dot{q}_1 + \cdots + \frac{\partial f_1}{\partial q_n}\,\dot{q}_n + \frac{\partial f_1}{\partial t}\,, \notag\\
+&\cdots\cdots\cdots\cdots\cdots\cdots\cdots\cdots\cdots\cdots \notag\\
+&\cdots\cdots\cdots\cdots\cdots\cdots\cdots\cdots\cdots\cdots \tag{18.4}\\
+\dot{z}_N &= \frac{\partial f_{3N}}{\partial q_1}\,\dot{q}_1 + \cdots + \frac{\partial f_{3N}}{\partial q_n}\,\dot{q}_n + \frac{\partial f_{3N}}{\partial t}\,. \notag
+\end{align}
+Si estas expresiones se sustituyen en la definici\'on (15.9) de la energ\'ia cin\'etica, esta no resultar\'a como una forma puramente cuadr\'atica de las velocidades generalizadas $\dot{q}_i$; obtendremos t\'erminos nuevos adicionales que son lineales en las velocidades, y otros que son independientes de las velocidades. La geometr\'ia riemanniana del espacio de configuraci\'on deja de desempe\~nar el papel que ha desempe\~nado antes.
+
+Nuevamente, el tiempo puede entrar expl\'icitamente en la funci\'on de trabajo $U$. Ya sea que los coeficientes de la energ\'ia cin\'etica o los de la funci\'on de trabajo contengan el tiempo expl\'icitamente o no, las consecuencias anal\'iticas son las mismas y el sistema se vuelve reon\'omico en ambos casos. La diferencia esencial entre un sistema escleron\'omico y uno reon\'omico es que en un sistema escleron\'omico---como demostraremos m\'as adelante---una cantidad fundamental, interpretada como la ``energ\'ia total'' del sistema, permanece constante durante el movimiento. La energ\'ia total es igual a la suma de la energ\'ia cin\'etica y la energ\'ia potencial, siempre que la energ\'ia potencial $V$ del sistema mec\'anico se defina como sigue:
+\begin{equation}
+V = \sum \frac{\partial U}{\partial \dot{q}_i}\,q_i - U.
+\tag{18.5}
+\end{equation}
+En el caso frecuente en que la funci\'on de trabajo es independiente de las velocidades, la energ\'ia potencial se convierte simplemente en la negativa de la funci\'on de trabajo, y podemos considerar la energ\'ia cin\'etica $T$ y la energ\'ia potencial $V$ como las dos cantidades escalares b\'asicas de la mec\'anica, prescindiendo de la funci\'on de trabajo $U$. En el caso general (18.5), sin embargo, debemos retener la funci\'on de trabajo $U$, pero si $U$ es dependiente del tiempo, una definici\'on razonable de la ``energ\'ia potencial'' como una segunda forma de energ\'ia que compense la p\'erdida o ganancia de energ\'ia cin\'etica ya no es posible.
+
+La cantidad verdaderamente fundamental de la mec\'anica anal\'itica no es la energ\'ia potencial sino la funci\'on de trabajo, aunque el f\'isico y el ingeniero est\'an m\'as familiarizados con la primera. En todos los casos en que mencionamos la energ\'ia potencial, se asume t\'acitamente que la funci\'on de trabajo tiene la forma especial (17.6), junto con la conexi\'on $V = -\,U$.
+
+Los sistemas reon\'omicos no satisfacen ninguna ley de conservaci\'on pero los sistemas escleron\'omicos s\'i. Por esta raz\'on, los sistemas escleron\'omicos son frecuentemente denominados ``sistemas conservativos''.
+
+\begin{center}
+\fbox{\parbox{0.85\textwidth}{
+\textit{Resumen.} Es posible que las dos cantidades b\'asicas de la mec\'anica, la energ\'ia cin\'etica y la funci\'on de trabajo, contengan el tiempo $t$ expl\'icitamente. Esto ocurrir\'a si algunas de las condiciones cinem\'aticas dadas son dependientes del tiempo. Tambi\'en ocurrir\'a si la funci\'on de trabajo es una funci\'on expl\'icita del tiempo as\'i como de las coordenadas de posici\'on (y quiz\'a de las velocidades). Si tanto la energ\'ia cin\'etica como la funci\'on de trabajo son escleron\'omicas, es decir, independientes del tiempo, las ecuaciones de movimiento producen un teorema fundamental llamado la ley de la conservaci\'on de la energ\'ia. Si la energ\'ia cin\'etica o la funci\'on de trabajo o ambas son reon\'omicas, es decir, dependientes del tiempo, tal ley de conservaci\'on no puede encontrarse.
+}}
+\end{center}
+
+\end{document}
